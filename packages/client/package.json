@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.0.0",
-  "type": "module",q
+  "type": "module",
   "scripts": {
     "build": "tsc && vite build",
     "build:dev": "cross-env BUILD_MODE=development vite build",
