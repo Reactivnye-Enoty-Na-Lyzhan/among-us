@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import cssnano from 'cssnano';
+import postcssColorMod from 'postcss-color-mod-function';
 import postcssNesting from 'postcss-nesting';
 import postcssPresetEnv from 'postcss-preset-env';
 
@@ -10,5 +11,10 @@ const cssnanoPlugin = cssnano({
 const postcssPresetEnvPlugin = postcssPresetEnv({ stage: 1 });
 
 export default {
-  plugins: [postcssNesting(), postcssPresetEnvPlugin, cssnanoPlugin],
+  plugins: [
+    postcssNesting(),
+    postcssPresetEnvPlugin,
+    postcssColorMod,
+    cssnanoPlugin,
+  ],
 };
