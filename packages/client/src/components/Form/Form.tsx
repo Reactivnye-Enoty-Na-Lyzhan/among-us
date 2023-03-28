@@ -1,15 +1,13 @@
-import React, { FC } from 'react';
-import './Form.css';
+import React from 'react';
 
 type Props = {
   children: React.ReactNode;
   onSubmit: () => void;
 };
 
-const Form: FC<Props> = ({ children, onSubmit }) => {
+export default function Form({ children, onSubmit }: Props) {
   return (
     <form
-      className="form"
       noValidate
       onSubmit={(e: React.FormEvent) => {
         e.preventDefault();
@@ -18,6 +16,4 @@ const Form: FC<Props> = ({ children, onSubmit }) => {
       {children}
     </form>
   );
-};
-
-export default Form;
+}

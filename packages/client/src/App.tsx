@@ -5,13 +5,16 @@ import './vendor/fonts/Inter-Medium.woff';
 import './vendor/fonts/Inter-Bold.woff';
 import { Error404 } from './components/ErrorPage/ErrorPage';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './components/LoginPage/LoginPage';
 import './fonts/Inter-Regular.woff';
 import './fonts/Inter-Medium.woff';
 import './fonts/Inter-Bold.woff';
-import ErrorToast from './components/ErrorToast/ErrorToast';
 
 //placeholders
+function HomePage() {
+  return <h1>Landing page</h1>;
+}
 function ForumPage() {
   return <h1>Forum page</h1>;
 }
@@ -25,14 +28,13 @@ function SignUpPage() {
 function App() {
   return (
     <Router>
-        <ErrorToast />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/game" element={<GamePage />} />
         <Route path="/forum" element={<ForumPage />} />
-        <Route path="*" element={<Error404/>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
