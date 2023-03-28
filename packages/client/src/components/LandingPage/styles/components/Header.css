@@ -1,0 +1,47 @@
+header {
+  width: 100%;
+  height: 15vh;
+
+  .header-container {
+    width: 100%;
+    height: 100%;
+
+    .game-title-section {
+      padding-top: 3vh;
+
+      .game-title__svg {
+        display: block;
+
+        width: 6em;
+        max-height: 12vh;
+        margin: 0 auto;
+
+        font-size: 4em;
+        font-weight: 500;
+
+        .game-title__svg-text-copy:nth-child(1) {
+          fill: none;
+          stroke: var(--navbar-title-color);
+          stroke-width: 2px;
+        }
+
+        .game-title__svg-text-copy:nth-child(2) {
+          fill: none;
+          stroke: red;
+          stroke-dasharray: 0.5em 2em;
+          animation: game-title-animation 60s infinite linear;
+        }
+      }
+    }
+  }
+}
+
+@keyframes game-title-animation {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: 5em;
+  }
+}

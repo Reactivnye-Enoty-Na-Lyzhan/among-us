@@ -1,0 +1,30 @@
+@import './styles/helpers.css';
+@import './styles/fonts.css';
+@import './styles/components/Header.css';
+@import './styles/components/Main.css';
+@import './styles/components/Footer.css';
+@import './styles/components/Wallpaper.css';
+
+.landing-page-container {
+  --color-cold-white: #e7f6f6;
+  --color-light-blue: #cee9ea;
+  --color-space-black: #333334;
+  --color-space-deepblue: #090248;
+
+  --font-size-normal: calc(11px + 16 * ((100vw - 320px) / 1600));
+  --font-color-default: var(--color-cold-white);
+
+  --background-color: var(--color-space-black);
+  --background-animation-duration: 40s;
+
+  --navbar-title-color: var(--color-light-blue);
+
+  --link-color-blue: color-mod(#e7f6f6 blend(#090248 40%));
+  --link-hover-color-blue: color-mod(#e7f6f6 blend(#090248 70%));
+
+  width: 100%;
+  height: 100%;
+
+  font-size: var(--font-size-normal);
+  color: var(--font-color-default);
+}

@@ -1,0 +1,32 @@
+main {
+  height: 70vh;
+
+  .game-description-section {
+    @extend flex-column-container;
+
+    justify-content: center;
+
+    width: 70%;
+    height: 100%;
+    margin: 0 auto;
+
+    font-size: 1.1em;
+
+    .game-description__text {
+      overflow-y: auto;
+      max-height: 60vh;
+      margin-bottom: 1vh;
+      background-color: var(--background-color);
+    }
+
+    .game-description__join-link {
+      color: var(--link-color-blue);
+      text-align: center;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--link-hover-color-blue);
+      }
+    }
+  }
+}

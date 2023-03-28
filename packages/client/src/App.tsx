@@ -1,9 +1,11 @@
-import './App.css';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import LandingPage from './components/LandingPage/LandingPage';
 
-//placeholders 
+import './App.css';
+
+//placeholders
 function HomePage() {
-    return <h1>Landing page</h1>;
+  return <h1>Landing page</h1>;
 }
 function ForumPage() {
   return <h1>Forum page</h1>;
@@ -24,14 +26,14 @@ function NotFound() {
 function App() {
   return (
     <Router>
-        <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/game" element={<GamePage />} />
-            <Route path="/forum" element={<ForumPage />} />
-            <Route path="*" element={<NotFound/>} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/game" element={<GamePage />} />
+        <Route path="/forum" element={<ForumPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </Router>
   );
 }
