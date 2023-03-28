@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ValidationData } from '../hooks';
 import './style.css';
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
   name: string;
   required: boolean;
   value?: string;
+  validation?: ValidationData;
   handleInputChange: (name: string, value?: string) => void;
 };
 
@@ -16,12 +18,16 @@ export default function Input({
   label,
   value,
   type,
+  validation,
   ...props
 }: Props) {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   return (
-    <div className="form-input">
+    <div
+      className={`form-input ${
+        validation?.isValid === false ? 'form-input_invalid' : ''
+      }`}>
       <label>{label}</label>
       <input
         {...props}
@@ -45,6 +51,9 @@ export default function Input({
           onClick={() => {
             setPasswordVisibility(!passwordVisibility);
           }}></div>
+      ) : null}
+      {validation?.isValid === false ? (
+        <div className="form-input__validation">{validation?.text}</div>
       ) : null}
     </div>
   );
