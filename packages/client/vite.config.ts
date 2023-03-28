@@ -39,6 +39,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src/'),
       images: path.resolve(__dirname, 'src/images/'),
+      fonts: path.resolve(__dirname, 'src/vendor/fonts/'),
     },
   },
 });
