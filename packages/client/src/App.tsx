@@ -1,18 +1,19 @@
 import './App.css';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './components/LoginPage/LoginPage';
+import './fonts/Inter-Regular.woff';
+import './fonts/Inter-Medium.woff';
+import './fonts/Inter-Bold.woff';
 
-//placeholders 
+//placeholders
 function HomePage() {
-    return <h1>Landing page</h1>;
+  return <h1>Landing page</h1>;
 }
 function ForumPage() {
   return <h1>Forum page</h1>;
 }
 function GamePage() {
   return <h1>Game</h1>;
-}
-function LoginPage() {
-  return <h1>Login</h1>;
 }
 function SignUpPage() {
   return <h1>Registration</h1>;
@@ -24,14 +25,14 @@ function NotFound() {
 function App() {
   return (
     <Router>
-        <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/game" element={<GamePage />} />
-            <Route path="/forum" element={<ForumPage />} />
-            <Route path="*" element={<NotFound/>} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/game" element={<GamePage />} />
+        <Route path="/forum" element={<ForumPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </Router>
   );
 }
