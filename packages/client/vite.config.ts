@@ -15,4 +15,7 @@ export default defineConfig({
   build: {
     cssMinify: false,
   },
+  css: {
+    devSourcemap: true,
+  },
 });
