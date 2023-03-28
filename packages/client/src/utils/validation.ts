@@ -10,22 +10,6 @@ const validationMethods = {
   checkFirstCapitalLetter: (value: string) => !value.match(/^[A-ZА-Я]+.*$/),
 };
 
-const validationTexts = {
-  notEmpty: 'Поле не может быть пустым',
-  lenNotLessNotMore:
-    'Длина значения не должна быть меньше {min} и больше {max} символов',
-  noSymbols: 'Нельзя использовать символы',
-  noSpace: 'Нельзя использовать пробел',
-  onlyCyrilicAndLatin:
-    'Можно использовать только латинские или кириллические буквы',
-  notOnlyNumbers: 'Не может состоять только из цифр',
-  oneCapitalLetter: 'Должна быть хотя бы одна заглавная буква',
-  firstCapitalLetter: 'Первая буква должна быть заглавной',
-  invalidEmailFormat: 'Неверный формат адреса электронной почты',
-  phone: 'Номер телефона должен состоять только из цифр',
-  comparePasswords: 'Пароли должны совпадать',
-};
-
 export const validation = {
   login: (value?: string) => {
     let isValid = false;
@@ -33,19 +17,17 @@ export const validation = {
     const min = 3;
     const max = 20;
 
-    if (!value) text = validationTexts.notEmpty;
+    if (!value) text = 'Поле не может быть пустым';
     else if (validationMethods.checkLength(value, min, max))
-      text = validationTexts.lenNotLessNotMore
-        .replace('{min}', String(min))
-        .replace('{max}', String(max));
+      text = `Длина значения не должна быть меньше ${min} и больше ${max} символов`;
     else if (validationMethods.checkBannedSymbols(value))
-      text = validationTexts.noSymbols;
+      text = 'Нельзя использовать символы';
     else if (validationMethods.checkNoSpace(value))
-      text = validationTexts.noSpace;
+      text = 'Нельзя использовать пробел';
     else if (validationMethods.checkLangs(value))
-      text = validationTexts.onlyCyrilicAndLatin;
+      text = 'Можно использовать только латинские или кириллические буквы';
     else if (validationMethods.checkOnlyNumbers(value))
-      text = validationTexts.notOnlyNumbers;
+      text = 'Не может состоять только из цифр';
     else {
       isValid = true;
     }
@@ -58,13 +40,11 @@ export const validation = {
     const min = 8;
     const max = 40;
 
-    if (!value) text = validationTexts.notEmpty;
+    if (!value) text = 'Поле не может быть пустым';
     else if (validationMethods.checkLength(value, min, max))
-      text = validationTexts.lenNotLessNotMore
-        .replace('{min}', String(min))
-        .replace('{max}', String(max));
+      text = `Длина значения не должна быть меньше ${min} и больше ${max} символов`;
     else if (validationMethods.checkOneCapitalLetter(value))
-      text = validationTexts.oneCapitalLetter;
+      text = 'Должна быть хотя бы одна заглавная буква';
     else {
       isValid = true;
     }
@@ -75,11 +55,11 @@ export const validation = {
     let isValid = false;
     let text = '';
 
-    if (!value) text = validationTexts.notEmpty;
+    if (!value) text = 'Поле не может быть пустым';
     else if (validationMethods.checkLangs(value))
-      text = validationTexts.onlyCyrilicAndLatin;
+      text = 'Можно использовать только латинские или кириллические буквы';
     else if (validationMethods.checkFirstCapitalLetter(value))
-      text = validationTexts.firstCapitalLetter;
+      text = 'Первая буква должна быть заглавной';
     else {
       isValid = true;
     }
@@ -90,12 +70,12 @@ export const validation = {
     let isValid = false;
     let text = '';
 
-    if (!value) text = validationTexts.notEmpty;
+    if (!value) text = 'Поле не может быть пустым';
     else if (
       !value.match('^[a-zA-Z0-9@.-]') ||
       !value.match('^.+@[a-zA-Z]+.[a-zA-Z]')
     )
-      text = validationTexts.invalidEmailFormat;
+      text = 'Неверный формат адреса электронной почты';
     else {
       isValid = true;
     }
@@ -108,12 +88,11 @@ export const validation = {
     const min = 10;
     const max = 15;
 
-    if (!value) text = validationTexts.notEmpty;
+    if (!value) text = 'Поле не может быть пустым';
     else if (validationMethods.checkLength(value, min, max))
-      text = validationTexts.lenNotLessNotMore
-        .replace('{min}', String(min))
-        .replace('{max}', String(max));
-    else if (!value.match(/^\+?[0-9]+$/)) text = validationTexts.phone;
+      text = `Длина значения не должна быть меньше ${min} и больше ${max} символов`;
+    else if (!value.match(/^\+?[0-9]+$/))
+      text = 'Номер телефона должен состоять только из цифр';
     else {
       isValid = true;
     }
@@ -124,7 +103,7 @@ export const validation = {
     let isValid = false;
     let text = '';
 
-    if (!value) text = validationTexts.notEmpty;
+    if (!value) text = 'Поле не может быть пустым';
     else {
       isValid = true;
     }
@@ -138,8 +117,8 @@ export const validation = {
     let isValid = false;
     let text = '';
 
-    if (!value) text = validationTexts.notEmpty;
-    else if (value !== secondValue) text = validationTexts.comparePasswords;
+    if (!value) text = 'Поле не может быть пустым';
+    else if (value !== secondValue) text = 'Пароли должны совпадать';
     else {
       isValid = true;
     }
