@@ -8,4 +8,9 @@
   color: #fff;
   font-size: 12px;
   cursor: pointer;
+  transition: opacity ease-in 0.1s;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
