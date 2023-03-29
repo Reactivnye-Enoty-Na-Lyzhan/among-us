@@ -1,0 +1,12 @@
+.form {
+  width: 100%;
+  max-width: 300px;
+}
+
+.form__form-input {
+  margin-bottom: 24px;
+}
+
+.form__form-button {
+  margin-top: 20px;
+}

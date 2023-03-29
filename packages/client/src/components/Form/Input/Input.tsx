@@ -7,14 +7,15 @@ type Props = {
   placeholder?: string;
   type: string;
   name: string;
-  required: boolean;
   value?: string;
   validation?: ValidationData;
   handleInputChange: (name: string, value?: string) => void;
+  clearFieldValidation?: (field: string) => void;
 };
 
 export default function Input({
   handleInputChange,
+  clearFieldValidation,
   label,
   value,
   type,
@@ -24,11 +25,11 @@ export default function Input({
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   return (
-    <div
-      className={`form-input ${
+    <label
+      className={`form-input form__form-input ${
         validation?.isValid === false ? 'form-input_invalid' : ''
       }`}>
-      <label>{label}</label>
+      <span className="form-input__label">{label}</span>
       <input
         {...props}
         type={
@@ -38,9 +39,13 @@ export default function Input({
               : 'password'
             : type
         }
+        className="form-input__input"
         value={value ?? ''}
         onChange={(e: React.FormEvent<HTMLInputElement>) => {
           handleInputChange(props.name, e.currentTarget.value);
+          if (clearFieldValidation) {
+            clearFieldValidation(props.name);
+          }
         }}
       />
       {type === 'password' && value ? (
@@ -52,9 +57,11 @@ export default function Input({
             setPasswordVisibility(!passwordVisibility);
           }}></div>
       ) : null}
-      {validation?.isValid === false ? (
-        <div className="form-input__validation">{validation?.text}</div>
-      ) : null}
-    </div>
+      <div
+        className="form-input__validation"
+        title={validation?.isValid === false ? validation?.text : undefined}>
+        {validation?.isValid === false ? validation?.text : undefined}
+      </div>
+    </label>
   );
 }

@@ -1,0 +1,11 @@
+.form-button {
+  background-color: #910cbf;
+  border: none;
+  border-radius: 5px;
+  height: 42px;
+  text-align: center;
+  width: 100%;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
