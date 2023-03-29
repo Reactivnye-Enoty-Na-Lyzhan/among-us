@@ -5,15 +5,16 @@
 }
 
 .footer {
-  --footer-hegiht: 15vh;
+  --footer-height: 15vh;
+  --links-section-margin: 3vw;
 
   @extend flex-row-container;
 
   justify-content: space-between;
 
   width: 100%;
-  height: var(----footer-hegiht);
-  padding: 0 3vw;
+  height: 15vh;
+  height: var(--footer-height);
 
   font-size: 1.3em;
 }
@@ -22,12 +23,14 @@
   @extend flex-row-container;
 
   height: 100%;
+  margin-left: var(--links-section-margin);
 
   .technologies-list-section__header {
     display: block;
-    /* margin-right: 5%; */
+    width: min-content;
+    margin-right: 0.5em;
 
-    @media only screen and (min-width: 500px) {
+    @media only screen and (min-width: 400px) {
       white-space: nowrap;
     }
   }
@@ -51,8 +54,8 @@
   }
 
   .technologies-list-entry__logo {
-    width: min(1.5em, var(--footer-hegiht));
-    height: min(1.5em, var(--footer-hegiht));
+    width: min(1.5em, var(--footer-height));
+    height: min(1.5em, var(--footer-height));
 
     -webkit-user-drag: none;
   }
@@ -62,6 +65,7 @@
   @extend flex-row-container;
 
   height: 100%;
+  margin-right: var(--links-section-margin);
 }
 
 .media-links-list {

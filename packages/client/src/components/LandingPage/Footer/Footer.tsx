@@ -49,7 +49,6 @@ export default function () {
           </li>
         </ul>
       </section>
-
       <section className="media-links-section">
         <ul className="media-links-list">
           <li className="media-links-list__entry">
