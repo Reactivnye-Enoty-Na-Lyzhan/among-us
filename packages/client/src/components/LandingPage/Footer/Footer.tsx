@@ -56,7 +56,7 @@ export default function () {
               className="media-link-entry__link"
               href="https://github.com/Reactivnye-Enoty-Na-Lyzhan/among-us"
               target="_blank">
-              <h3 className="icon-github">GitHub</h3>
+              <h3 className="icon-github media-link-entry__header">GitHub</h3>
             </a>
           </li>
         </ul>
