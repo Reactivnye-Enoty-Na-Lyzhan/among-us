@@ -7,7 +7,7 @@
   padding-top: 3vh;
 }
 
-.game-title__svg {
+.game-title-svg {
   display: block;
 
   width: 6em;
@@ -17,7 +17,7 @@
   font-size: min(4em, 12vh);
   font-weight: 500;
 
-  .game-title__svg-text-copy {
+  .game-title-svg__text-copy {
     fill: none;
 
     &:nth-child(1) {
