@@ -1,8 +1,8 @@
-import PageFooter from './components/Footer';
-import PageHeader from './components/Header';
-import PageMain from './components/Main';
-import PageWallpaper from './components/Wallpaper';
+import PageFooter from './Footer/Footer';
+import PageHeader from './Header/Header';
 import './LandingPage.css';
+import PageMain from './Main/Main';
+import PageWallpaper from './Wallpaper/Wallpaper';
 
 export default function () {
   return (

@@ -1,3 +1,5 @@
+import './Header.css';
+
 export default function () {
   return (
     <header>

@@ -1,6 +1,7 @@
 import postcssLogo from 'images/landing-page/icons/postcss-logo.svg';
 import reactLogo from 'images/landing-page/icons/react-logo.svg';
 import viteLogo from 'images/landing-page/icons/vite-logo.svg';
+import './Footer.css';
 
 export default function () {
   return (

@@ -1,3 +1,5 @@
+import './Wallpaper.css';
+
 export default function () {
   return (
     <div className="background-wallpaper-container">

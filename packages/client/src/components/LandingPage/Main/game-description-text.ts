@@ -1,4 +1,4 @@
-const gameDescriptionText = `
+export default `
 Welcome to 'Among Us', the ultimate web browser game that takes
 inspiration from the wildly popular computer original. In this game,
 you'll find yourself on a spaceship mission with a team of fellow
@@ -17,16 +17,3 @@ infiltrators and save the mission. Can you work together with your
 team to save the day, or will the infiltrators succeed in their
 mission?
 `;
-
-export default function () {
-  return (
-    <main>
-      <section className="game-description-section">
-        <span className="game-description__text">{gameDescriptionText}</span>
-        <a href="" className="game-description__join-link">
-          <h2>Play now and find out!</h2>
-        </a>
-      </section>
-    </main>
-  );
-}

@@ -1,7 +1,9 @@
 .footer-container {
-  @extend flex-row-container;
-
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
+
   width: 100%;
   height: 100%;
   padding: 0 3%;
@@ -17,8 +19,9 @@ footer {
   }
 
   .technologies-list-section {
-    @extend flex-row-container;
-
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     height: 100%;
 
     .technologies-list__header {
@@ -32,9 +35,12 @@ footer {
     }
 
     .technologies-list {
-      @extend flex-row-container;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
 
       padding: 0;
+
       list-style: none;
 
       .technologies-list__entry {
@@ -59,8 +65,9 @@ footer {
   }
 
   .media-links-section {
-    @extend flex-row-container;
-
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     height: 100%;
 
     .media-links-list {

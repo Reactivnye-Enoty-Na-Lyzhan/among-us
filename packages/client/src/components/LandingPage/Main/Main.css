@@ -2,7 +2,9 @@ main {
   height: 70vh;
 
   .game-description-section {
-    @extend flex-column-container;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     justify-content: center;
 
