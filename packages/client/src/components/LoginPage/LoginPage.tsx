@@ -1,9 +1,10 @@
 import React from 'react';
 import Form from '../Form/Form';
 import Input from '../Form/Input/Input';
-import { useForm, useValidation } from '../Form/hooks';
+import { useForm } from '../Form/hooks';
 import { validation } from '../../utils/validation';
 import Button from '../Form/Button/Button';
+import { useValidation } from '../../hooks/useValidation';
 
 export default function LoginPage() {
   const { values, handleInputChange } = useForm({ login: 'test' });

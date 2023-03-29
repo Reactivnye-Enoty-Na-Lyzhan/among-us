@@ -7,9 +7,9 @@ import { Error404 } from './components/ErrorPage/ErrorPage';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './components/LoginPage/LoginPage';
-import './fonts/Inter-Regular.woff';
-import './fonts/Inter-Medium.woff';
-import './fonts/Inter-Bold.woff';
+import './vendor/fonts/Inter-Regular.woff';
+import './vendor/fonts/Inter-Medium.woff';
+import './vendor/fonts/Inter-Bold.woff';
 
 //placeholders
 function HomePage() {
