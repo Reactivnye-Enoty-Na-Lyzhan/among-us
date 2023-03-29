@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ValidationData } from '../hooks';
+import { ValidationData } from '../../../hooks/useValidation';
 import './style.css';
 
 type Props = {
