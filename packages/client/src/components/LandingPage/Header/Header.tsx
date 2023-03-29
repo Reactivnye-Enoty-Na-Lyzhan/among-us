@@ -3,6 +3,7 @@ import './Header.css';
 export default function () {
   return (
     <header className="header">
+      <h1 className="page-main-header">AMONG US WEB BROWSER GAME</h1>
       <section className="game-title-section">
         <svg className="game-title-svg">
           <symbol id="game-title-href">
