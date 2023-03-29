@@ -1,2 +1,7 @@
-@import 'styles/normalize.css';
-@import 'styles/reset.css';
+@import '@/vendor/styles/normalize.css';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
