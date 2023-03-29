@@ -1,20 +1,14 @@
-import React, { FC } from 'react';
-import './Button.css';
+import React from 'react';
+import './style.css';
 
 type Props = {
   text: string;
-  disabled: boolean;
 };
 
-const Button: FC<Props> = ({ text, disabled }) => {
+export default function Button({ text }: Props) {
   return (
-    <button
-      type="submit"
-      className="form-button form__form-button"
-      disabled={disabled}>
+    <button type="submit" className="form-button form__form-button">
       {text}
     </button>
   );
-};
-
-export default Button;
+}

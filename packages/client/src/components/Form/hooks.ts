@@ -40,5 +40,9 @@ export function useValidation(
     return !newValidationData.some(v => v.isValid === false);
   }
 
-  return { validationData, validateForm };
+  function clearFieldValidation(field: string) {
+    setValidationData(validationData.filter(d => d.field !== field));
+  }
+
+  return { validationData, validateForm, clearFieldValidation };
 }
