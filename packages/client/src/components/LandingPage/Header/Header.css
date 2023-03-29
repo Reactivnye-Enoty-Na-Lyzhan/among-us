@@ -21,7 +21,7 @@
     fill: none;
 
     &:nth-child(1) {
-      stroke: var(--navbar-title-color);
+      stroke: var(--color-light-blue);
       stroke-width: 2px;
     }
 

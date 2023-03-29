@@ -5,7 +5,7 @@ body {
   height: 100vh;
 }
 
-.landing-page-container {
+.landing-page {
   --color-cold-white: #e7f6f6;
   --color-light-blue: #cee9ea;
   --color-space-black: #333334;
@@ -15,9 +15,6 @@ body {
   --font-color-default: var(--color-cold-white);
 
   --background-color: var(--color-space-black);
-  --background-animation-duration: 40s;
-
-  --navbar-title-color: var(--color-light-blue);
 
   --link-color-blue: color-mod(#e7f6f6 blend(#090248 40%));
   --link-hover-color-blue: color-mod(#e7f6f6 blend(#090248 70%));

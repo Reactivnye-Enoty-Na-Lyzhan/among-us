@@ -6,7 +6,7 @@ import PageWallpaper from './Wallpaper/Wallpaper';
 
 export default function () {
   return (
-    <div className="landing-page-container">
+    <div className="landing-page">
       <PageWallpaper></PageWallpaper>
       <PageHeader></PageHeader>
       <PageMain></PageMain>

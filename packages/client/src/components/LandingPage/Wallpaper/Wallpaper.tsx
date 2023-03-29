@@ -2,7 +2,7 @@ import './Wallpaper.css';
 
 export default function () {
   return (
-    <div className="background-wallpaper-container">
+    <div className="background-wallpaper">
       <div className="background-wallpaper__stars-1"></div>
       <div className="background-wallpaper__stars-2"></div>
       <div className="background-wallpaper__stars-3"></div>
