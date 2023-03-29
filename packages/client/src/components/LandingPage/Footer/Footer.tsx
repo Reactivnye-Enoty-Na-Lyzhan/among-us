@@ -5,63 +5,63 @@ import './Footer.css';
 
 export default function () {
   return (
-    <footer>
-      <div className="footer-container">
-        <section className="technologies-list-section">
-          <h3 className="technologies-list__header">Technologies Used:</h3>
-          <ul className="technologies-list">
-            <li className="technologies-list__entry">
-              <a
-                href="https://vitejs.dev/"
-                className="technology-entry__link"
-                target="_blank">
-                <img
-                  className="technology-entry__logo"
-                  src={viteLogo}
-                  alt="vite logo"
-                />
-              </a>
-            </li>
-            <li className="technologies-list__entry">
-              <a
-                href="https://react.dev/"
-                className="technology-entry__link"
-                target="_blank">
-                <img
-                  className="technology-entry__logo"
-                  src={reactLogo}
-                  alt="react logo"
-                />
-              </a>
-            </li>
-            <li className="technologies-list__entry">
-              <a
-                href="https://postcss.org/"
-                className="technology-entry__link"
-                target="_blank">
-                <img
-                  className="technology-entry__logo"
-                  src={postcssLogo}
-                  alt="postcss logo"
-                />
-              </a>
-            </li>
-          </ul>
-        </section>
+    <footer className="footer">
+      <section className="technologies-list-section">
+        <h3 className="technologies-list-section__header">
+          Technologies Used:
+        </h3>
+        <ul className="technologies-list">
+          <li className="technologies-list-entry">
+            <a
+              href="https://vitejs.dev/"
+              className="technologies-list-entry__link"
+              target="_blank">
+              <img
+                className="technologies-list-entry__logo"
+                src={viteLogo}
+                alt="vite logo"
+              />
+            </a>
+          </li>
+          <li className="technologies-list-entry">
+            <a
+              href="https://react.dev/"
+              className="technologies-list-entry__link"
+              target="_blank">
+              <img
+                className="technologies-list-entry__logo"
+                src={reactLogo}
+                alt="react logo"
+              />
+            </a>
+          </li>
+          <li className="technologies-list-entry">
+            <a
+              href="https://postcss.org/"
+              className="technologies-list-entry__link"
+              target="_blank">
+              <img
+                className="technologies-list-entry__logo"
+                src={postcssLogo}
+                alt="postcss logo"
+              />
+            </a>
+          </li>
+        </ul>
+      </section>
 
-        <section className="media-links-section">
-          <ul className="media-links-list">
-            <li className="media-links-list__entry">
-              <a
-                className="media-link-entry__link"
-                href="https://github.com/Reactivnye-Enoty-Na-Lyzhan/among-us"
-                target="_blank">
-                <h3 className="icon-github">GitHub</h3>
-              </a>
-            </li>
-          </ul>
-        </section>
-      </div>
+      <section className="media-links-section">
+        <ul className="media-links-list">
+          <li className="media-links-list__entry">
+            <a
+              className="media-link-entry__link"
+              href="https://github.com/Reactivnye-Enoty-Na-Lyzhan/among-us"
+              target="_blank">
+              <h3 className="icon-github">GitHub</h3>
+            </a>
+          </li>
+        </ul>
+      </section>
     </footer>
   );
 }
