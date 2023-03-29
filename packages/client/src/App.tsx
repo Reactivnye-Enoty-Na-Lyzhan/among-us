@@ -1,5 +1,6 @@
 import './App.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import GamePage from './components/GamePage/GamePage';
 
 //placeholders 
 function HomePage() {
@@ -8,9 +9,7 @@ function HomePage() {
 function ForumPage() {
   return <h1>Forum page</h1>;
 }
-function GamePage() {
-  return <h1>Game</h1>;
-}
+
 function LoginPage() {
   return <h1>Login</h1>;
 }

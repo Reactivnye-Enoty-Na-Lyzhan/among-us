@@ -1,0 +1,20 @@
+.game-end__button {
+  text-align: center;
+}
+
+.game-end__button-name {
+  width: 205px;
+  height: 51px;
+  margin-bottom: 21px;
+  border-radius: 5px;
+  border: 0;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 120%;
+  background-color: inherit;
+}
+
+.game-end__button-link {
+  color: #fafafa;
+  text-decoration: none;
+}
