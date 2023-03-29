@@ -51,7 +51,7 @@ export default function () {
       </section>
       <section className="media-links-section">
         <ul className="media-links-list">
-          <li className="media-links-list__entry">
+          <li className="media-link-entry">
             <a
               className="media-link-entry__link"
               href="https://github.com/Reactivnye-Enoty-Na-Lyzhan/among-us"

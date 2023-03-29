@@ -24,7 +24,7 @@
   @for $i from 1 to 8 {
     .background-wallpaper__stars-$(i) {
       background-image: url('images/landing-page/wallpapers/$(i).png');
-      animation-delay: calc($(i) * (var(--animation-duration) / 8));
+      animation-delay: calc(-$(i) * (var(--animation-duration) / 8));
     }
   }
 }

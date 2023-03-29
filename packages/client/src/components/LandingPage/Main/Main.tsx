@@ -6,7 +6,7 @@ export default function () {
     <main className="main">
       <section className="game-description">
         <p className="game-description__text">{gameDescriptionText}</p>
-        <a href="" className="game-description__join-link">
+        <a href="#" className="game-description__join-link">
           <h2>Play now and find out!</h2>
         </a>
       </section>

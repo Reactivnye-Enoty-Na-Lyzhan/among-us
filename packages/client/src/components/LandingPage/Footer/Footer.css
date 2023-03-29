@@ -73,10 +73,12 @@
 
   .media-link-entry__link {
     color: inherit;
+    text-decoration: underline 0.1em;
   }
 
   .media-link-entry__link:hover {
     color: var(--link-hover-color-blue);
+    transition: color 400ms ease;
   }
 
   .icon-github::before {
