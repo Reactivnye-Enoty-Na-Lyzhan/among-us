@@ -1,22 +1,25 @@
-.game-end {
-  display: flex;
-  flex-direction: row;
+@import '../../utils/game-end/variables.css';
+
+.game-end_spacing_below {
   padding-bottom: 100px;
 }
 
-.game-end__subtitle {
-  margin: 124px 0 147px;
-  color: #fafafa;
+.game-end__title {
+  color: var(--text-color);
   font-weight: 700;
-  font-size: 96px;
+  font-size: 5rem;
   line-height: 120%;
+}
+
+.game-end__title_spacing_above-below {
+  margin: 124px 0 147px;
 }
 
 .game-end__wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
+  width: 46rem;
 }
 
 .game-end__container {
@@ -26,27 +29,65 @@
   justify-content: flex-end;
 }
 
+.game-end__image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+}
+
 .game-end__image_left {
-  display: flex;
-  align-self: flex-end;
-  height: 18rem;
-  padding-right: 100px;
+  left: 50px;
+  bottom: 100px;
 }
 
 .game-end__image_right {
-  display: flex;
-  align-self: flex-end;
-  height: 11rem;
-  padding-left: 100px;
+  right: 50px;
+  bottom: 100px;
+}
+
+.game-end__image_impostor-yellow {
+  background-image: url(../../images/game-end/impostor-yellow.svg);
+  width: 12rem;
+  height: 18rem;
+}
+
+.game-end__image_impostor-red {
+  background-image: url(../../images/game-end/impostor-red.svg);
+  width: 16rem;
+  height: 18rem;
+}
+
+.game-end__image_impostor-mint {
+  background-image: url(../../images/game-end/impostor-mint.svg);
+  width: 16rem;
+  height: 18rem;
+  bottom: 50px;
+}
+
+.game-end__image_impostor-firework {
+  background-image: url(../../images/game-end/impostor-firework.svg);
+  width: 24rem;
+  height: 34rem;
+}
+
+.game-end__image_impostor-dead {
+  background-image: url(../../images/game-end/impostor-dead.svg);
+  width: 16rem;
+  height: 18rem;
+  bottom: 50px;
 }
 
 .game-end__text {
   text-align: center;
-  margin-bottom: 10px;
-  color: #fafafa;
+  color: var(--text-color);
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 120%;
+}
+
+.game-end__text_spacing_below {
+  margin-bottom: 10px;
 }
 
 .game-end__link {
@@ -54,7 +95,7 @@
   justify-content: center;
   color: #e8125f;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 120%;
   text-decoration: none;
 }
