@@ -29,8 +29,7 @@
   transition: border-color ease-in 0.1s;
   font-size: 12px;
 
-  &:focus,
-  &:hover {
+  &:focus {
     outline: none;
     border-color: #910cbf;
   }

@@ -10,11 +10,13 @@ type Props = {
   value?: string;
   validation?: ValidationData;
   handleInputChange: (name: string, value?: string) => void;
+  validateField?: (field: string, value?: string) => void;
   clearFieldValidation?: (field: string) => void;
 };
 
 export default function Input({
   handleInputChange,
+  validateField,
   clearFieldValidation,
   label,
   value,
@@ -45,6 +47,11 @@ export default function Input({
           handleInputChange(props.name, e.currentTarget.value);
           if (clearFieldValidation) {
             clearFieldValidation(props.name);
+          }
+        }}
+        onBlur={() => {
+          if (validateField) {
+            validateField(props.name, value);
           }
         }}
       />
