@@ -13,18 +13,18 @@ export default function GameEnd({result, score}: Props){
   if (result === 'lose') {
     imageLeftSrc = ' ';
   } else if (result === 'win' && score > 10) {
-    imageLeftSrc = 'game-end__image_impostor-yellow';
+    imageLeftSrc = 'game-end__image_impostor_red';
   } else {
-    imageLeftSrc = 'game-end__image_impostor-red';
+    imageLeftSrc = 'game-end__image_impostor_yellow';
   }
 
   let imageRightSrc = '';
   if (result === 'lose') {
-    imageRightSrc = 'game-end__image_impostor-dead';
+    imageRightSrc = 'game-end__image_impostor_dead';
   } else if (result === 'win' && score > 10) {
-    imageRightSrc = 'game-end__image_impostor-firework';
+    imageRightSrc = 'game-end__image_impostor_firework';
   } else {
-    imageRightSrc = 'game-end__image_impostor-mint';
+    imageRightSrc = 'game-end__image_impostor_mint';
   }
 
   return(
@@ -33,9 +33,9 @@ export default function GameEnd({result, score}: Props){
       <div className='game-end__wrapper'>
       <h1 className='game-end__title game-end__title_spacing_above-below'>{result === 'lose' ? 'Как же так-то?' : 'Победа!'}</h1>
         <div className='game-end__container'>
-          <GameEndButton name='Сыграть ещё' link='/game' color='#24D108'/>
-          <GameEndButton name='Рейтинг' link='/leaderboard' color='#910CBF'/>
-          <GameEndButton name='Ваш профиль' link='/profile' color='#E8125F'/>
+          <GameEndButton name='Сыграть ещё' link='/game' color='green'/>
+          <GameEndButton name='Рейтинг' link='/leaderboard' color='violet'/>
+          <GameEndButton name='Ваш профиль' link='/profile' color='pink'/>
           <p className='game-end__text game-end__text_spacing_below'>или</p>
           <Link  className='game-end__link' to='/forum'>Посетите наш форум</Link>
         </div>

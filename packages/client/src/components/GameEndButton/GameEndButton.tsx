@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './GameEndButton.css';
 
 interface Props {
@@ -8,11 +8,19 @@ interface Props {
 }
 
 export default function GameEndButton(props: Props) {
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(props.link);
+  };
+  
   return(
-    <div className="game-end__button">
-      <button type='button' style={{ backgroundColor: `${props.color}`}} className="game-end__button-name game-end__button-name_spacing_below">
-        <Link to={props.link} className='game-end__button-link'>{props.name}</Link>
+      <button 
+        type='submit' 
+        onClick={handleClick} 
+        className={`game-end__button-name game-end__button-name_${props.color} game-end__button-name_spacing_below`}>
+        {props.name}
       </button>
-    </div>
   );
 }

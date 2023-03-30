@@ -46,32 +46,32 @@
   bottom: 100px;
 }
 
-.game-end__image_impostor-yellow {
+.game-end__image_impostor_yellow {
   background-image: url(../../images/game-end/impostor-yellow.svg);
   width: 12rem;
   height: 18rem;
 }
 
-.game-end__image_impostor-red {
+.game-end__image_impostor_red {
   background-image: url(../../images/game-end/impostor-red.svg);
   width: 16rem;
   height: 18rem;
 }
 
-.game-end__image_impostor-mint {
+.game-end__image_impostor_mint {
   background-image: url(../../images/game-end/impostor-mint.svg);
   width: 16rem;
   height: 18rem;
   bottom: 50px;
 }
 
-.game-end__image_impostor-firework {
+.game-end__image_impostor_firework {
   background-image: url(../../images/game-end/impostor-firework.svg);
   width: 24rem;
   height: 34rem;
 }
 
-.game-end__image_impostor-dead {
+.game-end__image_impostor_dead {
   background-image: url(../../images/game-end/impostor-dead.svg);
   width: 16rem;
   height: 18rem;
@@ -98,4 +98,8 @@
   font-size: 1rem;
   line-height: 120%;
   text-decoration: none;
+}
+
+.game-end__link:hover {
+  opacity: 0.8;
 }
