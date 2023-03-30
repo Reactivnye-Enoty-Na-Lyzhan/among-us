@@ -8,7 +8,7 @@ export default function LoginPage() {
 
   return (
     <div
-      style={{ backgroundColor: '#010318', width: '300px', padding: '40px' }}>
+      style={{ backgroundColor: '#010318', width: '100%', height:'100vh', padding: '40px' }}>
       <Form
         onSubmit={() => {
           console.log('SUBMIT', { values });
