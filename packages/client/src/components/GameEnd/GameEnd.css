@@ -1,5 +1,9 @@
 @import '../../utils/game-end/variables.css';
 
+.game-end {
+  display: flex;
+}
+
 .game-end_spacing_below {
   padding-bottom: 100px;
 }
