@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import './style.css';
 import getErrorMessage from "./getErrorMessage";
 
-function ErrorNotification() {
+function ErrorToast() {
 //TBD: move errorCode to global storage and update from controllers/api calls
   const [APIErrorCode, setAPIErrorCode] = useState<string|null>(null);
   const [errorObj, setErrorObj] = useState<Record<string, string>|null>(null);
@@ -43,4 +43,4 @@ function ErrorNotification() {
   );
 }
 
-export default ErrorNotification;
+export default ErrorToast;

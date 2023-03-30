@@ -4,7 +4,7 @@ import LoginPage from './components/LoginPage/LoginPage';
 import './fonts/Inter-Regular.woff';
 import './fonts/Inter-Medium.woff';
 import './fonts/Inter-Bold.woff';
-import ErrorNotification from './components/ErrorToast/ErrorToast';
+import ErrorToast from './components/ErrorToast/ErrorToast';
 
 //placeholders
 function HomePage() {
@@ -26,7 +26,7 @@ function NotFound() {
 function App() {
   return (
     <Router>
-        <ErrorNotification />
+        <ErrorToast />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
