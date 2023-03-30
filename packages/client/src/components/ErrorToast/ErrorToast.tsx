@@ -27,13 +27,8 @@ function ErrorNotification() {
     }
   }, [errorObj]);
 
-  const err = ()=> {
-    setAPIErrorCode('503');
-  };
-
   return (
     <>
-    <button onClick={err}>Make error</button>
       {errorObj && (
         <div className="error-toast error-toast_position">
           <h1 className="error-toast__code">{errorObj.code}</h1>
