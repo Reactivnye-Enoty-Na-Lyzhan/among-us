@@ -4,9 +4,6 @@ import LandingPage from './components/LandingPage/LandingPage';
 import './App.css';
 
 //placeholders
-function HomePage() {
-  return <h1>Landing page</h1>;
-}
 function ForumPage() {
   return <h1>Forum page</h1>;
 }
