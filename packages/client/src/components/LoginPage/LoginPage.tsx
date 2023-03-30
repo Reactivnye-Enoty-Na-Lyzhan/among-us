@@ -8,10 +8,11 @@ import { useValidation } from '../../hooks/useValidation';
 
 export default function LoginPage() {
   const { values, handleInputChange } = useForm({ login: 'test' });
-  const { validationData, validateForm, clearFieldValidation } = useValidation([
-    { field: 'login', validation: validation.login },
-    { field: 'password', validation: validation.password },
-  ]);
+  const { validationData, validateForm, validateField, clearFieldValidation } =
+    useValidation([
+      { field: 'login', validation: validation.login },
+      { field: 'password', validation: validation.password },
+    ]);
 
   return (
     <div style={{ backgroundColor: '#010318', width: '100%', padding: '40px' }}>
@@ -25,6 +26,7 @@ export default function LoginPage() {
           value={values.login}
           handleInputChange={handleInputChange}
           clearFieldValidation={clearFieldValidation}
+          validateField={validateField}
           type={'text'}
           name={'login'}
           placeholder={'Введите логин'}
@@ -35,13 +37,17 @@ export default function LoginPage() {
           value={values.password}
           handleInputChange={handleInputChange}
           clearFieldValidation={clearFieldValidation}
+          validateField={validateField}
           type={'password'}
           name={'password'}
           placeholder={'Введите пароль'}
           label={'Пароль'}
           validation={validationData.find(v => v.field === 'password')}
         />
-        <Button text={'Отправить'} />
+        <Button
+          disabled={validationData.some(d => d.isValid === false)}
+          text={'Отправить'}
+        />
       </Form>
     </div>
   );
