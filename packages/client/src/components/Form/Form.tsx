@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css';
+import './Form.css';
 
 type Props = {
   children: React.ReactNode;
