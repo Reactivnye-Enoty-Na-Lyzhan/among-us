@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ValidationData } from '../../../hooks/useValidation';
-import './style.css';
+import './Input.css';
 
 type Props = {
   label?: string;
