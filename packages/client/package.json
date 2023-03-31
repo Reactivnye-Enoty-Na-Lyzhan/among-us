@@ -12,14 +12,13 @@
     "test": "jest --passWithNoTests ./"
   },
   "dependencies": {
+    "classnames": "^2.3.2",
     "dotenv": "^16.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0"
   },
   "devDependencies": {
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.5.0",
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^28.1.8",
     "@types/react": "^18.0.17",
@@ -29,6 +28,8 @@
     "@vitejs/plugin-react": "^2.0.1",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.23.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",

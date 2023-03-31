@@ -6,7 +6,7 @@ type Props = {
   onSubmit: () => void;
 };
 
-const Form: FC<Props> = ({ children, onSubmit }: Props) => {
+const Form: FC<Props> = ({ children, onSubmit }) => {
   return (
     <form
       className="form"

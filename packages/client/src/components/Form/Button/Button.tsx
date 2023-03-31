@@ -6,7 +6,7 @@ type Props = {
   disabled: boolean;
 };
 
-const Button: FC<Props> = ({ text, disabled }: Props) => {
+const Button: FC<Props> = ({ text, disabled }) => {
   return (
     <button
       type="submit"
