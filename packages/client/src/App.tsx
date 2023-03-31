@@ -1,5 +1,7 @@
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import LandingPage from './components/LandingPage/LandingPage';
+
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './components/LoginPage/LoginPage';
 import './fonts/Inter-Regular.woff';
 import './fonts/Inter-Medium.woff';
@@ -7,9 +9,6 @@ import './fonts/Inter-Bold.woff';
 import ErrorToast from './components/ErrorToast/ErrorToast';
 
 //placeholders
-function HomePage() {
-  return <h1>Landing page</h1>;
-}
 function ForumPage() {
   return <h1>Forum page</h1>;
 }
@@ -28,7 +27,7 @@ function App() {
     <Router>
         <ErrorToast />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/game" element={<GamePage />} />
