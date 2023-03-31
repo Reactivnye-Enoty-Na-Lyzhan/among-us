@@ -1,0 +1,8 @@
+*
+
+!src/
+!src/**
+
+*.*
+!*.css
+normalize.css
