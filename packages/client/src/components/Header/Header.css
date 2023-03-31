@@ -1,0 +1,11 @@
+.header {
+  --color-white: #fff;
+
+  margin: 45px 30px 30px;
+}
+
+.header__title {
+  color: var(--color-white);
+  font-size: 22px;
+  font-weight: 500;
+}

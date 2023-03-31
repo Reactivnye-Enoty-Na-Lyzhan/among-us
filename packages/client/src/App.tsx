@@ -2,11 +2,9 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
 
 import './App.css';
+import ForumPage from './components/Forum/ForumPage/ForumPage';
 
 //placeholders
-function ForumPage() {
-  return <h1>Forum page</h1>;
-}
 function GamePage() {
   return <h1>Game</h1>;
 }
