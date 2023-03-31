@@ -1,10 +1,10 @@
 .form {
-  width: 100%;
-  max-width: 300px;
-
   --color-white: #fff;
   --color-purple: #910cbf;
   --color-yellow: #e0d700;
+
+  width: 100%;
+  max-width: 300px;
 }
 
 .form__form-input {

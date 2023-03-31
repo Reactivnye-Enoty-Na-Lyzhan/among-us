@@ -1,47 +1,56 @@
 .form-input {
-  display: block;
   position: relative;
+  display: block;
 }
 
 .form-input__label {
-  color: #9b9b9b;
   display: block;
-  font-style: normal;
-  font-weight: 400;
+
   font-size: 10px;
+  font-weight: 400;
+  font-style: normal;
   line-height: 120%;
+  color: #9b9b9b;
 }
 
 .form-input__input {
   width: 100%;
-  color: var(--color-white);
   height: 28px;
+
+  font-size: 12px;
+  color: var(--color-white);
+
   background-color: transparent;
   border: none;
   border-bottom: 1px solid var(--color-white);
+
   transition: border-color ease-in 0.1s;
-  font-size: 12px;
 
   &:focus {
-    outline: none;
     border-color: var(--color-purple);
+    outline: none;
   }
 }
 
 .form-input__visibility {
-  opacity: 0;
+  cursor: pointer;
+
   position: absolute;
-  right: 0;
   top: 16px;
+  right: 0;
+
   width: 20px;
   height: 20px;
+
+  opacity: 0;
   background-color: var(--color-white);
+
+  transition: opacity ease-in 0.1s;
+
   mask-image: url(./../../../images/form/eye-hide.svg);
-  mask-size: 12px 10px;
   mask-position: center;
   mask-repeat: no-repeat;
-  transition: opacity ease-in 0.1s;
-  cursor: pointer;
+  mask-size: 12px 10px;
 
   &:hover {
     opacity: 1;
@@ -50,8 +59,9 @@
 
 .form-input__visibility_show {
   background-color: var(--color-white);
-  mask-size: 12px 8px;
+
   mask-image: url(./../../../images/form/eye-show.svg);
+  mask-size: 12px 8px;
 }
 
 .form-input:hover .form-input__visibility {
@@ -63,14 +73,16 @@
 }
 
 .form-input__validation {
+  overflow: hidden;
+
   height: 12px;
-  color: var(--color-yellow);
+  margin: 4px 0;
+
   font-size: 10px;
   line-height: 120%;
-  margin: 4px 0;
-  white-space: nowrap;
-  overflow: hidden;
+  color: var(--color-yellow);
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .form-input_invalid {
