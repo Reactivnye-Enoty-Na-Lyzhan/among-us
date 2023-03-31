@@ -2,7 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
 
 import './App.css';
-import ForumPage from './components/Forum/ForumPage/ForumPage';
+import Page from './components/Forum/Page/Page';
 
 //placeholders
 function GamePage() {
@@ -26,7 +26,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/game" element={<GamePage />} />
-        <Route path="/forum" element={<ForumPage />} />
+        <Route path="/forum" element={<Page />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

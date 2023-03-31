@@ -1,11 +1,33 @@
 .header {
   --color-white: #fff;
 
-  margin: 45px 30px 30px;
+  margin-left: 72px;
+  margin-right: 30px;
+  margin-top: 45px;
+  margin-bottom: 36px;
+  position: relative;
 }
 
 .header__title {
   color: var(--color-white);
   font-size: 22px;
   font-weight: 500;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 120%;
+}
+
+.header__go-back {
+  position: absolute;
+  left: -42px;
+  top: 1px;
+  width: 32px;
+  height: 24px;
+  background-color: var(--color-white);
+  mask-image: url(./../../images/header/return-link.svg);
+  mask-size: 32px 15px;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  transition: opacity ease-in 0.1s;
+  cursor: pointer;
 }
