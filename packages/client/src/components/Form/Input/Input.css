@@ -3,13 +3,6 @@
   position: relative;
 }
 
-.form-input_invalid {
-  & input {
-    color: #e0d700;
-    border-bottom: 1px solid #e0d700 !important;
-  }
-}
-
 .form-input__label {
   color: #9b9b9b;
   display: block;
@@ -78,4 +71,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.form-input_invalid {
+  .form-input__input {
+    color: #e0d700;
+    border-bottom: 1px solid #e0d700;
+  }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './Form.css';
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
   onSubmit: () => void;
 };
 
-export default function Form({ children, onSubmit }: Props) {
+const Form: FC<Props> = ({ children, onSubmit }: Props) => {
   return (
     <form
       className="form"
@@ -18,4 +18,6 @@ export default function Form({ children, onSubmit }: Props) {
       {children}
     </form>
   );
-}
+};
+
+export default Form;
