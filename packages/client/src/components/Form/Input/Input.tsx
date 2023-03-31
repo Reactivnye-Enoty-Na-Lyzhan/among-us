@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { ValidationData } from '../../../hooks/useValidation';
 import './Input.css';
 
@@ -14,7 +14,7 @@ type Props = {
   clearFieldValidation?: (field: string) => void;
 };
 
-export default function Input({
+const Input: FC<Props> = ({
   handleInputChange,
   validateField,
   clearFieldValidation,
@@ -23,7 +23,7 @@ export default function Input({
   type,
   validation,
   ...props
-}: Props) {
+}: Props) => {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   return (
@@ -71,4 +71,6 @@ export default function Input({
       </div>
     </label>
   );
-}
+};
+
+export default Input;

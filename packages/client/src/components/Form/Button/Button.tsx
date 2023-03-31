@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './Button.css';
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
   disabled: boolean;
 };
 
-export default function Button({ text, disabled }: Props) {
+const Button: FC<Props> = ({ text, disabled }: Props) => {
   return (
     <button
       type="submit"
@@ -15,4 +15,6 @@ export default function Button({ text, disabled }: Props) {
       {text}
     </button>
   );
-}
+};
+
+export default Button;
