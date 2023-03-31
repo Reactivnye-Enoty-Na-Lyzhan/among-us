@@ -1,6 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
-
+import { Error404 } from './components/ErrorPage/ErrorPage';
 import './App.css';
 import LoginPage from './components/LoginPage/LoginPage';
 import './fonts/Inter-Regular.woff';
@@ -18,9 +18,6 @@ function GamePage() {
 function SignUpPage() {
   return <h1>Registration</h1>;
 }
-function NotFound() {
-  return <h1>404</h1>;
-}
 
 function App() {
   return (
@@ -32,7 +29,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/game" element={<GamePage />} />
         <Route path="/forum" element={<ForumPage />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Error404/>} />
       </Routes>
     </Router>
   );
