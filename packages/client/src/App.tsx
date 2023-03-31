@@ -24,12 +24,12 @@ function App() {
     <Router>
         <ErrorToast />
       <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/game" element={<GamePage />} />
-            <Route path="/forum" element={<ForumPage />} />
-            <Route path="*" element={<Error404/>} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/game" element={<GamePage />} />
+        <Route path="/forum" element={<ForumPage />} />
+        <Route path="*" element={<Error404/>} />
       </Routes>
     </Router>
   );
