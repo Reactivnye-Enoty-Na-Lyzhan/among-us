@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { ValidationData } from '../../../hooks/useValidation';
+import classNames from 'classnames';
 import './Input.css';
 
 type Props = {
@@ -23,14 +24,14 @@ const Input: FC<Props> = ({
   type,
   validation,
   ...props
-}: Props) => {
+}) => {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   return (
     <label
-      className={`form-input form__form-input ${
-        validation?.isValid === false ? 'form-input_invalid' : ''
-      }`}>
+      className={classNames('form-input', 'form__form-input', {
+        'form-input_invalid': validation?.isValid === false,
+      })}>
       <span className="form-input__label">{label}</span>
       <input
         {...props}
@@ -57,9 +58,9 @@ const Input: FC<Props> = ({
       />
       {type === 'password' && value ? (
         <div
-          className={`form-input__visibility ${
-            passwordVisibility ? '' : 'form-input__visibility_show'
-          }`}
+          className={classNames('form-input__visibility', {
+            'form-input__visibility_show': passwordVisibility,
+          })}
           onClick={() => {
             setPasswordVisibility(!passwordVisibility);
           }}></div>
