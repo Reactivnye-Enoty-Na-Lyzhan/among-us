@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:styles": "stylelint --ignore-path='./configs/stylelint/.stylelintignore' --config='./configs/stylelint/stylelint.config.cjs' .",
-    "format": "prettier --write .",
+    "format": "prettier --write  --config='../../.prettierrc' .",
     "test": "jest --passWithNoTests ./"
   },
   "dependencies": {
