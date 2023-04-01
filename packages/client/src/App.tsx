@@ -1,5 +1,8 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
+import './vendor/fonts/Inter-Regular.woff';
+import './vendor/fonts/Inter-Medium.woff';
+import './vendor/fonts/Inter-Bold.woff';
 import { Error404 } from './components/ErrorPage/ErrorPage';
 import './App.css';
 import LoginPage from './components/LoginPage/LoginPage';

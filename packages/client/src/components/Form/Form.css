@@ -1,0 +1,16 @@
+.form {
+  width: 100%;
+  max-width: 300px;
+
+  --color-white: #fff;
+  --color-purple: #910cbf;
+  --color-yellow: #e0d700;
+}
+
+.form__form-input {
+  margin-bottom: 24px;
+}
+
+.form__form-button {
+  margin-top: 20px;
+}

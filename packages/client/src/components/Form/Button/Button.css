@@ -1,0 +1,21 @@
+.form-button {
+  background-color: var(--color-purple);
+  border: none;
+  border-radius: 5px;
+  height: 42px;
+  text-align: center;
+  width: 100%;
+  color: var(--color-white);
+  font-size: 12px;
+  cursor: pointer;
+  transition: opacity ease-in 0.1s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+}
