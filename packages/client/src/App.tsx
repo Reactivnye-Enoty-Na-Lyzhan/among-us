@@ -1,5 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
+import Profile from './components/Profile/Profile';
 
 import './App.css';
 
@@ -29,6 +30,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/game" element={<GamePage />} />
         <Route path="/forum" element={<ForumPage />} />
+        <Route path='/profile' element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

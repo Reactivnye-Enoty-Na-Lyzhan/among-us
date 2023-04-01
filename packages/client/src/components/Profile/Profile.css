@@ -1,0 +1,123 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.profile__information_space_around {
+  padding: 25px 0 75px;
+}
+
+.profile__form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.profile__form_space_left {
+  margin-left: 72px;
+}
+
+.profile__information {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.profile__information_space_right {
+  margin-right: 10px;
+}
+
+.profile__information_space_left {
+  padding-left: 10px;
+  border-left: 2px solid #fafafa;
+}
+
+.profile__information_space_m {
+  margin-left: 32px;
+}
+
+.profile__link-back {
+  background-image: url(../../images/profile/return-link__icon.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 32px;
+  height: 15px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.profile__link-back:hover {
+  left: -5px;
+}
+
+.profile__paragraph {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 120%;
+  color: #fafafa;
+}
+
+.profile__personal-info {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  color: #fafafa;
+}
+
+.profile__navigation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile__navigation_space_right {
+  margin-right: 102px;
+}
+
+.profile__navigation-links {
+  display: flex;
+  flex-direction: row;
+  font-family: Inter;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1rem;
+  color: #fafafa;
+}
+
+.profile__navigation-link {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1rem;
+  text-decoration: none;
+  color: #fafafa;
+}
+
+.profile__navigation-link:hover {
+  opacity: 0.8;
+}
+
+.profile__navigation-links_left {
+  text-align: left;
+  border-right: 1px solid #fafafa;
+  padding-right: 20px;
+}
+
+.profile__navigation-links_right {
+  text-align: right;
+  border-left: 1px solid #fafafa;
+  padding-left: 20px;
+}
+
+.profile__navigation-img {
+  width: 14rem;
+  height: 20.5rem;
+  background-image: url(../../images/profile/amongus-profile.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
