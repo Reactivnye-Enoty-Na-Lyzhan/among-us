@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-export function useForm(defaultValues?: Record<string, string | undefined>) {
+export function useForm(initValues?: Record<string, string | undefined>) {
   const [values, setValues] = useState<Record<string, string | undefined>>(
-    defaultValues ?? {}
+    initValues ?? {}
   );
 
   function handleInputChange(name: string, value?: string) {

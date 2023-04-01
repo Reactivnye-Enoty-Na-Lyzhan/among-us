@@ -17,7 +17,7 @@ export function useValidation(validations: ValidationRule[]) {
   >({});
 
   const isFormValid = useMemo(() => {
-    return !Object.entries(validationData).some(d => !d[1].isValid);
+    return Object.values(validationData).every(d => d.isValid);
   }, [validationData]);
 
   function validateForm(values: Record<string, string | undefined>) {
@@ -44,7 +44,6 @@ export function useValidation(validations: ValidationRule[]) {
     const newValidationData: Record<string, ValidationData> = {
       ...validationData,
     };
-    delete newValidationData[field];
     const validation = validations.find(v => v.field === field);
 
     if (validation) {

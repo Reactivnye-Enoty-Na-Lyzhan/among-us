@@ -1,16 +1,16 @@
-import React, { FC } from 'react';
+import React from 'react';
 import Form from '../Form/Form';
 import Input from '../Form/Input/Input';
 import { useForm } from '../Form/hooks';
-import { validation } from '../../utils/validation';
-import Button from '../Form/Button/Button';
-import { useValidation } from '../../hooks/useValidation';
+import { validation } from '../../utils/input-validators/validators';
+// import Button from '../Form/Button/Button';
+import { useValidation } from '../Form/_hooks/useValidation';
 
-const LoginPage: FC = () => {
+const LoginPage: React.FC = () => {
   const { values, handleInputChange } = useForm({ login: 'test' });
   const {
     validationData,
-    isFormValid,
+    // isFormValid,
     validateForm,
     validateField,
     clearFieldValidation,
@@ -32,19 +32,25 @@ const LoginPage: FC = () => {
             console.log('SUBMIT', { values });
           }
         }}>
+        {[
+          props => (
+            <Input
+              displayName="login"
+              handleInputChange={handleInputChange}
+              clearFieldValidation={clearFieldValidation}
+              validateField={validateField}
+              type={'text'}
+              name={'login'}
+              placeholder={'Введите логин'}
+              label={'Логин'}
+              validation={validationData.login}
+              {...props}
+            />
+          ),
+        ]}
+        {/* 
         <Input
-          value={values.login}
-          handleInputChange={handleInputChange}
-          clearFieldValidation={clearFieldValidation}
-          validateField={validateField}
-          type={'text'}
-          name={'login'}
-          placeholder={'Введите логин'}
-          label={'Логин'}
-          validation={validationData.login}
-        />
-        <Input
-          value={values.password}
+          displayName="password"
           handleInputChange={handleInputChange}
           clearFieldValidation={clearFieldValidation}
           validateField={validateField}
@@ -54,7 +60,7 @@ const LoginPage: FC = () => {
           label={'Пароль'}
           validation={validationData.password}
         />
-        <Button disabled={!isFormValid} text={'Отправить'} />
+        <Button disabled={!isFormValid} text={'Отправить'} /> */}
       </Form>
     </div>
   );
