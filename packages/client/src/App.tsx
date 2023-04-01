@@ -1,11 +1,10 @@
-import './App.css';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import LandingPage from './components/LandingPage/LandingPage';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import GamePage from './components/GamePage/GamePage';
+import './App.css';
 
-//placeholders 
-function HomePage() {
-    return <h1>Landing page</h1>;
-}
+//placeholders
 function ForumPage() {
   return <h1>Forum page</h1>;
 }
@@ -24,7 +23,7 @@ function App() {
   return (
     <Router>
         <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/game" element={<GamePage result="win" score={10} />} />
