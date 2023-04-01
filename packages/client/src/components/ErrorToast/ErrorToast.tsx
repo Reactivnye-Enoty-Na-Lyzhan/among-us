@@ -6,7 +6,6 @@ function ErrorToast() {
 //TBD: move errorCode to global storage and update from controllers/api calls
   const [APIErrorCode, setAPIErrorCode] = useState<string|null>(null);
   const [errorObj, setErrorObj] = useState<Record<string, string>|null>(null);
-
   useEffect(() => {
     if(!APIErrorCode) {
         setErrorObj(null);
