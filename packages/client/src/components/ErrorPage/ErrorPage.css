@@ -12,18 +12,23 @@
 .error-page__code {
     font-weight: 700;
     font-size: 128px;
+    line-height: 120%;
     margin: 0;
 }
 .error-page__message {
     font-weight: 400;
     font-size: 20px;
     text-align: center;
+    white-space: pre-line;
+    line-height: 120%;
 }
 .error-page__return-link {
     text-decoration: none;
     font-weight: 400;
     font-size: 14px;
-    line-height: 120%;
     color: #910CBF;
     margin-top: 30px;
+}
+.error-page__return-link:hover {
+    opacity: 0.8;
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import './style.css';
+import './ErrorToast.css';
 import getErrorMessage from "./getErrorMessage";
 
 function ErrorToast() {
@@ -30,7 +30,7 @@ function ErrorToast() {
   return (
     <>
       {errorObj && (
-        <div className="error-toast error-toast_position">
+        <div className="error-toast error-toast_position_upper-right">
           <h1 className="error-toast__code">{errorObj.code}</h1>
           <div className="error-toast__info">
             <h3 className="error-toast__header">К сожалению, что-то пошло не так...</h3>
