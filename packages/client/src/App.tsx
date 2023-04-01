@@ -1,6 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import GamePage from './components/GamePage/GamePage';
 import './App.css';
 
