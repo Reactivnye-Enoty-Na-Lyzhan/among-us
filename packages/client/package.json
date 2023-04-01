@@ -12,6 +12,7 @@
     "test": "jest --passWithNoTests  ./"
   },
   "dependencies": {
+    "classnames": "^2.3.2",
     "dotenv": "^16.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -25,6 +26,7 @@
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "@vitejs/plugin-react": "3.1.0",
+    "autoprefixer": "^10.4.14",
     "cross-env": "7.0.3",
     "cssnano": "6.0.0",
     "eslint": "^8.23.0",
@@ -39,6 +41,8 @@
     "lefthook": "^1.1.1",
     "postcss": "^8.4.21",
     "postcss-cli": "^10.1.0",
+    "postcss-import": "^15.1.0",
+    "postcss-nesting": "^11.2.2",
     "postcss-color-mod-function": "3.0.3",
     "postcss-extend": "1.0.5",
     "postcss-for": "2.1.1",

@@ -1,6 +1,9 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
-
+import LoginPage from './components/LoginPage/LoginPage';
+import './vendor/fonts/Inter-Regular.woff';
+import './vendor/fonts/Inter-Medium.woff';
+import './vendor/fonts/Inter-Bold.woff';
 import './App.css';
 
 //placeholders
@@ -9,9 +12,6 @@ function ForumPage() {
 }
 function GamePage() {
   return <h1>Game</h1>;
-}
-function LoginPage() {
-  return <h1>Login</h1>;
 }
 function SignUpPage() {
   return <h1>Registration</h1>;
