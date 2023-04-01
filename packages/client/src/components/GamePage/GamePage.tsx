@@ -1,9 +1,12 @@
 import GameEnd from '../GameEnd/GameEnd';
 import './GamePage.css';
 
-export default function GamePage() {
-  const result = 'win';
-  const score = 100;
+interface Props {
+  result: "lose" | "win";
+  score: number;
+}
+
+export default function GamePage({result, score}: Props) {
   return (
     <div className='game'>
       <GameEnd result={result} score={score}/>

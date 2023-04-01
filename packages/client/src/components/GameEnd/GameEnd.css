@@ -82,6 +82,27 @@
   bottom: 50px;
 }
 
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .game-end__image_impostor_yellow {
+    background-image: url(../../images/game-end/impostor-yellow@2x.svg);
+  }
+  .game-end__image_impostor_red {
+    background-image: url(../../images/game-end/impostor-red@2x.svg);
+  }
+
+  .game-end__image_impostor_mint {
+    background-image: url(../../images/game-end/impostor-mint@2x.svg);
+  }
+
+  .game-end__image_impostor_firework {
+    background-image: url(../../images/game-end/impostor-firework@2x.svg);
+  }
+
+  .game-end__image_impostor_dead {
+    background-image: url(../../images/game-end/impostor-dead@2x.svg);
+  }
+}
+
 .game-end__text {
   text-align: center;
   color: var(--text-color);
