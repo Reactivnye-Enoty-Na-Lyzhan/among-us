@@ -11,8 +11,8 @@ function ErrorPage({code, message, linkLabel}: Props) {
     return (
         <div className="error-page">
             <h1 className="error-page__code">{code}</h1>
-            <h5 className="error-page__message">{message}</h5>
-            <Link to={'/'} className="error-page__return-link">
+            <p className="error-page__message">{message}</p>
+            <Link to={'..'} className="error-page__return-link">
                 {linkLabel}
             </Link>
         </div>
