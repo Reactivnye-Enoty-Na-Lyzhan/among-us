@@ -10,6 +10,7 @@ import './fonts/Inter-Regular.woff';
 import './fonts/Inter-Medium.woff';
 import './fonts/Inter-Bold.woff';
 import ErrorToast from './components/ErrorToast/ErrorToast';
+import LeaderBoard from './components/LeaderBoard/LeaderBoard';
 
 //placeholders
 function ForumPage() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/game" element={<GamePage />} />
+        <Route path="/leaderboard" element={<LeaderBoard />} />
         <Route path="/forum" element={<ForumPage />} />
         <Route path="*" element={<Error404/>} />
       </Routes>

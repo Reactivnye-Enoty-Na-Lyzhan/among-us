@@ -1,0 +1,65 @@
+.leaderboard__player {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 315px;
+  width: 100%;
+  background-color: #910cbf;
+  border-radius: 7px;
+  --font-color: #fafafa;
+}
+
+.leaderboard__player_type_owner {
+  background-color: #e0d700;
+  --font-color: #2b2b2b;
+}
+
+.leaderboard__player-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.leaderboard__user-avatar {
+  margin: 10px 0 10px 25px;
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.leaderboard__player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.leaderboard__nickname {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--font-color);
+  line-height: 1.2;
+}
+
+.leaderboard__player-achievment {
+  margin: 0;
+  font-size: 12px;
+  color: var(--font-color);
+  line-height: 1.2;
+}
+
+.leaderboard__accent {
+  font-weight: 500;
+}
+
+.leaderboard__rank {
+  margin-right: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--font-color);
+  line-height: 1.2;
+}
