@@ -1,14 +1,15 @@
 import classNames from 'classnames';
-import React, { useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import './Group.css';
 
 type Props = {
   title: string;
   children: React.ReactNode;
+  buttons?: React.ReactNode[];
   collapsible?: boolean;
 };
 
-const ThemesGroup = ({ title, children, collapsible }: Props) => {
+const ThemesGroup: FC<Props> = ({ title, children, collapsible, buttons }) => {
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = useCallback(() => {
     setCollapsed(prev => !prev);
@@ -20,15 +21,24 @@ const ThemesGroup = ({ title, children, collapsible }: Props) => {
         'forum-themes-group_collapsed': collapsed,
       })}>
       <div className="forum-themes-group__title">
-        <span>{title}</span>
-        <button
-          type="button"
-          hidden={!collapsible}
-          className={classNames('forum-themes-group__collapse-button', {
-            'forum-themes-group__collapse-button_collapsed': collapsed,
-          })}
-          onClick={toggleCollapsed}
-        />
+        <div className="forum-themes-group__left">
+          <span>{title}</span>
+          <button
+            type="button"
+            hidden={!collapsible}
+            className={classNames('forum-themes-group__collapse-button', {
+              'forum-themes-group__collapse-button_collapsed': collapsed,
+            })}
+            onClick={toggleCollapsed}
+          />
+        </div>
+        {buttons && buttons.length ? (
+          <div className="forum-themes-group__right">
+            {buttons.map(b => (
+              <div className="forum-themes-group__button">{b}</div>
+            ))}
+          </div>
+        ) : null}
       </div>
       <div hidden={collapsed} className="forum-themes-group__content">
         {children}

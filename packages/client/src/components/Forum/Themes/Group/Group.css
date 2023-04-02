@@ -7,9 +7,7 @@
   font-weight: 400;
   color: var(--color-white);
   margin-bottom: 25px;
-}
-
-.forum-themes-group__content {
+  display: flex;
 }
 
 .forum-themes-group__collapse-button {
@@ -17,7 +15,7 @@
   width: 16px;
   height: 16px;
   background-color: #fff;
-  mask-image: url(./../../../../images/forum/arrow-down.svg);
+  mask-image: url(./../../../../images/forum/icon-arrow-down.svg);
   mask-size: 11px 7px;
   mask-position: center;
   mask-repeat: no-repeat;
@@ -31,4 +29,14 @@
 
 .forum-themes-group__collapse-button_collapsed {
   transform: rotate(180deg);
+}
+
+.forum-themes-group__left {
+  flex: 1;
+}
+
+.forum-themes-group__right {
+  display: flex;
+  align-items: center;
+  flex: 0 0;
 }
