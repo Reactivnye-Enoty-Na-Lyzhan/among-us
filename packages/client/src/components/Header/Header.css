@@ -1,5 +1,6 @@
-.header {
+.page-header {
   --color-white: #fff;
+  --color-purple: #910cbf;
 
   margin-left: 72px;
   margin-right: 30px;
@@ -8,7 +9,7 @@
   position: relative;
 }
 
-.header__title {
+.page-header__title {
   color: var(--color-white);
   font-size: 22px;
   font-weight: 500;
@@ -17,7 +18,7 @@
   line-height: 120%;
 }
 
-.header__go-back {
+.page-header__go-back {
   position: absolute;
   left: -42px;
   top: 1px;
@@ -30,4 +31,10 @@
   mask-repeat: no-repeat;
   transition: opacity ease-in 0.1s;
   cursor: pointer;
+  text-decoration: none;
+  transition: background-color ease-in 0.1s;
+
+  &:hover {
+    background-color: var(--color-purple);
+  }
 }

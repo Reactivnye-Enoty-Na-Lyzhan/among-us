@@ -1,0 +1,34 @@
+.forum-themes-group {
+  padding-bottom: 25px;
+}
+
+.forum-themes-group__title {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--color-white);
+  margin-bottom: 25px;
+}
+
+.forum-themes-group__content {
+}
+
+.forum-themes-group__collapse-button {
+  margin-left: 10px;
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  mask-image: url(./../../../../images/forum/arrow-down.svg);
+  mask-size: 11px 7px;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform, background-color ease-in 0.1s;
+
+  &:hover {
+    background-color: var(--color-purple);
+  }
+}
+
+.forum-themes-group__collapse-button_collapsed {
+  transform: rotate(180deg);
+}

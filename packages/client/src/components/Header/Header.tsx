@@ -9,9 +9,9 @@ type Props = {
 
 export default function Header({ title, goBackUrl }: Props) {
   return (
-    <div className="header">
-      <Link className="header__go-back" to={goBackUrl}></Link>
-      <div className="header__title">{title}</div>
-    </div>
+    <header className="page-header">
+      <Link className="page-header__go-back" to={goBackUrl}></Link>
+      <div className="page-header__title">{title}</div>
+    </header>
   );
 }
