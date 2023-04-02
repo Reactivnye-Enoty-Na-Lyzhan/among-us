@@ -1,30 +1,21 @@
 import { signInAPI } from "../api/auth";
-import { Dispatch, SetStateAction } from "react";
 type signInData = Record<string, string | undefined>
 
-export async function signIn(data: signInData, setErrorMessage: Dispatch<SetStateAction<string>> ) {
+const errorsHash: Record<string, string> = {
+    '401': 'Неверный логин или пароль',
+    '400': 'Пользователь уже в системе',
+    '500': 'Прозошла ошибка на сервере. Пожалуйста, попробуйте позже',
+    'unknown': 'Произошла неизвестная ошибка. Пожалуйста, попробуйте позже'
+};
+
+export async function signIn(data: signInData) {
     try {
-        setErrorMessage('');
-        const res = await signInAPI(data);
-        if(res.status === 401) {
-            setErrorMessage('Указан неверный логин или пароль');
-        }
-        if (res.status === 200) {
-            console.log('Вход успешен');
-        } 
-         if (res.status === 400) {
-            //response body is only sent with 400 errors
-            try {
-                const response = await res.json();
-                if(response.reason === 'User already in system') {
-                    setErrorMessage('Пользователь уже в системе');
-                }
-            } catch(e:any) {
-                console.log(e);
-            }
-        }
-    } catch(e: any) {
-        console.log(e);
-        //TBD: move error state to global storage to trigger popup on api errors
+        await signInAPI(data);
+        return null;
+    } catch(err: any) {
+        if (!err?.status) {
+            return ;
+          }
+        return errorsHash[err.status];
     }
 }

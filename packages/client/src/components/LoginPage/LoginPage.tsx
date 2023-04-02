@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
 import Input from '../Form/Input/Input';
@@ -10,7 +10,8 @@ import './LoginPage.css';
 import { signIn } from '../../controllers/auth';
 
 const LoginPage: FC = () => {
-  const [errorMessage, setErrorMessage] = useState('');
+  const [requestStatus, setRequestStatus] = useState('');
+  const [statusMessageClass, setStatusMessageClass] = useState('');
   const { values, handleInputChange } = useForm();
   const {
     validationData,
@@ -23,18 +24,33 @@ const LoginPage: FC = () => {
     { field: 'password', validation: validation.password },
   ]);
 
+function handleSubmit() {
+    if (!validateForm(values)) {
+        return;
+    }
+    setStatusMessageClass('');
+    setRequestStatus('Проверяем...');
+    (async () => {
+       const errResponse = await signIn(values);
+       if (errResponse) {
+        setStatusMessageClass('login-page__status_red');
+        setRequestStatus(errResponse);
+       } else {
+        setStatusMessageClass('login-page__status_green');
+        setRequestStatus('Рады видеть снова!');
+       }
+    })();
+}
+
   return (
     <div className='login-page'>
         <div className='login-page__container'>
             <h1 className='login-page__title'>Рады видеть!</h1>
-            <div className='login-page__error-container'>{errorMessage}</div>        
+            <div className={'login-page__status ' + statusMessageClass}>
+                {requestStatus}
+            </div>
             <Form
-              onSubmit={() => { 
-                if (validateForm(values)) {
-                  console.log(values);
-                  signIn(values, setErrorMessage);
-                }
-              }}>
+              onSubmit={handleSubmit}>
               <Input
                 value={values.login}
                 handleInputChange={handleInputChange}
