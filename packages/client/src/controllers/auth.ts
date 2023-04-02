@@ -14,7 +14,7 @@ export async function signIn(data: signInData) {
         return null;
     } catch(err: any) {
         if (!err?.status) {
-            return ;
+            return errorsHash['unknown'];
           }
         return errorsHash[err.status];
     }
