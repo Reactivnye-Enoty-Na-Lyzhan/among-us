@@ -1,16 +1,18 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext, useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
 import './Input.css';
 import { EnumFormInputType } from './enums';
-import { WithRendersCounter } from '@/utils/hocs/WithRendersCounter';
 import { type TFormContextValue } from '../typings';
 
-import type { Props } from './typings';
+import type { TFormInputProps as Props } from './typings';
 
 const Input: FC<Props> = props => {
   const { label, type, validators, name } = props;
   const [passwordVisibility, setPasswordVisibility] = useState(false);
-  const [input, setInput] = useState({ value: '', validationError: '' });
+  const [inputState, setInputState] = useState({
+    value: '',
+    validationError: '',
+  });
   const formContext: TFormContextValue = useContext(props.context);
 
   const onChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
@@ -25,22 +27,23 @@ const Input: FC<Props> = props => {
       value: inputValue,
       isValid: !validationError,
     };
-    setInput({ value: inputValue, validationError });
-
-    console.log(`PROPS: ${JSON.stringify(Object.keys(props))}`);
-    console.log(`CONTEXT: ${JSON.stringify(formContext)}`);
+    setInputState({ value: inputValue, validationError });
   };
+
+  const displayName = props.displayName?.toUpperCase();
+  console.log(`RENDER ${displayName}`);
+  console.log(`STATE: ${JSON.stringify(inputState)}`);
+  console.log(`CONTEXT: ${JSON.stringify(formContext)}`);
 
   return (
     <label
       className={classNames('form-input', 'form__form-input', {
-        'form-input_invalid': !!input.validationError,
+        'form-input_invalid': !!inputState.validationError,
       })}>
       <span className="form-input__label">{label}</span>
       <input
         type={type}
         className="form-input__input"
-        value={input.value}
         onChange={onChangeHandler}
         // onBlur={() => {
         //   if (validateField) {
@@ -57,13 +60,14 @@ const Input: FC<Props> = props => {
             setPasswordVisibility(!passwordVisibility);
           }}></div>
       ) : null}
-      <div
-        className="form-input__validation"
-        title={validation?.isValid === false ? validation?.text : undefined}>
-        {validation?.isValid === false ? validation?.text : undefined}
-      </div> */}
+        > */}
+      {inputState.validationError !== '' && (
+        <div className="form-input__validation">
+          {inputState.validationError}
+        </div>
+      )}
     </label>
   );
 };
 
-export default WithRendersCounter(Input);
+export default Input;

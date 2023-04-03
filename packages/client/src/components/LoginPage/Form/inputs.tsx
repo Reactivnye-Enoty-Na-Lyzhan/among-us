@@ -1,38 +1,35 @@
-import FormInput from '@/components/Form/Input/Input';
-import { Props as TInputProps } from '@/components/Form/Input/typings';
-import { validation } from '@/utils/input-validators/validators';
+import { TFormInputProps } from '@/components/Form/Input/typings';
+import { validators } from '@/utils/input-validators/validators';
 
-const enum EnumFormFields {
+export enum EnumFormFields {
   LOGIN = 'login',
   PASSWORD = 'password',
 }
 
-type TPredefinedProps = Omit<TInputProps, 'context'>;
+type TPredefinedProps = Omit<TFormInputProps, 'context' | 'name'>;
 
-const mapFormFieldToProps: Record<EnumFormFields, TPredefinedProps> = {
+export const mapFormFieldToProps: Record<EnumFormFields, TPredefinedProps> = {
   [EnumFormFields.LOGIN]: {
     displayName: 'login',
     type: 'text',
-    name: 'login',
     placeholder: 'Введите логин',
     label: 'Логин',
-    validator: validation.login,
+    validators: [
+      validators.checkNoSpaces,
+      validators.checkBannedSymbols,
+      validators.checkLength({ min: 3, max: 20 }),
+      validators.checkNotOnlyNumbers,
+      validators.checkLanguage,
+    ],
   },
   [EnumFormFields.PASSWORD]: {
-    displayName: 'login',
+    displayName: 'password',
     type: 'password',
-    name: 'password',
     placeholder: 'Введите пароль',
     label: 'Пароль',
-    validator: validation.password,
+    validators: [
+      validators.checkLength({ min: 8, max: 40 }),
+      validators.checkHasCapitalLetter,
+    ],
   },
 };
-
-export const mapFormFieldToRenderFunc = Object.entries(
-  mapFormFieldToProps
-).reduce((acc, [field, props]: [EnumFormFields, TPredefinedProps]) => {
-  acc[field] = (propsNew: TInputProps) => (
-    <FormInput {...props} {...propsNew}></FormInput>
-  );
-  return acc;
-}, {} as Record<EnumFormFields, React.FC<TInputProps>>);

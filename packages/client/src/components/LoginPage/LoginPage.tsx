@@ -1,23 +1,24 @@
 import React from 'react';
 import Form from '../Form/Form';
 import Input from '../Form/Input/Input';
-import { useForm } from '../Form/hooks';
-import { validation } from '../../utils/input-validators/validators';
+// import { useForm } from '../Form/hooks';
+// import { validation } from '../../utils/input-validators/validators';
 // import Button from '../Form/Button/Button';
-import { useValidation } from '../Form/_hooks/useValidation';
+import { EnumFormFields } from './Form/inputs';
+import { mapFormFieldToProps } from './Form/inputs';
 
 const LoginPage: React.FC = () => {
-  const { values, handleInputChange } = useForm({ login: 'test' });
-  const {
-    validationData,
-    // isFormValid,
-    validateForm,
-    validateField,
-    clearFieldValidation,
-  } = useValidation([
-    { field: 'login', validation: validation.login },
-    { field: 'password', validation: validation.password },
-  ]);
+  // const { values, handleInputChange } = useForm({ login: 'test' });
+  // const {
+  //   validationData,
+  //   isFormValid,
+  //   validateForm,
+  //   validateField,
+  //   clearFieldValidation,
+  // } = useValidation([
+  //   { field: 'login', validation: validation.login },
+  //   { field: 'password', validation: validation.password },
+  // ]);
 
   return (
     <div
@@ -26,42 +27,16 @@ const LoginPage: React.FC = () => {
         width: '100%',
         padding: '40px',
       }}>
-      <Form
+      <Form<EnumFormFields>
+        displayName="LoginForm"
+        enumInputFields={EnumFormFields}
         onSubmit={() => {
-          if (validateForm(values)) {
-            console.log('SUBMIT', { values });
-          }
-        }}>
-        {[
-          props => (
-            <Input
-              displayName="login"
-              handleInputChange={handleInputChange}
-              clearFieldValidation={clearFieldValidation}
-              validateField={validateField}
-              type={'text'}
-              name={'login'}
-              placeholder={'Введите логин'}
-              label={'Логин'}
-              validation={validationData.login}
-              {...props}
-            />
-          ),
-        ]}
-        {/* 
-        <Input
-          displayName="password"
-          handleInputChange={handleInputChange}
-          clearFieldValidation={clearFieldValidation}
-          validateField={validateField}
-          type={'password'}
-          name={'password'}
-          placeholder={'Введите пароль'}
-          label={'Пароль'}
-          validation={validationData.password}
-        />
-        <Button disabled={!isFormValid} text={'Отправить'} /> */}
-      </Form>
+          // if (validateForm(values)) {
+          //   console.log('SUBMIT');
+          // }
+        }}
+        InputComponent={Input}
+        mapFormFieldToProps={mapFormFieldToProps}></Form>
     </div>
   );
 };

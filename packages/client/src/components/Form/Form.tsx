@@ -1,38 +1,64 @@
 import React, { useMemo } from 'react';
-import type { Props as InputProps } from './Input/typings';
-import { TFormContextValue } from './typings';
+import type { TFormInputProps } from './Input/typings';
+import type {
+  TFormContextValue,
+  TFormInputSharedData,
+  TMapFormFieldToProps,
+} from './typings';
 import './Form.css';
 
-type FormProps = {
-  children: React.FC<InputProps>[];
+type FormProps<EnumFields extends string> = {
+  displayName?: string;
   onSubmit: React.FormEventHandler<HTMLFormElement>;
+  enumInputFields: Record<string, EnumFields>;
+  mapFormFieldToProps: TMapFormFieldToProps<EnumFields>;
+  InputComponent: React.FC<TFormInputProps>;
 };
 
-function Form<Fields extends string = string>(props: FormProps) {
+function Form<EnumFields extends string>(props: FormProps<EnumFields>) {
+  const { enumInputFields, mapFormFieldToProps, InputComponent } = props;
+
   const formContext = useMemo(() => {
-    const context = React.createContext<TFormContextValue<Fields>>({
-      inputsValues: {},
+    const initInputsValues = Object.values(enumInputFields).reduce(
+      (acc, fieldName) => {
+        acc[fieldName] = {
+          value: '',
+          isValid: false,
+        };
+        return acc;
+      },
+      {} as Record<EnumFields, TFormInputSharedData>
+    );
+    const context = React.createContext<TFormContextValue<EnumFields>>({
+      inputsValues: initInputsValues,
     });
 
     return context;
   }, []);
 
-  const children = useMemo(
-    () =>
-      props.children.map((renderFunc, index) =>
-        renderFunc({ key: index, context: formContext })
-      ),
-    []
-  );
+  const displayName = props.displayName?.toUpperCase();
+  console.log(`RENDER ${displayName}`);
+
+  const formFields = Object.values(enumInputFields).map((fieldName, index) => {
+    const fieldProps = mapFormFieldToProps[fieldName];
+    return (
+      <InputComponent
+        key={index}
+        context={formContext}
+        name={fieldName}
+        {...fieldProps}></InputComponent>
+    );
+  });
 
   return (
     <form
       className="form"
       noValidate
-      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-      }}>
-      {children}
+      // onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+      //   e.preventDefault();
+      // }}
+    >
+      {formFields}
     </form>
   );
 }
