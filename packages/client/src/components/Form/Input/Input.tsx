@@ -1,22 +1,29 @@
-import React, { FC, useContext, useEffect, useState, useRef } from 'react';
+import React, { FC, useContext, useState, useImperativeHandle } from 'react';
 import classNames from 'classnames';
 import './Input.css';
-import { EnumFormInputType } from './enums';
+// import { EnumFormInputType } from './enums';
 import { type TFormContextValue } from '../typings';
 
 import type { TFormInputProps as Props } from './typings';
 
 const Input: FC<Props> = props => {
-  const { label, type, validators, name } = props;
-  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const {
+    name,
+    label,
+    context,
+    componentRef,
+    validators,
+    debugName,
+    ...htmlProps
+  } = props;
+  // const [passwordVisibility, setPasswordVisibility] = useState(false);
   const [inputState, setInputState] = useState({
     value: '',
     validationError: '',
   });
-  const formContext: TFormContextValue = useContext(props.context);
+  const formContext: TFormContextValue = useContext(context);
 
-  const onChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    const inputValue = e.currentTarget.value;
+  const validateInputValue = (inputValue: string) => {
     let validationError = '';
     validators?.some(validator => {
       validationError = validator(inputValue);
@@ -30,8 +37,25 @@ const Input: FC<Props> = props => {
     setInputState({ value: inputValue, validationError });
   };
 
-  const displayName = props.displayName?.toUpperCase();
-  console.log(`RENDER ${displayName}`);
+  const validationHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    const inputValue = e.currentTarget.value;
+    validateInputValue(inputValue);
+  };
+
+  useImperativeHandle(
+    componentRef,
+    () => {
+      return {
+        validateField(inputValue: string) {
+          console.log(`VALIDATE ${debugName?.toUpperCase()} '${inputValue}'`);
+          validateInputValue(inputValue);
+        },
+      };
+    },
+    []
+  );
+
+  console.log(`RENDER ${debugName?.toUpperCase()}`);
   console.log(`STATE: ${JSON.stringify(inputState)}`);
   console.log(`CONTEXT: ${JSON.stringify(formContext)}`);
 
@@ -42,14 +66,11 @@ const Input: FC<Props> = props => {
       })}>
       <span className="form-input__label">{label}</span>
       <input
-        type={type}
         className="form-input__input"
-        onChange={onChangeHandler}
-        // onBlur={() => {
-        //   if (validateField) {
-        //     validateField(name, value);
-        //   }
-        // }}
+        name={name}
+        onChange={validationHandler}
+        onBlur={validationHandler}
+        {...htmlProps}
       />
       {/* {type === EnumFormInputType.password && value ? (
         <div
@@ -61,11 +82,7 @@ const Input: FC<Props> = props => {
           }}></div>
       ) : null}
         > */}
-      {inputState.validationError !== '' && (
-        <div className="form-input__validation">
-          {inputState.validationError}
-        </div>
-      )}
+      <div className="form-input__validation">{inputState.validationError}</div>
     </label>
   );
 };

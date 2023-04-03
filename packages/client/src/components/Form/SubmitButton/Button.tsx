@@ -1,18 +1,18 @@
-import React, { FC } from 'react';
+import React from 'react';
 import './Button.css';
 
 type Props = {
-  text: string;
+  label: string;
   disabled: boolean;
 };
 
-const Button: FC<Props> = ({ text, disabled }) => {
+const Button: React.FC<Props> = ({ label, disabled }) => {
   return (
     <button
       type="submit"
       className="form-button form__form-button"
       disabled={disabled}>
-      {text}
+      {label}
     </button>
   );
 };

@@ -1,5 +1,5 @@
 const validationErrors = {
-  notEmpty: 'Поле не может быть пустым',
+  isEmpty: 'Поле не может быть пустым',
   wrongLength: 'Не менее {min} и  не больше {max} символов',
   hasBannedSymbols: "Недопустимые символы '{symbols}'",
   hasSpaces: 'Нельзя использовать пробел',
@@ -13,14 +13,16 @@ const validationErrors = {
 };
 
 export const validators = {
-  checkLength:
-    ({ min, max }: { min: number; max: number }) =>
-    (value: string) =>
+  checkNotEmpty: (value: string) =>
+    value !== '' ? '' : validationErrors.isEmpty,
+  checkLength: function ({ min, max }: { min: number; max: number }) {
+    return (value: string) =>
       min <= value.length && value.length <= max
         ? ''
         : validationErrors.wrongLength
             .replace('{min}', String(min))
-            .replace('{max}', String(max)),
+            .replace('{max}', String(max));
+  },
   checkBannedSymbols: (value: string) => {
     const symbolsMatch = value.match(/[.*+?^${}()|[\]\\`~!@#%&№;:,/<>]/g);
     if (!symbolsMatch) {
@@ -52,7 +54,7 @@ export const validation = {
     let isValid = false;
     let text = '';
 
-    if (!value) text = validationErrors.notEmpty;
+    if (!value) text = validationErrors.isEmpty;
     else if (validators.checkLanguage(value))
       text = validationErrors.nonCyrillicAndLatin;
     else if (validators.checkFirstLetterIsCapital(value))
@@ -67,7 +69,7 @@ export const validation = {
     let isValid = false;
     let text = '';
 
-    if (!value) text = validationErrors.notEmpty;
+    if (!value) text = validationErrors.isEmpty;
     else if (
       !value.match('^[a-zA-Z0-9@.-]') ||
       !value.match('^.+@[a-zA-Z]+.[a-zA-Z]')
@@ -85,7 +87,7 @@ export const validation = {
     const min = 10;
     const max = 15;
 
-    if (!value) text = validationErrors.notEmpty;
+    if (!value) text = validationErrors.isEmpty;
     else if (validators.checkLength({ min, max })(value))
       text = validationErrors.wrongLength
         .replace('{min}', String(min))
@@ -101,7 +103,7 @@ export const validation = {
     let isValid = false;
     let text = '';
 
-    if (!value) text = validationErrors.notEmpty;
+    if (!value) text = validationErrors.isEmpty;
     else {
       isValid = true;
     }
@@ -115,7 +117,7 @@ export const validation = {
     let isValid = false;
     let text = '';
 
-    if (!value) text = validationErrors.notEmpty;
+    if (!value) text = validationErrors.isEmpty;
     else if (value !== secondValue) text = validationErrors.comparePasswords;
     else {
       isValid = true;

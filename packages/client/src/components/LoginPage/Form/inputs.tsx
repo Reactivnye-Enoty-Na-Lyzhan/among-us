@@ -6,15 +6,19 @@ export enum EnumFormFields {
   PASSWORD = 'password',
 }
 
-type TPredefinedProps = Omit<TFormInputProps, 'context' | 'name'>;
+type TPredefinedProps = Omit<
+  TFormInputProps,
+  'name' | 'context' | 'componentRef'
+>;
 
 export const mapFormFieldToProps: Record<EnumFormFields, TPredefinedProps> = {
   [EnumFormFields.LOGIN]: {
-    displayName: 'login',
+    debugName: 'login',
     type: 'text',
     placeholder: 'Введите логин',
     label: 'Логин',
     validators: [
+      validators.checkNotEmpty,
       validators.checkNoSpaces,
       validators.checkBannedSymbols,
       validators.checkLength({ min: 3, max: 20 }),
@@ -23,11 +27,12 @@ export const mapFormFieldToProps: Record<EnumFormFields, TPredefinedProps> = {
     ],
   },
   [EnumFormFields.PASSWORD]: {
-    displayName: 'password',
+    debugName: 'password',
     type: 'password',
     placeholder: 'Введите пароль',
     label: 'Пароль',
     validators: [
+      validators.checkNotEmpty,
       validators.checkLength({ min: 8, max: 40 }),
       validators.checkHasCapitalLetter,
     ],

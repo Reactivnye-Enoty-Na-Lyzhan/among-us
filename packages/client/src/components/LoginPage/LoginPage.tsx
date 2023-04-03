@@ -28,7 +28,7 @@ const LoginPage: React.FC = () => {
         padding: '40px',
       }}>
       <Form<EnumFormFields>
-        displayName="LoginForm"
+        debugName="LoginForm"
         enumInputFields={EnumFormFields}
         onSubmit={() => {
           // if (validateForm(values)) {

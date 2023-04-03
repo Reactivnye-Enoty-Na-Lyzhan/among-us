@@ -1,9 +1,14 @@
-import type { TInputFormContext } from '@/components/Form/typings';
+import type { TFormContext } from '@/components/Form/typings';
+
+export type TFormInputRef = React.RefObject<{
+  validateField: (inputValue: string) => void;
+}>;
 
 export type TFormInputProps = React.HTMLProps<HTMLInputElement> & {
   name: string;
-  context: TInputFormContext;
+  context: TFormContext;
+  componentRef: TFormInputRef;
   type?: string;
   validators?: ((value: string) => string)[];
-  displayName?: string;
+  debugName?: string;
 };
