@@ -17,12 +17,6 @@ function ForumPage() {
   return <h1>Forum page</h1>;
 }
 
-function LoginPage() {
-  return <h1>Login</h1>;
-
-function GamePage() {
-  return <h1>Game</h1>;
-}
 function SignUpPage() {
   return <h1>Registration</h1>;
 }
