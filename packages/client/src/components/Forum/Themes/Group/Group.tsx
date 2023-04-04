@@ -34,15 +34,17 @@ const ThemesGroup: FC<Props> = ({ title, children, collapsible, buttons }) => {
         </div>
         {buttons && buttons.length ? (
           <div className="forum-themes-group__right">
-            {buttons.map(b => (
-              <div className="forum-themes-group__button">{b}</div>
+            {buttons.map((b, i) => (
+              <div className="forum-themes-group__button" key={i}>
+                {b}
+              </div>
             ))}
           </div>
         ) : null}
       </div>
-      <div hidden={collapsed} className="forum-themes-group__content">
+      <ul hidden={collapsed} className="forum-themes-group__content">
         {children}
-      </div>
+      </ul>
     </div>
   );
 };

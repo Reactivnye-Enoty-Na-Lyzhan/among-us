@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
+import Pagination from '../../Pagination/Pagination';
 import ThemeCard from './Card/Card';
 import GroupButton from './Group/Button/Button';
 import ThemesGroup from './Group/Group';
@@ -10,14 +11,16 @@ type Props = {
 };
 
 const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
   return (
     <section className="forum-themes">
       <div className="form-themes__group">
         <ThemesGroup title={pinnedThemes.title} collapsible={true}>
-          {pinnedThemes.themes.map(theme => (
-            <div className="forum-themes__item">
+          {pinnedThemes.themes.map((theme, i) => (
+            <li className="forum-themes__item" key={i}>
               <ThemeCard theme={theme} isPinned={true} isAdmin={true} />
-            </div>
+            </li>
           ))}
         </ThemesGroup>
       </div>
@@ -25,13 +28,19 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
         <ThemesGroup
           title={themes.title}
           buttons={[<GroupButton text="+ cоздать новую тему" />]}>
-          {themes.themes.map(theme => (
-            <div className="forum-themes__item">
+          {themes.themes.map((theme, i) => (
+            <li className="forum-themes__item" key={i}>
               <ThemeCard theme={theme} isAdmin={true} />
-            </div>
+            </li>
           ))}
         </ThemesGroup>
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalCount={100}
+        pageSize={10}
+        onPageChange={setCurrentPage}
+      />
     </section>
   );
 };
