@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { EnumFormInputType } from '../../_enums';
 import classNames from 'classnames';
 import './WithHideMask.css';
+
+const EnumFormInputType = {
+  PASSWORD: 'password',
+  TEXT: 'text',
+};
 
 export function WithHideMask<P extends React.HTMLProps<HTMLInputElement>>(
   InputComponent: React.FC<P>

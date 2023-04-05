@@ -1,80 +1,56 @@
-import React, { FC, useContext, useState, useImperativeHandle } from 'react';
 import classNames from 'classnames';
+import { useContext } from 'react';
+import type { FormInputProps } from './_typings';
 import './Input.css';
-import { type FormContextValue } from '../_typings';
+import { useInputValidation, useInputRef } from './_hooks';
+import type { FormContextValue } from '../_typings';
 
-import type { FormInputProps as Props } from './_typings';
-
-export const FormInput: FC<Props> = props => {
+export function FormInput<EnumFields extends string = string>(
+  props: FormInputProps<EnumFields>
+) {
   const {
-    name,
-    label,
     children,
-    context,
     componentRef,
-    validators,
     debugName,
+    formContext,
+    label,
+    validators,
     ...htmlProps
   } = props;
 
-  const [inputState, setInputState] = useState({
-    value: '',
-    validationError: '',
+  const context = useContext(formContext) as FormContextValue;
+  const { validationError, validateInputValue } = useInputValidation({
+    inputName: props.name,
+    formContext: context,
+    validators,
   });
-  const formContext: FormContextValue = useContext(context);
-
-  const validateInputValue = (inputValue: string) => {
-    let validationError = '';
-    validators?.some(validator => {
-      validationError = validator(inputValue);
-      return validationError !== '';
-    });
-
-    formContext.inputsValues[name] = {
-      value: inputValue,
-      isValid: !validationError,
-    };
-    setInputState({ value: inputValue, validationError });
-  };
+  useInputRef({ componentRef, debugName, validateInputValue });
 
   const onEventValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const inputValue = e.currentTarget.value;
     validateInputValue(inputValue);
+    context.updateIsFormValid?.();
   };
 
-  useImperativeHandle(
-    componentRef,
-    () => {
-      return {
-        validateField(inputValue: string) {
-          console.log(`VALIDATE ${debugName?.toUpperCase()} '${inputValue}'`);
-          validateInputValue(inputValue);
-        },
-      };
-    },
-    []
-  );
-
   console.log(`RENDER ${debugName?.toUpperCase()}`);
-  console.log(`STATE: ${JSON.stringify(inputState)}`);
-  console.log(`CONTEXT: ${JSON.stringify(formContext)}`);
+  console.log(`STATE: ${JSON.stringify({ validationError })}`);
+  console.log(`CONTEXT: ${JSON.stringify(context)}`);
   console.log('-'.repeat(50));
 
   return (
     <label
       className={classNames('form-input', 'form__form-input', {
-        'form-input_invalid': !!inputState.validationError,
+        'form-input_invalid': !!validationError,
       })}>
       <span className="form-input__label">{label}</span>
       <input
         className="form-input__input"
-        name={name}
         onChange={onEventValidationHandler}
         onBlur={onEventValidationHandler}
         {...htmlProps}
       />
-      <div className="form-input__validation">{inputState.validationError}</div>
+      <div className="form-input__validation">{validationError}</div>
       {children}
     </label>
   );
-};
+}

@@ -1,6 +1,8 @@
-type FormSubmitRef = React.RefObject<{
-  setIsDisabled: (isDisabled: boolean) => void;
-}>;
+export type FormSubmitRefValue = {
+  updateIsDisabled: ({ isFormValid: boolean }) => void;
+};
+
+export type FormSubmitRef = React.RefObject<FormSubmitRefValue>;
 
 export type SubmitButtonProps = {
   label: string;

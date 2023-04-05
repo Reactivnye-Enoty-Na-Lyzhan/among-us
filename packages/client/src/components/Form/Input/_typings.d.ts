@@ -1,19 +1,22 @@
 import type { FormContext } from '@/components/Form/typings';
-import type { EnumFormInputType } from './_enums';
 
-export type FormInputRef = React.RefObject<{
+export type FormInputRefValue = {
   validateField: (inputValue: string) => void;
-}>;
+};
+export type FormInputRef = React.RefObject<FormInputRefValue>;
 
 export type FormInputValidators = ((value: string) => string)[];
+export type FormValidationHandler = (inputValue: string) => void;
 
-export type FormInputProps = React.HTMLProps<HTMLInputElement> & {
-  name: string;
-  context: FormContext;
-  componentRef: FormInputRef;
-  type?: EnumFormInputType;
-  validators?: FormInputValidators;
-  debugName?: string;
-};
+export type FormInputProps<EnumFields extends string = string> =
+  React.HTMLProps<HTMLInputElement> & {
+    name: EnumFields;
+    formContext: FormContext<EnumFields>;
+    componentRef: FormInputRef;
+    validators?: FormInputValidators;
+    debugName?: string;
+  };
 
-export type FormInput = React.FC<FormInputProps>;
+export type FormInput<EnumFields extends string = string> = React.FC<
+  FormInputProps<EnumFields>
+>;

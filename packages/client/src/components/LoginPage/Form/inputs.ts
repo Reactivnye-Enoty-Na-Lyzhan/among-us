@@ -2,7 +2,7 @@ import { validators } from '@/utils/input-validators/validators';
 import {
   MapFormFieldToInputComponent,
   MapFormFieldToProps,
-} from '@/components/Form/typings';
+} from '@/components/Form/_typings';
 import { FormInput } from '@/components/Form/Input/Input';
 import { WithHideMask } from '@/components/Form/Input/_HOCS/WithHideMask/WithHideMask';
 

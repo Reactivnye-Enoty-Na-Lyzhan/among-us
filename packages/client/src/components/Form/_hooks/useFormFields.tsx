@@ -3,7 +3,7 @@ import { FormInput } from '../Input/Input';
 import type { FormProps, FormContext } from '../_typings';
 import type { FormInputRef } from '../Input/_typings';
 
-type Args<EnumFields extends string = string> = {
+type Args<EnumFields extends string> = {
   inputsRefs: Record<EnumFields, FormInputRef>;
   formContext: FormContext<EnumFields>;
   formProps: FormProps<EnumFields>;
@@ -24,7 +24,8 @@ export function useFormFields<EnumFields extends string = string>({
         const inputRef = inputsRefs[fieldName];
 
         const InputComponent =
-          mapFormFieldToInputComponent?.[fieldName] ?? FormInput;
+          mapFormFieldToInputComponent?.[fieldName] ?? FormInput<EnumFields>;
+
         console.log(
           `${fieldName.toUpperCase()} INPUT COMPONENT: ${InputComponent.name}`
         );
@@ -33,7 +34,7 @@ export function useFormFields<EnumFields extends string = string>({
           <InputComponent
             componentRef={inputRef}
             key={index}
-            context={formContext}
+            formContext={formContext}
             name={fieldName}
             {...fieldProps}></InputComponent>
         );

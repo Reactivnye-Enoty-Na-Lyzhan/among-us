@@ -1,24 +1,32 @@
-import React, { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { FormSubmitButton } from './SubmitButton/Button';
-import type { FormProps, FormInputSharedData } from './_typings';
+import type { FormProps } from './_typings';
 import './Form.css';
-import { useFormContext, useFormRefs, useFormFields } from './_hooks';
+import {
+  useFormContext,
+  useFormRefs,
+  useFormFields,
+  useFormValidation,
+} from './_hooks';
 
 function Form<EnumFields extends string>(props: FormProps<EnumFields>) {
-  const [isValid, setIsValid] = useState(true);
-
   const { enumInputFields } = props;
 
   console.log(`RENDER ${props.debugName?.toUpperCase()}`);
   console.log('-'.repeat(50));
 
-  const formContext = useFormContext<EnumFields>(enumInputFields);
-  const context = useContext(formContext);
-  const { inputsRefs, submitRef } = useFormRefs<EnumFields>(enumInputFields);
+  const formReactContext = useFormContext<EnumFields>(enumInputFields);
+  const formContext = useContext(formReactContext);
+  const formRefs = useFormRefs<EnumFields>(enumInputFields);
+  const { updateIsFormValid } = useFormValidation({
+    enumInputFields,
+    formContext,
+    formRefs,
+  });
   const formFields = useFormFields<EnumFields>({
     formProps: props,
-    formContext,
-    inputsRefs,
+    formContext: formReactContext,
+    inputsRefs: formRefs.inputsRefs,
   });
 
   return (
@@ -27,24 +35,13 @@ function Form<EnumFields extends string>(props: FormProps<EnumFields>) {
       noValidate
       onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(`SUBMIT`);
-        Object.values(enumInputFields).forEach(fieldName => {
-          const inputData = context.inputsValues[fieldName];
-          inputsRefs[fieldName].current?.validateField(inputData.value);
+        console.log(`SUBMIT VALIDATION\n${'-'.repeat(50)}`);
+        updateIsFormValid({
+          shouldForceValidateFields: formContext.isFormValid === null,
         });
-
-        const isFormValid = Object.entries<FormInputSharedData>(
-          context.inputsValues
-        ).every(([inputName, inputData]) => {
-          console.log(
-            `${inputName} is valid: ${inputData.isValid}`.toUpperCase()
-          );
-          return inputData.isValid;
-        });
-        setIsValid(isFormValid);
       }}>
       {formFields}
-      <FormSubmitButton label={'Отправить'} componentRef={submitRef} />
+      <FormSubmitButton label={'Отправить'} componentRef={formRefs.submitRef} />
     </form>
   );
 }

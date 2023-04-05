@@ -1,11 +1,5 @@
 import { createRef, useMemo } from 'react';
-import { FormInputRef } from '../Input/_typings';
-import { FormSubmitRef } from '../SubmitButton/_typings';
-
-type FormRefs<EnumFields extends string = string> = {
-  inputsRefs: Record<EnumFields, FormInputRef>;
-  submitRef: FormSubmitRef;
-};
+import { FormRefs } from '../_typings';
 
 export function useFormRefs<EnumFields extends string = string>(
   enumInputFields: Record<string, EnumFields>
