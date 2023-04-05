@@ -14,7 +14,11 @@ const ThemeCard: FC<Props> = ({ theme, isAdmin, isPinned }) => {
       <div className="theme-card-info theme-card__info">
         <div
           className="theme-card-info__avatar"
-          style={{ backgroundImage: `url(${theme.avatarUrl})` }}></div>
+          style={
+            theme.avatarUrl
+              ? { backgroundImage: `url(${theme.avatarUrl})` }
+              : undefined
+          }></div>
         <div className="theme-card-info__container">
           <div className="theme-card-info__title">{theme.title}</div>
           <div className="theme-card-info__author">
@@ -55,9 +59,13 @@ const ThemeCard: FC<Props> = ({ theme, isAdmin, isPinned }) => {
           </div>
           <div
             className="theme-card-last-message__avatar"
-            style={{
-              backgroundImage: `url(${theme.lastMessage.avatarUrl})`,
-            }}></div>
+            style={
+              theme.lastMessage.avatarUrl
+                ? {
+                    backgroundImage: `url(${theme.lastMessage.avatarUrl})`,
+                  }
+                : undefined
+            }></div>
         </div>
       ) : null}
     </div>

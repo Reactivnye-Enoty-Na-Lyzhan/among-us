@@ -44,7 +44,8 @@
 }
 
 .theme-card-info__avatar {
-  background-color: var(--color-medium-grey);
+  background-image: url(./../../../../images/forum/default-avatar.svg);
+  background-size: contain;
   height: 45px;
   width: 45px;
   border-radius: 50%;
@@ -88,7 +89,8 @@
 }
 
 .theme-card-last-message__avatar {
-  background-color: var(--color-medium-grey);
+  background-image: url(./../../../../images/forum/default-avatar.svg);
+  background-size: contain;
   height: 35px;
   width: 35px;
   border-radius: 50%;
