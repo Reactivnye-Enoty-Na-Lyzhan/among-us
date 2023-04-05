@@ -1,27 +1,27 @@
 import React, { FC, useContext, useState, useImperativeHandle } from 'react';
 import classNames from 'classnames';
 import './Input.css';
-// import { EnumFormInputType } from './enums';
-import { type TFormContextValue } from '../typings';
+import { type FormContextValue } from '../_typings';
 
-import type { TFormInputProps as Props } from './typings';
+import type { FormInputProps as Props } from './_typings';
 
-const Input: FC<Props> = props => {
+export const FormInput: FC<Props> = props => {
   const {
     name,
     label,
+    children,
     context,
     componentRef,
     validators,
     debugName,
     ...htmlProps
   } = props;
-  // const [passwordVisibility, setPasswordVisibility] = useState(false);
+
   const [inputState, setInputState] = useState({
     value: '',
     validationError: '',
   });
-  const formContext: TFormContextValue = useContext(context);
+  const formContext: FormContextValue = useContext(context);
 
   const validateInputValue = (inputValue: string) => {
     let validationError = '';
@@ -37,7 +37,7 @@ const Input: FC<Props> = props => {
     setInputState({ value: inputValue, validationError });
   };
 
-  const validationHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const onEventValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const inputValue = e.currentTarget.value;
     validateInputValue(inputValue);
   };
@@ -58,6 +58,7 @@ const Input: FC<Props> = props => {
   console.log(`RENDER ${debugName?.toUpperCase()}`);
   console.log(`STATE: ${JSON.stringify(inputState)}`);
   console.log(`CONTEXT: ${JSON.stringify(formContext)}`);
+  console.log('-'.repeat(50));
 
   return (
     <label
@@ -68,23 +69,12 @@ const Input: FC<Props> = props => {
       <input
         className="form-input__input"
         name={name}
-        onChange={validationHandler}
-        onBlur={validationHandler}
+        onChange={onEventValidationHandler}
+        onBlur={onEventValidationHandler}
         {...htmlProps}
       />
-      {/* {type === EnumFormInputType.password && value ? (
-        <div
-          className={classNames('form-input__visibility', {
-            'form-input__visibility_show': passwordVisibility,
-          })}
-          onClick={() => {
-            setPasswordVisibility(!passwordVisibility);
-          }}></div>
-      ) : null}
-        > */}
       <div className="form-input__validation">{inputState.validationError}</div>
+      {children}
     </label>
   );
 };
-
-export default Input;

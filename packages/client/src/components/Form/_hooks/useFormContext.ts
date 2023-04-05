@@ -1,5 +1,5 @@
 import { createContext, useMemo } from 'react';
-import type { TFormInputSharedData, TFormContextValue } from '../typings';
+import type { FormInputSharedData, FormContextValue } from '../_typings';
 
 export function useFormContext<EnumFields extends string = string>(
   enumInputFields: Record<string, EnumFields>
@@ -13,9 +13,9 @@ export function useFormContext<EnumFields extends string = string>(
         };
         return acc;
       },
-      {} as Record<EnumFields, TFormInputSharedData>
+      {} as Record<EnumFields, FormInputSharedData>
     );
-    const context = createContext<TFormContextValue<EnumFields>>({
+    const context = createContext<FormContextValue<EnumFields>>({
       inputsValues: initInputsValues,
     });
 

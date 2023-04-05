@@ -1,2 +1,3 @@
 export { useFormContext } from './useFormContext';
-export { useInputsRefs } from './useInputsRefs';
+export { useFormRefs } from './useFormRefs';
+export { useFormFields } from './useFormFields';

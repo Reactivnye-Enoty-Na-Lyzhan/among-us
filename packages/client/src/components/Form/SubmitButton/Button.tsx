@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { SubmitButtonProps } from './_typings';
 import './Button.css';
 
-type Props = {
-  label: string;
-  disabled: boolean;
-};
+export const FormSubmitButton: React.FC<SubmitButtonProps> = ({
+  label,
+  componentRef,
+}) => {
+  const [isDisabled, setIsDisabled] = useState(false);
 
-const Button: React.FC<Props> = ({ label, disabled }) => {
   return (
     <button
       type="submit"
       className="form-button form__form-button"
-      disabled={disabled}>
+      disabled={isDisabled}>
       {label}
     </button>
   );
 };
-
-export default Button;

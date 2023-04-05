@@ -1,17 +1,17 @@
-import { TFormInputProps } from '@/components/Form/Input/typings';
 import { validators } from '@/utils/input-validators/validators';
+import {
+  MapFormFieldToInputComponent,
+  MapFormFieldToProps,
+} from '@/components/Form/typings';
+import { FormInput } from '@/components/Form/Input/Input';
+import { WithHideMask } from '@/components/Form/Input/_HOCS/WithHideMask/WithHideMask';
 
 export enum EnumFormFields {
   LOGIN = 'login',
   PASSWORD = 'password',
 }
 
-type TPredefinedProps = Omit<
-  TFormInputProps,
-  'name' | 'context' | 'componentRef'
->;
-
-export const mapFormFieldToProps: Record<EnumFormFields, TPredefinedProps> = {
+export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
   [EnumFormFields.LOGIN]: {
     debugName: 'login',
     type: 'text',
@@ -38,3 +38,9 @@ export const mapFormFieldToProps: Record<EnumFormFields, TPredefinedProps> = {
     ],
   },
 };
+
+export const mapFormFieldToInputComponent: MapFormFieldToInputComponent<EnumFormFields> =
+  {
+    [EnumFormFields.LOGIN]: FormInput,
+    [EnumFormFields.PASSWORD]: WithHideMask(FormInput),
+  };

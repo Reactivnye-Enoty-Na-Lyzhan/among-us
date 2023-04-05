@@ -32,46 +32,6 @@
   }
 }
 
-.form-input__visibility {
-  cursor: pointer;
-
-  position: absolute;
-  top: 16px;
-  right: 0;
-
-  width: 20px;
-  height: 20px;
-
-  opacity: 0;
-  background-color: var(--color-white);
-
-  transition: opacity ease-in 0.1s;
-
-  mask-image: url(./../../../images/form/eye-hide.svg);
-  mask-position: center;
-  mask-repeat: no-repeat;
-  mask-size: 12px 10px;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
-.form-input__visibility_show {
-  background-color: var(--color-white);
-
-  mask-image: url(./../../../images/form/eye-show.svg);
-  mask-size: 12px 8px;
-}
-
-.form-input:hover .form-input__visibility {
-  opacity: 0.3;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
 .form-input__validation {
   overflow: hidden;
 

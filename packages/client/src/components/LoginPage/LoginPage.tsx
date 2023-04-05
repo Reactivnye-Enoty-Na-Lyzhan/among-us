@@ -1,11 +1,13 @@
 import React from 'react';
 import Form from '../Form/Form';
-import Input from '../Form/Input/Input';
 // import { useForm } from '../Form/hooks';
 // import { validation } from '../../utils/input-validators/validators';
 // import Button from '../Form/Button/Button';
 import { EnumFormFields } from './Form/inputs';
-import { mapFormFieldToProps } from './Form/inputs';
+import {
+  mapFormFieldToProps,
+  mapFormFieldToInputComponent,
+} from './Form/inputs';
 
 const LoginPage: React.FC = () => {
   // const { values, handleInputChange } = useForm({ login: 'test' });
@@ -35,7 +37,7 @@ const LoginPage: React.FC = () => {
           //   console.log('SUBMIT');
           // }
         }}
-        InputComponent={Input}
+        mapFormFieldToInputComponent={mapFormFieldToInputComponent}
         mapFormFieldToProps={mapFormFieldToProps}></Form>
     </div>
   );

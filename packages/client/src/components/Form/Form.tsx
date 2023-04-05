@@ -1,47 +1,25 @@
-import React, { useState, useMemo, useContext } from 'react';
-import type { TFormInputProps } from './Input/typings';
-import SubmitButton from './SubmitButton/Button';
-import type { TFormInputRef } from './Input/typings';
-import type { TMapFormFieldToProps } from './typings';
+import React, { useState, useContext } from 'react';
+import { FormSubmitButton } from './SubmitButton/Button';
+import type { FormProps, FormInputSharedData } from './_typings';
 import './Form.css';
-import { useFormContext, useInputsRefs } from './_hooks';
-
-type FormProps<EnumFields extends string> = {
-  debugName?: string;
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
-  enumInputFields: Record<string, EnumFields>;
-  mapFormFieldToProps: TMapFormFieldToProps<EnumFields>;
-  InputComponent: React.FC<TFormInputProps>;
-};
+import { useFormContext, useFormRefs, useFormFields } from './_hooks';
 
 function Form<EnumFields extends string>(props: FormProps<EnumFields>) {
   const [isValid, setIsValid] = useState(true);
 
-  const { enumInputFields, mapFormFieldToProps, InputComponent } = props;
+  const { enumInputFields } = props;
 
-  const debugName = props.debugName?.toUpperCase();
-  console.log(`RENDER ${debugName}`);
+  console.log(`RENDER ${props.debugName?.toUpperCase()}`);
+  console.log('-'.repeat(50));
 
   const formContext = useFormContext<EnumFields>(enumInputFields);
   const context = useContext(formContext);
-  const refs = useInputsRefs<EnumFields>(enumInputFields);
-  const formFields = useMemo(
-    () =>
-      Object.values(enumInputFields).map((fieldName, index) => {
-        const fieldProps = mapFormFieldToProps[fieldName];
-        const inputRef = refs[fieldName];
-
-        return (
-          <InputComponent
-            componentRef={inputRef}
-            key={index}
-            context={formContext}
-            name={fieldName}
-            {...fieldProps}></InputComponent>
-        );
-      }),
-    []
-  );
+  const { inputsRefs, submitRef } = useFormRefs<EnumFields>(enumInputFields);
+  const formFields = useFormFields<EnumFields>({
+    formProps: props,
+    formContext,
+    inputsRefs,
+  });
 
   return (
     <form
@@ -52,11 +30,21 @@ function Form<EnumFields extends string>(props: FormProps<EnumFields>) {
         console.log(`SUBMIT`);
         Object.values(enumInputFields).forEach(fieldName => {
           const inputData = context.inputsValues[fieldName];
-          refs[fieldName].current?.validateField(inputData.value);
+          inputsRefs[fieldName].current?.validateField(inputData.value);
         });
+
+        const isFormValid = Object.entries<FormInputSharedData>(
+          context.inputsValues
+        ).every(([inputName, inputData]) => {
+          console.log(
+            `${inputName} is valid: ${inputData.isValid}`.toUpperCase()
+          );
+          return inputData.isValid;
+        });
+        setIsValid(isFormValid);
       }}>
       {formFields}
-      <SubmitButton disabled={!isValid} label={'Отправить'} />
+      <FormSubmitButton label={'Отправить'} componentRef={submitRef} />
     </form>
   );
 }
