@@ -11,12 +11,42 @@ import { FormInput } from '@/components/Form/Input/Input';
 import { WithHideMask } from '@/components/Form/Input/_HOCS/WithHideMask/WithHideMask';
 
 export enum EnumFormFields {
+  FIRST_NAME = 'first_name',
+  SECOND_NAME = 'second_name',
   LOGIN = 'login',
   PASSWORD = 'password',
   PASSWORD_REPEAT = 'password_repeat',
+  EMAIL = 'email',
+  PHONE = 'phone',
 }
 
 export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
+  [EnumFormFields.FIRST_NAME]: {
+    type: 'text',
+    placeholder: 'Введите имя',
+    label: 'Имя',
+    validators: {
+      validatorsList: [
+        validators.checkNotEmpty,
+        validators.checkNoSpaces,
+        validators.checkBannedSymbols,
+        validators.checkLanguage,
+      ],
+    },
+  },
+  [EnumFormFields.SECOND_NAME]: {
+    type: 'text',
+    placeholder: 'Введите фамилию',
+    label: 'Фамилия',
+    validators: {
+      validatorsList: [
+        validators.checkNotEmpty,
+        validators.checkNoSpaces,
+        validators.checkBannedSymbols,
+        validators.checkLanguage,
+      ],
+    },
+  },
   [EnumFormFields.LOGIN]: {
     type: 'text',
     placeholder: 'Введите логин',
@@ -54,7 +84,7 @@ export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
   },
   [EnumFormFields.PASSWORD_REPEAT]: {
     type: 'password',
-    placeholder: 'Введите пароль',
+    placeholder: 'Повторите пароль',
     label: 'Повторите пароль',
     validators: {
       validatorsList: [
@@ -70,6 +100,32 @@ export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
         thisInput: EnumFormFields.PASSWORD_REPEAT,
         otherInput: EnumFormFields.PASSWORD,
       }),
+    },
+  },
+  [EnumFormFields.EMAIL]: {
+    type: 'email',
+    placeholder: 'Введите email',
+    label: 'Email',
+    validators: {
+      validatorsList: [
+        validators.checkNotEmpty,
+        validators.checkNoSpaces,
+        validators.checkBannedSymbols,
+        validators.checkLanguage,
+      ],
+    },
+  },
+  [EnumFormFields.PHONE]: {
+    type: 'phone',
+    placeholder: 'Введите телефон',
+    label: 'Телефон',
+    validators: {
+      validatorsList: [
+        validators.checkNotEmpty,
+        validators.checkNoSpaces,
+        validators.checkBannedSymbols,
+        validators.checkLanguage,
+      ],
     },
   },
 };
