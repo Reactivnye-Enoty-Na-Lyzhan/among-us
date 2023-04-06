@@ -12,13 +12,8 @@ export const FormSubmitButton: React.FC<SubmitButtonProps> = props => {
     updateIsDisabled({ isFormValid }: { isFormValid: boolean }) {
       const isEnabled =
         (formContext.submitsCount.current === 0 &&
-          Object.entries(formContext.formRefs.inputsRefs).every(
-            ([inputName, inputRef]) => {
-              console.log(
-                `${inputName.toUpperCase()} ERROR: ${inputRef.current?.getError()}`
-              );
-              return !inputRef.current?.getError();
-            }
+          Object.values(formContext.formRefs.inputsRefs).every(
+            inputRef => !inputRef.current?.getError()
           )) ||
         isFormValid;
       console.log(`SUBMIT BUTTON IS DISABLED: '${!isEnabled}'`);

@@ -4,7 +4,7 @@ import PageMain from './Main/Main';
 import PageWallpaper from './Wallpaper/Wallpaper';
 import './LandingPage.css';
 
-export default function () {
+export function LandingPage() {
   return (
     <div className="landing-page">
       <PageWallpaper></PageWallpaper>

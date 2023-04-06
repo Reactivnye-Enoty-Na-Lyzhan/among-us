@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
 import path from 'path';
+import { defineConfig } from 'vite';
 dotenv.config();
 
 const isDev = process.env.BUILD_MODE === 'development';
@@ -23,9 +24,22 @@ export default defineConfig({
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   plugins: [react()],
+  build: {
+    cssMinify: false,
+    rollupOptions: {
+      output: {
+        ...outputNamesOptions,
+      },
+    },
+  },
+  css: {
+    devSourcemap: true,
+  },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src/'),
+      '@': path.resolve(__dirname, 'src/'),
+      images: path.resolve(__dirname, 'src/images/'),
+      fonts: path.resolve(__dirname, 'src/vendor/fonts/'),
     },
   },
 });
