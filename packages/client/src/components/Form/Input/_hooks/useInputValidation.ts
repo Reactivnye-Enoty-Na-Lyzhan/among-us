@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useImperativeHandle } from 'react';
+import { useCallback, useState, useImperativeHandle } from 'react';
 import type {
   FormInputProps,
   FormInputRefValue,
@@ -9,7 +9,7 @@ import { FormContextValue } from '../../_typings';
 
 type Args<EnumFields extends string> = Pick<
   FormInputProps<EnumFields>,
-  'componentRef' | 'debugName' | 'validators'
+  'componentRef' | 'validators'
 > & {
   inputName: EnumFields;
   formContext: FormContextValue<EnumFields>;
@@ -19,9 +19,9 @@ export function useInputValidation<EnumFields extends string = string>(
   args: Args<EnumFields>
 ) {
   const [validationError, setValidationError] = useState('');
-  const { componentRef, debugName, formContext, inputName, validators } = args;
+  const { componentRef, formContext, inputName, validators } = args;
 
-  const setValueAndValidate = useCallback(function (value?: string) {
+  const setValueAndValidate = useCallback(async function (value?: string) {
     let inputValue: string;
     if (value === undefined) {
       inputValue = formContext.inputsValues[inputName];
@@ -31,13 +31,13 @@ export function useInputValidation<EnumFields extends string = string>(
     }
     let errorMessage = '';
 
-    validators?.every(validator => {
+    validators?.validatorsList.every(validator => {
       if (typeof validator === 'function') {
         errorMessage = (validator as InputStraightValidator)(inputValue);
       } else {
-        errorMessage = (
-          validator as InputWithFormContextValidator
-        ).withFormContextValidator.apply({ formContext, inputName }, [
+        const { withFormContextValidator } =
+          validator as InputWithFormContextValidator;
+        errorMessage = withFormContextValidator.apply({ formContext }, [
           inputValue,
         ]);
       }
@@ -56,7 +56,9 @@ export function useInputValidation<EnumFields extends string = string>(
       };
     }
 
-    setValidationError(errorMessage);
+    await setValidationError(errorMessage);
+    validators?.afterValidationCallback?.apply({ formContext });
+
     return errorMessage;
   }, []);
 
@@ -67,7 +69,7 @@ export function useInputValidation<EnumFields extends string = string>(
 
       const _refValue = {
         setValueAndValidate(value?: string) {
-          console.log(`VALIDATE ${debugName?.toUpperCase()} '${value}'`);
+          console.log(`VALIDATE ${args.inputName.toUpperCase()} '${value}'`);
           return _setValueAndValidate(value);
         },
         getError() {

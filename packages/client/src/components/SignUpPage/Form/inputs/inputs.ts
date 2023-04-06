@@ -1,5 +1,8 @@
 import { validators } from '@/utils/input-validators/validators';
-import { validateMatching } from './password-match-validator';
+import {
+  validateMatching,
+  afterValidateMatchingCallback,
+} from './password-match-validator';
 import {
   MapFormFieldToInputComponent,
   MapFormFieldToProps,
@@ -15,57 +18,63 @@ export enum EnumFormFields {
 
 export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
   [EnumFormFields.LOGIN]: {
-    debugName: 'login',
     type: 'text',
     placeholder: 'Введите логин',
     label: 'Логин',
-    validators: [
-      validators.checkNotEmpty,
-      validators.checkNoSpaces,
-      validators.checkBannedSymbols,
-      validators.checkLength({ min: 3, max: 20 }),
-      validators.checkNotOnlyNumbers,
-      validators.checkLanguage,
-    ],
+    validators: {
+      validatorsList: [
+        validators.checkNotEmpty,
+        validators.checkNoSpaces,
+        validators.checkBannedSymbols,
+        validators.checkLength({ min: 3, max: 20 }),
+        validators.checkNotOnlyNumbers,
+        validators.checkLanguage,
+      ],
+    },
   },
   [EnumFormFields.PASSWORD]: {
-    debugName: 'password',
     type: 'password',
     placeholder: 'Введите пароль',
     label: 'Пароль',
-    validators: [
-      validators.checkNotEmpty,
-      validators.checkLength({ min: 8, max: 40 }),
-      validators.checkHasCapitalLetter,
-      {
-        withFormContextValidator: validateMatching<EnumFormFields>({
+    validators: {
+      validatorsList: [
+        validators.checkNotEmpty,
+        validators.checkLength({ min: 8, max: 40 }),
+        validators.checkHasCapitalLetter,
+        validateMatching<EnumFormFields>({
           thisInput: EnumFormFields.PASSWORD,
           otherInput: EnumFormFields.PASSWORD_REPEAT,
         }),
-      },
-    ],
+      ],
+      afterValidationCallback: afterValidateMatchingCallback<EnumFormFields>({
+        thisInput: EnumFormFields.PASSWORD,
+        otherInput: EnumFormFields.PASSWORD_REPEAT,
+      }),
+    },
   },
   [EnumFormFields.PASSWORD_REPEAT]: {
-    debugName: 'password_repeat',
     type: 'password',
     placeholder: 'Введите пароль',
     label: 'Повторите пароль',
-    validators: [
-      validators.checkNotEmpty,
-      validators.checkLength({ min: 8, max: 40 }),
-      validators.checkHasCapitalLetter,
-      {
-        withFormContextValidator: validateMatching<EnumFormFields>({
+    validators: {
+      validatorsList: [
+        validators.checkNotEmpty,
+        validators.checkLength({ min: 8, max: 40 }),
+        validators.checkHasCapitalLetter,
+        validateMatching<EnumFormFields>({
           thisInput: EnumFormFields.PASSWORD_REPEAT,
           otherInput: EnumFormFields.PASSWORD,
         }),
-      },
-    ],
+      ],
+      afterValidationCallback: afterValidateMatchingCallback<EnumFormFields>({
+        thisInput: EnumFormFields.PASSWORD_REPEAT,
+        otherInput: EnumFormFields.PASSWORD,
+      }),
+    },
   },
 };
 
 const FormInputWithHideMask = WithHideMask(FormInput<EnumFormFields>);
-
 export const mapFormFieldToInputComponent: MapFormFieldToInputComponent<EnumFormFields> =
   {
     [EnumFormFields.LOGIN]: FormInput<EnumFormFields>,

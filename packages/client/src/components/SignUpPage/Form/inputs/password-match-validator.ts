@@ -1,9 +1,9 @@
 import { validationErrors } from '@/utils/input-validators/validators';
 import { FormContextValue } from '@/components/Form/_typings';
+import { InputWithFormContextValidator } from '@/components/Form/Input/_typings';
 
 type ThisType<EnumFields extends string> = {
   formContext: FormContextValue<EnumFields>;
-  inputName: EnumFields;
 };
 
 type InputsToCompare<EnumFields extends string> = {
@@ -14,29 +14,41 @@ type InputsToCompare<EnumFields extends string> = {
 export function validateMatching<EnumFields extends string = string>({
   thisInput,
   otherInput,
-}: InputsToCompare<EnumFields>) {
+}: InputsToCompare<EnumFields>): InputWithFormContextValidator<EnumFields> {
+  return {
+    withFormContextValidator(this: ThisType<EnumFields>) {
+      let errorMessage = '';
+      const { inputsValues } = this.formContext;
+
+      console.log(
+        `VALUES TO COMPARE: this = ${inputsValues[thisInput]}, other = ${inputsValues[otherInput]}`
+      );
+      if (inputsValues[thisInput] !== inputsValues[otherInput]) {
+        errorMessage = validationErrors.passwordsNotMatching;
+      }
+
+      return errorMessage;
+    },
+  };
+}
+
+export function afterValidateMatchingCallback<
+  EnumFields extends string = string
+>({ thisInput, otherInput }: InputsToCompare<EnumFields>) {
   return function (this: ThisType<EnumFields>) {
     const { inputsRefs } = this.formContext.formRefs;
-    let errorMessage = '';
-    const { inputsValues } = this.formContext;
 
+    const thisInputError = inputsRefs[thisInput].current?.getError();
+    const otherInputError = inputsRefs[otherInput].current?.getError();
     console.log(
-      `VALUES TO COMPARE: this = ${inputsValues[thisInput]}, other = ${inputsValues[otherInput]}`
+      `AFTER MATCHING VALIDATION ERRORS: this = ${thisInputError}; other: ${otherInputError}`
     );
-    if (inputsValues[thisInput] !== inputsValues[otherInput]) {
-      errorMessage = validationErrors.passwordsNotMatching;
-    }
-    console.log(
-      `OTHER INPUT ERROR: '${inputsRefs[otherInput].current?.getError()}'`
-    );
+
     if (
-      inputsRefs[otherInput].current?.getError() ===
-        validationErrors.passwordsNotMatching &&
-      errorMessage === ''
+      otherInputError === validationErrors.passwordsNotMatching &&
+      thisInputError === ''
     ) {
       inputsRefs[otherInput].current?.setValueAndValidate();
     }
-
-    return errorMessage;
   };
 }

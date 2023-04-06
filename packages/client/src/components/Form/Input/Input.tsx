@@ -11,7 +11,6 @@ export function FormInput<EnumFields extends string = string>(
   const {
     children,
     componentRef,
-    debugName,
     formContext,
     label,
     validators,
@@ -22,7 +21,6 @@ export function FormInput<EnumFields extends string = string>(
   const { validationError, setValueAndValidate } =
     useInputValidation<EnumFields>({
       componentRef,
-      debugName,
       inputName: props.name,
       formContext: context,
       validators,
@@ -34,7 +32,7 @@ export function FormInput<EnumFields extends string = string>(
     context.updateIsFormValid?.();
   };
 
-  console.log(`RENDER ${debugName?.toUpperCase()}`);
+  console.log(`RENDER ${props.name.toUpperCase()}`);
   console.log(`STATE: ${JSON.stringify({ validationError })}`);
   console.log(`CONTEXT: ${JSON.stringify(context)}`);
   console.log('-'.repeat(50));

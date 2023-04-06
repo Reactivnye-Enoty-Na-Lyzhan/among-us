@@ -13,29 +13,31 @@ export enum EnumFormFields {
 
 export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
   [EnumFormFields.LOGIN]: {
-    debugName: 'login',
     type: 'text',
     placeholder: 'Введите логин',
     label: 'Логин',
-    validators: [
-      validators.checkNotEmpty,
-      validators.checkNoSpaces,
-      validators.checkBannedSymbols,
-      validators.checkLength({ min: 3, max: 20 }),
-      validators.checkNotOnlyNumbers,
-      validators.checkLanguage,
-    ],
+    validators: {
+      validatorsList: [
+        validators.checkNotEmpty,
+        validators.checkNoSpaces,
+        validators.checkBannedSymbols,
+        validators.checkLength({ min: 3, max: 20 }),
+        validators.checkNotOnlyNumbers,
+        validators.checkLanguage,
+      ],
+    },
   },
   [EnumFormFields.PASSWORD]: {
-    debugName: 'password',
     type: 'password',
     placeholder: 'Введите пароль',
     label: 'Пароль',
-    validators: [
-      validators.checkNotEmpty,
-      validators.checkLength({ min: 8, max: 40 }),
-      validators.checkHasCapitalLetter,
-    ],
+    validators: {
+      validatorsList: [
+        validators.checkNotEmpty,
+        validators.checkLength({ min: 8, max: 40 }),
+        validators.checkHasCapitalLetter,
+      ],
+    },
   },
 };
 

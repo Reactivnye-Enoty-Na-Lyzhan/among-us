@@ -9,10 +9,11 @@ export type FormInputRef = React.RefObject<FormInputRefValue>;
 type InputStraightValidator = (value: string) => string;
 type InputWithFormContextValidator<EnumFields extends string = string> = {
   withFormContextValidator: (
-    this: { formContext: FormContextValue<EnumFields>; inputName: EnumFields },
+    this: { formContext: FormContextValue<EnumFields> },
     value: string
   ) => string;
 };
+
 export type FormInputValidators<EnumFields extends string = string> = (
   | InputStraightValidator
   | InputWithFormContextValidator<EnumFields>
@@ -23,8 +24,12 @@ export type FormInputProps<EnumFields extends string = string> =
     name: EnumFields;
     formContext: FormContext<EnumFields>;
     componentRef: FormInputRef;
-    validators?: FormInputValidators<EnumFields>;
-    debugName?: string;
+    validators?: {
+      afterValidationCallback?: (this: {
+        formContext: FormContextValue<EnumFields>;
+      }) => void;
+      validatorsList: FormInputValidators<EnumFields>;
+    };
   };
 
 export type FormInput<EnumFields extends string = string> = React.FC<
