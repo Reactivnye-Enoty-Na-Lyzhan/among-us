@@ -2,26 +2,20 @@ import { useContext } from 'react';
 import { FormSubmitButton } from './SubmitButton/Button';
 import type { FormProps } from './_typings';
 import './Form.css';
-import {
-  useFormContext,
-  useFormRefs,
-  useFormFields,
-  useFormValidation,
-} from './_hooks';
+import { useFormContext, useFormFields, useFormValidation } from './_hooks';
 
 function Form<EnumFields extends string>(props: FormProps<EnumFields>) {
-  const { enumInputFields } = props;
+  const { enumInputFields, onSubmitCallback } = props;
 
   console.log(`RENDER ${props.debugName?.toUpperCase()}`);
   console.log('-'.repeat(50));
 
   const formReactContext = useFormContext<EnumFields>(enumInputFields);
   const formContext = useContext(formReactContext);
-  const formRefs = useFormRefs<EnumFields>(enumInputFields);
+  const { formRefs } = formContext;
   const { updateIsFormValid } = useFormValidation({
     enumInputFields,
     formContext,
-    formRefs,
   });
   const formFields = useFormFields<EnumFields>({
     formProps: props,
@@ -36,12 +30,19 @@ function Form<EnumFields extends string>(props: FormProps<EnumFields>) {
       onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(`SUBMIT VALIDATION\n${'-'.repeat(50)}`);
+        const { submitsCount } = formContext;
+        submitsCount.current++;
         updateIsFormValid({
-          shouldForceValidateFields: formContext.isFormValid === null,
+          shouldForceValidateFields: submitsCount.current === 1,
         });
+        onSubmitCallback?.();
       }}>
       {formFields}
-      <FormSubmitButton label={'Отправить'} componentRef={formRefs.submitRef} />
+      <FormSubmitButton
+        label={'Отправить'}
+        componentRef={formRefs.submitRef}
+        formContext={formReactContext}
+      />
     </form>
   );
 }

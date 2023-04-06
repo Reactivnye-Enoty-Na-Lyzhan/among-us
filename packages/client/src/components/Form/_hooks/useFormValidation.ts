@@ -1,18 +1,16 @@
 import { useCallback } from 'react';
-import { FormContextValue, FormRefs, FormValidationMod } from '../_typings';
+import { FormContextValue, FormValidationMod } from '../_typings';
 import type { FormInputRef } from '../Input/_typings';
 
 type Args<EnumFields extends string> = {
   enumInputFields: Record<string, EnumFields>;
   formContext: FormContextValue<EnumFields>;
-  formRefs: FormRefs<EnumFields>;
 };
 
 export function useFormValidation<EnumFields extends string = string>({
   formContext,
-  formRefs,
 }: Args<EnumFields>) {
-  const { inputsRefs, submitRef } = formRefs;
+  const { inputsRefs, submitRef } = formContext.formRefs;
 
   const validateForm = useCallback(
     (() => {
@@ -28,7 +26,9 @@ export function useFormValidation<EnumFields extends string = string>({
             `VALIDATION STATUSES UNCHANGED: ${JSON.stringify(currentStatuses)}`
           );
 
-          return !!formContext.isFormValid;
+          if (!shouldForceValidateFields) {
+            return !!formContext.isFormValid;
+          }
         }
 
         console.log(
@@ -43,7 +43,7 @@ export function useFormValidation<EnumFields extends string = string>({
             ([inputName, inputRef]) => {
               const inputValue =
                 formContext.inputsValues[inputName as EnumFields];
-              inputRef.current?.validateField(inputValue);
+              inputRef.current?.setValueAndValidate(inputValue);
             }
           );
         }

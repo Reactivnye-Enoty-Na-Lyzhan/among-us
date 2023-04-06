@@ -1,4 +1,4 @@
-const validationErrors = {
+export const validationErrors = {
   isEmpty: 'Поле не может быть пустым',
   wrongLength: 'Не менее {min} и  не больше {max} символов',
   hasBannedSymbols: "Недопустимые символы '{symbols}'",
@@ -9,7 +9,7 @@ const validationErrors = {
   firstLetterNotCapital: 'Первая буква должна быть заглавной',
   invalidEmailFormat: 'Неверный формат адреса электронной почты',
   phone: 'Номер телефона должен состоять только из цифр',
-  comparePasswords: 'Пароли должны совпадать',
+  passwordsNotMatching: 'Пароли должны совпадать',
 };
 
 export const validators = {
@@ -104,21 +104,6 @@ export const validation = {
     let text = '';
 
     if (!value) text = validationErrors.isEmpty;
-    else {
-      isValid = true;
-    }
-
-    return { isValid, text };
-  },
-  comparePasswords: (
-    value: string | undefined,
-    secondValue: string | undefined
-  ) => {
-    let isValid = false;
-    let text = '';
-
-    if (!value) text = validationErrors.isEmpty;
-    else if (value !== secondValue) text = validationErrors.comparePasswords;
     else {
       isValid = true;
     }

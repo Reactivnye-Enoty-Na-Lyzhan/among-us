@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useContext } from 'react';
 import type { FormInputProps } from './_typings';
 import './Input.css';
-import { useInputValidation, useInputRef } from './_hooks';
+import { useInputValidation } from './_hooks';
 import type { FormContextValue } from '../_typings';
 
 export function FormInput<EnumFields extends string = string>(
@@ -18,17 +18,19 @@ export function FormInput<EnumFields extends string = string>(
     ...htmlProps
   } = props;
 
-  const context = useContext(formContext) as FormContextValue;
-  const { validationError, validateInputValue } = useInputValidation({
-    inputName: props.name,
-    formContext: context,
-    validators,
-  });
-  useInputRef({ componentRef, debugName, validateInputValue });
+  const context = useContext(formContext) as FormContextValue<EnumFields>;
+  const { validationError, setValueAndValidate } =
+    useInputValidation<EnumFields>({
+      componentRef,
+      debugName,
+      inputName: props.name,
+      formContext: context,
+      validators,
+    });
 
   const onEventValidationHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const inputValue = e.currentTarget.value;
-    validateInputValue(inputValue);
+    setValueAndValidate(inputValue);
     context.updateIsFormValid?.();
   };
 

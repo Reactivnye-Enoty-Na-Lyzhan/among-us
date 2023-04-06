@@ -10,6 +10,8 @@ export type FormContextValue<EnumFields extends string = string> = {
   updateIsFormValid:
     | (({ shouldForceValidateFields }?: FormValidationMod) => void)
     | null;
+  formRefs: FormRefs<EnumFields>;
+  submitsCount: React.MutableRefObject<number>;
 };
 
 export type FormContext<EnumFields extends string = string> = React.Context<
@@ -29,10 +31,15 @@ export type MapFormFieldToProps<EnumFields extends string = string> = Record<
 export type MapFormFieldToInputComponent<EnumFields extends string = string> =
   Partial<Record<EnumFields, FormInput<EnumFields>>>;
 
+export type MapFormFieldToRefAttributes<EnumFields extends string> = Partial<
+  Record<EnumFields, Record<string, unknown>>
+>;
+
 export type FormProps<EnumFields extends string> = {
   debugName?: string;
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
+  onSubmitCallback?: () => void;
   enumInputFields: Record<string, EnumFields>;
   mapFormFieldToProps: MapFormFieldToProps<EnumFields>;
   mapFormFieldToInputComponent?: MapFormFieldToInputComponent<EnumFields>;
+  mapFormFieldToRefAttributes?: MapFormFieldToRefAttributes<EnumFields>;
 };

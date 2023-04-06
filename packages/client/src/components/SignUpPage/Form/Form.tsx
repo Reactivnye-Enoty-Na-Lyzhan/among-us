@@ -1,17 +1,17 @@
 import Form from '@/components/Form/Form';
+import { EnumFormFields } from './inputs/inputs';
 import {
-  EnumFormFields,
   mapFormFieldToInputComponent,
   mapFormFieldToProps,
-} from './inputs';
+} from './inputs/inputs';
 
-export function LoginPageForm() {
+export function SignUpForm() {
   return (
     <Form<EnumFormFields>
       debugName="LoginForm"
       enumInputFields={EnumFormFields}
       onSubmitCallback={() => {
-        // TODO: login service
+        // TODO: sign up service
       }}
       mapFormFieldToInputComponent={mapFormFieldToInputComponent}
       mapFormFieldToProps={mapFormFieldToProps}></Form>

@@ -1,16 +1,10 @@
 import { LoginPageForm } from './Form/Form';
+import './LoginPage.css';
 
-const LoginPage: React.FC = () => {
+export const LoginPage: React.FC = () => {
   return (
-    <div
-      style={{
-        backgroundColor: '#010318',
-        width: '100%',
-        padding: '40px',
-      }}>
+    <div className="login-page">
       <LoginPageForm></LoginPageForm>
     </div>
   );
 };
-
-export default LoginPage;

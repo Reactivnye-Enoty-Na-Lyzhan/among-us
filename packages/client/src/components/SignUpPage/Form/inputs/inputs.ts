@@ -1,4 +1,5 @@
 import { validators } from '@/utils/input-validators/validators';
+import { validateMatching } from './password-match-validator';
 import {
   MapFormFieldToInputComponent,
   MapFormFieldToProps,
@@ -9,6 +10,7 @@ import { WithHideMask } from '@/components/Form/Input/_HOCS/WithHideMask/WithHid
 export enum EnumFormFields {
   LOGIN = 'login',
   PASSWORD = 'password',
+  PASSWORD_REPEAT = 'password_repeat',
 }
 
 export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
@@ -35,12 +37,38 @@ export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
       validators.checkNotEmpty,
       validators.checkLength({ min: 8, max: 40 }),
       validators.checkHasCapitalLetter,
+      {
+        withFormContextValidator: validateMatching<EnumFormFields>({
+          thisInput: EnumFormFields.PASSWORD,
+          otherInput: EnumFormFields.PASSWORD_REPEAT,
+        }),
+      },
+    ],
+  },
+  [EnumFormFields.PASSWORD_REPEAT]: {
+    debugName: 'password_repeat',
+    type: 'password',
+    placeholder: 'Введите пароль',
+    label: 'Повторите пароль',
+    validators: [
+      validators.checkNotEmpty,
+      validators.checkLength({ min: 8, max: 40 }),
+      validators.checkHasCapitalLetter,
+      {
+        withFormContextValidator: validateMatching<EnumFormFields>({
+          thisInput: EnumFormFields.PASSWORD_REPEAT,
+          otherInput: EnumFormFields.PASSWORD,
+        }),
+      },
     ],
   },
 };
 
+const FormInputWithHideMask = WithHideMask(FormInput<EnumFormFields>);
+
 export const mapFormFieldToInputComponent: MapFormFieldToInputComponent<EnumFormFields> =
   {
     [EnumFormFields.LOGIN]: FormInput<EnumFormFields>,
-    [EnumFormFields.PASSWORD]: WithHideMask(FormInput<EnumFormFields>),
+    [EnumFormFields.PASSWORD]: FormInputWithHideMask,
+    [EnumFormFields.PASSWORD_REPEAT]: FormInputWithHideMask,
   };

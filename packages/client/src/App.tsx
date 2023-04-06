@@ -6,7 +6,8 @@ import './vendor/fonts/Inter-Bold.woff';
 import { Error404 } from './components/ErrorPage/ErrorPage';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginPage from './components/LoginPage/LoginPage';
+import { LoginPage } from './components/LoginPage/LoginPage';
+import { SignUpPage } from './components/SignUpPage/SignUpPage';
 import './vendor/fonts/Inter-Regular.woff';
 import './vendor/fonts/Inter-Medium.woff';
 import './vendor/fonts/Inter-Bold.woff';
@@ -21,8 +22,8 @@ function ForumPage() {
 function GamePage() {
   return <h1>Game</h1>;
 }
-function SignUpPage() {
-  return <h1>Registration</h1>;
+function NotFound() {
+  return <h1>404</h1>;
 }
 
 function App() {
