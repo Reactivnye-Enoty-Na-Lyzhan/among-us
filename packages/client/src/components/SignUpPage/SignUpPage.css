@@ -60,7 +60,7 @@
     }
 
     .form-input:last-of-type {
-      margin-bottom: 4vh;
+      margin-bottom: 3vh;
     }
 
     .form-input__input {
@@ -77,8 +77,10 @@
       margin-top: 0.3em;
       font-size: var(--font-size-small);
     }
+
     .form-button {
-      margin-bottom: 1vh;
+      display: block;
+      margin: 0 auto 1vh;
       font-size: var(--font-size-normal);
     }
   }
