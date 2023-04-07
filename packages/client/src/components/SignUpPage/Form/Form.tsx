@@ -8,10 +8,13 @@ import {
 export function SignUpForm() {
   return (
     <Form<EnumFormFields>
-      debugName="LoginForm"
+      className="signup-page__form"
       enumInputFields={EnumFormFields}
       onSubmitCallback={() => {
         // TODO: sign up service
+      }}
+      submitButtonProps={{
+        label: 'Зарегистрироваться',
       }}
       mapFormFieldToInputComponent={mapFormFieldToInputComponent}
       mapFormFieldToProps={mapFormFieldToProps}></Form>

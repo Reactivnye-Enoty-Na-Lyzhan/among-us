@@ -1,9 +1,5 @@
 import { validators } from '@/utils/input-validators/validators';
 import {
-  validateMatching,
-  afterValidateMatchingCallback,
-} from './password-match-validator';
-import {
   MapFormFieldToInputComponent,
   MapFormFieldToProps,
 } from '@/components/Form/_typings';
@@ -13,11 +9,10 @@ import { WithHideMask } from '@/components/Form/Input/_HOCS/WithHideMask/WithHid
 export enum EnumFormFields {
   FIRST_NAME = 'first_name',
   SECOND_NAME = 'second_name',
-  LOGIN = 'login',
-  PASSWORD = 'password',
-  PASSWORD_REPEAT = 'password_repeat',
   EMAIL = 'email',
   PHONE = 'phone',
+  LOGIN = 'login',
+  PASSWORD = 'password',
 }
 
 export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
@@ -29,7 +24,7 @@ export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
       validatorsList: [
         validators.checkNotEmpty,
         validators.checkNoSpaces,
-        validators.checkBannedSymbols,
+        validators.checkFirstLetterIsCapital,
         validators.checkLanguage,
       ],
     },
@@ -38,6 +33,27 @@ export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
     type: 'text',
     placeholder: 'Введите фамилию',
     label: 'Фамилия',
+    validators: {
+      validatorsList: [
+        validators.checkNotEmpty,
+        validators.checkNoSpaces,
+        validators.checkFirstLetterIsCapital,
+        validators.checkLanguage,
+      ],
+    },
+  },
+  [EnumFormFields.EMAIL]: {
+    type: 'email',
+    placeholder: 'Введите email',
+    label: 'Email',
+    validators: {
+      validatorsList: [validators.checkNotEmpty, validators.checkBannedSymbols],
+    },
+  },
+  [EnumFormFields.PHONE]: {
+    type: 'phone',
+    placeholder: 'Введите телефон',
+    label: 'Телефон',
     validators: {
       validatorsList: [
         validators.checkNotEmpty,
@@ -71,60 +87,6 @@ export const mapFormFieldToProps: MapFormFieldToProps<EnumFormFields> = {
         validators.checkNotEmpty,
         validators.checkLength({ min: 8, max: 40 }),
         validators.checkHasCapitalLetter,
-        validateMatching<EnumFormFields>({
-          thisInput: EnumFormFields.PASSWORD,
-          otherInput: EnumFormFields.PASSWORD_REPEAT,
-        }),
-      ],
-      afterValidationCallback: afterValidateMatchingCallback<EnumFormFields>({
-        thisInput: EnumFormFields.PASSWORD,
-        otherInput: EnumFormFields.PASSWORD_REPEAT,
-      }),
-    },
-  },
-  [EnumFormFields.PASSWORD_REPEAT]: {
-    type: 'password',
-    placeholder: 'Повторите пароль',
-    label: 'Повторите пароль',
-    validators: {
-      validatorsList: [
-        validators.checkNotEmpty,
-        validators.checkLength({ min: 8, max: 40 }),
-        validators.checkHasCapitalLetter,
-        validateMatching<EnumFormFields>({
-          thisInput: EnumFormFields.PASSWORD_REPEAT,
-          otherInput: EnumFormFields.PASSWORD,
-        }),
-      ],
-      afterValidationCallback: afterValidateMatchingCallback<EnumFormFields>({
-        thisInput: EnumFormFields.PASSWORD_REPEAT,
-        otherInput: EnumFormFields.PASSWORD,
-      }),
-    },
-  },
-  [EnumFormFields.EMAIL]: {
-    type: 'email',
-    placeholder: 'Введите email',
-    label: 'Email',
-    validators: {
-      validatorsList: [
-        validators.checkNotEmpty,
-        validators.checkNoSpaces,
-        validators.checkBannedSymbols,
-        validators.checkLanguage,
-      ],
-    },
-  },
-  [EnumFormFields.PHONE]: {
-    type: 'phone',
-    placeholder: 'Введите телефон',
-    label: 'Телефон',
-    validators: {
-      validatorsList: [
-        validators.checkNotEmpty,
-        validators.checkNoSpaces,
-        validators.checkBannedSymbols,
-        validators.checkLanguage,
       ],
     },
   },
@@ -135,5 +97,4 @@ export const mapFormFieldToInputComponent: MapFormFieldToInputComponent<EnumForm
   {
     [EnumFormFields.LOGIN]: FormInput<EnumFormFields>,
     [EnumFormFields.PASSWORD]: FormInputWithHideMask,
-    [EnumFormFields.PASSWORD_REPEAT]: FormInputWithHideMask,
   };

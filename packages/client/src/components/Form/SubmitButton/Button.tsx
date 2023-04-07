@@ -1,18 +1,21 @@
 import { useState, useImperativeHandle, useContext } from 'react';
 import { SubmitButtonProps, FormSubmitRefValue } from './_typings';
 import './Button.css';
+import classNames from 'classnames';
 
 export const FormSubmitButton: React.FC<SubmitButtonProps> = props => {
   console.log(`RENDER SUBMIT BUTTON\n${'-'.repeat(50)}`);
-  const { componentRef, label } = props;
-  const formContext = useContext(props.formContext);
+  const { componentRef, buttonProps, formContext } = props;
+  const { label, className, ...htmlProps } = buttonProps;
+
+  const formContextValue = useContext(formContext);
   const [isDisabled, setIsDisabled] = useState(false);
 
   const refValue: FormSubmitRefValue = {
     updateIsDisabled({ isFormValid }: { isFormValid: boolean }) {
       const isEnabled =
-        (formContext.submitsCount.current === 0 &&
-          Object.values(formContext.formRefs.inputsRefs).every(
+        (formContextValue.submitsCount.current === 0 &&
+          Object.values(formContextValue.formRefs.inputsRefs).every(
             inputRef => !inputRef.current?.getError()
           )) ||
         isFormValid;
@@ -24,8 +27,9 @@ export const FormSubmitButton: React.FC<SubmitButtonProps> = props => {
 
   return (
     <button
+      {...htmlProps}
       type="submit"
-      className="form-button form__form-button"
+      className={classNames('form-button', 'form__form-button', className)}
       disabled={isDisabled}>
       {label}
     </button>

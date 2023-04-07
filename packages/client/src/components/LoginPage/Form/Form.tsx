@@ -8,7 +8,6 @@ import {
 export function LoginPageForm() {
   return (
     <Form<EnumFormFields>
-      debugName="LoginForm"
       enumInputFields={EnumFormFields}
       onSubmitCallback={() => {
         // TODO: login service

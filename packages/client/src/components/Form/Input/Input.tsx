@@ -26,9 +26,9 @@ export function FormInput<EnumFields extends string = string>(
       validators,
     });
 
-  const onEventValidationHandler = async (
+  const onEventValidationHandler = async function (
     e: React.FormEvent<HTMLInputElement>
-  ) => {
+  ) {
     const inputValue = e.currentTarget.value;
     await setValueAndValidate(inputValue);
     context.updateIsFormValid?.();

@@ -7,16 +7,11 @@ const EnumFormInputType = {
   TEXT: 'text',
 };
 
-type Props = {
-  onMaskToggleCallback?: () => void;
-};
-
 export function WithHideMask<P extends React.HTMLProps<HTMLInputElement>>(
   InputComponent: React.FC<P>
-): FC<P & Props> {
-  return function InputWithHideMask(props: P & Props) {
+): FC<P> {
+  return function InputWithHideMask(props: P) {
     const [isMasked, setIsMasked] = useState(true);
-    const { onMaskToggleCallback } = props;
 
     const { type } = props;
     const typeProp = {} as { type: string };
@@ -42,7 +37,6 @@ export function WithHideMask<P extends React.HTMLProps<HTMLInputElement>>(
             })}
             onClick={() => {
               setIsMasked(!isMasked);
-              onMaskToggleCallback?.();
             }}></div>
         </InputComponent>
       </>

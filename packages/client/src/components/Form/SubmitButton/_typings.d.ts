@@ -4,10 +4,14 @@ export type FormSubmitRefValue = {
   updateIsDisabled: ({ isFormValid: boolean }) => void;
 };
 
+export type FormSubmitProps = React.HTMLProps<HTMLButtonElement> & {
+  label?: string;
+};
+
 export type FormSubmitRef = React.RefObject<FormSubmitRefValue>;
 
 export type SubmitButtonProps = {
-  label: string;
+  buttonProps: FormSubmitProps;
   componentRef: SubmitButtonRef;
   formContext: FormContext;
 };

@@ -1,13 +1,22 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { FormSubmitButton } from './SubmitButton/Button';
 import type { FormProps } from './_typings';
 import './Form.css';
 import { useFormContext, useFormFields, useFormValidation } from './_hooks';
+import classNames from 'classnames';
 
 function Form<EnumFields extends string>(props: FormProps<EnumFields>) {
-  const { enumInputFields, onSubmitCallback } = props;
+  const {
+    enumInputFields,
+    mapFormFieldToProps,
+    mapFormFieldToInputComponent,
+    onSubmitCallback,
+    submitButtonProps,
+    className,
+    ...htmlProps
+  } = props;
 
-  console.log(`RENDER ${props.debugName?.toUpperCase()}`);
+  console.log(`RENDER FORM`);
   console.log('-'.repeat(50));
 
   const formReactContext = useFormContext<EnumFields>(enumInputFields);
@@ -18,14 +27,21 @@ function Form<EnumFields extends string>(props: FormProps<EnumFields>) {
     formContext,
   });
   const formFields = useFormFields<EnumFields>({
-    formProps: props,
+    enumInputFields,
+    mapFormFieldToProps,
+    mapFormFieldToInputComponent,
     formContext: formReactContext,
     inputsRefs: formRefs.inputsRefs,
   });
 
+  const buttonDefaultProps = useMemo(() => {
+    return { label: 'Отправить' };
+  }, []);
+
   return (
     <form
-      className="form"
+      {...htmlProps}
+      className={classNames('form', className)}
       noValidate
       onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -39,9 +55,9 @@ function Form<EnumFields extends string>(props: FormProps<EnumFields>) {
       }}>
       {formFields}
       <FormSubmitButton
-        label={'Отправить'}
         componentRef={formRefs.submitRef}
         formContext={formReactContext}
+        buttonProps={submitButtonProps ?? buttonDefaultProps}
       />
     </form>
   );

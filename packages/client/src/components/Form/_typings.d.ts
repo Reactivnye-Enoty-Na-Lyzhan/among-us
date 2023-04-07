@@ -1,5 +1,5 @@
 import type { FormInputProps, FormInput, FormInputRef } from './Input/_typings';
-import type { FormSubmitRef } from './SubmitButton/_typings';
+import type { FormSubmitProps, FormSubmitRef } from './SubmitButton/_typings';
 
 export type FormValidationMod = { shouldForceValidateFields: boolean };
 
@@ -35,11 +35,12 @@ export type MapFormFieldToRefAttributes<EnumFields extends string> = Partial<
   Record<EnumFields, Record<string, unknown>>
 >;
 
-export type FormProps<EnumFields extends string> = {
-  debugName?: string;
-  onSubmitCallback?: () => void;
-  enumInputFields: Record<string, EnumFields>;
-  mapFormFieldToProps: MapFormFieldToProps<EnumFields>;
-  mapFormFieldToInputComponent?: MapFormFieldToInputComponent<EnumFields>;
-  mapFormFieldToRefAttributes?: MapFormFieldToRefAttributes<EnumFields>;
-};
+export type FormProps<EnumFields extends string> =
+  React.HTMLProps<HTMLFormElement> & {
+    onSubmitCallback?: () => void;
+    submitButtonProps?: FormSubmitProps;
+    enumInputFields: Record<string, EnumFields>;
+    mapFormFieldToProps: MapFormFieldToProps<EnumFields>;
+    mapFormFieldToInputComponent?: MapFormFieldToInputComponent<EnumFields>;
+    mapFormFieldToRefAttributes?: MapFormFieldToRefAttributes<EnumFields>;
+  };

@@ -6,17 +6,18 @@ import type { FormInputRef } from '../Input/_typings';
 type Args<EnumFields extends string> = {
   inputsRefs: Record<EnumFields, FormInputRef>;
   formContext: FormContext<EnumFields>;
-  formProps: FormProps<EnumFields>;
-};
+} & Pick<
+  FormProps<EnumFields>,
+  'enumInputFields' | 'mapFormFieldToProps' | 'mapFormFieldToInputComponent'
+>;
 
 export function useFormFields<EnumFields extends string = string>({
-  formProps,
+  enumInputFields,
+  mapFormFieldToProps,
+  mapFormFieldToInputComponent,
   inputsRefs,
   formContext,
 }: Args<EnumFields>) {
-  const { enumInputFields, mapFormFieldToProps, mapFormFieldToInputComponent } =
-    formProps;
-
   const formFields = useMemo(
     () =>
       Object.values(enumInputFields).map((fieldName, index) => {
