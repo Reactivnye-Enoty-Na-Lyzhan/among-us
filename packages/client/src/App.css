@@ -1,4 +1,6 @@
+@import './utils/game-end/variables.css';
+
 body {
   font-family: Inter, sans-serif;
-  background-color: #010318;
+  background-color: var(--screen-content-background);
 }
