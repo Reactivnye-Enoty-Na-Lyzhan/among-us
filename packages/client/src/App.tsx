@@ -1,5 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
+import GamePage from './components/GamePage/GamePage';
 import './vendor/fonts/Inter-Regular.woff';
 import './vendor/fonts/Inter-Medium.woff';
 import './vendor/fonts/Inter-Bold.woff';
@@ -15,9 +16,7 @@ import ErrorToast from './components/ErrorToast/ErrorToast';
 function ForumPage() {
   return <h1>Forum page</h1>;
 }
-function GamePage() {
-  return <h1>Game</h1>;
-}
+
 function SignUpPage() {
   return <h1>Registration</h1>;
 }
@@ -30,7 +29,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/game" element={<GamePage />} />
+        <Route path="/game" element={<GamePage result="win" score={10} />} />
         <Route path="/forum" element={<ForumPage />} />
         <Route path="*" element={<Error404/>} />
       </Routes>
