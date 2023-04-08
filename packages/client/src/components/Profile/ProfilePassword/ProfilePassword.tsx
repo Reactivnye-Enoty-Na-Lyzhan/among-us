@@ -41,7 +41,7 @@ const ProfileForm: React.FunctionComponent<Props> = ({choice}) => {
           validateField={validateField}
           type={'password'}
           name={'oldPassword'}
-          placeholder={'Старый пароль'}
+          placeholder={''}
           label={'Старый пароль'}
           validation={validationData.password}
         />
@@ -52,7 +52,7 @@ const ProfileForm: React.FunctionComponent<Props> = ({choice}) => {
           validateField={validateField}
           type={'password'}
           name={'newPassword'}
-          placeholder={'Новый пароль'}
+          placeholder={''}
           label={'Новый пароль'}
           validation={validationData.password}
         />
@@ -63,9 +63,9 @@ const ProfileForm: React.FunctionComponent<Props> = ({choice}) => {
           validateField={validateField}
           type={'password'}
           name={'repeatPassword'}
-          placeholder={'Повторите новый пароль'}
+          placeholder={''}
           label={'Повторите новый пароль'}
-          validation={validationData.comparePasswords}
+          validation={validationData.password}
         />
         <Button disabled={!isFormValid} text={'Изменить пароль'} />
       </Form>
