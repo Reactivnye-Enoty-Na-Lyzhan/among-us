@@ -8,11 +8,7 @@
 .signup-page {
   --color-white: #fff;
   --color-black: #010318;
-  --form-width: clamp(300px, 23.4375vw, 450px);
-  --page-content-width: min(var(--form-width), 92%);
-  --font-size-normal: clamp(14px, 14px + 7 * (100vw - 1280px) / 640, 21px);
-  --font-size-smaller: var(--font-size-normal) - 2px;
-  --font-size-small: var(--font-size-normal) - 4px;
+  --font-size-normal: 14px;
 
   width: 100vw;
   height: 100%;
@@ -23,11 +19,6 @@
   color: var(--color-white);
 
   background-color: var(--color-black);
-
-  * {
-    margin: 0;
-    padding: 0;
-  }
 }
 
 .signup-page-header {
@@ -37,15 +28,15 @@
 }
 
 .signup-page-header_spacing_outer {
-  margin-bottom: min(7vh, 53px);
+  margin-bottom: 53.55px;
 }
 
 .signup-page-header__title {
-  width: var(--page-content-width);
+  width: 300px;
 
   font-size: 2em;
   color: var(--color-white);
-  text-align: center;
+  text-align: left;
   white-space: nowrap;
 }
 
@@ -56,63 +47,34 @@
 }
 
 .signup-page-main_spacing_outer {
-  margin-bottom: min(1vh, 5px);
-}
-
-.signup-page-form {
-  max-width: var(--page-content-width);
-  padding: 0 clamp(5px, 2.5%, 10px);
-  .form-input {
-    margin-bottom: min(2vh, 15px);
-  }
-
-  .form-input:last-of-type {
-    margin-bottom: min(6vh, 46px);
-  }
-
-  .form-input__input {
-    font-size: var(--font-size-smaller);
-  }
-
-  .form-input__label {
-    font-size: var(--font-size-small);
-  }
-
-  .form-input__validation {
-    min-height: 1.2em;
-    margin-top: 7px;
-    font-size: var(--font-size-smaller);
-  }
-
-  .form-button {
-    display: block;
-    height: clamp(30px, 5.6vh, 45px);
-    font-size: var(--font-size-normal);
-  }
+  margin-bottom: 15px;
 }
 
 .signup-page-footer {
   @extend flex-row-container;
 
   width: 100%;
-  max-height: 5vh;
 }
 
 .signup-page-navigation {
-  width: var(--page-content-width);
+  width: 300px;
+}
 
-  .login-prompt {
-    @extend flex-row-container;
+.signup-page-login-prompt {
+  @extend flex-row-container;
 
-    justify-content: center;
-    font-size: var(--font-size-small);
-  }
+  justify-content: center;
+}
 
-  .login-prompt__title {
-    margin-right: 2%;
-  }
+.signup-page-login-prompt__title {
+  margin-right: 5px;
+}
 
-  .login-prompt__link {
-    text-decoration: none;
+.signup-page-login-prompt__link {
+  color: #910cbf;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.8;
   }
 }

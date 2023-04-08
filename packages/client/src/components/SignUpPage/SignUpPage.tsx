@@ -13,9 +13,11 @@ const SignUpPage: React.FC = () => {
       </main>
       <footer className="signup-page-footer">
         <nav className="signup-page-navigation">
-          <div className="login-prompt">
-            <span className="login-prompt__title">Уже зарегистрированы?</span>
-            <Link className="login-prompt__link" to="/login">
+          <div className="signup-page-login-prompt">
+            <span className="signup-page-login-prompt__title">
+              Уже зарегистрированы?
+            </span>
+            <Link className="signup-page-login-prompt__link" to="/login">
               Войти
             </Link>
           </div>
