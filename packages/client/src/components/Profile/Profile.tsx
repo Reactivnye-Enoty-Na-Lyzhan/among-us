@@ -1,27 +1,41 @@
-import { Link } from 'react-router-dom';
-import ProfileForm from '../ProfileForm/ProfileForm';
+import ProfilePassword from './ProfilePassword/ProfilePassword';
+import ProfilePersonalData from './ProfilePersonalData/ProfilePersonalData';
+import ProfileHeader from './ProfileHeader/ProfileHeader';
+import ProfileAvatar from './ProfileAvatar/ProfileAvatar';
+import ProfileNavigation from './ProfileNavigation/ProfileNavigation';
 import './Profile.css';
 
-export default function Profile(){
-  return(
-    <div className='profile'>
-      <div className='profile__information profile__information_space_around'>
-        <Link className='profile__link-back profile__information_space_right profile__information_space_m' to="/" />
-        <p className='profile__paragraph profile__information_space_right'>Редактирование профиля</p>
-        <p className='profile__personal-info profile__information_space_left'>Персональные данные</p>
-      </div>
-      <div className='profile__form profile__form_space_left'>
-        <div>
-          <ProfileForm />
-        </div>
-        <div className='profile__navigation profile__navigation_space_right'>
-          <div className='profile__navigation-img'></div>
-          <div className='profile__navigation-links'>
-            <Link className='profile__navigation-links_left profile__navigation-link' to="/change-avatar">Изменить аватар</Link>
-            <Link className='profile__navigation-links_right profile__navigation-link' to="/change-password" >Изменить пароль</Link>
+interface Props {
+  choice: 'Персональные данные' | "Изменение пароля" | "Аватар";
+  handleChoiceChange?: (choice: 'Персональные данные' | "Изменение пароля" | "Аватар") => void;
+}
+
+export default function Profile({ choice, handleChoiceChange }: Props) {
+  return (
+    <div>
+      <ProfileHeader choice={choice}/>
+      {choice === 'Персональные данные' && (
+        <div className='profile__form profile__form_space_left'>
+          <ProfilePersonalData choice={choice}/>
+          <div className='profile__navigation_space_right'>
+            <ProfileNavigation choice={choice} handleChoiceChange={handleChoiceChange}/> 
           </div>
         </div>
-      </div>
+      )}
+      {choice === 'Изменение пароля' && (
+        <div className='profile__form profile__form_space_left'>
+          <ProfilePassword choice={choice}/>
+          <div className='profile__navigation profile__navigation_space_right'>
+            <ProfileNavigation choice={choice} handleChoiceChange={handleChoiceChange}/>
+          </div>
+        </div>
+      )}
+      {choice === 'Аватар' && (
+        <div className='profile__form_space_top profile__form_direction_center'>
+          <ProfileAvatar />
+          <ProfileNavigation choice={choice} handleChoiceChange={handleChoiceChange}/>
+        </div>
+      )}
     </div>
   );
 }

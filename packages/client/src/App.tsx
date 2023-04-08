@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
 import Profile from './components/Profile/Profile';
@@ -23,6 +24,12 @@ function SignUpPage() {
 }
 
 function App() {
+  const [link, setLink] = useState<"Персональные данные" | "Изменение пароля" | "Аватар">("Персональные данные");
+
+  const handleChoiceChange = (choice: "Персональные данные" | "Изменение пароля" | "Аватар") => {
+    setLink(choice);
+  };
+
   return (
     <Router>
         <ErrorToast />
@@ -32,7 +39,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/game" element={<GamePage result="win" score={10} />} />
         <Route path="/forum" element={<ForumPage />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='/profile' element={<Profile choice={link} handleChoiceChange={handleChoiceChange}/>} />
         <Route path="*" element={<Error404/>} />
       </Routes>
     </Router>

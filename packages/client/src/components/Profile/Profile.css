@@ -14,8 +14,17 @@
   justify-content: space-between;
 }
 
+.profile__form_direction_center {
+  display: flex;
+  justify-content: center;
+}
+
 .profile__form_space_left {
   margin-left: 72px;
+}
+
+.profile__form_space_top {
+  margin-top: 111px;
 }
 
 .profile__information {
@@ -52,7 +61,6 @@
 }
 
 .profile__paragraph {
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 22px;
@@ -72,7 +80,7 @@
 .profile__navigation {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
 
 .profile__navigation_space_right {
@@ -82,6 +90,7 @@
 .profile__navigation-links {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   font-family: Inter;
   font-size: 0.9rem;
   font-weight: 400;
@@ -114,10 +123,32 @@
   padding-left: 20px;
 }
 
-.profile__navigation-img {
-  width: 14rem;
-  height: 20.5rem;
+.profile__navigation_space_top {
+  margin-top: 30px;
+}
+
+.profile__navigation-data {
+  width: 297px;
+  height: 378px;
   background-image: url(../../images/profile/amongus-profile.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.profile__navigation-password {
+  width: 297px;
+  height: 425px;
+  background-image: url(../../images/profile/amongus-password.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.profile__navigation-avatar {
+  width: 330px;
+  height: 481px;
+  /* margin-left: 170px; */
+  margin-top: -65px;
+  background-image: url(../../images/profile/amongus-avatar.svg);
   background-repeat: no-repeat;
   background-size: contain;
 }
