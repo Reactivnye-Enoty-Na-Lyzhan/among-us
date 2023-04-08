@@ -1,0 +1,113 @@
+@define-placeholder flex-row-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.signup-page {
+  --color-white: #fff;
+  --color-black: #010318;
+  --form-width: clamp(300px, 23.4375vw, 450px);
+  --page-content-width: min(var(--form-width), 92%);
+  --font-size-normal: clamp(14px, 14px + 7 * (100vw - 1280px) / 640, 21px);
+  --font-size-smaller: var(--font-size-normal) - 2px;
+  --font-size-small: var(--font-size-normal) - 4px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  font-size: var(--font-size-normal);
+  color: var(--color-white);
+
+  background-color: var(--color-black);
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.signup-page-header {
+  width: 100%;
+  margin-top: 2.5vh;
+  margin-bottom: min(7vh, 53px);
+
+  .signup-page-header__title {
+    width: var(--page-content-width);
+    margin: 0 auto;
+
+    font-size: 2em;
+    color: var(--color-white);
+    text-align: center;
+  }
+}
+
+.signup-page-main {
+  overflow-y: scroll;
+  width: 100%;
+
+  margin: 0 auto;
+
+  .form {
+    max-width: var(--page-content-width);
+    width: var(--page-content-width);
+    margin: 0 auto 1vh auto;
+    .form-input {
+      margin-bottom: min(2vh, 15px);
+    }
+
+    .form-input:last-of-type {
+      margin-bottom: min(6vh, 46px);
+    }
+
+    .form-input__input {
+      font-size: var(--font-size-smaller);
+    }
+
+    .form-input__label {
+      font-size: var(--font-size-small);
+    }
+
+    .form-input__validation {
+      min-height: 1.2em;
+      margin-top: 7px;
+      font-size: var(--font-size-smaller);
+    }
+
+    .form-button {
+      display: block;
+      height: min(5.6vh, 41px);
+      font-size: var(--font-size-normal);
+    }
+  }
+}
+
+.signup-page-footer {
+  width: 100%;
+  max-height: 10vh;
+}
+
+.signup-page-navigation {
+  width: var(--page-content-width);
+  margin: 0 auto 2.5vh;
+
+  .login-prompt {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto;
+
+    font-size: var(--font-size-small);
+  }
+
+  .login-prompt__title {
+    margin-right: 2%;
+  }
+}
