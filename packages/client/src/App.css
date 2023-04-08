@@ -1,3 +1,5 @@
+@import './utils/game-end/variables.css';
+
 .app {
   padding-left: calc(100vw - 100%);
   min-height: 100vh;

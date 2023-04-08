@@ -16,20 +16,21 @@ function SignUpPage() {
 }
 
 function App() {
+  /* browser router вынести в main.tsx */
   return (
-    <div className="app app_theme_default">
-      <Router>
+    <Router>
+      <div className="app app_theme_default">
         <ErrorToast />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/game/*" element={<GamePage />} />
+          <Route path="/game/*" element={<GamePage result="win" score={10} />} />
           <Route path="/forum" element={<ForumPage />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
-      </Router>
-    </div>
+      </div>
+    </Router >
   );
 }
 

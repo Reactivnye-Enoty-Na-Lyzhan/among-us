@@ -1,0 +1,130 @@
+@import '../../utils/game-end/variables.css';
+
+.game-end {
+  display: flex;
+}
+
+.game-end_spacing_below {
+  padding-bottom: 100px;
+}
+
+.game-end__title {
+  color: var(--text-color);
+  font-weight: 700;
+  font-size: 5rem;
+  line-height: 120%;
+}
+
+.game-end__title_spacing_above-below {
+  margin: 124px 0 147px;
+}
+
+.game-end__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 46rem;
+}
+
+.game-end__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.game-end__image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+}
+
+.game-end__image_left {
+  left: 50px;
+  bottom: 100px;
+}
+
+.game-end__image_right {
+  right: 50px;
+  bottom: 100px;
+}
+
+.game-end__image_impostor_yellow {
+  background-image: url(../../images/game-end/impostor-yellow.svg);
+  width: 12rem;
+  height: 18rem;
+}
+
+.game-end__image_impostor_red {
+  background-image: url(../../images/game-end/impostor-red.svg);
+  width: 16rem;
+  height: 18rem;
+}
+
+.game-end__image_impostor_mint {
+  background-image: url(../../images/game-end/impostor-mint.svg);
+  width: 16rem;
+  height: 18rem;
+  bottom: 50px;
+}
+
+.game-end__image_impostor_firework {
+  background-image: url(../../images/game-end/impostor-firework.svg);
+  width: 24rem;
+  height: 34rem;
+}
+
+.game-end__image_impostor_dead {
+  background-image: url(../../images/game-end/impostor-dead.svg);
+  width: 16rem;
+  height: 18rem;
+  bottom: 50px;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .game-end__image_impostor_yellow {
+    background-image: url(../../images/game-end/impostor-yellow@2x.svg);
+  }
+  .game-end__image_impostor_red {
+    background-image: url(../../images/game-end/impostor-red@2x.svg);
+  }
+
+  .game-end__image_impostor_mint {
+    background-image: url(../../images/game-end/impostor-mint@2x.svg);
+  }
+
+  .game-end__image_impostor_firework {
+    background-image: url(../../images/game-end/impostor-firework@2x.svg);
+  }
+
+  .game-end__image_impostor_dead {
+    background-image: url(../../images/game-end/impostor-dead@2x.svg);
+  }
+}
+
+.game-end__text {
+  text-align: center;
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 120%;
+}
+
+.game-end__text_spacing_below {
+  margin-bottom: 10px;
+}
+
+.game-end__link {
+  display: flex;
+  justify-content: center;
+  color: #e8125f;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 120%;
+  text-decoration: none;
+}
+
+.game-end__link:hover {
+  opacity: 0.8;
+}
