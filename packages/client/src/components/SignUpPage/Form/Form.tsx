@@ -31,6 +31,7 @@ export default function SignUpForm() {
 
   return (
     <Form
+      className="signup-page-form"
       onSubmit={() => {
         if (validateForm(values)) {
           console.log('SUBMIT', { values });

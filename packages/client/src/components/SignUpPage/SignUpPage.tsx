@@ -5,10 +5,10 @@ import './SignUpPage.css';
 const SignUpPage: React.FC = () => {
   return (
     <div className="signup-page">
-      <header className="signup-page-header">
+      <header className="signup-page-header signup-page-header_spacing_outer">
         <h1 className="signup-page-header__title">Добро Пожаловать!</h1>
       </header>
-      <main className="signup-page-main">
+      <main className="signup-page-main signup-page-main_spacing_outer">
         <SignUpForm></SignUpForm>
       </main>
       <footer className="signup-page-footer">
