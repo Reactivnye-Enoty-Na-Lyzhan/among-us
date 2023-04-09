@@ -1,18 +1,15 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import LandingPage from './components/LandingPage/LandingPage';
 import { Error404 } from './components/ErrorPage/ErrorPage';
-import LoginPage from './components/LoginPage/LoginPage';
 import ErrorToast from './components/ErrorToast/ErrorToast';
 import GamePage from './components/GamePage/GamePage';
+import LoginPage from './components/LoginPage/LoginPage';
+import LandingPage from './components/LandingPage/LandingPage';
+import SignUpPage from './components/SignUpPage/SignUpPage';
 import './App.css';
 
 //placeholders
 function ForumPage() {
   return <h1>Forum page</h1>;
-}
-
-function SignUpPage() {
-  return <h1>Registration</h1>;
 }
 
 function App() {
