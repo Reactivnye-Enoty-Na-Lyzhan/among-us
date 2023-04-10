@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 export type ValidationData = {
   field: string;
@@ -20,51 +20,58 @@ export function useValidation(validations: ValidationRule[]) {
     return !Object.entries(validationData).some(d => !d[1].isValid);
   }, [validationData]);
 
-  function validateForm(values: Record<string, string | undefined>) {
-    const newValidationData: Record<string, ValidationData> = {};
-    let isValid = true;
+  const validateForm = useCallback(
+    (values: Record<string, string | undefined>) => {
+      const newValidationData: Record<string, ValidationData> = {};
+      let isValid = true;
 
-    for (const validation of validations) {
-      newValidationData[validation.field] = {
-        ...validation.validation(values[validation.field]),
-        field: validation.field,
-      };
+      for (const validation of validations) {
+        newValidationData[validation.field] = {
+          ...validation.validation(values[validation.field]),
+          field: validation.field,
+        };
 
-      if (isValid && !newValidationData[validation.field].isValid) {
-        isValid = false;
+        if (isValid && !newValidationData[validation.field].isValid) {
+          isValid = false;
+        }
       }
-    }
 
-    setValidationData(newValidationData);
+      setValidationData(newValidationData);
 
-    return isValid;
-  }
+      return isValid;
+    },
+    []
+  );
 
-  function validateField(field: string, value?: string) {
-    const newValidationData: Record<string, ValidationData> = {
-      ...validationData,
-    };
-    delete newValidationData[field];
-    const validation = validations.find(v => v.field === field);
-
-    if (validation) {
-      newValidationData[validation.field] = {
-        ...validation.validation(value),
-        field: validation.field,
+  const validateField = useCallback((field: string, value?: string) => {
+    setValidationData(prev => {
+      const newValidationData: Record<string, ValidationData> = {
+        ...prev,
       };
-    }
+      delete newValidationData[field];
+      const validation = validations.find(v => v.field === field);
 
-    setValidationData(newValidationData);
-  }
+      if (validation) {
+        newValidationData[validation.field] = {
+          ...validation.validation(value),
+          field: validation.field,
+        };
+      }
 
-  function clearFieldValidation(field: string) {
-    const newValidationData: Record<string, ValidationData> = {
-      ...validationData,
-    };
-    delete newValidationData[field];
+      return newValidationData;
+    });
+  }, []);
 
-    setValidationData(newValidationData);
-  }
+  const clearFieldValidation = useCallback((field: string) => {
+    setValidationData(prev => {
+      const newValidationData: Record<string, ValidationData> = {
+        ...prev,
+      };
+      delete newValidationData[field];
+
+      return newValidationData;
+    });
+  }, []);
 
   return {
     validationData,

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import './Button.css';
 
 type Props = {
@@ -17,4 +17,4 @@ const Button: FC<Props> = ({ text, disabled }) => {
   );
 };
 
-export default Button;
+export default memo(Button);
