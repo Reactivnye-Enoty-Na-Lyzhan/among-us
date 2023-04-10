@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_TEAM_NAME } from '../../utils/constants';
+import { API_BASE_URL, API_TEAM_NAME } from '../../utils/constants';
 import { LeaderboardDataType } from './leaderboard.types';
 
 export const leaderboardApi = createApi({
   reducerPath: 'leaderboard/api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://ya-praktikum.tech/api/v2/',
+    baseUrl: API_BASE_URL,
     credentials: 'include',
   }),
   endpoints: build => ({
