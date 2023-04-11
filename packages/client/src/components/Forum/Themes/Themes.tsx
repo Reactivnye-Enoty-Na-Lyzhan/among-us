@@ -46,7 +46,7 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
         <ThemesGroup title={pinnedThemes.title} collapsible={true}>
           {filteredPinnedThemes.map((theme, i) => (
             <li className="forum-themes__item" key={i}>
-              <ThemeCard theme={theme} isPinned={true} isAdmin={true} />
+              <ThemeCard theme={theme} isPinned={true} hasEditAccess={true} />
             </li>
           ))}
         </ThemesGroup>
@@ -57,7 +57,7 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
           buttons={[<GroupButton text="+ cоздать новую тему" />]}>
           {filteredThemes.map((theme, i) => (
             <li className="forum-themes__item" key={i}>
-              <ThemeCard theme={theme} isAdmin={true} />
+              <ThemeCard theme={theme} hasEditAccess={true} />
             </li>
           ))}
         </ThemesGroup>

@@ -4,11 +4,11 @@ import './Card.css';
 
 type Props = {
   theme: ForumTheme;
-  isAdmin?: boolean;
+  hasEditAccess?: boolean;
   isPinned?: boolean;
 };
 
-const ThemeCard: FC<Props> = ({ theme, isAdmin, isPinned }) => {
+const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
   return (
     <div className="theme-card">
       <div className="theme-card-info theme-card__info">
@@ -30,7 +30,7 @@ const ThemeCard: FC<Props> = ({ theme, isAdmin, isPinned }) => {
       <div className="theme-card__messages">
         Сообщений: <span>{theme.messagesCount}</span>
       </div>
-      {isAdmin ? (
+      {hasEditAccess ? (
         <div className="theme-card__tools">
           <button
             type="button"

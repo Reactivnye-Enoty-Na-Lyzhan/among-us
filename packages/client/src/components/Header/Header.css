@@ -19,6 +19,7 @@
   font-family: Inter;
   font-weight: 400;
   line-height: 120%;
+  margin: 0;
 }
 
 .page-header__go-back {
@@ -28,7 +29,7 @@
   width: 32px;
   height: 24px;
   background-color: var(--color-white);
-  mask-image: url(./../../images/header/return-link.svg);
+  mask-image: url(images/header/return-link.svg);
   mask-size: 32px 15px;
   mask-position: center;
   mask-repeat: no-repeat;

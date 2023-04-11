@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Header from '../../Header/Header';
 import Themes from '../Themes/Themes';
 import './Page.css';
 
+// TBD: change mockThemes to themes from API
 const mockThemes: ForumTheme[] = [
   {
     title:
@@ -40,7 +41,7 @@ const themes: ForumThemeGroup = {
   themes: mockThemes,
 };
 
-export default function () {
+const ForumPage: FC = () => {
   return (
     <div className="forum">
       <Header title={'Форум'} goBackUrl={'/'} />
@@ -49,4 +50,6 @@ export default function () {
       </main>
     </div>
   );
-}
+};
+
+export default ForumPage;

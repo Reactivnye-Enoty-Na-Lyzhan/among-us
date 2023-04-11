@@ -11,7 +11,7 @@ const Header: FC<Props> = ({ title, goBackUrl }) => {
   return (
     <header className="page-header">
       <Link className="page-header__go-back" to={goBackUrl}></Link>
-      <div className="page-header__title">{title}</div>
+      <h1 className="page-header__title">{title}</h1>
     </header>
   );
 };
