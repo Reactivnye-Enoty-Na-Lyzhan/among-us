@@ -1,4 +1,4 @@
-import { FC, memo, useState } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import ColorButton from './ColorButton/ColorButton';
@@ -31,7 +31,10 @@ const FinalPreparing: FC<Props> = props => {
   const navigate = useNavigate();
 
   // Исключительно для демонстрации
-  setTimeout(() => setUsedColors(colors => ({ ...colors, white: true })), 5000);
+  useEffect(() => {
+    setTimeout(() => setUsedColors(colors => ({ ...colors, white: true })), 5000);
+  }, []);
+
 
   // TODO: Добавить смену цвета
   const crewmanClass = classNames('finalpreparing__crewman', {
@@ -53,6 +56,8 @@ const FinalPreparing: FC<Props> = props => {
 
   // Начало игры с выбранным цветом скафандра
   const handleStartGame = () => {
+    if (!selectedColor) return;
+
     navigate('../await');
   };
 

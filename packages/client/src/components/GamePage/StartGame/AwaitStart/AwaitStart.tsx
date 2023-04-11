@@ -1,13 +1,8 @@
 import { FC, memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { pluralSeconds } from '../../../../utils/plural';
+import { gameSettings } from '@/utils/gameParams';
 import './AwaitStart.css';
-
-type GameSettingsType = {
-  meeting: number;
-  discussion: number;
-  interval: number;
-};
 
 type Props = {
   onCancel: () => void;
@@ -23,17 +18,13 @@ const AwaitStart: FC<Props> = props => {
 
   // Обратный отсчёт
   useEffect(() => {
-    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+    if (counter > 0) {
+      setTimeout(() => setCounter(counter - 1), 1000);
+    }
   }, [counter]);
 
-  // Временный объект
-  const gameSettings: GameSettingsType = {
-    meeting: 5,
-    discussion: 50,
-    interval: 30,
-  };
-
   const heading = counter > 0 ? 'Старт игры через' : 'Игра начинается!';
+
   const pluralRules = new Intl.PluralRules('ru-RU');
   const pluralDiscussion = pluralRules.select(gameSettings.discussion);
   const pluralInterval = pluralRules.select(gameSettings.interval);
@@ -42,7 +33,7 @@ const AwaitStart: FC<Props> = props => {
   const handleExitGame = () => {
     // отмена игры
     onCancel();
-    navigate('..');
+    navigate('./');
   };
 
   return (

@@ -4,10 +4,10 @@ import { SuitColorsType } from '../../../../../utils/gameParams';
 import './ColorButton.css';
 
 type Props = {
-  color: string;
-  selected: boolean;
-  disabled: boolean;
-  onSelect: (color: keyof SuitColorsType) => void;
+  color: keyof SuitColorsType,
+  selected: boolean,
+  disabled: boolean,
+  onSelect: (color: keyof SuitColorsType) => void,
 };
 
 // Кнопка выбора цвета скафандра
@@ -20,7 +20,7 @@ const ColorButton: FC<Props> = props => {
   });
 
   const handleClick = () => {
-    onSelect(color as keyof SuitColorsType);
+    onSelect(color);
   };
 
   return (

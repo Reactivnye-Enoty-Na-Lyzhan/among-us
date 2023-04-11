@@ -1,14 +1,14 @@
 export type GameParamsType = {
-  title: string;
-  name: string;
-  min: number;
-  max: number;
-  rangeUnit: string;
+  title: string,
+  name: keyof InputsParamsType,
+  min: number,
+  max: number,
+  rangeUnit: string,
 };
 
-export const gameNamePattern = /^[0-9a-zA-Zа-яА-ЯёЁ-]*$/i;
+export const gameNamePattern = /^[0-9a-zA-Zа-яА-ЯёЁ-]+$/i;
 
-export const gameParams = [
+export const gameParams: GameParamsType[] = [
   {
     title: 'Предателей',
     name: 'impostor',
@@ -39,15 +39,31 @@ export const gameParams = [
   },
 ];
 
-export const inputDefaultValues = {
+const inputsList = [
+  'impostor',
+  'meeting',
+  'discussion',
+  'interval',
+  'title'
+] as const;
+
+export type InputsParamsType = {
+  [k in typeof inputsList[number]]: string;
+}
+
+export const inputDefaultValues: InputsParamsType = {
   impostor: '2',
   meeting: '5',
   discussion: '50',
   interval: '30',
-  title: 'Без названия',
+  title: 'БезНазвания',
 };
 
-export const defaultValidityState = {
+export type DefaultValidityStateType = {
+  [k in typeof inputsList[number]]: boolean;
+}
+
+export const defaultValidityState: DefaultValidityStateType = {
   impostor: true,
   meeting: true,
   discussion: true,
@@ -56,16 +72,8 @@ export const defaultValidityState = {
 };
 
 export type SuitColorsType = {
-  white: boolean;
-  red: boolean;
-  green: boolean;
-  blue: boolean;
-  yellow: boolean;
-  purple: boolean;
-  aquamarine: boolean;
-  brown: boolean;
-  grey: boolean;
-};
+  [k in typeof suitsColors[number]]: boolean;
+}
 
 export const suitsColors = [
   'white',
@@ -77,4 +85,17 @@ export const suitsColors = [
   'blue',
   'brown',
   'grey',
-];
+] as const;
+
+export type GameSettingsType = {
+  meeting: number,
+  discussion: number,
+  interval: number,
+};
+
+// Временный объект
+export const gameSettings: GameSettingsType = {
+  meeting: 5,
+  discussion: 50,
+  interval: 30,
+};

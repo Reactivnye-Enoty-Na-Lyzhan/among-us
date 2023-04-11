@@ -9,7 +9,7 @@ type Props = {
 const ProtectedGame: FC<Props> = props => {
   const { isStarted } = props;
 
-  return <>{isStarted ? <Outlet /> : <Navigate to=".." />}</>;
+  return isStarted ? <Outlet /> : <Navigate to="" />;
 };
 
 export default memo(ProtectedGame);

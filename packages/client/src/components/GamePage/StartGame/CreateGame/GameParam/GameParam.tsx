@@ -1,25 +1,16 @@
 import { FC, memo } from 'react';
 import classNames from 'classnames';
+import { CheckInputValidityType, ControlParamType, HandleChangeType } from '@/hooks/useParamsValidation.types';
 import { GameParamsType } from '../../../../../utils/gameParams';
 import './GameParam.css';
 
 type Props = GameParamsType & {
-  inputValue: string;
-  validity: boolean;
-  onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (evt: React.FocusEvent<HTMLInputElement>) => void;
-  onIncrease: (
-    name: string,
-    inputValue: string,
-    min: number,
-    max: number
-  ) => void;
-  onDecrease: (
-    name: string,
-    inputValue: string,
-    min: number,
-    max: number
-  ) => void;
+  inputValue: string,
+  validity: boolean,
+  onChange: HandleChangeType,
+  onBlur: CheckInputValidityType,
+  onIncrease: ControlParamType,
+  onDecrease: ControlParamType,
 };
 
 // Параметр настройки игры
@@ -42,6 +33,14 @@ const GameParam: FC<Props> = props => {
     'create-game__param-controls_invalid': !validity,
   });
 
+  const increaseValue = () => {
+    onIncrease(name, inputValue, min, max);
+  };
+
+  const decreaseValue = () => {
+    onDecrease(name, inputValue, min, max);
+  };
+
   return (
     <li className="create-game__game-param">
       <div className="create-game__param-container">
@@ -50,7 +49,7 @@ const GameParam: FC<Props> = props => {
           <button
             className="create-game__control"
             type="button"
-            onClick={() => onDecrease(name, inputValue, min, max)}>
+            onClick={decreaseValue}>
             -
           </button>
           <input
@@ -70,7 +69,7 @@ const GameParam: FC<Props> = props => {
           <button
             className="create-game__control"
             type="button"
-            onClick={() => onIncrease(name, inputValue, min, max)}>
+            onClick={increaseValue}>
             +
           </button>
         </div>

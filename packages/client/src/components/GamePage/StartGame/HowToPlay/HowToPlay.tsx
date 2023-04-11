@@ -5,13 +5,18 @@ import './HowToPlay.css';
 const HowToPlay: FC = () => {
   const navigate = useNavigate();
 
+  // Вернуть пользователя на предыдущую страницу
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="howtoplay">
       <h1 className="howtoplay__title">Как играть?</h1>
       <p className="howtoplay__helper-text">
         Никто не знает, как играть. Идите-ка обратно
       </p>
-      <button className="howtoplay__go-back" onClick={() => navigate(-1)}>
+      <button className="howtoplay__go-back" onClick={goBack}>
         Хорошо, хорошо!
       </button>
     </div>
