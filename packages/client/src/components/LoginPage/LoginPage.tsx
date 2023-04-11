@@ -24,13 +24,12 @@ const LoginPage: FC = () => {
     { field: 'password', validation: validation.password },
   ]);
 
-function handleSubmit() {
+async function handleSubmit() {
     if (!validateForm(values)) {
         return;
     }
     setStatusMessageClass('');
     setRequestStatus('Проверяем...');
-    (async () => {
        const errResponse = await signIn(values);
        if (errResponse) {
         setStatusMessageClass('login-page__status_red');
@@ -39,7 +38,6 @@ function handleSubmit() {
         setStatusMessageClass('login-page__status_green');
         setRequestStatus('Рады видеть снова!');
        }
-    })();
 }
 
   return (
