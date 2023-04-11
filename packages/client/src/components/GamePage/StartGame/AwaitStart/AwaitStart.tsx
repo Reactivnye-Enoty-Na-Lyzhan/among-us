@@ -1,7 +1,7 @@
 import { FC, memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { pluralSeconds } from '../../../../utils/plural';
 import { gameSettings } from '@/utils/gameParams';
+import { getPluralSeconds } from '@/utils/helpers/getPlural';
 import './AwaitStart.css';
 
 type Props = {
@@ -24,10 +24,6 @@ const AwaitStart: FC<Props> = props => {
   }, [counter]);
 
   const heading = counter > 0 ? 'Старт игры через' : 'Игра начинается!';
-
-  const pluralRules = new Intl.PluralRules('ru-RU');
-  const pluralDiscussion = pluralRules.select(gameSettings.discussion);
-  const pluralInterval = pluralRules.select(gameSettings.interval);
 
   // Выход из игры
   const handleExitGame = () => {
@@ -62,7 +58,7 @@ const AwaitStart: FC<Props> = props => {
           <li className="await-start__list-item">
             <h2 className="await-start__param-name">Время на обсуждение:</h2>
             <span className="await-start__param-value">
-              {gameSettings.discussion} {pluralSeconds[pluralDiscussion]}
+              {gameSettings.discussion} {getPluralSeconds(gameSettings.discussion)}
             </span>
           </li>
           <li className="await-start__list-item">
@@ -70,7 +66,7 @@ const AwaitStart: FC<Props> = props => {
               Перерыв между собраниями:
             </h2>
             <span className="await-start__param-value">
-              {gameSettings.interval} {pluralSeconds[pluralInterval]}
+              {gameSettings.interval} {getPluralSeconds(gameSettings.interval)}
             </span>
           </li>
         </ul>
