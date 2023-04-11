@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, memo, useState } from 'react';
 import { ValidationData } from '../../../hooks/useValidation';
 import classNames from 'classnames';
 import './Input.css';
@@ -74,4 +74,4 @@ const Input: FC<Props> = ({
   );
 };
 
-export default Input;
+export default memo(Input);
