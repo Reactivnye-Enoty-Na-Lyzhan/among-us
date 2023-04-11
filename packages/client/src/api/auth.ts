@@ -4,18 +4,17 @@ const signUpUrl = `${BASE_URL}/auth/signin`;
 
 type signInData = Record<string, string | undefined>
 
-export function signInAPI(data: signInData) {
-    return fetch(signUpUrl, {
+export async function signInAPI(data: signInData) {
+    const res = await fetch(signUpUrl, {
         method: 'POST',
         credentials: "include",
         headers: {
-          'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-      }).then(res => {
-        if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(res);
-      });
+    });
+    if (res.ok) {
+        return;
+    }
+    return Promise.reject(res);
 }

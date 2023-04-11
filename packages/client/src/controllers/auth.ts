@@ -13,6 +13,7 @@ export async function signIn(data: signInData) {
         await signInAPI(data);
         return null;
     } catch(err: any) {
+        console.log(err);
         if (!err?.status) {
             return errorsHash['unknown'];
           }
