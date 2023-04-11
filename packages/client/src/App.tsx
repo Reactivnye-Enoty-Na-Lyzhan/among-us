@@ -5,12 +5,8 @@ import ErrorToast from './components/ErrorToast/ErrorToast';
 import LandingPage from './components/LandingPage/LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import SignUpPage from './components/SignUpPage/SignUpPage';
+import ForumPage from './components/Forum/Page/Page';
 import './App.css';
-
-//placeholders
-function ForumPage() {
-  return <h1>Forum page</h1>;
-}
 
 function App() {
   return (
