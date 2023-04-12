@@ -11,6 +11,14 @@ type CacheHandler = {
   deleteOldCaches: ({ keepList }?: { keepList: string[] }) => Promise<void>;
 };
 
+const getURL = (request: RequestInfo): string => {
+  if (typeof request === 'string') {
+    return request;
+  } else {
+    return new URL(request.url).pathname;
+  }
+};
+
 function makeCacheHandler(cacheName: string): CacheHandler {
   const addResourcesToCache: CacheHandler['addResourcesToCache'] =
     async resources => {
@@ -23,10 +31,15 @@ function makeCacheHandler(cacheName: string): CacheHandler {
     response,
   }) => {
     const cache = await caches.open(cacheName);
-    let logString = `PUT REQUEST '${getURL(request)}' TO CACHE ${cacheName}`;
+    let logString = `NETWORK REQUEST: ${getURL(request)}; STATUS: ${
+      response.status
+    }\n`;
+
+    logString += `PUT REQUEST '${getURL(request)}' TO CACHE ${cacheName}`;
     await cache.put(request, response).catch(error => {
-      logString += `FAILED WITH ERROR: ${error}`;
+      logString += `FAILED WITH ERROR: ${error.message}`;
     });
+
     console.log(logString);
   };
 
@@ -41,11 +54,11 @@ function makeCacheHandler(cacheName: string): CacheHandler {
     { keepList } = { keepList: [cacheName] }
   ) => {
     const cachesKeysList = await caches.keys();
-    console.log(`CASHES: ${cachesKeysList}`);
+    console.log(`CASHES: ${JSON.stringify(cachesKeysList)}`);
     const cachesToDelete = cachesKeysList.filter(
       key => !keepList.includes(key)
     );
-    console.log(`DELETE OLD CACHES ${cachesToDelete}`);
+    console.log(`DELETE OLD CACHES ${JSON.stringify(cachesToDelete)}`);
     await Promise.all(cachesToDelete.map(deleteCache));
   };
 
@@ -57,18 +70,10 @@ function makeCacheHandler(cacheName: string): CacheHandler {
   };
 }
 
-const getURL = (request: RequestInfo): string => {
-  if (typeof request === 'string') {
-    return request;
-  } else {
-    return new URL(request.url).pathname;
-  }
-};
-
 const sw: ServiceWorkerGlobalScope = self as any;
 
 const CACHE_NAME = 'ws-cache-v1';
-const URLS_TO_CACHE = ['/login'];
+const URLS_TO_CACHE = ['/', '/offline.html'];
 
 const cacheHandler = makeCacheHandler(CACHE_NAME);
 
@@ -82,21 +87,72 @@ sw.addEventListener('activate', event => {
   event.waitUntil(cacheHandler.deleteOldCaches({ keepList: [CACHE_NAME] }));
 });
 
-const cacheFirst = async (request: RequestInfo) => {
+const getResponseFromCache = async (request: RequestInfo) => {
   const responseFromCache = await caches.match(request);
+
   if (responseFromCache) {
     console.log(`REQUEST '${getURL(request)}' FOUND IN CACHE`);
     return responseFromCache;
   }
+};
 
-  const responseFromNetwork = await fetch(request);
-  cacheHandler.putInCache({
-    request,
-    response: responseFromNetwork.clone(),
-  });
-  return responseFromNetwork;
+const getAndCacheResponseFromNetwork = async (request: RequestInfo) => {
+  try {
+    const responseFromNetwork = await fetch(request);
+
+    if (responseFromNetwork.status === 200) {
+      cacheHandler.putInCache({
+        request,
+        response: responseFromNetwork.clone(),
+      });
+    }
+
+    return responseFromNetwork;
+  } catch (error) {
+    return;
+  }
+};
+
+const getOfflineResponse = async () => {
+  const offlinePage = await caches.match('/offline.html');
+  return offlinePage;
+};
+
+const cacheFirst = async (request: RequestInfo) => {
+  const responseFromCache = await getResponseFromCache(request);
+  if (responseFromCache) {
+    return responseFromCache;
+  }
+
+  const responseFromNetwork = await getAndCacheResponseFromNetwork(request);
+  if (responseFromNetwork) {
+    return responseFromNetwork;
+  }
+
+  const responseOffline = await getOfflineResponse();
+  return responseOffline ?? new Response();
+};
+
+const networkFirst = async (request: RequestInfo) => {
+  const responseFromNetwork = await getAndCacheResponseFromNetwork(request);
+  if (responseFromNetwork) {
+    return responseFromNetwork;
+  }
+
+  const responseFromCache = await getResponseFromCache(request);
+  if (responseFromCache) {
+    return responseFromCache;
+  }
+
+  const responseOffline = await getOfflineResponse();
+  return responseOffline ?? new Response();
+};
+
+const cacheStrategies = {
+  cacheFirst,
+  networkFirst,
 };
 
 sw.addEventListener('fetch', event => {
-  event.respondWith(cacheFirst(event.request));
+  event.respondWith(cacheStrategies.networkFirst(event.request));
 });
