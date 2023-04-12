@@ -5,7 +5,7 @@ const useAuth = () => {
   if (isLoading) {
     return 'Loading';
   }
-  return data !== null && data !== undefined && data !== false && data !== 0 && data !== '';
+  return data !== null && data !== undefined;
 };
 
 export default useAuth;

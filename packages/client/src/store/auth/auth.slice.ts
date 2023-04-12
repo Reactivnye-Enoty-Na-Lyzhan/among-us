@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { User } from './auth.types';
 import { API_BASE_URL } from '../../utils/constants';
 
 export const authApi = createApi({
@@ -8,7 +9,7 @@ export const authApi = createApi({
     credentials: 'include',
   }),
   endpoints: build => ({
-    getUser: build.query<any, void>({
+    getUser: build.query<User, void>({
       query: () => '/auth/user', 
     })
   }),
