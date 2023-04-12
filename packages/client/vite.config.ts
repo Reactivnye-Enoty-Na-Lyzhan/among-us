@@ -1,12 +1,16 @@
 import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
 import path from 'path';
+import { InputOptions, OutputOptions, rollup } from 'rollup';
+import rollupPluginTypescript from 'rollup-plugin-typescript';
 import { defineConfig } from 'vite';
 dotenv.config();
 
-const isDev = process.env.BUILD_MODE === 'development';
+const IS_DEV = process.env.BUILD_MODE === 'development';
+const OUT_DIR = 'dist';
+
 let outputNamesOptions;
-if (isDev) {
+if (IS_DEV) {
   outputNamesOptions = {
     entryFileNames: 'assets/[name].js',
     chunkFileNames: 'assets/[name].js',
@@ -14,6 +18,23 @@ if (isDev) {
   };
 }
 console.log(outputNamesOptions);
+
+const CompileTsServiceWorker = () => ({
+  name: 'compile-typescript-service-worker',
+  async writeBundle() {
+    const inputOptions: InputOptions = {
+      input: 'src/service-worker/worker/service-worker.ts',
+      plugins: [rollupPluginTypescript()],
+    };
+    const outputOptions: OutputOptions = {
+      file: `${OUT_DIR}/service-worker.js`,
+      format: 'es',
+    };
+    const bundle = await rollup(inputOptions);
+    await bundle.write(outputOptions);
+    await bundle.close();
+  },
+});
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -23,8 +44,9 @@ export default defineConfig({
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
-  plugins: [react()],
+  plugins: [react(), CompileTsServiceWorker()],
   build: {
+    outDir: OUT_DIR,
     cssMinify: false,
     rollupOptions: {
       output: {
