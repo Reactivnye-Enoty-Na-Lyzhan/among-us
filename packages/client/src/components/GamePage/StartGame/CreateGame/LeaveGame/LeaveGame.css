@@ -1,0 +1,11 @@
+.create-game__leave-game {
+  font-size: 16px;
+  color: var(--button-font-secondary);
+  line-height: 1.2;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.create-game__leave-game:hover {
+  opacity: 0.8;
+}
