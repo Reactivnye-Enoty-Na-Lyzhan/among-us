@@ -6,8 +6,6 @@
 }
 
 .signup-page {
-  --color-white: #fff;
-  --color-black: #010318;
   --font-size-normal: 14px;
 
   display: flex;
@@ -21,9 +19,9 @@
   padding: 2.5vh 0;
 
   font-size: var(--font-size-normal);
-  color: var(--color-white);
+  color: var(--font-main-primary);
 
-  background-color: var(--color-black);
+  background-color: var(--background-main-primary);
 }
 
 .signup-page-header {
@@ -40,7 +38,7 @@
   width: 300px;
 
   font-size: 2em;
-  color: var(--color-white);
+  color: var(--font-main-primary);
   text-align: left;
   white-space: nowrap;
 }
@@ -76,7 +74,7 @@
 }
 
 .signup-page-login-prompt__link {
-  color: #910cbf;
+  color: var(--font-main-secondary);
   text-decoration: none;
 
   &:hover {

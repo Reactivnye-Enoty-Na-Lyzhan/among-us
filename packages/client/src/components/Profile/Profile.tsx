@@ -12,7 +12,8 @@ interface Props {
 
 export default function Profile({ choice, handleChoiceChange }: Props) {
   return (
-    <div>
+    /* Измени потом. Profile-page добавил, чтобы сохранить заливку */
+    <div className='profile-page'>
       <ProfileHeader choice={choice}/>
       {choice === 'Персональные данные' && (
         <div className='profile__form profile__form_space_left'>

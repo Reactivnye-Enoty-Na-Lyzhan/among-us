@@ -6,7 +6,7 @@ const SignUpPage: React.FC = () => {
   return (
     <div className="signup-page">
       <header className="signup-page-header signup-page-header_spacing_outer">
-        <h1 className="signup-page-header__title">Добро Пожаловать!</h1>
+        <h1 className="signup-page-header__title">Добро пожаловать!</h1>
       </header>
       <main className="signup-page-main signup-page-main_spacing_outer">
         <SignUpForm></SignUpForm>

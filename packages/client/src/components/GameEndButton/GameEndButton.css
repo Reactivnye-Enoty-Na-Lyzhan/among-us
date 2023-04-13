@@ -22,15 +22,15 @@
 }
 
 .game-end__button-name_green {
-  background-color: #24d108;
+  background-color: var(--button-main-secondary);
 }
 
 .game-end__button-name_violet {
-  background-color: #910cbf;
+  background-color: var(--button-main-primary);
 }
 
 .game-end__button-name_pink {
-  background-color: #e8125f;
+  background-color: var(--button-main-quaternary);
 }
 
 .game-end__button-name_spacing_below {

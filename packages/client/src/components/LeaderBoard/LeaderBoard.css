@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #010318;
+  background-color: var(--leaderboard-background-primary);
   position: relative;
 }
 
@@ -22,17 +22,18 @@
   margin-right: 10px;
   width: 32px;
   height: 15px;
-  background-image: url(../../images/ui/return-link.svg);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: var(--leaderboard-font-primary);
+  mask-image: url(../../images/ui/return-link.svg);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
 }
 
 .leaderboard__title {
   margin: 0;
   font-size: 22px;
   font-weight: 500;
-  color: #fafafa;
+  color: var(--leaderboard-font-primary);
   line-height: 1.2;
 }
 
@@ -53,7 +54,7 @@
   padding: 0;
   width: 133px;
   height: 33px;
-  background-color: #910cbf;
+  background-color: var(--leaderboard-background-tertiary);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -67,7 +68,7 @@
 .leaderboard__menu-title {
   font-size: 12px;
   font-weight: 500;
-  color: #fafafa;
+  color: var(--leaderboard-font-primary);
   line-height: 1.2;
 }
 
@@ -75,10 +76,11 @@
   margin-left: 5px;
   width: 8px;
   height: 5px;
-  background-image: url(../../images/ui/caret.svg);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: var(--leaderboard-font-primary);
+  mask-image: url(../../images/ui/caret.svg);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
 }
 
 .leaderboard__menu-icon_opened {
@@ -95,8 +97,8 @@
   padding: 18px 0 18px 21px;
   gap: 15px;
   width: 217px;
-  background-color: #fafafa;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+  background-color: var(--leaderboard-dropdown-background);
+  box-shadow: 0 4px 4px rgba(var(--leaderboard-dropdown-overlay), .25);
   border-radius: 5px;
   list-style: none;
   overflow: hidden;
@@ -117,7 +119,7 @@
   padding: 0;
   font-size: 12px;
   font-weight: 500;
-  color: #2b2b2b;
+  color: var(--leaderboard-dropdown-fontZ);
   line-height: 1.2;
   background: transparent;
   border: none;
@@ -145,7 +147,7 @@
   list-style: none;
   overflow-y: scroll;
   scrollbar-width: thin;
-  scrollbar-color: #fafafa #010318;
+  scrollbar-color: var(--leaderboard-scroll-primary) var(--leaderboard-scroll-secondary);
   scrollbar-gutter: stable;
 }
 
@@ -154,8 +156,8 @@
 }
 
 .leaderboard__rating-board::-webkit-scrollbar-thumb {
-  background-color: #fafafa;
-  border: 3px solid #010318;
+  background-color: var(--leaderboard-scroll-primary);
+  border: 3px solid var(--leaderboard-scroll-secondary);
   border-radius: 5px;
 }
 .leaderboard__rating-board::-webkit-scrollbar-track {
@@ -169,9 +171,9 @@
   width: 138px;
   height: 34px;
   font-size: 12px;
-  color: #fafafa;
+  color: var(--leaderboard-font-primary);
   line-height: 1.2;
-  background-color: #910cbf;
+  background-color: var(--leaderboard-background-tertiary);
   border: none;
   border-radius: 3px;
   cursor: pointer;

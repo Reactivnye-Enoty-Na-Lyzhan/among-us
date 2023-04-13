@@ -26,8 +26,9 @@ const ProfileForm: React.FunctionComponent<Props> = ({choice}) => {
   ]);
 
   return(
-    <div className='form'>
-      <h1 className='form__title form__title_space_bottom'>Смена пароля члена экипажа</h1>
+    /* Временно изменил класс с form на profile-form. У тебя ниже идёт снова class Form*/
+    <div className='profile-form'>
+      <h1 className='profile-form__title profile-form__title_space_bottom'>Смена пароля члена экипажа</h1>
       <Form
         onSubmit={() => {
           if (validateForm(values)) {
