@@ -39,7 +39,6 @@ function makeCacheHandler(cacheName: string): CacheHandler {
     await cache.put(request, response).catch(error => {
       logString += `FAILED WITH ERROR: ${error.message}`;
     });
-
     console.log(logString);
   };
 
@@ -109,7 +108,10 @@ const getAndCacheResponseFromNetwork = async (request: RequestInfo) => {
 
     return responseFromNetwork;
   } catch (error) {
-    return;
+    const logString = `FAILED TO GET RESPONSE ON '${getURL(
+      request
+    )} 'FROM NETWORK WITH ERROR: ${error}`;
+    console.error(logString);
   }
 };
 
