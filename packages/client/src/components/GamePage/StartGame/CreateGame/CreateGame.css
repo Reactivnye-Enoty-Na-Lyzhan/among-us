@@ -1,0 +1,40 @@
+.create-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.create-game_spacing_outer {
+  margin: 130px 0 55px;
+}
+
+.create-game__title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+}
+
+.create-game__container {
+  display: grid;
+  grid-template-columns: 2fr 1fr auto 1fr 2fr;
+  grid-template-areas: 'crewman-left return-link content next-link crewman-right';
+  height: 100%;
+}
+
+.create-game__crewman {
+  grid-area: crewman-left;
+  justify-self: flex-end;
+  align-self: center;
+  margin-top: 71px;
+  width: 181px;
+  height: 247px;
+  background-image: url(../../../../images/crewman/crewman-white.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1);
+}

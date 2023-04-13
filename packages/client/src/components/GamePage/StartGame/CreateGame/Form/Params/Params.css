@@ -1,0 +1,26 @@
+.create-game__params {
+  display: flex;
+  flex-direction: column;
+  margin: 0 50px;
+  padding: 0;
+  gap: 20px;
+  list-style: none;
+}
+
+.create-game__reset-params {
+  align-self: flex-end;
+  margin-right: 50px;
+  padding: 0;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--font-main-secondary);
+  line-height: 1.2;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.create-game__reset-params:hover {
+  opacity: 0.8;
+}
