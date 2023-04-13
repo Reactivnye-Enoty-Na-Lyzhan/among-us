@@ -1,0 +1,8 @@
+.forum-themes__item {
+  margin-bottom: 25px;
+  display: block;
+
+  &:last-child {
+    margin-bottom: none;
+  }
+}

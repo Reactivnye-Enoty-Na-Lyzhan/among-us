@@ -34,7 +34,7 @@
     width: 20px;
     height: 20px;
     background-color: #fff;
-    mask-image: url(./../../../images/form/eye-hide.svg);
+    mask-image: url(images/form/eye-hide.svg);
     mask-size: 12px 10px;
     mask-position: center;
     mask-repeat: no-repeat;
@@ -50,6 +50,6 @@
   & .form-input__visibility_show {
     background-color: #fff;
     mask-size: 12px 8px;
-    mask-image: url(./../../../images/form/eye-show.svg);
+    mask-image: url(images/form/eye-show.svg);
   }
 }
