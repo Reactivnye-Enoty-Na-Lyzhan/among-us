@@ -1,0 +1,33 @@
+.howtoplay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.howtoplay__title {
+  margin: 0;
+  font-size: 64px;
+  font-weight: 500;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+}
+
+.howtoplay__helper-text {
+  margin: 15px 0 0 0;
+  font-size: 20px;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+}
+
+.howtoplay__go-back {
+  padding: 0;
+  margin-top: 25px;
+  font-family: inherit;
+  font-size: 20px;
+  color: var(--font-main-secondary);
+  line-height: 1.2;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
