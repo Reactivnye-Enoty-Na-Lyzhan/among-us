@@ -5,7 +5,7 @@ node_modules/
 dist
 tmp
 *.log
-packages/client/public/*
-packages/client/public/!*.svg
+packages/client/public/service-worker*
+packages/client/public/*.tsbuildinfo
 packages/client/configs/stylelint
 
