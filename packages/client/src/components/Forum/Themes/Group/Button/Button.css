@@ -1,0 +1,27 @@
+.theme-group-button {
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  margin-left: 6px;
+  background: none;
+  font-size: 12px;
+  color: var(--color-white);
+  transition: color ease-in 0.1s;
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--color-purple);
+  }
+}
+
+.theme-group-button__icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  mask-size: 10px 13px;
+  mask-position: center;
+  mask-repeat: no-repeat;
+}

@@ -1,0 +1,13 @@
+.forum-themes-search {
+  text-align: right;
+}
+
+.forum-themes-search__input {
+  border: none;
+  border-radius: 3px;
+  background-color: var(--color-white);
+  font-size: 12px;
+  height: 32px;
+  padding: 0 10px;
+  width: 169px;
+}
