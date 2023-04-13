@@ -120,7 +120,25 @@ const getOfflineResponse = async () => {
   return offlinePage;
 };
 
-const cacheFirst = async (request: RequestInfo) => {
+type TRequestHandler<TResponse extends Response | undefined = Response> = (
+  request: RequestInfo
+) => Promise<TResponse>;
+
+function withOfflineResponse(
+  strategy: TRequestHandler<Response | undefined>
+): TRequestHandler {
+  return async request => {
+    const response = await strategy(request);
+    if (!response) {
+      const responseOffline = await getOfflineResponse();
+      return responseOffline ?? new Response();
+    }
+
+    return response;
+  };
+}
+
+const cacheFirst = withOfflineResponse(async (request: RequestInfo) => {
   const responseFromCache = await getResponseFromCache(request);
   if (responseFromCache) {
     return responseFromCache;
@@ -130,12 +148,9 @@ const cacheFirst = async (request: RequestInfo) => {
   if (responseFromNetwork) {
     return responseFromNetwork;
   }
+});
 
-  const responseOffline = await getOfflineResponse();
-  return responseOffline ?? new Response();
-};
-
-const networkFirst = async (request: RequestInfo) => {
+const networkFirst = withOfflineResponse(async (request: RequestInfo) => {
   const responseFromNetwork = await getAndCacheResponseFromNetwork(request);
   if (responseFromNetwork) {
     return responseFromNetwork;
@@ -148,7 +163,7 @@ const networkFirst = async (request: RequestInfo) => {
 
   const responseOffline = await getOfflineResponse();
   return responseOffline ?? new Response();
-};
+});
 
 const cacheStrategies = {
   cacheFirst,
