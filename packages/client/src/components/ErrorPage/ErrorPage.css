@@ -6,8 +6,8 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    background: #010318;
-    color: #FAFAFA;
+    background: var(--background-main-primary);
+    color: var(--font-main-primary);
 }
 .error-page__code {
     font-weight: 700;
@@ -26,7 +26,7 @@
     text-decoration: none;
     font-weight: 400;
     font-size: 14px;
-    color: #910CBF;
+    color: var(--font-main-secondary);
     margin-top: 30px;
 }
 .error-page__return-link:hover {
