@@ -13,7 +13,7 @@ function Navigation() {
     <nav className="startgame-navigation startgame-navigation_spacing_outer">
       <ul className="startgame-navigation__links">
         <li className="startgame-navigation__links-item">
-          <Link to="/rate" className="startgame-navigation__link">
+          <Link to="/leaderboard" className="startgame-navigation__link">
             Рейтинг
           </Link>
         </li>
