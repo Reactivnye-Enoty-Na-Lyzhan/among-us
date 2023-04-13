@@ -13,3 +13,4 @@ export default function GamePage({result, score}: Props) {
     </div>
   );
 }
+
