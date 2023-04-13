@@ -34,11 +34,14 @@ function makeCacheHandler(cacheName: string): CacheHandler {
     let logString = `NETWORK REQUEST: ${getURL(request)}; STATUS: ${
       response.status
     }\n`;
-
     logString += `PUT REQUEST '${getURL(request)}' TO CACHE ${cacheName}`;
-    await cache.put(request, response).catch(error => {
-      logString += `FAILED WITH ERROR: ${error.message}`;
-    });
+
+    try {
+      await cache.put(request, response);
+    } catch (error) {
+      logString += `FAILED WITH ERROR: ${error}`;
+    }
+
     console.log(logString);
   };
 
