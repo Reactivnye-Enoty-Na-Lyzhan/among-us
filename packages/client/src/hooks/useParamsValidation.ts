@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { gameNamePattern, InputsParamsType, DefaultValidityStateType } from '@/utils/gameParams';
+import {
+  gameNamePattern,
+  InputsParamsType,
+  DefaultValidityStateType,
+} from '@/utils/gameParams';
 import {
   Props,
   UseParamsValidationType,
@@ -11,13 +15,11 @@ import {
 
 // Хук валидации параметров игры
 const useParamsValidation = (props: Props): UseParamsValidationType => {
-  const {
-    defaultValues,
-    defaultValidityState,
-  } = props;
+  const { defaultValues, defaultValidityState } = props;
 
   const [values, setValues] = useState<InputsParamsType>(defaultValues);
-  const [inputsValidity, setInputsValidity] = useState<DefaultValidityStateType>(defaultValidityState);
+  const [inputsValidity, setInputsValidity] =
+    useState<DefaultValidityStateType>(defaultValidityState);
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
 
   // Обновление валидации формы
@@ -28,40 +30,52 @@ const useParamsValidation = (props: Props): UseParamsValidationType => {
   }, [inputsValidity]);
 
   // Обработчик поля ввода
-  const handleChange: HandleChangeType = useCallback((evt) => {
+  const handleChange: HandleChangeType = useCallback(evt => {
     const { target } = evt;
     const { name, value } = target;
     if (name !== 'title' && value !== '' && !Number(value)) return;
-    setValues((inputValues) => ({ ...inputValues, [name]: value }));
+    setValues(inputValues => ({ ...inputValues, [name]: value }));
   }, []);
 
   // Обработчик клика уменьшения значения
-  const handleDecrease: ControlParamType = useCallback((name, value, min, max) => {
-    // Если значение уже меньше или равно минимуму, запретить уменьшение
-    if (+value <= min) return;
+  const handleDecrease: ControlParamType = useCallback(
+    (name, value, min, max) => {
+      // Если значение уже меньше или равно минимуму, запретить уменьшение
+      if (+value <= min) return;
 
-    setValues(inputValues => ({ ...inputValues, [name]: (+value - 1).toString() }));
-    setInputsValidity((inputs) => ({
-      ...inputs,
-      [name]: +value - 1 >= min && +value - 1 <= max,
-    }));
-  }, []);
+      setValues(inputValues => ({
+        ...inputValues,
+        [name]: (+value - 1).toString(),
+      }));
+      setInputsValidity(inputs => ({
+        ...inputs,
+        [name]: +value - 1 >= min && +value - 1 <= max,
+      }));
+    },
+    []
+  );
 
   // Обработчик клика увеличения значения
-  const handleIncrease: ControlParamType = useCallback((name, value, min, max) => {
-    // Если значение уже больше или равно максимум, запретить увеличение
+  const handleIncrease: ControlParamType = useCallback(
+    (name, value, min, max) => {
+      // Если значение уже больше или равно максимум, запретить увеличение
 
-    if (+value >= max) return;
+      if (+value >= max) return;
 
-    setValues(inputValues => ({ ...inputValues, [name]: (+value + 1).toString() }));
-    setInputsValidity(inputs => ({
-      ...inputs,
-      [name]: +value + 1 >= min && +value + 1 <= max,
-    }));
-  }, []);
+      setValues(inputValues => ({
+        ...inputValues,
+        [name]: (+value + 1).toString(),
+      }));
+      setInputsValidity(inputs => ({
+        ...inputs,
+        [name]: +value + 1 >= min && +value + 1 <= max,
+      }));
+    },
+    []
+  );
 
   // Проверка валидности поля ввода
-  const checkInputValidity: CheckInputValidityType = useCallback((evt) => {
+  const checkInputValidity: CheckInputValidityType = useCallback(evt => {
     const { target } = evt;
     const { name, value, min, max } = target;
 

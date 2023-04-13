@@ -7,10 +7,10 @@ import { useValidation } from '../../../hooks/useValidation';
 import './ProfilePersonalData.css';
 
 type Props = {
-  choice: "Персональные данные" | "Изменение пароля" | "Аватар";
+  choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар';
 };
 
-const ProfileForm: React.FunctionComponent<Props> = ({choice}) => {
+const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
   choice;
   const { values, handleInputChange } = useForm({});
   const {
@@ -28,9 +28,9 @@ const ProfileForm: React.FunctionComponent<Props> = ({choice}) => {
     { field: 'login', validation: validation.login },
   ]);
 
-  return(
-    <div className='form'>
-        <h1 className='form__title'>Карточка члена экипажа</h1>
+  return (
+    <div className="form">
+      <h1 className="form__title">Карточка члена экипажа</h1>
       <Form
         onSubmit={() => {
           if (validateForm(values)) {
@@ -103,7 +103,7 @@ const ProfileForm: React.FunctionComponent<Props> = ({choice}) => {
           label={'Логин'}
           validation={validationData.login}
         />
-        
+
         <Button disabled={!isFormValid} text={'Изменить данные'} />
       </Form>
     </div>

@@ -58,7 +58,8 @@ const AwaitStart: FC<Props> = props => {
           <li className="await-start__list-item">
             <h2 className="await-start__param-name">Время на обсуждение:</h2>
             <span className="await-start__param-value">
-              {gameSettings.discussion} {getPluralSeconds(gameSettings.discussion)}
+              {gameSettings.discussion}{' '}
+              {getPluralSeconds(gameSettings.discussion)}
             </span>
           </li>
           <li className="await-start__list-item">

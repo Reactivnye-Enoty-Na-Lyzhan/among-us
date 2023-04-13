@@ -1,4 +1,4 @@
-import { pluralSeconds } from "../plural";
+import { pluralSeconds } from '../plural';
 
 export const getPluralSeconds = (value: number): string => {
   const pluralRules = new Intl.PluralRules('ru-RU');

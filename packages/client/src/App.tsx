@@ -12,9 +12,13 @@ import ForumPage from './components/Forum/Page/Page';
 import './App.css';
 
 function App() {
-  const [link, setLink] = useState<"Персональные данные" | "Изменение пароля" | "Аватар">("Персональные данные");
+  const [link, setLink] = useState<
+    'Персональные данные' | 'Изменение пароля' | 'Аватар'
+  >('Персональные данные');
 
-  const handleChoiceChange = (choice: "Персональные данные" | "Изменение пароля" | "Аватар") => {
+  const handleChoiceChange = (
+    choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар'
+  ) => {
     setLink(choice);
   };
 
@@ -26,14 +30,22 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/game/*" element={<GamePage result="win" score={10} />} />
+          <Route
+            path="/game/*"
+            element={<GamePage result="win" score={10} />}
+          />
           <Route path="/leaderboard" element={<LeaderBoard />} />
           <Route path="/forum" element={<ForumPage />} />
-          <Route path='/profile' element={<Profile choice={link} handleChoiceChange={handleChoiceChange} />} />
+          <Route
+            path="/profile"
+            element={
+              <Profile choice={link} handleChoiceChange={handleChoiceChange} />
+            }
+          />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </div>
-    </Router >
+    </Router>
   );
 }
 

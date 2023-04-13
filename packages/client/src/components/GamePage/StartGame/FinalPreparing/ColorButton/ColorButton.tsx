@@ -4,10 +4,10 @@ import { SuitColorsType } from '../../../../../utils/gameParams';
 import './ColorButton.css';
 
 type Props = {
-  color: keyof SuitColorsType,
-  selected: boolean,
-  disabled: boolean,
-  onSelect: (color: keyof SuitColorsType) => void,
+  color: keyof SuitColorsType;
+  selected: boolean;
+  disabled: boolean;
+  onSelect: (color: keyof SuitColorsType) => void;
 };
 
 // Кнопка выбора цвета скафандра

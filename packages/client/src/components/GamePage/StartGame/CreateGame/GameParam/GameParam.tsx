@@ -1,16 +1,20 @@
 import { FC, memo } from 'react';
 import classNames from 'classnames';
-import { CheckInputValidityType, ControlParamType, HandleChangeType } from '@/hooks/useParamsValidation.types';
+import {
+  CheckInputValidityType,
+  ControlParamType,
+  HandleChangeType,
+} from '@/hooks/useParamsValidation.types';
 import { GameParamsType } from '../../../../../utils/gameParams';
 import './GameParam.css';
 
 type Props = GameParamsType & {
-  inputValue: string,
-  validity: boolean,
-  onChange: HandleChangeType,
-  onBlur: CheckInputValidityType,
-  onIncrease: ControlParamType,
-  onDecrease: ControlParamType,
+  inputValue: string;
+  validity: boolean;
+  onChange: HandleChangeType;
+  onBlur: CheckInputValidityType;
+  onIncrease: ControlParamType;
+  onDecrease: ControlParamType;
 };
 
 // Параметр настройки игры

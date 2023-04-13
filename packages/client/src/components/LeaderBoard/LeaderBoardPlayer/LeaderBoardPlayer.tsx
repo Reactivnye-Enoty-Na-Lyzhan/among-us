@@ -3,24 +3,24 @@ import { LeaderboardDataType } from '../../../utils/leaderboardData';
 import './LeaderBoardPlayer.css';
 
 type Props = LeaderboardDataType & {
-  owner: boolean,
+  owner: boolean;
 };
 
 // Компонент карточки пользователя в таблице рейтинга
-const LeaderBoardPlayer: FC<Props> = (props) => {
-  const {
-    avatar,
-    nickname,
-    games,
-    wins,
-    rank,
-    owner,
-  } = props;
+const LeaderBoardPlayer: FC<Props> = props => {
+  const { avatar, nickname, games, wins, rank, owner } = props;
 
   return (
-    <li className={`leaderboard__player${owner ? ' leaderboard__player_type_owner' : ''}`}>
+    <li
+      className={`leaderboard__player${
+        owner ? ' leaderboard__player_type_owner' : ''
+      }`}>
       <div className="leaderboard__player-container">
-        <img src={avatar} alt={`Аватар игрока ${nickname}.`} className="leaderboard__user-avatar" />
+        <img
+          src={avatar}
+          alt={`Аватар игрока ${nickname}.`}
+          className="leaderboard__user-avatar"
+        />
         <div className="leaderboard__player-info">
           <h2 className="leaderboard__nickname">{nickname}</h2>
           <p className="leaderboard__player-achievment">

@@ -32,9 +32,11 @@ const FinalPreparing: FC<Props> = props => {
 
   // Исключительно для демонстрации
   useEffect(() => {
-    setTimeout(() => setUsedColors(colors => ({ ...colors, white: true })), 5000);
+    setTimeout(
+      () => setUsedColors(colors => ({ ...colors, white: true })),
+      5000
+    );
   }, []);
-
 
   // TODO: Добавить смену цвета
   const crewmanClass = classNames('finalpreparing__crewman', {
