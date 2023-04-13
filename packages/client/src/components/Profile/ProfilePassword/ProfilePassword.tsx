@@ -7,10 +7,10 @@ import { useValidation } from '../../../hooks/useValidation';
 import './ProfilePassword.css';
 
 type Props = {
-  choice: "Персональные данные" | "Изменение пароля" | "Аватар";
+  choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар';
 };
 
-const ProfileForm: React.FunctionComponent<Props> = ({choice}) => {
+const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
   choice;
   const { values, handleInputChange } = useForm({});
   const {
@@ -25,10 +25,12 @@ const ProfileForm: React.FunctionComponent<Props> = ({choice}) => {
     { field: 'repeatPassword', validation: validation.password },
   ]);
 
-  return(
+  return (
     /* Временно изменил класс с form на profile-form. У тебя ниже идёт снова class Form*/
-    <div className='profile-form'>
-      <h1 className='profile-form__title profile-form__title_space_bottom'>Смена пароля члена экипажа</h1>
+    <div className="profile-form">
+      <h1 className="profile-form__title profile-form__title_space_bottom">
+        Смена пароля члена экипажа
+      </h1>
       <Form
         onSubmit={() => {
           if (validateForm(values)) {

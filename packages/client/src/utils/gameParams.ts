@@ -1,9 +1,9 @@
 export type GameParamsType = {
-  title: string,
-  name: keyof InputsParamsType,
-  min: number,
-  max: number,
-  rangeUnit: string,
+  title: string;
+  name: keyof InputsParamsType;
+  min: number;
+  max: number;
+  rangeUnit: string;
 };
 
 export const gameNamePattern = /^[0-9a-zA-Zа-яА-ЯёЁ-]+$/i;
@@ -44,12 +44,12 @@ const inputsList = [
   'meeting',
   'discussion',
   'interval',
-  'title'
+  'title',
 ] as const;
 
 export type InputsParamsType = {
-  [k in typeof inputsList[number]]: string;
-}
+  [k in (typeof inputsList)[number]]: string;
+};
 
 export const inputDefaultValues: InputsParamsType = {
   impostor: '2',
@@ -60,8 +60,8 @@ export const inputDefaultValues: InputsParamsType = {
 };
 
 export type DefaultValidityStateType = {
-  [k in typeof inputsList[number]]: boolean;
-}
+  [k in (typeof inputsList)[number]]: boolean;
+};
 
 export const defaultValidityState: DefaultValidityStateType = {
   impostor: true,
@@ -72,8 +72,8 @@ export const defaultValidityState: DefaultValidityStateType = {
 };
 
 export type SuitColorsType = {
-  [k in typeof suitsColors[number]]: boolean;
-}
+  [k in (typeof suitsColors)[number]]: boolean;
+};
 
 export const suitsColors = [
   'white',
@@ -88,9 +88,9 @@ export const suitsColors = [
 ] as const;
 
 export type GameSettingsType = {
-  meeting: number,
-  discussion: number,
-  interval: number,
+  meeting: number;
+  discussion: number;
+  interval: number;
 };
 
 // Временный объект

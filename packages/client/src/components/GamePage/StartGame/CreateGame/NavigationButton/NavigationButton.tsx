@@ -1,16 +1,16 @@
-import classNames from "classnames";
-import { FC, memo } from "react";
+import classNames from 'classnames';
+import { FC, memo } from 'react';
 import './NavigationButton.css';
 
 type Props = {
-  title: string,
-  action?: 'next',
-  buttonType?: 'submit' | 'button',
-  isFormValid?: boolean,
-  handleClick: () => void,
-}
+  title: string;
+  action?: 'next';
+  buttonType?: 'submit' | 'button';
+  isFormValid?: boolean;
+  handleClick: () => void;
+};
 
-const NavigationButton: FC<Props> = (props) => {
+const NavigationButton: FC<Props> = props => {
   const {
     title,
     action = '',

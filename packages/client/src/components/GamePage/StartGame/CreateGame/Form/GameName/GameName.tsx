@@ -1,22 +1,20 @@
-import { FC, memo } from "react";
-import classNames from "classnames";
-import { CheckInputValidityType, HandleChangeType } from "@/hooks/useParamsValidation.types";
+import { FC, memo } from 'react';
+import classNames from 'classnames';
+import {
+  CheckInputValidityType,
+  HandleChangeType,
+} from '@/hooks/useParamsValidation.types';
 import './GameName.css';
 
 type Props = {
-  value: string,
-  validity: boolean,
-  onChange: HandleChangeType,
-  onBlur: CheckInputValidityType,
-}
+  value: string;
+  validity: boolean;
+  onChange: HandleChangeType;
+  onBlur: CheckInputValidityType;
+};
 
-const GameName: FC<Props> = (props) => {
-  const {
-    value,
-    validity,
-    onChange,
-    onBlur,
-  } = props;
+const GameName: FC<Props> = props => {
+  const { value, validity, onChange, onBlur } = props;
 
   const gameNameClass = classNames('create-game__input', {
     'create-game__input_type_error': !validity,

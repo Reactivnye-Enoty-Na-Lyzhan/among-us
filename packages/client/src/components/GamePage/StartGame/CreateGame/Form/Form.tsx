@@ -1,29 +1,25 @@
-import { FC, memo } from "react";
-import useParamsValidation from "@/hooks/useParamsValidation";
-import NavigationButton from "../NavigationButton/NavigationButton";
-import Params from "./Params/Params";
-import GameParam from "../GameParam/GameParam";
-import GameName from "./GameName/GameName";
+import { FC, memo } from 'react';
+import useParamsValidation from '@/hooks/useParamsValidation';
+import NavigationButton from '../NavigationButton/NavigationButton';
+import Params from './Params/Params';
+import GameParam from '../GameParam/GameParam';
+import GameName from './GameName/GameName';
 import {
   InputsParamsType,
   defaultValidityState,
   gameParams,
-  inputDefaultValues
+  inputDefaultValues,
 } from '../../../../../utils/gameParams';
 import './Form.css';
 
 type Props = {
-  formStep: number,
-  changeStep: (step: number) => void,
-  onSubmit: (values: InputsParamsType) => void,
+  formStep: number;
+  changeStep: (step: number) => void;
+  onSubmit: (values: InputsParamsType) => void;
 };
 
-const Form: FC<Props> = (props) => {
-  const {
-    formStep,
-    changeStep,
-    onSubmit,
-  } = props;
+const Form: FC<Props> = props => {
+  const { formStep, changeStep, onSubmit } = props;
 
   const test = { defaultValues: inputDefaultValues, defaultValidityState };
   const {
@@ -63,17 +59,14 @@ const Form: FC<Props> = (props) => {
   return (
     <>
       {formStep === 2 && (
-        <NavigationButton
-          title={"Назад"}
-          handleClick={handlePrevButton} />
+        <NavigationButton title={'Назад'} handleClick={handlePrevButton} />
       )}
       <form
         className="create-game__form"
         onSubmit={handleFormSubmit}
         noValidate>
         <div className="create-game__form-container">
-          {
-            formStep === 1 &&
+          {formStep === 1 && (
             <Params onReset={resetValues}>
               {gameParams.map(gameParam => (
                 <GameParam
@@ -92,23 +85,23 @@ const Form: FC<Props> = (props) => {
                 />
               ))}
             </Params>
-          }
-          {
-            formStep === 2 &&
+          )}
+          {formStep === 2 && (
             <GameName
               value={values.title}
               validity={inputsValidity.title}
               onChange={handleChange}
               onBlur={checkInputValidity}
             />
-          }
+          )}
         </div>
       </form>
       <NavigationButton
         title="Создать игру"
         handleClick={handleNextButton}
         action="next"
-        isFormValid={isFormValid} />
+        isFormValid={isFormValid}
+      />
     </>
   );
 };
