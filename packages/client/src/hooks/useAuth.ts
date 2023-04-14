@@ -1,11 +1,15 @@
 import { useGetUserQuery } from '../store/auth/auth.slice';
 
-const useAuth = () => {
+interface AuthState {
+  isAuthenticated: boolean;
+  isLoading: boolean;
+}
+
+const useAuth = (): AuthState => {
   const { data, isLoading } = useGetUserQuery();
-  if (isLoading) {
-    return 'Loading';
-  }
-  return data !== null && data !== undefined;
+  const isAuthenticated = data !== null && data !== undefined;
+
+  return { isAuthenticated, isLoading };
 };
 
 export default useAuth;

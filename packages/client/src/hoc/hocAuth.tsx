@@ -4,12 +4,17 @@ import { Navigate } from 'react-router-dom';
 
 const hocAuth = (Component: FC) => {
   return () => {
-    const isAuthenticated = useAuth();
+    const { isAuthenticated, isLoading } = useAuth();
     
-    if (!isAuthenticated) {
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+
+    if (isAuthenticated) {
+      return <Component />;
+    } else {
       return <Navigate to="/login" />;
     }
-    return <Component />;
   };
 };
 
