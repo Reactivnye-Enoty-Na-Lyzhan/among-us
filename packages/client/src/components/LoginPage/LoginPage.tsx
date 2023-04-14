@@ -5,6 +5,7 @@ import { useForm } from '../Form/hooks';
 import { validation } from '../../utils/validation';
 import Button from '../Form/Button/Button';
 import { useValidation } from '../../hooks/useValidation';
+import hocAuth from '../../hoc/hocAuth';
 
 const LoginPage: FC = () => {
   const { values, handleInputChange } = useForm({ login: 'test' });
@@ -60,4 +61,4 @@ const LoginPage: FC = () => {
   );
 };
 
-export default LoginPage;
+export default hocAuth(LoginPage);
