@@ -1,0 +1,137 @@
+.theme-card {
+  background-color: var(--color-purple);
+  display: flex;
+  color: var(--color-white);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.theme-card__info {
+  padding: 15px;
+  flex: 1;
+  min-width: 0;
+}
+
+.theme-card__messages {
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+
+  & > span {
+    margin-left: 5px;
+    font-weight: 400;
+  }
+}
+
+.theme-card__tools {
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.theme-card__last-message {
+  padding: 15px;
+  background-color: var(--color-white);
+}
+
+.theme-card-info {
+  display: flex;
+  align-items: center;
+}
+
+.theme-card-info__avatar {
+  background-image: url(images/forum/default-avatar.svg);
+  background-size: contain;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.theme-card-info__title {
+  font-size: 16px;
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 5px;
+}
+
+.theme-card-info__author {
+  font-size: 12px;
+  font-weight: 500;
+
+  & span {
+    margin-left: 5px;
+    font-weight: 400;
+  }
+}
+
+.theme-card-info__container {
+  margin-left: 25px;
+  min-width: 0;
+}
+
+.theme-card-last-message {
+  color: var(--color-dark-blue);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.theme-card-last-message__container {
+  flex-grow: 1;
+  padding-right: 10px;
+}
+
+.theme-card-last-message__avatar {
+  background-image: url(images/forum/default-avatar.svg);
+  background-size: contain;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+}
+
+.theme-card-last-message__date {
+  margin-bottom: 5px;
+  text-align: right;
+}
+
+.theme-card-last-message__author {
+  font-weight: 500;
+  text-align: right;
+}
+
+.theme-card-tool {
+  border: none;
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  mask-size: 10px 13px;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  cursor: pointer;
+  margin: 0 3px;
+  transition: opacity ease-in 0.1s;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.theme-card-tool_type_delete {
+  mask-image: url(images/forum/icon-delete.svg);
+}
+
+.theme-card-tool_type_pin {
+  mask-image: url(images/forum/icon-pin.svg);
+}
+
+.theme-card-tool_type_unpin {
+  mask-image: url(images/forum/icon-unpin.svg);
+}

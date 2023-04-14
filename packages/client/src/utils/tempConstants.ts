@@ -1,0 +1,216 @@
+export type ExistingGamesType = {
+  nickname: string;
+  avatar: string;
+  impostors: number;
+  players: number;
+  id: number;
+};
+
+export const existingGames: ExistingGamesType[] = [
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 1,
+  },
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 2,
+  },
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 3,
+  },
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 4,
+  },
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 5,
+  },
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 6,
+  },
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 7,
+  },
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 8,
+  },
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 9,
+  },
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 10,
+  },
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 11,
+  },
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 12,
+  },
+];
+
+export const additionalGamesList: ExistingGamesType[] = [
+  {
+    nickname: 'EzhikVTumane',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 156755,
+  },
+  {
+    nickname: 'wow',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 12334,
+  },
+  {
+    nickname: 'profi',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 4563,
+  },
+  {
+    nickname: 'superEzzzzh',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 5,
+    players: 5,
+    id: 4578,
+  },
+  {
+    nickname: 'loshadka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 1,
+    players: 3,
+    id: 123,
+  },
+  {
+    nickname: 'loshadka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 1,
+    players: 3,
+    id: 124,
+  },
+  {
+    nickname: 'loshadka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 1,
+    players: 3,
+    id: 125,
+  },
+  {
+    nickname: 'loshadka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 1,
+    players: 3,
+    id: 126,
+  },
+  {
+    nickname: 'loshadka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 1,
+    players: 3,
+    id: 127,
+  },
+  {
+    nickname: 'loshadka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 1,
+    players: 3,
+    id: 128,
+  },
+  {
+    nickname: 'loshadka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 1,
+    players: 3,
+    id: 129,
+  },
+  {
+    nickname: 'ptichka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 3,
+    players: 1,
+    id: 12012,
+  },
+  {
+    nickname: 'ptichka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 3,
+    players: 1,
+    id: 1212113,
+  },
+  {
+    nickname: 'ptichka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 3,
+    players: 1,
+    id: 121213123,
+  },
+  {
+    nickname: 'ptichka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 3,
+    players: 1,
+    id: 121231423,
+  },
+  {
+    nickname: 'ptichka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 3,
+    players: 1,
+    id: 124124,
+  },
+  {
+    nickname: 'ptichka',
+    avatar: 'https://avatars.githubusercontent.com/u/87607555',
+    impostors: 3,
+    players: 1,
+    id: 121236123,
+  },
+];

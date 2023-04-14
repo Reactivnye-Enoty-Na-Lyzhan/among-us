@@ -14,17 +14,17 @@
 
 .form-input__input {
   width: 100%;
-  color: var(--color-white);
+  color: var(--form-font-primary);
   height: 28px;
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid var(--color-white);
+  border-bottom: 1px solid var(--form-input-primary);
   transition: border-color ease-in 0.1s;
   font-size: 12px;
 
   &:focus {
     outline: none;
-    border-color: var(--color-purple);
+    border-color: var(--form-input-secondary);
   }
 }
 
@@ -35,8 +35,8 @@
   top: 16px;
   width: 20px;
   height: 20px;
-  background-color: var(--color-white);
-  mask-image: url(./../../../images/form/eye-hide.svg);
+  background-color: var(--form-font-primary);
+  mask-image: url(images/form/eye-hide.svg);
   mask-size: 12px 10px;
   mask-position: center;
   mask-repeat: no-repeat;
@@ -49,9 +49,9 @@
 }
 
 .form-input__visibility_show {
-  background-color: var(--color-white);
+  background-color: var(--form-font-primary);
   mask-size: 12px 8px;
-  mask-image: url(./../../../images/form/eye-show.svg);
+  mask-image: url(images/form/eye-show.svg);
 }
 
 .form-input:hover .form-input__visibility {
@@ -64,7 +64,7 @@
 
 .form-input__validation {
   height: 12px;
-  color: var(--color-yellow);
+  color: var(--form-font-secondary);
   font-size: 10px;
   line-height: 120%;
   margin: 4px 0;
@@ -76,6 +76,6 @@
 .form-input_invalid {
   .form-input__input {
     color: #e0d700;
-    border-bottom: 1px solid #e0d700;
+    border-bottom: 1px solid var(--form-input-tertiary);
   }
 }

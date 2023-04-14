@@ -1,3 +1,69 @@
-body {
-  font-family: Inter;
+@import './utils/game-end/variables.css';
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  font-family: 'Inter', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+.app_theme_default {
+  --background-main-primary: #010318;
+  --background-main-secondary: #fafafa;
+  --background-main-overlay: 250, 250, 250;
+  --background-additional-primary: #fafafa;
+  --font-main-primary: #fafafa;
+  --font-main-secondary: #910cbf;
+  --font-main-tertiary: #e0d700;
+  --font-main-quaternary: #010318;
+  --font-additional-primary: #2b2b2b;
+  --font-additional-secondary: #e8125f;
+  --font-additional-tertiary: #24d108;
+  --font-additional-quaternary: #9b9b9b;
+  --button-main-primary: #910cbf;
+  --button-main-secondary: #24d108;
+  --button-main-tertiary: #fafafa;
+  --button-main-quaternary: #e8125f;
+  --button-font-primary: #fafafa;
+  --button-font-secondary: #910cbf;
+  --button-font-tertiary: #e8125f;
+  --table-background-primary: #910cbf;
+  --table-background-overlay: 145, 12, 191;
+  --table-background-secondary: #e0d700;
+  --table-font-primary: #fafafa;
+  --table-font-secondary: #2b2b2b;
+  --input-background-primary: #910cbf;
+  --input-background-secondary: #fafafa;
+  --input-background-tertiary: #e8125f;
+  --input-font-primary: #fafafa;
+  --input-font-secondary: #910cbf;
+  /* Для форума и для формы можно отдельные пременные */
+  --forum-background-primary: #010318;
+  --form-input-primary: #fafafa;
+  --form-input-secondary: #910cbf;
+  --form-input-tertiary: #e0d700;
+  --form-button-primary: #910cbf;
+  --form-font-primary: #fafafa;
+  --form-font-secondary: #e0d700;
+  --leaderboard-background-primary: #010318;
+  --leaderboard-background-secondary: #e0d700;
+  --leaderboard-background-tertiary: #910cbf;
+  --leaderboard-font-primary: #fafafa;
+  --leaderboard-font-secondary: #2b2b2b;
+  --leaderboard-dropdown-background: #fafafa;
+  --leaderboard-dropdown-overlay: 0, 0, 0;
+  --leaderboard-dropdown-font: #2b2b2b;
+  --leaderboard-scroll-primary: #fafafa;
+  --leaderboard-scroll-secondary: #010318;
+  --errorboundary-background: #010318;
+  --errorboundary-font: #fafafa;
+  --error-popup-background: #fafafa;
+  --error-popup-overlay: 232, 18, 95;
+  --error-popup-font-primary: #e8125f;
+  --error-popup-font-secondary: #010318;
+  --landing-button-primary: #910cbf;
+  --landing-font-primary: #fafafa;
 }

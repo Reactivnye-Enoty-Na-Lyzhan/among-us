@@ -1,43 +1,45 @@
 .error-toast {
-    width: 346px;
-    min-height: 127px;
-    background: #FAFAFA;
-    box-shadow: 0px 0px 15px rgba(232, 18, 95, 0.5);
-    border-radius: 7px;
-    padding: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
-    z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 346px;
+  min-height: 127px;
+  gap: 25px;
+  background: var(--error-popup-background);
+  box-shadow: 0px 0px 15px rgba(var(--error-popup-overlay), 0.5);
+  border-radius: 7px;
+  padding: 25px;
+  z-index: 9000;
 }
+
 .error-toast_position_upper-right {
-    position: absolute;
-    right: 15px;
-    top: 15px;
+  position: absolute;
+  right: 15px;
+  top: 15px;
 }
 .error-toast__code {
-    font-weight: 700;
-    font-size: 36px;
-    color: #E8125F;
+  font-weight: 700;
+  font-size: 36px;
+  color: var(--error-popup-font-primary);
 }
 .error-toast__info {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 5px;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  color: var(--error-popup-font-secondary);
 }
 .error-toast__header {
-    font-weight: 500;
-    font-size: 12px;
-    color: #E8125F;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--error-popup-font-primary);
 }
 .error-toast__subheader {
-    font-weight: 500;
-    font-size: 10px;
+  font-weight: 500;
+  font-size: 10px;
 }
 .error-toast__message {
-    font-weight: 400;
-    font-size: 10px;
+  font-weight: 400;
+  font-size: 10px;
 }

@@ -1,0 +1,41 @@
+.page-header {
+  padding-left: 72px;
+  padding-right: 30px;
+  margin-top: 45px;
+  margin-bottom: 36px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  position: relative;
+}
+
+.page-header__title {
+  color: var(--landing-font-primary);
+  font-size: 22px;
+  font-weight: 500;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 120%;
+  margin: 0;
+}
+
+.page-header__go-back {
+  position: absolute;
+  left: 20px;
+  top: 1px;
+  width: 32px;
+  height: 24px;
+  background-color: var(--landing-font-primary);
+  mask-image: url(images/header/return-link.svg);
+  mask-size: 32px 15px;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  transition: opacity ease-in 0.1s;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color ease-in 0.1s;
+
+  &:hover {
+    background-color: var(--landing-button-primary);
+  }
+}
