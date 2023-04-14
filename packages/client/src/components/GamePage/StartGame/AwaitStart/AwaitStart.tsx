@@ -51,9 +51,7 @@ const AwaitStart: FC = () => {
         <ul className="await-start__settings-list">
           <li className="await-start__list-item">
             <h2 className="await-start__param-name">Экстренных собраний:</h2>
-            <span className="await-start__param-value">
-              {params.meetings}
-            </span>
+            <span className="await-start__param-value">{params.meetings}</span>
           </li>
           <li className="await-start__list-item">
             <h2 className="await-start__param-name">Время на обсуждение:</h2>
@@ -67,7 +65,8 @@ const AwaitStart: FC = () => {
               Перерыв между собраниями:
             </h2>
             <span className="await-start__param-value">
-              {params.meetingCooldown} {getPluralSeconds(params.meetingCooldown)}
+              {params.meetingCooldown}{' '}
+              {getPluralSeconds(params.meetingCooldown)}
             </span>
           </li>
         </ul>

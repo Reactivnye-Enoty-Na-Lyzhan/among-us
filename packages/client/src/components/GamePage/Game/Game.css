@@ -42,9 +42,9 @@
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 .game__end-game:hover {
-  opacity: .8;
+  opacity: 0.8;
 }

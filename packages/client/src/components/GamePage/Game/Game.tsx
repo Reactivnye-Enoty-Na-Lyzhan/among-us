@@ -1,6 +1,6 @@
-import { FC, memo } from "react";
-import { useTypedSelector } from "@/hooks/useTypedSelector";
-import { useActions } from "@/hooks/useActions";
+import { FC, memo } from 'react';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useActions } from '@/hooks/useActions';
 import './Game.css';
 
 const Game: FC = () => {
@@ -9,7 +9,7 @@ const Game: FC = () => {
 
   const handleFinishGame = () => {
     finishGame({
-      result: "win",
+      result: 'win',
       score: 350,
     });
   };
@@ -17,9 +17,13 @@ const Game: FC = () => {
   return (
     <div className="game">
       <h1 className="game__title">Мы рады видеть вас! Вот вам игра:</h1>
-      <p className="game__description">Игра ещё не добавлена, но скоро точно будет!</p>
+      <p className="game__description">
+        Игра ещё не добавлена, но скоро точно будет!
+      </p>
       <p className="game__player-color">{`Кстати, а цвет игрока будет - ${color}`}</p>
-      <button className="game__end-game" onClick={handleFinishGame}>Завершить игру</button>
+      <button className="game__end-game" onClick={handleFinishGame}>
+        Завершить игру
+      </button>
     </div>
   );
 };

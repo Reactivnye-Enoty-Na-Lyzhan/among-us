@@ -50,7 +50,12 @@ const GameEnd: FC = () => {
           {result === 'lose' ? 'Как же так-то?' : 'Победа!'}
         </h1>
         <div className="game-end__container">
-          <GameEndButton name="Сыграть ещё" link="/games" color="green" onClick={handleGameStart} />
+          <GameEndButton
+            name="Сыграть ещё"
+            link="/games"
+            color="green"
+            onClick={handleGameStart}
+          />
           <GameEndButton name="Рейтинг" link="/leaderboard" color="violet" />
           <GameEndButton name="Ваш профиль" link="/profile" color="pink" />
           <p className="game-end__text game-end__text_spacing_below">или</p>

@@ -5,7 +5,7 @@ interface Props {
   color: string;
   link: string;
   name: string;
-  onClick?: () => void,
+  onClick?: () => void;
 }
 
 export default function GameEndButton(props: Props) {
@@ -22,8 +22,7 @@ export default function GameEndButton(props: Props) {
     <Link
       to={props.link}
       className={`game-end__button-name game-end__button-name_${props.color} game-end__button-name_spacing_below`}
-      onClick={handleClick}
-    >
+      onClick={handleClick}>
       {props.name}
     </Link>
   );

@@ -1,14 +1,14 @@
-import { SuitColorsType } from "@/utils/gameParams";
+import { SuitColorsType } from '@/utils/gameParams';
 
 export interface IGameState {
-  online: boolean,
+  online: boolean;
   title: string;
   status: GameStatusType;
   stage: GameStageType;
   params: IGameStateParams;
   player: IPlayer;
-  startCooldown: number,
-  results: IResults,
+  startCooldown: number;
+  results: IResults;
 }
 
 export interface IGameStateParams {

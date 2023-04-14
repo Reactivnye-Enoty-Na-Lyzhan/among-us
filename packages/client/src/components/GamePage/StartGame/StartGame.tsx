@@ -18,18 +18,9 @@ const StartGame: FC = () => {
       <Route path="create" element={<CreateGame />} />
       <Route path="how-to-play" element={<HowToPlay />} />
       <Route path="/*" element={<ProtectedGame />}>
-        <Route
-          path="assembling"
-          element={<TeamAssembling />}
-        />
-        <Route
-          path="preparing"
-          element={<FinalPreparing />}
-        />
-        <Route
-          path="await"
-          element={<AwaitStart />}
-        />
+        <Route path="assembling" element={<TeamAssembling />} />
+        <Route path="preparing" element={<FinalPreparing />} />
+        <Route path="await" element={<AwaitStart />} />
       </Route>
     </Routes>
   );

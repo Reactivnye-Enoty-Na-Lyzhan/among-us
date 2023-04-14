@@ -14,7 +14,6 @@ import './SearchGame.css';
 
 // Подключение к игре через поиск
 const SearchGame: FC = () => {
-
   const [gamesList, setGamesList] = useState<ExistingGamesType[] | []>([]);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [timer, setTimer] = useState<ReturnType<typeof setTimeout> | null>(

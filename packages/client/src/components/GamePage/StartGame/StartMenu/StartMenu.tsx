@@ -7,7 +7,6 @@ import './StartMenu.css';
 
 // Меню игрового выбора
 const StartMenu: FC = () => {
-
   const navigate = useNavigate();
   const isOnline = useTypedSelector(state => state.game.online);
   const { startFastGame } = useActions();

@@ -31,20 +31,20 @@ export const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    startFastGame: (state) => {
+    startFastGame: state => {
       state.stage = 'preparing';
       state.results = initialState.results;
     },
-    cancelGame: (state) => {
+    cancelGame: state => {
       state.status = initialState.status;
       state.stage = initialState.stage;
       state.player.color = initialState.player.color;
     },
-    launchGame: (state) => {
+    launchGame: state => {
       state.status = 'active';
       state.stage = 'active';
     },
-    playMore: (state) => {
+    playMore: state => {
       state.status = initialState.status;
       state.stage = initialState.stage;
       state.player = initialState.player;
