@@ -1,14 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { gameReducer } from './game/game.slice';
 import { leaderboardApi } from './leaderboard/leaderboard.api';
+import { authApi } from './auth/auth.slice';
 
 export const store = configureStore({
   reducer: {
     [leaderboardApi.reducerPath]: leaderboardApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
     game: gameReducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(leaderboardApi.middleware),
+    getDefaultMiddleware().concat(leaderboardApi.middleware, authApi.middleware),
 });
 
 export type TypeRootState = ReturnType<typeof store.getState>;
