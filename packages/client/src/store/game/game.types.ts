@@ -1,11 +1,34 @@
+import { SuitColorsType } from "@/utils/gameParams";
+
 export interface IGameState {
+  online: boolean,
   title: string;
+  status: GameStatusType;
+  stage: GameStageType;
   params: IGameStateParams;
+  player: IPlayer;
+  startCooldown: number,
+  results: IResults,
 }
 
 export interface IGameStateParams {
-  imposters: number;
-  emergencyMeetings: number;
-  votingTime: number;
-  emergencyCountdown: number;
+  impostors: number;
+  meetings: number;
+  meetingDuration: number;
+  meetingCooldown: number;
+}
+
+export type GameStatusType = 'start' | 'preparing' | 'active' | 'finished';
+
+export type GameStageType = 'start' | 'preparing' | 'active' | 'finishing';
+
+export interface IPlayer {
+  color: ColorType;
+}
+
+export type ColorType = keyof SuitColorsType;
+
+export interface IResults {
+  result: 'win' | 'lose';
+  score: number;
 }

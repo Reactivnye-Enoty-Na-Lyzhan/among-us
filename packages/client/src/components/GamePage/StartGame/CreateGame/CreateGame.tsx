@@ -1,22 +1,19 @@
 import { FC, memo, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useActions } from '@/hooks/useActions';
 import Form from './Form/Form';
 import LeaveGame from './LeaveGame/LeaveGame';
 import { InputsParamsType } from '@/utils/gameParams';
 import './CreateGame.css';
 
-type Props = {
-  onStart: () => void;
-};
-
 // Создание новой игры
-const CreateGame: FC<Props> = props => {
-  const { onStart } = props;
-
+const CreateGame: FC = () => {
   const [formStep, setFormStep] = useState<number>(1);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const navigate = useNavigate();
+
+  const { startFastGame } = useActions();
 
   const heading =
     formStep === 1 ? 'Установите параметры игры' : 'Вы почти готовы';
@@ -24,7 +21,7 @@ const CreateGame: FC<Props> = props => {
   // Создание игры
   const createGame = (values: InputsParamsType) => {
     // Действия для создания игры
-    onStart();
+    startFastGame();
     // Просто вывод данных в консоль (прототип)
     console.log(values);
     setIsProcessing(false);

@@ -1,6 +1,7 @@
 import { FC, memo, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
+import { useActions } from '@/hooks/useActions';
 import Navigation from '../Navigation/Navigation';
 import FoundGame from './FoundGame/FoundGame';
 import {
@@ -11,13 +12,8 @@ import {
 import { gameNamePattern } from '../../../../utils/gameParams';
 import './SearchGame.css';
 
-type Props = {
-  onStart: () => void;
-};
-
 // Подключение к игре через поиск
-const SearchGame: FC<Props> = props => {
-  const { onStart } = props;
+const SearchGame: FC = () => {
 
   const [gamesList, setGamesList] = useState<ExistingGamesType[] | []>([]);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -30,6 +26,8 @@ const SearchGame: FC<Props> = props => {
   const [foundResults, setFoundResults] = useState<number>(0);
 
   const navigate = useNavigate();
+
+  const { startFastGame } = useActions();
 
   // Первоначальный запрос списка игр (мультиплеер)
   // Пример для прототипа
@@ -103,7 +101,7 @@ const SearchGame: FC<Props> = props => {
 
   // Обработчик выбора игры (Прототип)
   const handleGameSelect = (id: number) => {
-    onStart();
+    startFastGame();
     console.log(id);
     navigate('../assembling');
   };

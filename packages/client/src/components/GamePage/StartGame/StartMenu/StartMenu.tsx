@@ -1,23 +1,25 @@
 import { FC, memo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useActions } from '@/hooks/useActions';
 import Navigation from '../Navigation/Navigation';
 import './StartMenu.css';
 
-type Props = {
-  onStart: () => void;
-};
-
 // Меню игрового выбора
-const StartMenu: FC<Props> = props => {
-  const { onStart } = props;
+const StartMenu: FC = () => {
 
   const navigate = useNavigate();
+  const isOnline = useTypedSelector(state => state.game.online);
+  const { startFastGame } = useActions();
 
-  // Временное решение для демонстрации прототипа
   const handleStart = () => {
-    // действие
-    onStart();
-    navigate('./assembling');
+    startFastGame();
+
+    if (isOnline) {
+      navigate('./assembling');
+    } else {
+      navigate('./preparing');
+    }
   };
 
   return (

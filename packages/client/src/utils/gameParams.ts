@@ -86,16 +86,3 @@ export const suitsColors = [
   'brown',
   'grey',
 ] as const;
-
-export type GameSettingsType = {
-  meeting: number;
-  discussion: number;
-  interval: number;
-};
-
-// Временный объект
-export const gameSettings: GameSettingsType = {
-  meeting: 5,
-  discussion: 50,
-  interval: 30,
-};

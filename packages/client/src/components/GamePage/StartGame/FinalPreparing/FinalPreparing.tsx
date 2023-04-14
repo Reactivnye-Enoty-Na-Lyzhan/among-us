@@ -1,25 +1,21 @@
-import { FC, memo, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
+import { useActions } from '@/hooks/useActions';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 import ColorButton from './ColorButton/ColorButton';
 import { SuitColorsType, suitsColors } from '../../../../utils/gameParams';
 import './FinalPreparing.css';
 
-type Props = {
-  onCancel: () => void;
-};
-
 // Экран выбора цвета скафандра (нужна игру уже найдена)
-const FinalPreparing: FC<Props> = props => {
-  const { onCancel } = props;
-
-  const [selectedColor, setSelectedColor] = useState<string>('');
+const FinalPreparing: FC = () => {
+  const userSuitColor = useTypedSelector(state => state.game.player.color);
 
   // Для мультиплеера. Блокирует возможность выбора цвета, если он уже выбран другим игроком
   const [usedColors, setUsedColors] = useState<SuitColorsType>({
     white: false,
     red: false,
-    green: true,
+    green: false,
     blue: false,
     yellow: false,
     purple: false,
@@ -30,35 +26,35 @@ const FinalPreparing: FC<Props> = props => {
 
   const navigate = useNavigate();
 
+  const { cancelGame, selectColor } = useActions();
+
   // Исключительно для демонстрации
   useEffect(() => {
-    setTimeout(
-      () => setUsedColors(colors => ({ ...colors, white: true })),
-      5000
-    );
+    setUsedColors(colors => ({ ...colors, grey: true }));
   }, []);
 
   // TODO: Добавить смену цвета
   const crewmanClass = classNames('finalpreparing__crewman', {
-    [`finalpreparing__crewman_suit_${selectedColor}`]: false, //selectedColor !== '',
+    [`finalpreparing__crewman_suit_${userSuitColor}`]: false, //selectedColor !== '',
   });
 
   // Предпосылки для мультиплеера
-  // Устанавливаем выбранный цвет только по итогу ответа сервера
-  const handleColorPick = (color: keyof SuitColorsType) => {
-    setSelectedColor(color);
-  };
+  // TODO: Устанавливаем выбранный цвет только по итогу ответа сервера
+  const handleColorPick = useCallback((color: keyof SuitColorsType) => {
+    selectColor(color);
+  }, []);
 
-  // Выход из игры // Прототип
+  // Выход из игры
+  // TODO: Выход из игры в режиме мультиплеера
   const handleExitGame = () => {
     // отмена игры;
-    onCancel();
+    cancelGame();
     navigate('..');
   };
 
   // Начало игры с выбранным цветом скафандра
   const handleStartGame = () => {
-    if (!selectedColor) return;
+    if (!userSuitColor) return;
 
     navigate('../await');
   };
@@ -75,8 +71,8 @@ const FinalPreparing: FC<Props> = props => {
             <li className="finalpreparing__list-item" key={color}>
               <ColorButton
                 color={color}
-                selected={selectedColor === color}
-                disabled={usedColors[color as keyof SuitColorsType]}
+                selected={userSuitColor === color}
+                disabled={usedColors[color]}
                 onSelect={handleColorPick}
               />
             </li>

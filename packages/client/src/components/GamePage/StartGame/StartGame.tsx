@@ -1,4 +1,4 @@
-import { memo, FC, useState } from 'react';
+import { memo, FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import StartMenu from './StartMenu/StartMenu';
 import TeamAssembling from './TeamAssembling/TeamAssembling';
@@ -11,36 +11,24 @@ import ProtectedGame from '../ProtectedGame/ProtectedGame';
 
 // Экран начала игры
 const StartGame: FC = () => {
-  const [isGameStarted, setGameStarted] = useState<boolean>(false);
-
-  // Для прототипа
-  const handleStartGame = () => {
-    setGameStarted(true);
-  };
-
-  // Для прототипа
-  const handleCancelGame = () => {
-    setGameStarted(false);
-  };
-
   return (
     <Routes>
-      <Route path="" element={<StartMenu onStart={handleStartGame} />} />
-      <Route path="find" element={<SearchGame onStart={handleStartGame} />} />
-      <Route path="create" element={<CreateGame onStart={handleStartGame} />} />
+      <Route path="" element={<StartMenu />} />
+      <Route path="find" element={<SearchGame />} />
+      <Route path="create" element={<CreateGame />} />
       <Route path="how-to-play" element={<HowToPlay />} />
-      <Route path="/*" element={<ProtectedGame isStarted={isGameStarted} />}>
+      <Route path="/*" element={<ProtectedGame />}>
         <Route
           path="assembling"
-          element={<TeamAssembling onCancel={handleCancelGame} />}
+          element={<TeamAssembling />}
         />
         <Route
           path="preparing"
-          element={<FinalPreparing onCancel={handleCancelGame} />}
+          element={<FinalPreparing />}
         />
         <Route
           path="await"
-          element={<AwaitStart onCancel={handleCancelGame} />}
+          element={<AwaitStart />}
         />
       </Route>
     </Routes>
