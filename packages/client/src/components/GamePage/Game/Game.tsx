@@ -1,12 +1,13 @@
-import { FC, memo } from 'react';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { FC, memo, useEffect, useRef } from 'react';
 import { useActions } from '@/hooks/useActions';
+import canvasProcess from './canvasProcess';
 import './Game.css';
+import killIcon from '@/images/game/kill.svg';
+import startMeetingIcon from '@/images/game/start-meeting.svg';
+import startMiniGameIcon from '@/images/game/start-minigame.svg';
 
 const Game: FC = () => {
-  const { color } = useTypedSelector(state => state.game.player);
   const { finishGame } = useActions();
-
   const handleFinishGame = () => {
     finishGame({
       result: 'win',
@@ -14,16 +15,47 @@ const Game: FC = () => {
     });
   };
 
+  const canvasRef = useRef(null);
+  const miniGameAction = useRef(null);
+  const meetingAction = useRef(null);
+  const killAction = useRef(null);
+
+  useEffect(() => {
+    if (
+      canvasRef.current &&
+      miniGameAction.current &&
+      meetingAction.current &&
+      killAction.current
+    ) {
+      canvasProcess(
+        canvasRef.current,
+        meetingAction.current,
+        miniGameAction.current,
+        killAction.current
+      );
+    }
+  }, []);
+
   return (
     <div className="game">
-      <h1 className="game__title">Мы рады видеть вас! Вот вам игра:</h1>
-      <p className="game__description">
-        Игра ещё не добавлена, но скоро точно будет!
-      </p>
-      <p className="game__player-color">{`Кстати, а цвет игрока будет - ${color}`}</p>
-      <button className="game__end-game" onClick={handleFinishGame}>
-        Завершить игру
-      </button>
+      <div className="game__canvas-container">
+        <canvas ref={canvasRef} id="main-canvas"></canvas>
+
+        <button className="game__action-btn" ref={miniGameAction}>
+          <img src={startMiniGameIcon}></img>
+        </button>
+
+        <button className="game__action-btn" ref={meetingAction}>
+          <img src={startMeetingIcon}></img>
+        </button>
+
+        <button
+          ref={killAction}
+          className="game__action-btn"
+          onClick={handleFinishGame}>
+          <img src={killIcon}></img>
+        </button>
+      </div>
     </div>
   );
 };

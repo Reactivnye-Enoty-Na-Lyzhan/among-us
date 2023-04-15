@@ -48,3 +48,19 @@
 .game__end-game:hover {
   opacity: 0.8;
 }
+
+.game__canvas-container {
+  position: relative;
+}
+
+.game__action-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 50px;
+  width: fit-content;
+  height: fit-content;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
