@@ -12,9 +12,8 @@ interface Props {
 function GameEndButton(props: Props) {
   const { onClick } = props;
 
-  const handleClick = (evt: React.MouseEvent) => {
+  const handleClick = () => {
     if (onClick) {
-      evt.preventDefault();
       onClick();
     }
   };

@@ -34,6 +34,6 @@ export interface IPlayer {
 export type ColorType = keyof SuitColorsType;
 
 export interface IResults {
-  result: 'win' | 'lose' | 'init';
+  result: 'init' | 'win' | 'lose';
   score: number;
 }

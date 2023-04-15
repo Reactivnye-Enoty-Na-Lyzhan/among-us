@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TypeRootState } from '..';
 import {
   IGameState,
   IGameStateParams,
@@ -74,3 +75,6 @@ export const gameSlice = createSlice({
 
 export const gameReducer = gameSlice.reducer;
 export const gameActions = gameSlice.actions;
+
+export const selectOnline = (state: TypeRootState) => state.game.online;
+export const selectResults = (state: TypeRootState) => state.game.results;
