@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { FC, useCallback } from 'react';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { selectResults } from '@/store/game/game.slice';
 import GameEndButton from '../GameEndButton/GameEndButton';
 import './GameEnd.css';
 
@@ -28,8 +29,7 @@ const config: Record<string, Config> = {
 };
 
 const GameEnd: FC = () => {
-  const results = useTypedSelector(state => state.game.results);
-  const { result, score } = results;
+  const { result, score } = useTypedSelector(selectResults);
 
   const { playMore } = useActions();
 
@@ -52,7 +52,7 @@ const GameEnd: FC = () => {
         <div className="game-end__container">
           <GameEndButton
             name="Сыграть ещё"
-            link="/games"
+            link="/game"
             color="green"
             onClick={handleGameStart}
           />

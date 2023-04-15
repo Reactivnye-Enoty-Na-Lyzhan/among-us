@@ -1,24 +1,18 @@
 import { FC, memo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { selectOnline } from '@/store/game/game.slice';
 import { useActions } from '@/hooks/useActions';
 import Navigation from '../Navigation/Navigation';
 import './StartMenu.css';
 
 // Меню игрового выбора
 const StartMenu: FC = () => {
-  const navigate = useNavigate();
-  const isOnline = useTypedSelector(state => state.game.online);
+  const isOnline = useTypedSelector(selectOnline);
   const { startFastGame } = useActions();
 
   const handleStart = () => {
     startFastGame();
-
-    if (isOnline) {
-      navigate('./assembling');
-    } else {
-      navigate('./preparing');
-    }
   };
 
   return (
@@ -28,12 +22,12 @@ const StartMenu: FC = () => {
       </h1>
       <div className="start-menu__container">
         <div className="start-menu__controls">
-          <button
+          <Link
+            to={isOnline ? 'assembling' : 'preparing'}
             className="start-menu__fast-start"
-            onClick={handleStart}
-            type="button">
+            onClick={handleStart}>
             Быстрая игра
-          </button>
+          </Link>
           <span className="start-menu__controls-divider">или</span>
           <Link to="find" className="start-menu__start-game">
             Найти нужную игру

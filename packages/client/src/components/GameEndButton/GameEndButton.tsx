@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import './GameEndButton.css';
 
@@ -8,12 +9,11 @@ interface Props {
   onClick?: () => void;
 }
 
-export default function GameEndButton(props: Props) {
+function GameEndButton(props: Props) {
   const { onClick } = props;
 
-  const handleClick = (evt: React.MouseEvent) => {
+  const handleClick = () => {
     if (onClick) {
-      evt.preventDefault();
       onClick();
     }
   };
@@ -27,3 +27,5 @@ export default function GameEndButton(props: Props) {
     </Link>
   );
 }
+
+export default memo(GameEndButton);

@@ -8,7 +8,7 @@ import './AwaitStart.css';
 // Экран ожидания начала игры
 const AwaitStart: FC = () => {
   const { params, startCooldown } = useTypedSelector(state => state.game);
-  const [counter, setCounter] = useState<number>(startCooldown || 30);
+  const [counter, setCounter] = useState<number>(startCooldown);
 
   const { launchGame, cancelGame } = useActions();
   const navigate = useNavigate();

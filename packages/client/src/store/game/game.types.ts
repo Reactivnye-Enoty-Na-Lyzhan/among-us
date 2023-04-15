@@ -20,7 +20,12 @@ export interface IGameStateParams {
 
 export type GameStatusType = 'start' | 'preparing' | 'active' | 'finished';
 
-export type GameStageType = 'start' | 'preparing' | 'active' | 'finishing';
+export type GameStageType =
+  | 'init'
+  | 'starting'
+  | 'preparing'
+  | 'activating'
+  | 'finishing';
 
 export interface IPlayer {
   color: ColorType;
@@ -29,6 +34,6 @@ export interface IPlayer {
 export type ColorType = keyof SuitColorsType;
 
 export interface IResults {
-  result: 'win' | 'lose';
+  result: 'init' | 'win' | 'lose';
   score: number;
 }

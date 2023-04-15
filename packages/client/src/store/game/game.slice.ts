@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TypeRootState } from '..';
 import {
   IGameState,
   IGameStateParams,
@@ -10,7 +11,7 @@ const initialState: IGameState = {
   online: false,
   title: 'Игра',
   status: 'start',
-  stage: 'start',
+  stage: 'init',
   params: {
     impostors: 2,
     meetings: 5,
@@ -22,7 +23,7 @@ const initialState: IGameState = {
   },
   startCooldown: 10,
   results: {
-    result: 'lose',
+    result: 'init',
     score: 0,
   },
 };
@@ -42,7 +43,7 @@ export const gameSlice = createSlice({
     },
     launchGame: state => {
       state.status = 'active';
-      state.stage = 'active';
+      state.stage = 'activating';
     },
     playMore: state => {
       state.status = initialState.status;
@@ -74,3 +75,6 @@ export const gameSlice = createSlice({
 
 export const gameReducer = gameSlice.reducer;
 export const gameActions = gameSlice.actions;
+
+export const selectOnline = (state: TypeRootState) => state.game.online;
+export const selectResults = (state: TypeRootState) => state.game.results;
