@@ -31,8 +31,7 @@ const StartMenu: FC = () => {
           <Link
             to={isOnline ? 'assembling' : 'preparing'}
             className="start-menu__fast-start"
-            onClick={handleStart}
-          >
+            onClick={handleStart}>
             Быстрая игра
           </Link>
           <span className="start-menu__controls-divider">или</span>

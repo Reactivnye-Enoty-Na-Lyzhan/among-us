@@ -3,7 +3,6 @@ export type SigninRequestData = {
   password: string;
 };
 
-
 export type User = {
   id: number;
   first_name: string;
