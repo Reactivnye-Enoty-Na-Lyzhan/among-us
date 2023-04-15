@@ -28,12 +28,13 @@ const StartMenu: FC = () => {
       </h1>
       <div className="start-menu__container">
         <div className="start-menu__controls">
-          <button
+          <Link
+            to={isOnline ? 'assembling' : 'preparing'}
             className="start-menu__fast-start"
             onClick={handleStart}
-            type="button">
+          >
             Быстрая игра
-          </button>
+          </Link>
           <span className="start-menu__controls-divider">или</span>
           <Link to="find" className="start-menu__start-game">
             Найти нужную игру

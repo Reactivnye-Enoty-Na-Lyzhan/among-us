@@ -28,8 +28,7 @@ const config: Record<string, Config> = {
 };
 
 const GameEnd: FC = () => {
-  const results = useTypedSelector(state => state.game.results);
-  const { result, score } = results;
+  const { result, score } = useTypedSelector(state => state.game.results);
 
   const { playMore } = useActions();
 
