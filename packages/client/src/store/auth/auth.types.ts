@@ -3,6 +3,22 @@ export type SigninRequestData = {
   password: string;
 };
 
+export type SignUpRequestData = {
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  password: string;
+  phone: string;
+};
+
+export type SignUpRequestResponse =
+  | {
+      id: number;
+    }
+  | {
+      reason: string;
+    };
 
 export type User = {
   id: number;
