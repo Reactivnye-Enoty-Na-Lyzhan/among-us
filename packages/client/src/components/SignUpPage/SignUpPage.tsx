@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
-import SignUpForm from './Form/Form';
+import SignUpForm from './Form';
 import './SignUpPage.css';
+import { authApi } from '@/store/auth/auth.slice';
 
 const SignUpPage: React.FC = () => {
+  console.log(`NAME: ${authApi.endpoints.signupUser.name}`);
+
   return (
     <div className="signup-page">
       <header className="signup-page-header signup-page-header_spacing_outer">

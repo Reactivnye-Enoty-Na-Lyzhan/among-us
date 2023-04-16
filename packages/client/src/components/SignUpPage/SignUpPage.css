@@ -43,8 +43,20 @@
   white-space: nowrap;
 }
 
+.signup-page-main__api_error {
+  min-width: 300px;
+  min-height: 25px;
+  margin-bottom: 7px;
+
+  font-size: 20px;
+  color: var(--form-font-secondary);
+}
+
 .signup-page-main {
-  @extend flex-row-container;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 
   width: 100%;
 }
