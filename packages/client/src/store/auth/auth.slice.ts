@@ -18,4 +18,4 @@ export const authApi = createApi({
   }),
 });
 
-export const { useGetUserQuery } = authApi;
+export const { useGetUserQuery, useLazyGetUserQuery } = authApi;

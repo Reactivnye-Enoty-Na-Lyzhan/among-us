@@ -6,9 +6,11 @@ import { useValidation } from '@/hooks/useValidation';
 import { validation } from '@/utils/validation';
 import { transformFormDataToDTO } from './_utils/transformFormDataToDTO';
 import { SignUpFormData } from './_types';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { SignUpService } from '@/services/signup/signup.service';
 import { getErrorMessage } from '@/services/signup/error-message/get-error-message';
+import { useLazyGetUserQuery } from '@/store/auth/auth.slice';
+import { Navigate } from 'react-router-dom';
 
 export default function SignUpForm() {
   const { values, handleInputChange } = useForm({
@@ -34,30 +36,54 @@ export default function SignUpForm() {
     { field: 'password', validation: validation.password },
   ]);
 
-  const [apiStatus, setApiStatus] = useState<string>('');
+  const valuesRef = useRef(values);
+  valuesRef.current = values;
 
-  const onSubmitHandler = async () => {
+  const [signupQueryError, setSignupQueryError] = useState<string | null>(null);
+  const [triggerGetUserQuery, getUserQueryStatus] = useLazyGetUserQuery();
+
+  console.log(`VALUES REF: ${JSON.stringify(valuesRef.current)}`);
+
+  const onSubmitHandler = useCallback(async () => {
     if (!validateForm(values)) {
       return;
     }
 
-    const data = transformFormDataToDTO(values as SignUpFormData);
+    const data = transformFormDataToDTO(valuesRef.current as SignUpFormData);
     console.log(`FORM DATA: ${JSON.stringify(data)}`);
     try {
-      const response = await SignUpService.signup(data);
-      const { status } = response;
-      const responseBody = await response.json();
+      const signupResponse = await SignUpService.signup(data);
+      const signupResponseBody = await signupResponse.json();
 
-      setApiStatus(getErrorMessage({ status, response: responseBody }));
+      setSignupQueryError(
+        getErrorMessage({
+          status: signupResponse.status,
+          response: signupResponseBody,
+        })
+      );
     } catch (error) {
       console.error(`ERROR WHILE SIGNUP REQUEST: ${error}`);
-      setApiStatus(`Непредвиденная ошибка клиента`);
+      setSignupQueryError(`Непредвиденная ошибка клиента`);
     }
-  };
+
+    try {
+      await triggerGetUserQuery();
+    } catch (error) {
+      console.error(`ERROR WHILE GET USER: ${error}`);
+      setSignupQueryError(`Непредвиденная ошибка клиента`);
+    }
+  }, []);
+
+  if (signupQueryError === '' && getUserQueryStatus.isSuccess) {
+    return <Navigate replace to="/game"></Navigate>;
+  }
+  if (signupQueryError === '' && getUserQueryStatus.isError) {
+    return <Navigate replace to="/login"></Navigate>;
+  }
 
   return (
     <>
-      <div className="signup-page-main__api_error">{apiStatus}</div>
+      <div className="signup-page-main__api_error">{signupQueryError}</div>
       <Form onSubmit={onSubmitHandler}>
         <Input
           value={values.name}
