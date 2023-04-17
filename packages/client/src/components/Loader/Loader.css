@@ -1,17 +1,20 @@
 @keyframes fly {
   from {
     transform: translate(0, 0);
-  } 50% {
+  }
+  50% {
     transform: translate(10px, 3px);
-  } to {
-    transform: translate(-7px,  15px);
+  }
+  to {
+    transform: translate(-7px, 15px);
   }
 }
 
 @keyframes grow {
   from {
     transform: scale(100%, 100%);
-  } to {
+  }
+  to {
     transform: scale(115%, 103%);
   }
 }
@@ -19,7 +22,8 @@
 @keyframes star {
   from {
     transform: translateX(100vw);
-  } to {
+  }
+  to {
     transform: translateX(0);
   }
 }
@@ -27,7 +31,8 @@
 @keyframes starInverse {
   from {
     transform: translateX(0);
-  } to {
+  }
+  to {
     transform: translateX(-100vw);
   }
 }
@@ -105,18 +110,20 @@
   width: 3px;
   height: 3px;
   background: transparent;
-  box-shadow: 
-  1vw 1vh #fff, 3vw 2vh #fff, 3vw 7vh #fff, 10vw 17vh #fff, 15vw 25vh #fff, 
-  32vw 44vh #fff, 13vw 19vh #fff, 4vw 87vh #fff, 32vw 16vh #fff, 45vw 35vh #fff,
-  21vw 98vh #fff, 47vw 65vh #fff, 90vw 73vh #fff, 91vw 57vh #fff, 99vw 85vh #fff, 
-  55vw 33vh #fff, 57vw 48vh #fff, 73vw 21vh #fff, 49vw 14vh #fff, 48vw 38vh #fff, 
-  61vw 21vh #fff, 75vw 75vh #fff, 76vw 77vh #fff, 79vw 84vh #fff, 50vw 65vh #fff,
-  55vw 63vh #fff, 57vw 59vh #fff, 63vw 82vh #fff, 65vw 87vh #fff, 50vw 91vh #fff,
-  49vw 71vh #fff, 44vw 32vh #fff, 30vw 47vh #fff, 31vw 41vh #fff, 41vw 57vh #fff, 
-  10vw 39vh #fff, 20vw 17vh #fff, 25vw 35vh #fff, 25vw 55vh #fff, 23vw 45vh #fff,
-  32vw 84vh #fff, 15vw 91vh #fff, 17vw 83vh #fff, 12vw 88vh #fff, 14vw 64vh #fff,
-  80vw 80vh #fff, 81vw 17vh #fff, 92vw 5vh #fff, 90vw 35vh #fff, 77vw 17vh #fff,
-  76vw 37vh #fff, 85vw 45vh #fff, 65vw 45vh #fff;
+  box-shadow: 1vw 1vh #fff, 3vw 2vh #fff, 3vw 7vh #fff, 10vw 17vh #fff,
+    15vw 25vh #fff, 32vw 44vh #fff, 13vw 19vh #fff, 4vw 87vh #fff,
+    32vw 16vh #fff, 45vw 35vh #fff, 21vw 98vh #fff, 47vw 65vh #fff,
+    90vw 73vh #fff, 91vw 57vh #fff, 99vw 85vh #fff, 55vw 33vh #fff,
+    57vw 48vh #fff, 73vw 21vh #fff, 49vw 14vh #fff, 48vw 38vh #fff,
+    61vw 21vh #fff, 75vw 75vh #fff, 76vw 77vh #fff, 79vw 84vh #fff,
+    50vw 65vh #fff, 55vw 63vh #fff, 57vw 59vh #fff, 63vw 82vh #fff,
+    65vw 87vh #fff, 50vw 91vh #fff, 49vw 71vh #fff, 44vw 32vh #fff,
+    30vw 47vh #fff, 31vw 41vh #fff, 41vw 57vh #fff, 10vw 39vh #fff,
+    20vw 17vh #fff, 25vw 35vh #fff, 25vw 55vh #fff, 23vw 45vh #fff,
+    32vw 84vh #fff, 15vw 91vh #fff, 17vw 83vh #fff, 12vw 88vh #fff,
+    14vw 64vh #fff, 80vw 80vh #fff, 81vw 17vh #fff, 92vw 5vh #fff,
+    90vw 35vh #fff, 77vw 17vh #fff, 76vw 37vh #fff, 85vw 45vh #fff,
+    65vw 45vh #fff;
   animation: star 100s linear infinite;
 }
 

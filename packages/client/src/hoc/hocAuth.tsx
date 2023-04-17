@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 const hocAuth = (Component: FC) => {
   return () => {
     const { isAuthenticated, isLoading } = useAuth();
-    
+
     if (isLoading) {
       return <div>Loading...</div>;
     }

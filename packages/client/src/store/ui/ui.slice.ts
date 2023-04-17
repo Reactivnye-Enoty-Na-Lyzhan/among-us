@@ -1,6 +1,6 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { TypeRootState } from "..";
-import { IUiState } from "./ui.types";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { TypeRootState } from '..';
+import { IUiState } from './ui.types';
 
 const initialState: IUiState = {
   isLoading: false,
