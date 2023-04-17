@@ -36,16 +36,16 @@ export default function SignUpForm() {
     { field: 'password', validation: validation.password },
   ]);
 
+  const navigate = useNavigate();
+
   const valuesRef = useRef(values);
   valuesRef.current = values;
 
   const [signupQueryError, setSignupQueryError] = useState<string | null>(null);
   const [triggerGetUserQuery, getUserQueryStatus] = useLazyGetUserQuery();
 
-  console.log(`VALUES REF: ${JSON.stringify(valuesRef.current)}`);
-
   const onSubmitHandler = useCallback(async () => {
-    if (!validateForm(values)) {
+    if (!validateForm(valuesRef.current)) {
       return;
     }
 
