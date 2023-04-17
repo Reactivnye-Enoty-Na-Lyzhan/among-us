@@ -1,0 +1,18 @@
+.forum-button {
+  display: inline-block;
+  background-color: var(--color-purple);
+  border: none;
+  border-radius: 5px;
+  height: 51px;
+  text-align: center;
+  width: 205px;
+  color: var(--color-white);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity ease-in 0.1s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

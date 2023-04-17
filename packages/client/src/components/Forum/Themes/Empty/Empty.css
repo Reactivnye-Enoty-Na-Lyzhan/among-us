@@ -1,0 +1,27 @@
+.forum-themes-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+}
+
+.forum-themes-empty__title {
+  color: var(--color-white);
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.forum-themes-empty__text {
+  margin-top: 35px;
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 180%;
+}
+
+.forum-themes-empty__button {
+  margin-top: 45px;
+  text-align: center;
+}
