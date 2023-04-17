@@ -10,6 +10,7 @@ import Profile from './components/Profile/Profile';
 import SignUpPage from './components/SignUpPage/SignUpPage';
 import ForumPage from './components/Forum/Page/Page';
 import './App.css';
+import Loader from './components/Loader/Loader';
 
 function App() {
   const [link, setLink] = useState<
@@ -26,6 +27,7 @@ function App() {
     <Router>
       <div className="app app_theme_default">
         <ErrorToast />
+        <Loader />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
