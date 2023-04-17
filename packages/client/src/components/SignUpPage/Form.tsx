@@ -4,14 +4,11 @@ import Input from '@/components/Form/Input/Input';
 import { useForm } from '@/components/Form/hooks';
 import { useValidation } from '@/hooks/useValidation';
 import { validation } from '@/utils/validation';
-import { useSignupUserMutation } from '@/store/auth/auth.slice';
 import { transformFormDataToDTO } from './_utils/transformFormDataToDTO';
-import { SignUpFormData, SignUpRequestError } from './_types';
-import type { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import {
-  ApiErrors,
-  ApiResponseMessages_RU,
-} from './_utils/api-statuses-locales';
+import { SignUpFormData } from './_types';
+import { useState } from 'react';
+import { SignUpService } from '@/services/signup/signup.service';
+import { getErrorMessage } from '@/services/signup/error-message/get-error-message';
 
 export default function SignUpForm() {
   const { values, handleInputChange } = useForm({
@@ -37,33 +34,30 @@ export default function SignUpForm() {
     { field: 'password', validation: validation.password },
   ]);
 
-  const [signupUser, { error: responseError, isSuccess: isSignupSuccess }] =
-    useSignupUserMutation();
+  const [apiStatus, setApiStatus] = useState<string>('');
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = async () => {
     if (!validateForm(values)) {
       return;
     }
 
     const data = transformFormDataToDTO(values as SignUpFormData);
     console.log(`FORM DATA: ${JSON.stringify(data)}`);
-    signupUser(data);
-  };
+    try {
+      const response = await SignUpService.signup(data);
+      const { status } = response;
+      const responseBody = await response.json();
 
-  const apiError = (responseError as FetchBaseQueryError)?.data as
-    | SignUpRequestError
-    | undefined;
-  let apiRequestStatus = '';
-  if (apiError) {
-    apiRequestStatus =
-      ApiResponseMessages_RU[apiError.reason as ApiErrors] ?? apiError.reason;
-  } else if (isSignupSuccess) {
-    apiRequestStatus = 'Регистрация прошла успешно';
-  }
+      setApiStatus(getErrorMessage({ status, response: responseBody }));
+    } catch (error) {
+      console.error(`ERROR WHILE SIGNUP REQUEST: ${error}`);
+      setApiStatus(`Непредвиденная ошибка клиента`);
+    }
+  };
 
   return (
     <>
-      <div className="signup-page-main__api_error">{apiRequestStatus}</div>
+      <div className="signup-page-main__api_error">{apiStatus}</div>
       <Form onSubmit={onSubmitHandler}>
         <Input
           value={values.name}

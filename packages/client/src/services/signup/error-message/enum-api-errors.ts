@@ -4,12 +4,14 @@ export const enum ApiErrors {
   LOGIN_ALREADY_EXISTS = 'Login already exists',
   EMAIL_ALREADY_EXISTS = 'Email already exists',
   USER_ALREADY_IN_SYSTEM = 'User already in system',
+  INTERNAL_SERVER_ERROR = 'Internal server error',
 }
 
-export const ApiResponseMessages_RU = {
+export const ApiResponseMessages_RU: Record<ApiErrors, string> = {
   [ApiErrors.INVALID_EMAIL]: 'Неправильный email',
   [ApiErrors.INVALID_PHONE]: 'Неверный номер телефона',
   [ApiErrors.LOGIN_ALREADY_EXISTS]: 'Логин занят',
   [ApiErrors.EMAIL_ALREADY_EXISTS]: 'Email занят',
   [ApiErrors.USER_ALREADY_IN_SYSTEM]: 'Вы уже авторизованы',
+  [ApiErrors.INTERNAL_SERVER_ERROR]: 'Ошибка сервера',
 };

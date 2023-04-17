@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { SignUpRequestData, SignUpRequestResponse, User } from './auth.types';
+import { User } from './auth.types';
 import { API_BASE_URL } from '../../utils/constants';
 
 const AUTH_API_PATH = 'auth';
@@ -15,10 +15,7 @@ export const authApi = createApi({
     getUser: build.query<User, void>({
       query: () => '/user',
     }),
-    signupUser: build.mutation<SignUpRequestResponse, SignUpRequestData>({
-      query: data => ({ url: '/signup', method: 'POST', body: data }),
-    }),
   }),
 });
 
-export const { useGetUserQuery, useSignupUserMutation } = authApi;
+export const { useGetUserQuery } = authApi;
