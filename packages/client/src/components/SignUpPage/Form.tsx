@@ -10,7 +10,7 @@ import { useCallback, useRef, useState } from 'react';
 import { SignUpService } from '@/services/signup/signup.service';
 import { getErrorMessage } from '@/services/signup/error-message/get-error-message';
 import { useLazyGetUserQuery } from '@/store/auth/auth.slice';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUpForm() {
   const { values, handleInputChange } = useForm({
@@ -74,11 +74,14 @@ export default function SignUpForm() {
     }
   }, []);
 
-  if (signupQueryError === '' && getUserQueryStatus.isSuccess) {
-    return <Navigate replace to="/game"></Navigate>;
-  }
-  if (signupQueryError === '' && getUserQueryStatus.isError) {
-    return <Navigate replace to="/login"></Navigate>;
+  if (signupQueryError === '') {
+    setSignupQueryError('Регистрация прошла успешно');
+
+    if (getUserQueryStatus.isSuccess) {
+      setTimeout(() => navigate('/game'), 4000);
+    } else {
+      setTimeout(() => navigate('/login'), 4000);
+    }
   }
 
   return (
