@@ -12,6 +12,6 @@ export const ApiResponseMessages_RU: Record<ApiErrors, string> = {
   [ApiErrors.INVALID_PHONE]: 'Неверный номер телефона',
   [ApiErrors.LOGIN_ALREADY_EXISTS]: 'Логин занят',
   [ApiErrors.EMAIL_ALREADY_EXISTS]: 'Email занят',
-  [ApiErrors.USER_ALREADY_IN_SYSTEM]: 'Вы уже авторизованы',
+  [ApiErrors.USER_ALREADY_IN_SYSTEM]: 'Пользователь уже в системе',
   [ApiErrors.INTERNAL_SERVER_ERROR]: 'Ошибка сервера',
 };

@@ -34,8 +34,16 @@ const isLoginAlreadyExistsError: ErrorClassifier = {
   errorMessage: ApiResponseMessages_RU[ApiErrors.LOGIN_ALREADY_EXISTS],
 };
 
+const isUserAlreadyInSystem: ErrorClassifier = {
+  predicateFunction: ({ response }) => {
+    return response.reason === ApiErrors.USER_ALREADY_IN_SYSTEM;
+  },
+  errorMessage: ApiResponseMessages_RU[ApiErrors.USER_ALREADY_IN_SYSTEM],
+};
+
 export const errorClassifiers: ErrorClassifier[] = [
   isServerError,
   isBadFormatError,
   isLoginAlreadyExistsError,
+  isUserAlreadyInSystem,
 ];
