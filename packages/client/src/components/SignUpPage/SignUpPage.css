@@ -43,7 +43,7 @@
   white-space: nowrap;
 }
 
-.signup-page-main__api_error {
+.signup-page-main__api-status-message {
   min-width: 300px;
   min-height: 25px;
   margin-bottom: 7px;

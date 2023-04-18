@@ -1,27 +1,14 @@
-import {
-  SignUpAPIResponse,
-  SignUpRequestError,
-  SignUpRequestSuccessfulResponse,
-} from '../_types';
+import { ClassifierArgs } from './_types';
 import { ApiErrors, ApiResponseMessages_RU } from './enum-api-errors';
 
-type Args = {
-  status: number;
-  response: SignUpRequestError;
-};
-
-type ErrorClassifierPredicate = ({ status, response }: Args) => boolean;
+type ErrorClassifierPredicate = ({
+  status,
+  response,
+}: ClassifierArgs) => boolean;
 
 type ErrorClassifier = {
   predicateFunction: ErrorClassifierPredicate;
-  errorMessage: string | (({ status, response }: Args) => string);
-};
-
-export const isSuccessfulResponse = (
-  status: number,
-  response: SignUpAPIResponse
-): response is SignUpRequestSuccessfulResponse => {
-  return status === 200;
+  errorMessage: string | (({ status, response }: ClassifierArgs) => string);
 };
 
 const isServerError: ErrorClassifier = {
@@ -46,7 +33,6 @@ const isLoginAlreadyExistsError: ErrorClassifier = {
   },
   errorMessage: ApiResponseMessages_RU[ApiErrors.LOGIN_ALREADY_EXISTS],
 };
-
 
 export const errorClassifiers: ErrorClassifier[] = [
   isServerError,

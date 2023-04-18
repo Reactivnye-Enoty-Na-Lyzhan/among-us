@@ -1,4 +1,4 @@
-import { SignUpRequestDTO } from '@/services/signup/_types';
+import { SignUpRequestDTO } from '@/api/signup/_types';
 import type { SignUpFormData } from '../_types';
 
 export function transformFormDataToDTO(

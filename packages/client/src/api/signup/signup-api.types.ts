@@ -7,7 +7,7 @@ export type SignUpRequestDTO = {
   phone: string;
 };
 
-export type SignUpRequestError = {
+export type SignUpRequestErrorResponse = {
   reason: string;
   error?: string;
 };
@@ -15,7 +15,3 @@ export type SignUpRequestError = {
 export type SignUpRequestSuccessfulResponse = {
   id: number;
 };
-
-export type SignUpAPIResponse =
-  | SignUpRequestError
-  | SignUpRequestSuccessfulResponse;

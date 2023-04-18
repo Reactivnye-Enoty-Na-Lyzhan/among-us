@@ -1,17 +1,14 @@
-import { SignUpAPIResponse } from '../_types';
-import { isSuccessfulResponse, errorClassifiers } from './errors-classifiers';
+import { SignUpRequestErrorResponse } from '../signup-api.types';
+import { errorClassifiers } from './errors-classifiers';
 
 type Args = {
-  status: number;
-  response: SignUpAPIResponse;
+  status: number | string;
+  response: SignUpRequestErrorResponse;
 };
 
 function getErrorMessage({ status, response }: Args): string {
-  if (isSuccessfulResponse(status, response)) {
-    return '';
-  }
-
   let error: string | undefined;
+
   errorClassifiers.some(({ predicateFunction, errorMessage }) => {
     const isMatching = predicateFunction({ status, response });
     if (isMatching) {

@@ -4,13 +4,10 @@ import Input from '@/components/Form/Input/Input';
 import { useForm } from '@/components/Form/hooks';
 import { useValidation } from '@/hooks/useValidation';
 import { validation } from '@/utils/validation';
-import { transformFormDataToDTO } from './_utils/transformFormDataToDTO';
-import { SignUpFormData } from './_types';
-import { useCallback, useRef, useState } from 'react';
-import { SignUpService } from '@/services/signup/signup.service';
-import { getErrorMessage } from '@/services/signup/error-message/get-error-message';
-import { useLazyGetUserQuery } from '@/store/auth/auth.slice';
+import { useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOnSubmitQueries } from './hooks/useOnSubmitRequests';
+import { SignUpFormData } from './_types';
 
 export default function SignUpForm() {
   const { values, handleInputChange } = useForm({
@@ -41,52 +38,37 @@ export default function SignUpForm() {
   const valuesRef = useRef(values);
   valuesRef.current = values;
 
-  const [signupQueryError, setSignupQueryError] = useState<string | null>(null);
-  const [triggerGetUserQuery, getUserQueryStatus] = useLazyGetUserQuery();
+  const {
+    apiQueryStatusMessage,
+    sendSignUpQuery,
+    getUserQueryStatus,
+    sendGetUserQuery,
+    signUpQueryStatus,
+  } = useOnSubmitQueries();
 
   const onSubmitHandler = useCallback(async () => {
-    if (!validateForm(valuesRef.current)) {
+    const formData = valuesRef.current;
+    if (!validateForm(formData)) {
       return;
     }
 
-    const data = transformFormDataToDTO(valuesRef.current as SignUpFormData);
-    console.log(`FORM DATA: ${JSON.stringify(data)}`);
-    try {
-      const signupResponse = await SignUpService.signup(data);
-      const signupResponseBody = await signupResponse.json();
-
-      setSignupQueryError(
-        getErrorMessage({
-          status: signupResponse.status,
-          response: signupResponseBody,
-        })
-      );
-    } catch (error) {
-      console.error(`ERROR WHILE SIGNUP REQUEST: ${error}`);
-      setSignupQueryError(`Непредвиденная ошибка клиента`);
-    }
-
-    try {
-      await triggerGetUserQuery();
-    } catch (error) {
-      console.error(`ERROR WHILE GET USER: ${error}`);
-      setSignupQueryError(`Непредвиденная ошибка клиента`);
-    }
+    sendSignUpQuery(formData as SignUpFormData);
+    sendGetUserQuery();
   }, []);
 
-  if (signupQueryError === '') {
-    setSignupQueryError('Регистрация прошла успешно');
-
+  if (signUpQueryStatus.isSuccess) {
     if (getUserQueryStatus.isSuccess) {
-      setTimeout(() => navigate('/game'), 4000);
+      setTimeout(() => navigate('/game'), 3000);
     } else {
-      setTimeout(() => navigate('/login'), 4000);
+      setTimeout(() => navigate('/login'), 3000);
     }
   }
 
   return (
     <>
-      <div className="signup-page-main__api_error">{signupQueryError}</div>
+      <div className="signup-page-main__api-status-message">
+        {apiQueryStatusMessage}
+      </div>
       <Form onSubmit={onSubmitHandler}>
         <Input
           value={values.name}
