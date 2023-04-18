@@ -52,6 +52,10 @@
   color: var(--form-font-secondary);
 }
 
+.signup-page-main__api-status-message_success {
+  color: var(--font-additional-tertiary);
+}
+
 .signup-page-main {
   display: flex;
   flex-direction: column;

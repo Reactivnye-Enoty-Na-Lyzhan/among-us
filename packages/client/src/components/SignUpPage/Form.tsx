@@ -8,6 +8,7 @@ import { useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnSubmitQueries } from './hooks/useOnSubmitRequests';
 import { SignUpFormData } from './_types';
+import classNames from 'classnames';
 
 export default function SignUpForm() {
   const { values, handleInputChange } = useForm({
@@ -66,7 +67,11 @@ export default function SignUpForm() {
 
   return (
     <>
-      <div className="signup-page-main__api-status-message">
+      <div
+        className={classNames('signup-page-main__api-status-message', {
+          'signup-page-main__api-status-message_success':
+            signUpQueryStatus.isSuccess,
+        })}>
         {apiQueryStatusMessage}
       </div>
       <Form onSubmit={onSubmitHandler}>
