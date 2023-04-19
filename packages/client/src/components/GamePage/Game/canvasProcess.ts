@@ -95,7 +95,6 @@ export default function canvasProcess(
       }
       table.checkCollision();
       task.checkCollision();
-      crewman.checkCollision();
     }
     draw() {
       ctx.drawImage(
@@ -173,6 +172,7 @@ export default function canvasProcess(
     }
   }
   const crewman = new Crewman(1500, 500, killActionBtn);
+  
 
   class InteractionObject implements IInteractionObject {
     x: number;
@@ -196,8 +196,9 @@ export default function canvasProcess(
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.closePath();
     background.draw();
-    player.draw();
     crewman.render();
+    player.draw();
+    crewman.checkCollision();
     movePlayer(player, background);
     gameFrame++;
     window.requestAnimationFrame(gameLoop);
