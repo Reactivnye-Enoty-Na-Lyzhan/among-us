@@ -1,9 +1,11 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 
-const hocAuth = (Component: FC) => {
-  return () => {
+function hocAuth<Props extends Record<string, unknown>>(
+  Component: FC<Props>
+): FC<Props> {
+  return props => {
     const { isAuthenticated, isLoading } = useAuth();
 
     if (isLoading) {
@@ -11,11 +13,11 @@ const hocAuth = (Component: FC) => {
     }
 
     if (isAuthenticated) {
-      return <Component />;
+      return <Component {...props} />;
     } else {
       return <Navigate to="/login" />;
     }
   };
-};
+}
 
 export default hocAuth;

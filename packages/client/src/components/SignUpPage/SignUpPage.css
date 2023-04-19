@@ -43,8 +43,29 @@
   white-space: nowrap;
 }
 
+.signup-page-main__api-status-message {
+  overflow: hidden;
+
+  width: 300px;
+  max-width: 300px;
+  min-height: 25px;
+  margin-bottom: 7px;
+
+  font-size: 14px;
+  color: var(--form-font-secondary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.signup-page-main__api-status-message_success {
+  color: var(--font-additional-tertiary);
+}
+
 .signup-page-main {
-  @extend flex-row-container;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 
   width: 100%;
 }

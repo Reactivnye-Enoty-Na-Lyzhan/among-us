@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import SignUpForm from './Form/Form';
+import SignUpForm from './Form';
 import './SignUpPage.css';
 
 const SignUpPage: React.FC = () => {
