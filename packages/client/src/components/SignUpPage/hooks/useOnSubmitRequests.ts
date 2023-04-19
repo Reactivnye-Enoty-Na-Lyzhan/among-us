@@ -5,12 +5,12 @@ import {
 import { useCallback, useState } from 'react';
 import { SignUpFormData } from '../_types';
 import { transformFormDataToDTO } from '../_utils/transformFormDataToDTO';
-import { getErrorMessage } from '@/api/signup/error-messages/get-error-message';
 import {
   isRTKQueryFetchError,
   isRTKQuerySuccessfulResponse,
-} from '@/api/utils';
-import { SignUpRequestErrorResponse } from '@/api/signup/signup-api.types';
+} from '@/utils/api/response-types';
+import { SignUpRequestErrorResponse } from '@/store/auth/auth.types';
+import { getErrorMessage } from '@/utils/api/signup/error-messages/get-error-message';
 
 export function useOnSubmitQueries() {
   const [apiQueryStatusMessage, setAPIQueryStatusMessage] = useState<

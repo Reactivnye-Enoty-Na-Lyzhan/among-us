@@ -1,4 +1,4 @@
-import { SignUpRequestErrorResponse } from '../signup-api.types';
+import { SignUpRequestErrorResponse } from '@/store/auth/auth.types';
 import { errorClassifiers } from './errors-classifiers';
 
 type Args = {

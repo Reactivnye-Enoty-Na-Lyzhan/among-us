@@ -4,7 +4,7 @@ import { API_BASE_URL } from '../../utils/constants';
 import {
   SignUpRequestDTO,
   SignUpRequestSuccessfulResponse,
-} from '@/api/signup/signup-api.types';
+} from '@/store/auth/auth.types';
 
 const AUTH_API_PATH = 'auth';
 const API_URL = `${API_BASE_URL}${AUTH_API_PATH}`;
