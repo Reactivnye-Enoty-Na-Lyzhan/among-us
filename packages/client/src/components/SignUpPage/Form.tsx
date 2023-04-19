@@ -59,9 +59,9 @@ export default function SignUpForm() {
 
   if (signUpQueryStatus.isSuccess) {
     if (getUserQueryStatus.isSuccess) {
-      setTimeout(() => navigate('/game'), 3000);
+      navigate('/game');
     } else {
-      setTimeout(() => navigate('/login'), 3000);
+      navigate('/login');
     }
   }
 
