@@ -9,6 +9,7 @@ import Button from '../Form/Button/Button';
 import { useValidation } from '../../hooks/useValidation';
 import './LoginPage.css';
 import { useSignIn } from './hooks/useSignIn';
+import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
 
 const LoginPage: FC = () => {
@@ -84,4 +85,7 @@ const LoginPage: FC = () => {
   );
 };
 
-export default LoginPage;
+export default hocAuth(LoginPage, {
+  onUnauthenticatedRedirection: null,
+  onAuthenticatedRedirection: '/game',
+});
