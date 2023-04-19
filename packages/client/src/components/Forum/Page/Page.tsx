@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useParams } from 'react-router-dom';
 import Header from '../../Header/Header';
 import Themes from '../Themes/Themes';
 import './Page.css';
@@ -42,11 +43,19 @@ const themes: ForumThemeGroup = {
 };
 
 const ForumPage: FC = () => {
+  // TBD: temporary solution while we don't have an API
+  const { param } = useParams();
+
   return (
     <div className="forum">
       <Header title={'Форум'} goBackUrl={'/'} />
       <main className="forum__container">
-        <Themes pinnedThemes={pinnedThemes} themes={themes} />
+        <Themes
+          pinnedThemes={
+            param === 'empty' ? { ...pinnedThemes, themes: [] } : pinnedThemes
+          }
+          themes={param === 'empty' ? { ...themes, themes: [] } : themes}
+        />
       </main>
     </div>
   );
