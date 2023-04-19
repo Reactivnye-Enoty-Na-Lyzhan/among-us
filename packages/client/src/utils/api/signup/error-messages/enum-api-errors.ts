@@ -5,6 +5,7 @@ export const enum ApiErrors {
   EMAIL_ALREADY_EXISTS = 'Email already exists',
   USER_ALREADY_IN_SYSTEM = 'User already in system',
   INTERNAL_SERVER_ERROR = 'Internal server error',
+  INVALID_COOKIE = 'Cookie is not valid',
 }
 
 export const ApiResponseMessages_RU: Record<ApiErrors, string> = {
@@ -14,4 +15,5 @@ export const ApiResponseMessages_RU: Record<ApiErrors, string> = {
   [ApiErrors.EMAIL_ALREADY_EXISTS]: 'Email занят',
   [ApiErrors.USER_ALREADY_IN_SYSTEM]: 'Пользователь уже в системе',
   [ApiErrors.INTERNAL_SERVER_ERROR]: 'Ошибка сервера',
+  [ApiErrors.INVALID_COOKIE]: 'Cookie невалиден',
 };

@@ -41,9 +41,17 @@ const isUserAlreadyInSystem: ErrorClassifier = {
   errorMessage: ApiResponseMessages_RU[ApiErrors.USER_ALREADY_IN_SYSTEM],
 };
 
+const isInvalidCookie: ErrorClassifier = {
+  predicateFunction: ({ response }) => {
+    return response.reason === ApiErrors.INVALID_COOKIE;
+  },
+  errorMessage: ApiResponseMessages_RU[ApiErrors.INVALID_COOKIE],
+};
+
 export const errorClassifiers: ErrorClassifier[] = [
   isServerError,
   isBadFormatError,
   isLoginAlreadyExistsError,
   isUserAlreadyInSystem,
+  isInvalidCookie,
 ];
