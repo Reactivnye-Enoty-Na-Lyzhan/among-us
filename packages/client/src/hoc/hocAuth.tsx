@@ -7,7 +7,7 @@ type Options = {
   onAuthenticatedRedirection: null | string;
 };
 
-const defaultOptions = {
+const defaultOptions: Options = {
   onUnauthenticatedRedirection: '/login',
   onAuthenticatedRedirection: null,
 };
