@@ -22,6 +22,10 @@ export type SignUpRequestDTO = {
   password: string;
   phone: string;
 };
+export type SignInRequestDTO = {
+  password: string;
+  phone: string;
+};
 
 export type SignUpRequestErrorResponse = {
   reason: string;

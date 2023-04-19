@@ -1,0 +1,55 @@
+import {
+  useSignInUserMutation,
+} from '@/store/auth/auth.slice';
+import { useState } from 'react';
+import {
+  isRTKQueryFetchError,
+  isRTKQuerySuccessfulResponse,
+} from '@/utils/api/response-types'; 
+import { SignUpRequestErrorResponse } from '@/store/auth/auth.types';
+import { getErrorMessage } from '@/utils/api/signup/error-messages/get-error-message';
+
+export function useSignIn() {
+    const [sendSignInQuery] = useSignInUserMutation();
+    const [requestStatus, setRequestStatus] = useState('');
+    const [statusMessageClass, setStatusMessageClass] = useState('');
+
+    async function signIn(data: any) {
+        setStatusMessageClass('');
+        setRequestStatus('Проверяем...');
+        try {
+            const response = await sendSignInQuery(data);
+            if (isRTKQuerySuccessfulResponse(response)) {
+                setStatusMessageClass('login-page__status_green');
+                setRequestStatus('Рады видеть снова!');
+                return true;
+            }
+            const { error } = response;
+            if (isRTKQueryFetchError(error)) {
+              const { status } = error;
+              let errorMessage;
+              if (status === 401) {
+                errorMessage = 'Неверный логин или пароль';
+              } else {
+                const response = error.data as SignUpRequestErrorResponse;
+                errorMessage = getErrorMessage({ status, response });
+              }
+              setStatusMessageClass('login-page__status_red');
+              setRequestStatus(errorMessage);
+              return false;
+            } else {
+              throw error;
+            }
+          } catch (error) {
+            console.log(error);
+            return false;
+          }
+    }
+
+
+  return {
+    requestStatus,
+    statusMessageClass,
+    signIn,
+  };
+}

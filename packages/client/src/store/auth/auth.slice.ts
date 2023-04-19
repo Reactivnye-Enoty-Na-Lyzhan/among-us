@@ -3,6 +3,7 @@ import { User } from './auth.types';
 import { API_BASE_URL } from '../../utils/constants';
 import {
   SignUpRequestDTO,
+  SignInRequestDTO,
   SignUpRequestSuccessfulResponse,
 } from '@/store/auth/auth.types';
 
@@ -24,9 +25,15 @@ export const authApi = createApi({
       SignUpRequestDTO
     >({
       query: data => ({ url: '/signup', method: 'POST', body: data }),
-    }),
+    }), 
+    signInUser: build.mutation<
+      SignUpRequestSuccessfulResponse,
+      SignInRequestDTO
+    >({
+      query: data => ({ url: '/signin', method: 'POST', body: data }),
+    }), 
   }),
 });
 
-export const { useGetUserQuery, useLazyGetUserQuery, useSignUpUserMutation } =
+export const { useGetUserQuery, useLazyGetUserQuery, useSignUpUserMutation, useSignInUserMutation } =
   authApi;
