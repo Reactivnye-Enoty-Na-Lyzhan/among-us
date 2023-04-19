@@ -9,16 +9,13 @@ import Button from '../Form/Button/Button';
 import { useValidation } from '../../hooks/useValidation';
 import './LoginPage.css';
 import { useSignIn } from './hooks/useSignIn';
+import { SignInRequestDTO } from '@/store/auth/auth.types';
 
 const LoginPage: FC = () => {
+  const { requestStatus, statusMessageClass, signIn, sendSignInQueryStatus } =
+    useSignIn();
 
-const {    
-    requestStatus,
-    statusMessageClass,
-    signIn
-} = useSignIn();
-
-  const { values, handleInputChange } = useForm();
+  const { values, handleInputChange } = useForm({ login: '', password: '' });
   const {
     validationData,
     isFormValid,
@@ -32,52 +29,57 @@ const {
 
   const navigate = useNavigate();
 
-async function handleSubmit() {
+  async function handleSubmit() {
     if (!validateForm(values)) {
-        return;
+      return;
     }
-     const success = await signIn(values);
-     success && navigate('/game');
-}
+    if (sendSignInQueryStatus.isLoading) {
+      console.log('block dos');
+      return;
+    }
+    const success = await signIn(values as SignInRequestDTO);
+    success && navigate('/game');
+  }
 
   return (
-    <div className='login-page'>
-        <div className='login-page__container'>
-            <h1 className='login-page__title'>Рады видеть!</h1>
-            <div className={'login-page__status ' + statusMessageClass}>
-                {requestStatus}
-            </div>
-            <Form
-              onSubmit={handleSubmit}>
-              <Input
-                value={values.login}
-                handleInputChange={handleInputChange}
-                clearFieldValidation={clearFieldValidation}
-                validateField={validateField}
-                type={'text'}
-                name={'login'}
-                placeholder={'Введите логин'}
-                label={'Логин'}
-                validation={validationData.login}
-              />
-              <Input
-                value={values.password}
-                handleInputChange={handleInputChange}
-                clearFieldValidation={clearFieldValidation}
-                validateField={validateField}
-                type={'password'}
-                name={'password'}
-                placeholder={'Введите пароль'}
-                label={'Пароль'}
-                validation={validationData.password}
-              />
-              <Button disabled={!isFormValid} text={'Отправить'}/>
-            </Form>
-            <div className='login-page__footer'>
-              <span>Ещё не зарегистрированы?</span>
-              <Link to={'/registration'} className='login-page__link'>Регистрация</Link>
-            </div>
+    <div className="login-page">
+      <div className="login-page__container">
+        <h1 className="login-page__title">Рады видеть!</h1>
+        <div className={'login-page__status ' + statusMessageClass}>
+          {requestStatus}
         </div>
+        <Form onSubmit={handleSubmit}>
+          <Input
+            value={values.login}
+            handleInputChange={handleInputChange}
+            clearFieldValidation={clearFieldValidation}
+            validateField={validateField}
+            type={'text'}
+            name={'login'}
+            placeholder={'Введите логин'}
+            label={'Логин'}
+            validation={validationData.login}
+          />
+          <Input
+            value={values.password}
+            handleInputChange={handleInputChange}
+            clearFieldValidation={clearFieldValidation}
+            validateField={validateField}
+            type={'password'}
+            name={'password'}
+            placeholder={'Введите пароль'}
+            label={'Пароль'}
+            validation={validationData.password}
+          />
+          <Button disabled={!isFormValid} text={'Отправить'} />
+        </Form>
+        <div className="login-page__footer">
+          <span>Ещё не зарегистрированы?</span>
+          <Link to={'/signup'} className="login-page__link">
+            Регистрация
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

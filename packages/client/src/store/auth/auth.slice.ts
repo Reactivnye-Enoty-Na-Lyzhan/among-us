@@ -25,15 +25,24 @@ export const authApi = createApi({
       SignUpRequestDTO
     >({
       query: data => ({ url: '/signup', method: 'POST', body: data }),
-    }), 
+    }),
     signInUser: build.mutation<
       SignUpRequestSuccessfulResponse,
       SignInRequestDTO
     >({
-      query: data => ({ url: '/signin', method: 'POST', body: data }),
-    }), 
+      query: data => ({
+        url: '/signin',
+        method: 'POST',
+        body: data,
+        responseHandler: response => response.text(),
+      }),
+    }),
   }),
 });
 
-export const { useGetUserQuery, useLazyGetUserQuery, useSignUpUserMutation, useSignInUserMutation } =
-  authApi;
+export const {
+  useGetUserQuery,
+  useLazyGetUserQuery,
+  useSignUpUserMutation,
+  useSignInUserMutation,
+} = authApi;

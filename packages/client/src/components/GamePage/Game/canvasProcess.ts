@@ -172,7 +172,6 @@ export default function canvasProcess(
     }
   }
   const crewman = new Crewman(1500, 500, killActionBtn);
-  
 
   class InteractionObject implements IInteractionObject {
     x: number;
