@@ -22,9 +22,7 @@ function getErrorMessage({ status, response }: Args): string {
     return isMatching;
   });
 
-  return (
-    error ?? `Непредвиденная ошибка: ${status}; ${JSON.stringify(response)}`
-  );
+  return error ?? `Непредвиденная ошибка: ${status}`;
 }
 
 const memoizedGetErrorMessage = (() => {
