@@ -9,7 +9,7 @@ import {
   isRTKQueryFetchError,
   isRTKQuerySuccessfulResponse,
 } from '@/utils/api/response-types';
-import { SignUpRequestErrorResponse } from '@/store/auth/auth.types';
+import { APIErrorResponse } from '@/store/auth/auth.types';
 import { getErrorMessage } from '@/utils/api/signup/error-messages/get-error-message';
 
 export function useOnSubmitQueries() {
@@ -32,7 +32,7 @@ export function useOnSubmitQueries() {
       const { error } = response;
       if (isRTKQueryFetchError(error)) {
         const { status } = error;
-        const response = error.data as SignUpRequestErrorResponse;
+        const response = error.data as APIErrorResponse;
         const errorMessage = getErrorMessage({ status, response });
 
         setAPIQueryStatusMessage(errorMessage);
