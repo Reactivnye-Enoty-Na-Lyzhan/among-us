@@ -1,3 +1,5 @@
+import { RTKQueryError, RTKQueryFetchError } from '@/types';
+
 export function isRTKQuerySuccessfulResponse<R>(
   response: R | { error: RTKQueryError }
 ): response is R {
