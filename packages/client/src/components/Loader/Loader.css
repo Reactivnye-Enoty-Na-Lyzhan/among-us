@@ -1,0 +1,128 @@
+@keyframes fly {
+  from {
+    transform: translate(0, 0);
+  } 50% {
+    transform: translate(10px, 3px);
+  } to {
+    transform: translate(-7px,  15px);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scale(100%, 100%);
+  } to {
+    transform: scale(115%, 103%);
+  }
+}
+
+@keyframes star {
+  from {
+    transform: translateX(100vw);
+  } to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes starInverse {
+  from {
+    transform: translateX(0);
+  } to {
+    transform: translateX(-100vw);
+  }
+}
+
+@keyframes movingBackground {
+  to {
+    background-position: 100% center;
+  }
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #010318;
+  z-index: 10;
+}
+
+.loader__rocket-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fly 3s ease-in-out alternate infinite;
+}
+
+.loader__rocket {
+  width: 179px;
+  height: 170px;
+  background-image: url(../../images/loader/rocket.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.loader__flame {
+  width: 98px;
+  height: 98px;
+  background-image: url(../../images/loader/flame.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: grow 3s ease-in-out alternate infinite;
+}
+
+.loader__title {
+  margin: 56px 0 0;
+  font-size: 32px;
+  font-weight: 500;
+  color: #fafafa;
+  line-height: 1.2;
+  text-align: center;
+  background-size: 200% auto;
+  background-image: linear-gradient(
+    135deg,
+    #231557 0%,
+    #910cbf 29%,
+    #e8125f 67%,
+    #e0d700 100%
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: movingBackground 5s ease-in-out alternate infinite;
+}
+
+.loader__stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: 
+  1vw 1vh #fff, 3vw 2vh #fff, 3vw 7vh #fff, 10vw 17vh #fff, 15vw 25vh #fff, 
+  32vw 44vh #fff, 13vw 19vh #fff, 4vw 87vh #fff, 32vw 16vh #fff, 45vw 35vh #fff,
+  21vw 98vh #fff, 47vw 65vh #fff, 90vw 73vh #fff, 91vw 57vh #fff, 99vw 85vh #fff, 
+  55vw 33vh #fff, 57vw 48vh #fff, 73vw 21vh #fff, 49vw 14vh #fff, 48vw 38vh #fff, 
+  61vw 21vh #fff, 75vw 75vh #fff, 76vw 77vh #fff, 79vw 84vh #fff, 50vw 65vh #fff,
+  55vw 63vh #fff, 57vw 59vh #fff, 63vw 82vh #fff, 65vw 87vh #fff, 50vw 91vh #fff,
+  49vw 71vh #fff, 44vw 32vh #fff, 30vw 47vh #fff, 31vw 41vh #fff, 41vw 57vh #fff, 
+  10vw 39vh #fff, 20vw 17vh #fff, 25vw 35vh #fff, 25vw 55vh #fff, 23vw 45vh #fff,
+  32vw 84vh #fff, 15vw 91vh #fff, 17vw 83vh #fff, 12vw 88vh #fff, 14vw 64vh #fff,
+  80vw 80vh #fff, 81vw 17vh #fff, 92vw 5vh #fff, 90vw 35vh #fff, 77vw 17vh #fff,
+  76vw 37vh #fff, 85vw 45vh #fff, 65vw 45vh #fff;
+  animation: star 100s linear infinite;
+}
+
+.loader__stars_position_middle {
+  position: absolute;
+  top: 0;
+  right: 100vw;
+  animation: starInverse 100s linear infinite;
+}
