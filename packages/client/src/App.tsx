@@ -6,6 +6,7 @@ import GamePage from './components/GamePage/GamePage';
 import LandingPage from './components/LandingPage/LandingPage';
 import LeaderBoard from './components/LeaderBoard/LeaderBoard';
 import LoginPage from './components/LoginPage/LoginPage';
+import Loader from './components/Loader/Loader';
 import Profile from './components/Profile/Profile';
 import SignUpPage from './components/SignUpPage/SignUpPage';
 import ForumPage from './components/Forum/Page/Page';
@@ -26,6 +27,7 @@ function App() {
     <Router>
       <div className="app app_theme_default">
         <ErrorToast />
+        <Loader />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
