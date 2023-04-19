@@ -1,9 +1,9 @@
-import { SignUpRequestErrorResponse } from '@/store/auth/auth.types';
+import { APIErrorResponse } from '@/store/auth/auth.types';
 import { errorClassifiers } from './errors-classifiers';
 
 type Args = {
   status: number | string;
-  response: SignUpRequestErrorResponse;
+  response: APIErrorResponse;
 };
 
 function getErrorMessage({ status, response }: Args): string {
@@ -22,7 +22,9 @@ function getErrorMessage({ status, response }: Args): string {
     return isMatching;
   });
 
-  return error ?? `Непредвиденная ошибка: ${status}`;
+  return (
+    error ?? `Непредвиденная ошибка: ${status}; ${JSON.stringify(response)}`
+  );
 }
 
 const memoizedGetErrorMessage = (() => {

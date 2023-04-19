@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { User } from './auth.types';
+import { SignInRequestSuccessfulResponse, User } from './auth.types';
 import { API_BASE_URL } from '../../utils/constants';
 import {
   SignUpRequestDTO,
@@ -27,14 +27,21 @@ export const authApi = createApi({
       query: data => ({ url: '/signup', method: 'POST', body: data }),
     }),
     signInUser: build.mutation<
-      SignUpRequestSuccessfulResponse,
+      SignInRequestSuccessfulResponse,
       SignInRequestDTO
     >({
       query: data => ({
         url: '/signin',
         method: 'POST',
         body: data,
-        responseHandler: response => response.text(),
+        responseHandler: response => {
+          const contentType = response.headers.get('Content-Type');
+          if (contentType?.match('application/json')) {
+            return response.json();
+          }
+
+          return response.text();
+        },
       }),
     }),
   }),
