@@ -57,7 +57,7 @@ export default function SignUpForm() {
     sendGetUserQuery();
   }, []);
 
-  if (signUpQueryStatus.isSuccess) {
+  if (signUpQueryStatus.isSuccess && !getUserQueryStatus.isUninitialized) {
     if (getUserQueryStatus.isSuccess) {
       navigate('/game');
     } else {
