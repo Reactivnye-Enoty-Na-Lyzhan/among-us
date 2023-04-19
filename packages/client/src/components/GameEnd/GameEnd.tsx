@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
+import { FC, useCallback } from 'react';
+import { useActions } from '@/hooks/useActions';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { selectResults } from '@/store/game/game.slice';
 import GameEndButton from '../GameEndButton/GameEndButton';
 import './GameEnd.css';
-
-type Props = {
-  result: 'win' | 'lose';
-  score: number;
-};
 
 type Config = {
   imageLeftSrc: (score: number) => string;
@@ -29,8 +28,16 @@ const config: Record<string, Config> = {
   },
 };
 
-const GameEnd: React.FunctionComponent<Props> = ({ result, score }) => {
+const GameEnd: FC = () => {
+  const { result, score } = useTypedSelector(selectResults);
+
+  const { playMore } = useActions();
+
   const { imageLeftSrc, imageRightSrc } = config[result];
+
+  const handleGameStart = useCallback(() => {
+    playMore();
+  }, []);
 
   return (
     <div className="game-end game-end_spacing_below">
@@ -43,7 +50,12 @@ const GameEnd: React.FunctionComponent<Props> = ({ result, score }) => {
           {result === 'lose' ? 'Как же так-то?' : 'Победа!'}
         </h1>
         <div className="game-end__container">
-          <GameEndButton name="Сыграть ещё" link="/game" color="green" />
+          <GameEndButton
+            name="Сыграть ещё"
+            link="/game"
+            color="green"
+            onClick={handleGameStart}
+          />
           <GameEndButton name="Рейтинг" link="/leaderboard" color="violet" />
           <GameEndButton name="Ваш профиль" link="/profile" color="pink" />
           <p className="game-end__text game-end__text_spacing_below">или</p>

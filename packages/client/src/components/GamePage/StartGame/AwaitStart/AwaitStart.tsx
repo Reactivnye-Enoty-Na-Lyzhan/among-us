@@ -1,25 +1,25 @@
 import { FC, memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { gameSettings } from '@/utils/gameParams';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useActions } from '@/hooks/useActions';
 import { getPluralSeconds } from '@/utils/helpers/getPlural';
 import './AwaitStart.css';
 
-type Props = {
-  onCancel: () => void;
-};
-
 // Экран ожидания начала игры
-const AwaitStart: FC<Props> = props => {
-  const { onCancel } = props;
+const AwaitStart: FC = () => {
+  const { params, startCooldown } = useTypedSelector(state => state.game);
+  const [counter, setCounter] = useState<number>(startCooldown);
 
-  const [counter, setCounter] = useState<number>(60);
-
+  const { launchGame, cancelGame } = useActions();
   const navigate = useNavigate();
 
   // Обратный отсчёт
   useEffect(() => {
     if (counter > 0) {
       setTimeout(() => setCounter(counter - 1), 1000);
+    } else {
+      launchGame();
+      navigate('/game');
     }
   }, [counter]);
 
@@ -28,8 +28,8 @@ const AwaitStart: FC<Props> = props => {
   // Выход из игры
   const handleExitGame = () => {
     // отмена игры
-    onCancel();
-    navigate('./');
+    cancelGame();
+    navigate('/game');
   };
 
   return (
@@ -51,15 +51,13 @@ const AwaitStart: FC<Props> = props => {
         <ul className="await-start__settings-list">
           <li className="await-start__list-item">
             <h2 className="await-start__param-name">Экстренных собраний:</h2>
-            <span className="await-start__param-value">
-              {gameSettings.meeting}
-            </span>
+            <span className="await-start__param-value">{params.meetings}</span>
           </li>
           <li className="await-start__list-item">
             <h2 className="await-start__param-name">Время на обсуждение:</h2>
             <span className="await-start__param-value">
-              {gameSettings.discussion}{' '}
-              {getPluralSeconds(gameSettings.discussion)}
+              {params.meetingDuration}{' '}
+              {getPluralSeconds(params.meetingDuration)}
             </span>
           </li>
           <li className="await-start__list-item">
@@ -67,7 +65,8 @@ const AwaitStart: FC<Props> = props => {
               Перерыв между собраниями:
             </h2>
             <span className="await-start__param-value">
-              {gameSettings.interval} {getPluralSeconds(gameSettings.interval)}
+              {params.meetingCooldown}{' '}
+              {getPluralSeconds(params.meetingCooldown)}
             </span>
           </li>
         </ul>
