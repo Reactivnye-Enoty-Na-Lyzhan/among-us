@@ -1,50 +1,52 @@
-.background-wallpaper {
-  --animation-duration: 40s;
+.landing-page {
+  .background-wallpaper {
+    --animation-duration: 40s;
 
-  position: fixed;
-  z-index: -1;
+    position: fixed;
+    z-index: -1;
 
-  overflow: hidden;
+    overflow: hidden;
 
-  width: 100vw;
-  height: 100vh;
+    width: 100vw;
+    height: 100vh;
 
-  background-color: black;
-  background-color: var(--background-color);
-}
-
-@for $i from 1 to 8 {
-  .background-wallpaper__stars-$(i) {
-    background-image: url('images/landing-page/wallpapers/$(i).png');
+    background-color: var(--background-color);
   }
-}
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .animated-wallpaper {
+    --single-animation-delay: var(--animation-duration) / 8;
+
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    animation: landing-page-background-twinkling-stars-animation
+        var(--animation-duration) ease-in-out infinite,
+      landing-page-background-stars-move-animation var(--animation-duration)
+        linear infinite;
+
+    @for $i from 1 to 8 {
+      &:nth-child($(i)) {
+        animation-delay: calc(-$(i) * var(--single-animation-delay));
+      }
+    }
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    @for $i from 1 to 8 {
+      .background-wallpaper__stars-$(i) {
+        background-image: url('images/landing-page/wallpapers/$(i)_2x.png');
+      }
+    }
+  }
+
   @for $i from 1 to 8 {
     .background-wallpaper__stars-$(i) {
-      background-image: url('images/landing-page/wallpapers/$(i)_2x.png');
+      background-image: url('images/landing-page/wallpapers/$(i).png');
     }
   }
 }
 
-.animated-wallpaper {
-  --single-animation-delay: var(--animation-duration) / 8;
-
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  animation: background-twinkling-stars-animation var(--animation-duration)
-      ease-in-out infinite,
-    background-stars-move-animation var(--animation-duration) linear infinite;
-
-  @for $i from 1 to 8 {
-    &:nth-child($(i)) {
-      animation-delay: calc(-$(i) * var(--single-animation-delay));
-    }
-  }
-}
-
-@keyframes background-twinkling-stars-animation {
+@keyframes landing-page-background-twinkling-stars-animation {
   0%,
   20%,
   40%,
@@ -63,7 +65,7 @@
   }
 }
 
-@keyframes background-stars-move-animation {
+@keyframes landing-page-background-stars-move-animation {
   from {
     transform: scale(1);
   }
