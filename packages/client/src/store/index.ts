@@ -10,10 +10,14 @@ export const store = configureStore({
     game: gameReducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(leaderboardApi.middleware, authApi.middleware),
+    getDefaultMiddleware().concat(
+      leaderboardApi.middleware,
+      authApi.middleware
+    ),
 });
 
 export type TypeRootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 /*
   ************* HOW TO USE: ****************

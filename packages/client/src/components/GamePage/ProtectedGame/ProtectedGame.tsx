@@ -1,15 +1,12 @@
 import { FC, memo } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-
-type Props = {
-  isStarted: boolean;
-};
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 // Защита внутренних страниц компонента game
-const ProtectedGame: FC<Props> = props => {
-  const { isStarted } = props;
+const ProtectedGame: FC = () => {
+  const stage = useTypedSelector(state => state.game.stage);
 
-  return isStarted ? <Outlet /> : <Navigate to="" />;
+  return stage === 'preparing' ? <Outlet /> : <Navigate to="" />;
 };
 
 export default memo(ProtectedGame);

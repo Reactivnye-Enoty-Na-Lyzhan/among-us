@@ -10,11 +10,9 @@ export const authApi = createApi({
   }),
   endpoints: build => ({
     getUser: build.query<User, void>({
-      query: () => '/auth/user', 
-    })
+      query: () => '/auth/user',
+    }),
   }),
 });
 
-export const {
-  useGetUserQuery
-} = authApi;
+export const { useGetUserQuery } = authApi;

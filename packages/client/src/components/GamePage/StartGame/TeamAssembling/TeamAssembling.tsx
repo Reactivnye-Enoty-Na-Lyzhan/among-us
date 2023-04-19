@@ -1,18 +1,15 @@
 import { memo, FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useActions } from '@/hooks/useActions';
 import Navigation from '../Navigation/Navigation';
 import './TeamAssembling.css';
 
-type Props = {
-  onCancel: () => void;
-};
-
 // Экран подбора команды
-const TeamAssembling: FC<Props> = props => {
-  const { onCancel } = props;
-
+const TeamAssembling: FC = () => {
   const [isSearching, setIsSearching] = useState<boolean>(true);
   const [counter, setCounter] = useState<number>(0);
+
+  const { cancelGame } = useActions();
 
   const navigate = useNavigate();
 
@@ -31,7 +28,7 @@ const TeamAssembling: FC<Props> = props => {
   // Отмена поиска игры
   function handleCancelSearch() {
     setIsSearching(false);
-    onCancel();
+    cancelGame();
     navigate('..');
   }
 
