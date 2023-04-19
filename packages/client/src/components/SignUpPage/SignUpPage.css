@@ -44,13 +44,17 @@
 }
 
 .signup-page-main__api-status-message {
-  min-width: 300px;
+  overflow: hidden;
+
+  width: 300px;
+  max-width: 300px;
   min-height: 25px;
   margin-bottom: 7px;
 
   font-size: 14px;
   color: var(--form-font-secondary);
-  text-overflow: elipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .signup-page-main__api-status-message_success {
