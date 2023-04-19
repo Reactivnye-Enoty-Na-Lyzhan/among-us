@@ -9,7 +9,7 @@ type Options = {
 
 const defaultOptions = {
   onUnauthenticatedRedirection: '/login',
-  onAuthenticatedRedirection: '/game',
+  onAuthenticatedRedirection: null,
 };
 
 function hocAuth<Props extends Record<string, unknown>>(
