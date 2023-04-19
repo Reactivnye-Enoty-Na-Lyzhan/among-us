@@ -8,9 +8,13 @@ import { validation } from '../../utils/validation';
 import Button from '../Form/Button/Button';
 import { useValidation } from '../../hooks/useValidation';
 import { useSignIn } from './hooks/useSignIn';
+<<<<<<< HEAD
 import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
 import './LoginPage.css';
+=======
+import { SignInRequestDTO } from '@/store/auth/auth.types';
+>>>>>>> c393cfc (Fix RTKQuery behaviour on success)
 
 const LoginPage: FC = () => {
   const { requestStatus, statusMessageClass, signIn, sendSignInQueryStatus } =
@@ -35,6 +39,10 @@ const LoginPage: FC = () => {
       return;
     }
     if (sendSignInQueryStatus.isLoading) {
+<<<<<<< HEAD
+=======
+      console.log('block dos');
+>>>>>>> c393cfc (Fix RTKQuery behaviour on success)
       return;
     }
     const success = await signIn(values as SignInRequestDTO);
