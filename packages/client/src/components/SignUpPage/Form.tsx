@@ -53,7 +53,7 @@ export default function SignUpForm() {
       return;
     }
 
-    sendSignUpQuery(formData as SignUpFormData);
+    await sendSignUpQuery(formData as SignUpFormData);
     sendGetUserQuery();
   }, []);
 
