@@ -17,7 +17,7 @@ const SignUpPage: React.FC = () => {
             <span className="signup-page-login-prompt__title">
               Уже зарегистрированы?
             </span>
-            <Link className="signup-page-login-prompt__link" to="/login">
+            <Link className="signup-page-login-prompt__link" to="/signin">
               Войти
             </Link>
           </div>

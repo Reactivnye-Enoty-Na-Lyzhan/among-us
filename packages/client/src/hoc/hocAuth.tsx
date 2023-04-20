@@ -8,7 +8,7 @@ type Options = {
 };
 
 const defaultOptions: Options = {
-  onUnauthenticatedRedirection: '/login',
+  onUnauthenticatedRedirection: '/signin',
   onAuthenticatedRedirection: null,
 };
 
