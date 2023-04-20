@@ -1,5 +1,5 @@
-import { TechnologyEntry } from '../_TechnologyEntry/TechnologyEntry';
-import { MediaEntry } from '../_MediaEntry/MediaEntry';
+import { TechnologyEntry } from '../TechnologyEntry/TechnologyEntry';
+import { MediaEntry } from '../MediaEntry/MediaEntry';
 import postcssLogo from 'images/landing-page/icons/postcss-logo.svg';
 import reactLogo from 'images/landing-page/icons/react-logo.svg';
 import reduxLogo from 'images/landing-page/icons/redux-logo.svg';
