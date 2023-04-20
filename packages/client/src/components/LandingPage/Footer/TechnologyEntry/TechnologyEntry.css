@@ -1,6 +1,13 @@
 .landing-technology-entry {
-  margin: 0 0.15em;
   transition: var(--link-on-hover-transition-duration);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.landing-technology-entry_spacing_outer {
+  margin: 0 0.15em;
 
   &:first-child {
     margin-left: 0;
@@ -8,10 +15,6 @@
 
   &:last-child {
     margin-right: 0;
-  }
-
-  &:hover {
-    opacity: 0.8;
   }
 }
 

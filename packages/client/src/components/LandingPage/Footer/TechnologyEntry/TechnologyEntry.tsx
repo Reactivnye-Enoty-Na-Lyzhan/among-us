@@ -12,7 +12,7 @@ export function TechnologyEntry({
   imageAlt,
 }: Props) {
   return (
-    <li className="landing-technology-entry">
+    <li className="landing-technology-entry landing-technology-entry_spacing_outer">
       <a
         href={technologyWebsiteURL}
         className="landing-technology-entry__link"
