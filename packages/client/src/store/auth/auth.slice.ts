@@ -35,12 +35,8 @@ export const authApi = createApi({
         method: 'POST',
         body: data,
         responseHandler: response => {
-          const contentType = response.headers.get('Content-Type');
-          if (contentType?.match('application/json')) {
-            return response.json();
-          }
-
-          return response.text();
+          const isJson = response.headers.get('Content-Type')?.includes('application/json');
+          return isJson ? response.json() : response.text();
         },
       }),
     }),

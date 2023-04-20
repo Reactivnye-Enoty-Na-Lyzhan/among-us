@@ -11,7 +11,7 @@ export type User = {
 
 export type SignInRequestDTO = {
   password: string;
-  phone: string;
+  login: string;
 };
 
 export type SignUpRequestDTO = {
