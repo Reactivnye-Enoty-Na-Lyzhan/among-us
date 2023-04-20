@@ -4,7 +4,8 @@
   align-items: center;
   background-color: var(--background-main-primary);
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
 }
 
 .profile {
@@ -18,7 +19,7 @@
 }
 
 .profile__information_space_around {
-  padding: 25px 0 75px;
+  padding: 25px 0 75px 30px;
 }
 
 .profile__form {
@@ -36,6 +37,7 @@
 
 .profile__form_space_left {
   margin-left: 72px;
+  margin-bottom: 115px;
 }
 
 .profile__form_space_top {
@@ -73,7 +75,7 @@
 }
 
 .profile__link-back:hover {
-  left: -5px;
+  opacity: .8;
 }
 
 .profile__paragraph {
