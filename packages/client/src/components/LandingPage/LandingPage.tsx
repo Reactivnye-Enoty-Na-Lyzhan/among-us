@@ -1,4 +1,4 @@
-import PageFooter from './Footer/Footer';
+import PageFooter from './Footer/_Component';
 import PageHeader from './Header/Header';
 import PageMain from './Main/Main';
 import PageWallpaper from './Wallpaper/Wallpaper';

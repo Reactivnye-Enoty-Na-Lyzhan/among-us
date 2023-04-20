@@ -5,6 +5,7 @@
   --game-ttile-secondary-color: var(--font-main-secondary);
 
   --join-link-color: var(--font-main-secondary);
+  --link-hovered-color: var(--font-main-secondary);
 
   --font-size-normal: calc(11px + 16 * ((100vw - 320px) / 1600));
   --font-color-default: var(--font-main-primary);
