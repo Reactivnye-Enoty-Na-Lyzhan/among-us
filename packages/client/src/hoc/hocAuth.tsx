@@ -17,11 +17,7 @@ function hocAuth<Props extends Record<string, unknown>>(
   initOptions?: Partial<Options>
 ): FC<Props> {
   return props => {
-    const { isAuthenticated, isLoading } = useAuth();
-
-    if (isLoading) {
-      return <div>Loading...</div>;
-    }
+    const { isAuthenticated } = useAuth();
 
     const options = { ...defaultOptions, ...initOptions };
 
