@@ -30,7 +30,7 @@ function App() {
         <Loader />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signin" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/game/*" element={<GamePage />} />
           <Route path="/leaderboard" element={<LeaderBoard />} />

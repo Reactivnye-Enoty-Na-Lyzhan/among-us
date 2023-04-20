@@ -1,8 +1,3 @@
-export type SigninRequestData = {
-  login: string;
-  password: string;
-};
-
 export type User = {
   id: number;
   first_name: string;
@@ -14,6 +9,11 @@ export type User = {
   avatar: string;
 };
 
+export type SignInRequestDTO = {
+  password: string;
+  login: string;
+};
+
 export type SignUpRequestDTO = {
   first_name: string;
   second_name: string;
@@ -23,11 +23,13 @@ export type SignUpRequestDTO = {
   phone: string;
 };
 
-export type SignUpRequestErrorResponse = {
-  reason: string;
-  error?: string;
-};
+export type SignInRequestSuccessfulResponse = string;
 
 export type SignUpRequestSuccessfulResponse = {
   id: number;
+};
+
+export type APIErrorResponse = {
+  reason: string;
+  error?: string;
 };

@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { User } from './auth.types';
+import { SignInRequestSuccessfulResponse, User } from './auth.types';
 import { API_BASE_URL } from '../../utils/constants';
 import {
   SignUpRequestDTO,
+  SignInRequestDTO,
   SignUpRequestSuccessfulResponse,
 } from '@/store/auth/auth.types';
 
@@ -25,8 +26,26 @@ export const authApi = createApi({
     >({
       query: data => ({ url: '/signup', method: 'POST', body: data }),
     }),
+    signInUser: build.mutation<
+      SignInRequestSuccessfulResponse,
+      SignInRequestDTO
+    >({
+      query: data => ({
+        url: '/signin',
+        method: 'POST',
+        body: data,
+        responseHandler: response => {
+          const isJson = response.headers.get('Content-Type')?.includes('application/json');
+          return isJson ? response.json() : response.text();
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetUserQuery, useLazyGetUserQuery, useSignUpUserMutation } =
-  authApi;
+export const {
+  useGetUserQuery,
+  useLazyGetUserQuery,
+  useSignUpUserMutation,
+  useSignInUserMutation,
+} = authApi;
