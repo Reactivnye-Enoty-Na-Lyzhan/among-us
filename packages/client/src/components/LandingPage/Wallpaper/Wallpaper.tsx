@@ -2,15 +2,15 @@ import './Wallpaper.css';
 
 export default function () {
   return (
-    <div className="background-wallpaper">
-      <div className="background-wallpaper__stars-1 animated-wallpaper"></div>
-      <div className="background-wallpaper__stars-2 animated-wallpaper"></div>
-      <div className="background-wallpaper__stars-3 animated-wallpaper"></div>
-      <div className="background-wallpaper__stars-4 animated-wallpaper"></div>
-      <div className="background-wallpaper__stars-5 animated-wallpaper"></div>
-      <div className="background-wallpaper__stars-6 animated-wallpaper"></div>
-      <div className="background-wallpaper__stars-7 animated-wallpaper"></div>
-      <div className="background-wallpaper__stars-8 animated-wallpaper"></div>
+    <div className="landing-wallpaper">
+      <div className="landing-wallpaper__stars-1 landing-animated-wallpaper"></div>
+      <div className="landing-wallpaper__stars-2 landing-animated-wallpaper"></div>
+      <div className="landing-wallpaper__stars-3 landing-animated-wallpaper"></div>
+      <div className="landing-wallpaper__stars-4 landing-animated-wallpaper"></div>
+      <div className="landing-wallpaper__stars-5 landing-animated-wallpaper"></div>
+      <div className="landing-wallpaper__stars-6 landing-animated-wallpaper"></div>
+      <div className="landing-wallpaper__stars-7 landing-animated-wallpaper"></div>
+      <div className="landing-wallpaper__stars-8 landing-animated-wallpaper"></div>
     </div>
   );
 }

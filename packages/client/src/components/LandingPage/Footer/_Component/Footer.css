@@ -33,15 +33,15 @@
   color: inherit;
 
   transition: var(--link-on-hover-transition-duration);
+
+  @media only screen and (min-width: 400px) {
+    white-space: nowrap;
+  }
 }
 
 .landing-technologies-section:hover .landing-technologies-section__header {
   color: var(--link-hovered-color);
   opacity: 0.8;
-}
-
-@media only screen and (min-width: 400px) {
-  white-space: nowrap;
 }
 
 .landing-technologies-list {
