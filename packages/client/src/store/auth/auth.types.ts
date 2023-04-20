@@ -23,9 +23,9 @@ export type SignUpRequestDTO = {
   phone: string;
 };
 
-export type SignInRequestSuccessfulResponse = string;
+export type SignInSuccessfulResponse = 'OK';
 
-export type SignUpRequestSuccessfulResponse = {
+export type SignUpSuccessfulResponse = {
   id: number;
 };
 
