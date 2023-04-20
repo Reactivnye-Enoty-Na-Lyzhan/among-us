@@ -6,6 +6,8 @@ import {
   leaderboardData,
   LeaderboardDataType,
 } from '../../utils/leaderboardData';
+import hocAuth from '@/hoc/hocAuth';
+import { SIGNIN_URL } from '@/utils/constants';
 import './LeaderBoard.css';
 
 const LeaderBoard: FC = () => {
@@ -153,4 +155,7 @@ const LeaderBoard: FC = () => {
   );
 };
 
-export default memo(LeaderBoard);
+export default hocAuth(memo(LeaderBoard), {
+  onAuthenticatedRedirection: null,
+  onUnauthenticatedRedirection: SIGNIN_URL,
+});
