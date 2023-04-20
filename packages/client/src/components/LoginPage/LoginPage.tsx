@@ -7,9 +7,10 @@ import { useForm } from '../Form/hooks';
 import { validation } from '../../utils/validation';
 import Button from '../Form/Button/Button';
 import { useValidation } from '../../hooks/useValidation';
-import './LoginPage.css';
 import { useSignIn } from './hooks/useSignIn';
+import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
+import './LoginPage.css';
 
 const LoginPage: FC = () => {
   const { requestStatus, statusMessageClass, signIn, sendSignInQueryStatus } =
@@ -34,7 +35,6 @@ const LoginPage: FC = () => {
       return;
     }
     if (sendSignInQueryStatus.isLoading) {
-      console.log('block dos');
       return;
     }
     const success = await signIn(values as SignInRequestDTO);
@@ -84,4 +84,7 @@ const LoginPage: FC = () => {
   );
 };
 
-export default LoginPage;
+export default hocAuth(LoginPage, {
+  onUnauthenticatedRedirection: null,
+  onAuthenticatedRedirection: '/game',
+});

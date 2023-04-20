@@ -1,9 +1,9 @@
-import { SignUpRequestErrorResponse } from '@/store/auth/auth.types';
+import { APIErrorResponse } from '@/store/auth/auth.types';
 import { errorClassifiers } from './errors-classifiers';
 
 type Args = {
   status: number | string;
-  response: SignUpRequestErrorResponse;
+  response: APIErrorResponse;
 };
 
 function getErrorMessage({ status, response }: Args): string {
