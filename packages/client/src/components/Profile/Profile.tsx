@@ -13,7 +13,7 @@ type Props = {
   handleChoiceChange?: (
     choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар'
   ) => void;
-}
+};
 
 const Profile: FC<Props> = ({ choice, handleChoiceChange }) => {
   return (

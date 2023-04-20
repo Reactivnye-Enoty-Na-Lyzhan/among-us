@@ -9,14 +9,14 @@ type Props = {
 const Header: FC<Props> = ({ title }) => {
   const navigate = useNavigate();
 
-  const goBack: MouseEventHandler<HTMLAnchorElement> = (evt) => {
+  const goBack: MouseEventHandler<HTMLAnchorElement> = evt => {
     evt.preventDefault();
     navigate(-1);
   };
 
   return (
     <header className="page-header">
-      <Link className="page-header__go-back" to='/' onClick={goBack}></Link>
+      <Link className="page-header__go-back" to="/" onClick={goBack}></Link>
       <h1 className="page-header__title">{title}</h1>
     </header>
   );

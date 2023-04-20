@@ -2,12 +2,8 @@ import { FC, memo } from 'react';
 import { IHintData } from '@/utils/how-to-play/hintData';
 import './Hint.css';
 
-const Hint: FC<IHintData> = (props) => {
-  const {
-    title,
-    description,
-    additional,
-  } = props;
+const Hint: FC<IHintData> = props => {
+  const { title, description, additional } = props;
 
   return (
     <li className="howtoplay__hint">
