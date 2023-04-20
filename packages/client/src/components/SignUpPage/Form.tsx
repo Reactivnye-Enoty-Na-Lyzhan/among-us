@@ -6,7 +6,7 @@ import { useValidation } from '@/hooks/useValidation';
 import { validation } from '@/utils/validation';
 import { useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useOnSubmitQueries } from './hooks/useOnSubmitRequests';
+import { useOnSubmitQueries } from './hooks/useSignUp';
 import { SignUpFormData } from './_types';
 import classNames from 'classnames';
 
@@ -57,7 +57,7 @@ export default function SignUpForm() {
     sendGetUserQuery();
   }, []);
 
-  if (signUpQueryStatus.isSuccess && !getUserQueryStatus.isUninitialized) {
+  if (signUpQueryStatus.isSuccess) {
     if (getUserQueryStatus.isSuccess) {
       navigate('/game');
     } else {
