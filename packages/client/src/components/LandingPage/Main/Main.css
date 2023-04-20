@@ -1,3 +1,5 @@
+@import '../mixins/link-hover-transition.css';
+
 .landing-page {
   .main {
     height: 70vh;
@@ -45,13 +47,14 @@
     }
 
     .game-description__join-link {
+      @mixin link-hover-transition;
+
       color: var(--join-link-color);
       text-align: center;
       text-decoration: none;
 
       &:hover {
         opacity: 0.8;
-        transition: opacity 400ms ease;
       }
     }
   }

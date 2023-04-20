@@ -1,0 +1,68 @@
+@import '../../mixins/link-hover-transition.css';
+
+@define-placeholder flex-row-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.landing-page-footer {
+  --footer-height: 15vh;
+  --links-section-margin: 3vw;
+
+  @extend flex-row-container;
+
+  justify-content: space-between;
+  width: 100%;
+  height: var(--footer-height);
+  font-size: 1.3em;
+}
+
+.landing-technologies-section {
+  @extend flex-row-container;
+
+  height: 100%;
+  margin-left: var(--links-section-margin);
+}
+
+.landing-technologies-section__header {
+  @mixin link-hover-transition;
+
+  display: block;
+
+  width: min-content;
+  margin-right: 0.5em;
+
+  font-size: 1.2em;
+  color: inherit;
+}
+
+.landing-technologies-section:hover .landing-technologies-section__header {
+  color: var(--link-hovered-color);
+  opacity: 0.8;
+}
+
+@media only screen and (min-width: 400px) {
+  white-space: nowrap;
+}
+
+.landing-technologies-list {
+  @extend flex-row-container;
+
+  list-style: none;
+}
+
+.landing-media-section {
+  @extend flex-row-container;
+
+  height: 100%;
+  margin-right: var(--links-section-margin);
+}
+
+.landing-media-entries {
+  list-style: none;
+
+  .icon-github::before {
+    font-size: 1.2em;
+  }
+}

@@ -1,0 +1,26 @@
+@import '../../mixins/link-hover-transition.css';
+
+.landing-technology-entry {
+  @mixin link-hover-transition;
+
+  margin: 0 0.15em;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.landing-technology-entry__logo {
+  width: min(1.5em, var(--footer-height));
+  height: min(1.5em, var(--footer-height));
+
+  -webkit-user-drag: none;
+}
