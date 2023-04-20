@@ -1,18 +1,15 @@
 @import './iconfont/fonts.css';
 
 .landing-page {
-  --color-cold-white: #e7f6f6;
-  --color-light-blue: #cee9ea;
-  --color-space-black: #333334;
-  --color-space-deepblue: #090248;
+  --game-title-primary-color: var(--font-main-primary);
+  --game-ttile-secondary-color: var(--font-main-secondary);
+
+  --join-link-color: var(--font-main-secondary);
 
   --font-size-normal: calc(11px + 16 * ((100vw - 320px) / 1600));
-  --font-color-default: var(--color-cold-white);
+  --font-color-default: var(--font-main-primary);
 
-  --background-color: var(--color-space-black);
-
-  --link-color-blue: color-mod(#e7f6f6 blend(#090248 40%));
-  --link-hover-color-blue: color-mod(#e7f6f6 blend(#090248 70%));
+  --background-color: var(--background-main-primary);
 
   width: 100vw;
   height: 100vh;

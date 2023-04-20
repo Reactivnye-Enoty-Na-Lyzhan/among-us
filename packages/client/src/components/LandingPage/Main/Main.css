@@ -1,56 +1,58 @@
-.main {
-  height: 70vh;
-}
-
-.game-description {
-  scrollbar-color: var(--link-color-blue) var(--background-color);
-  scrollbar-width: thin;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  width: 70%;
-  height: 100%;
-  margin: 0 auto;
-
-  font-size: 1.1em;
-
-  .game-description__text {
-    --scrollbar-width: clamp(3px, 0.5vw, 15px);
-
-    overflow-y: auto;
-
-    max-height: 60vh;
-    margin-bottom: 1vh;
-    padding-right: min(1.5vw, calc(2 * var(--scrollbar-width)));
-
-    text-align: justify;
-
-    background-color: var(--background-color);
-    &::-webkit-scrollbar {
-      width: var(--scrollbar-width);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--link-color-blue); /* color of the scroll thumb */
-      border-radius: var(--scrollbar-width); /* roundness of the scroll thumb */
-    }
-
-    &::-webkit-scrollbar-track {
-      background: var(--background-color);
-    }
+.landing-page {
+  .main {
+    height: 70vh;
   }
 
-  .game-description__join-link {
-    color: var(--link-color-blue);
-    text-align: center;
-    text-decoration: none;
+  .game-description {
+    scrollbar-color: var(--link-color-blue) var(--background-color);
+    scrollbar-width: thin;
 
-    &:hover {
-      color: var(--link-hover-color-blue);
-      transition: color 400ms ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 70%;
+    height: 100%;
+    margin: 0 auto;
+
+    font-size: 1.1em;
+
+    .game-description__text {
+      --scrollbar-width: clamp(3px, 0.5vw, 15px);
+
+      overflow-y: auto;
+
+      max-height: 60vh;
+      margin-bottom: 1vh;
+      padding-right: min(1.5vw, calc(2 * var(--scrollbar-width)));
+
+      text-align: justify;
+
+      background-color: var(--background-color);
+      &::-webkit-scrollbar {
+        width: var(--scrollbar-width);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--link-color-blue);
+        border-radius: var(--scrollbar-width);
+      }
+
+      &::-webkit-scrollbar-track {
+        background: var(--background-color);
+      }
+    }
+
+    .game-description__join-link {
+      color: var(--join-link-color);
+      text-align: center;
+      text-decoration: none;
+
+      &:hover {
+        opacity: 0.8;
+        transition: opacity 400ms ease;
+      }
     }
   }
 }

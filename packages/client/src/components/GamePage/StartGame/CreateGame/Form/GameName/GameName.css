@@ -1,0 +1,38 @@
+.create-game__game-name {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 125px;
+}
+
+.create-game__input-title {
+  margin-bottom: 30px;
+  font-size: 16px;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+}
+
+.create-game__input {
+  padding: 7px 0;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid var(--font-main-primary);
+  transition: 0.4s;
+}
+
+.create-game__input:focus {
+  border-bottom: 1px solid var(--font-main-secondary);
+}
+
+.create-game__input::placeholder {
+  color: var(--font-additional-quaternary);
+}
+
+.create-game__input_type_error {
+  border-color: var(--button-font-tertiary);
+}

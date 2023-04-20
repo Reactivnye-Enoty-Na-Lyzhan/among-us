@@ -1,0 +1,45 @@
+.startgame-navigation {
+  display: flex;
+}
+
+.startgame-navigation_spacing_outer {
+  margin-bottom: 55px;
+}
+
+.startgame-navigation__links {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+  list-style: none;
+}
+
+.startgame-navigation__links-item {
+  display: flex;
+  padding-right: 20px;
+  border-right: 1px solid var(--font-main-primary);
+}
+
+.startgame-navigation__links-item:last-child {
+  padding-right: 0;
+  border: none;
+}
+
+.startgame-navigation__link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+  text-decoration: none;
+  transition: 0.4s;
+}
+
+.startgame-navigation__link:hover {
+  opacity: 0.8;
+}
+
+.startgame-navigation__link_highlighted {
+  color: var(--font-main-secondary);
+}

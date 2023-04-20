@@ -1,0 +1,68 @@
+.finalpreparing__color-button {
+  padding: 0;
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.finalpreparing__color-button:hover {
+  opacity: 0.8;
+}
+
+.finalpreparing__color-button:disabled {
+  background: repeating-linear-gradient(
+    to top left,
+    #010318 0,
+    #010318 2px,
+    #9b9b9b 2px,
+    #9b9b9b 4px
+  );
+  pointer-events: none;
+  user-select: none;
+}
+
+.finalpreparing__color-button_selected {
+  border: 2px solid var(--background-main-primary);
+  box-shadow: 0 0 3px 3px rgba(var(--background-main-overlay), 0.15);
+  pointer-events: none;
+  user-select: none;
+}
+
+.finalpreparing__color-button_color_white {
+  background-color: #fafafa;
+}
+
+.finalpreparing__color-button_color_red {
+  background-color: #e8125f;
+}
+
+.finalpreparing__color-button_color_purple {
+  background-color: #910cbf;
+}
+
+.finalpreparing__color-button_color_aquamarine {
+  background-color: #00ffd1;
+}
+
+.finalpreparing__color-button_color_green {
+  background-color: #24d108;
+}
+
+.finalpreparing__color-button_color_yellow {
+  background-color: #e0d700;
+}
+
+.finalpreparing__color-button_color_blue {
+  background-color: #00a3ff;
+}
+
+.finalpreparing__color-button_color_brown {
+  background-color: #7a3b00;
+}
+
+.finalpreparing__color-button_color_grey {
+  background-color: #2b2b2b;
+}

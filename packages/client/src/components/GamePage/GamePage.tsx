@@ -1,15 +1,21 @@
+import { FC, memo } from 'react';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import StartGame from './StartGame/StartGame';
+import Game from './Game/Game';
 import GameEnd from '../GameEnd/GameEnd';
 import './GamePage.css';
 
-interface Props {
-  result: "lose" | "win";
-  score: number;
-}
+// Основной компонент игры
+const GamePage: FC = () => {
+  const status = useTypedSelector(state => state.game.status);
 
-export default function GamePage({result, score}: Props) {
   return (
-    <div className='game'>
-      <GameEnd result={result} score={score}/>
-    </div>
+    <main className="game-page">
+      {status === 'start' && <StartGame />}
+      {status === 'active' && <Game />}
+      {status === 'finished' && <GameEnd />}
+    </main>
   );
-}
+};
+
+export default memo(GamePage);

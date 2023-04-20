@@ -1,11 +1,11 @@
 .form-button {
-  background-color: var(--color-purple);
+  background-color: var(--form-button-primary);
   border: none;
   border-radius: 5px;
   height: 42px;
   text-align: center;
   width: 100%;
-  color: var(--color-white);
+  color: var(--form-font-primary);
   font-size: 12px;
   cursor: pointer;
   transition: opacity ease-in 0.1s;
