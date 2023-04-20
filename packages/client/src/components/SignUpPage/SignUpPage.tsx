@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import SignUpForm from './Form';
 import './SignUpPage.css';
+import hocAuth from '@/hoc/hocAuth';
 
 const SignUpPage: React.FC = () => {
   return (
@@ -27,4 +28,7 @@ const SignUpPage: React.FC = () => {
   );
 };
 
-export default SignUpPage;
+export default hocAuth(SignUpPage, {
+  onUnauthenticatedRedirection: null,
+  onAuthenticatedRedirection: '/game',
+});

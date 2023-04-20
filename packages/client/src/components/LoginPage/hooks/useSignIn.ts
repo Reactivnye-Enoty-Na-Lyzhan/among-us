@@ -1,5 +1,5 @@
-import { useSignInUserMutation } from '@/store/auth/auth.slice';
 import { useState } from 'react';
+import { useSignInUserMutation } from '@/store/auth/auth.slice';
 import {
   isRTKQueryFetchError,
   isRTKQuerySuccessfulResponse,
@@ -43,7 +43,6 @@ export function useSignIn() {
       return false;
     }
   }
-
   return {
     requestStatus,
     statusMessageClass,
