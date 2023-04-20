@@ -1,10 +1,7 @@
-@import '../../mixins/link-hover-transition.css';
-
 .landing-media-entry__link {
-  @mixin link-hover-transition;
-
   color: inherit;
   text-decoration: underline 0.1em;
+  transition: var(--link-on-hover-transition-duration);
 }
 
 .landing-media-entry__link:hover {

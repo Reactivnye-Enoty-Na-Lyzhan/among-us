@@ -1,9 +1,6 @@
-@import '../../mixins/link-hover-transition.css';
-
 .landing-technology-entry {
-  @mixin link-hover-transition;
-
   margin: 0 0.15em;
+  transition: var(--link-on-hover-transition-duration);
 
   &:first-child {
     margin-left: 0;

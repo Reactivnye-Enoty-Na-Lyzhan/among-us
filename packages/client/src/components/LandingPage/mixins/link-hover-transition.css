@@ -1,5 +1,0 @@
-@define-mixin link-hover-transition {
-  transition-timing-function: ease;
-  transition-duration: 400ms;
-  transition-property: color, opacity;
-}

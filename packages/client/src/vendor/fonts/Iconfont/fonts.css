@@ -1,16 +1,16 @@
 @font-face {
-  font-family: 'iconfont';
+  font-family: 'Iconfont';
   font-weight: normal;
   font-style: normal;
   font-display: block;
-  src: url('./iconfont.woff2') format('woff2');
+  src: url('./Iconfont.woff2') format('woff2');
 }
 
 [class^='icon-']::before,
 [class*=' icon-']::before {
   speak: never;
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'iconfont', sans-serif !important;
+  font-family: 'Iconfont', sans-serif !important;
   font-weight: normal;
   font-style: normal;
   font-variant: normal;
