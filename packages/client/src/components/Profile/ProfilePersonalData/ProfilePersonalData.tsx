@@ -4,7 +4,9 @@ import { useForm } from '../../Form/hooks';
 import { validation } from '../../../utils/validation';
 import Button from '../../Form/Button/Button';
 import { useValidation } from '../../../hooks/useValidation';
+import {useGetUserQuery} from '../../../store/auth/auth.slice';
 import './ProfilePersonalData.css';
+import { useEffect } from 'react';
 
 type Props = {
   choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар';
@@ -12,7 +14,31 @@ type Props = {
 
 const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
   choice;
-  const { values, handleInputChange } = useForm({});
+  const { values, handleInputChange } = useForm({
+    first_name: '',
+    second_name: '',
+    display_name: '',
+    email: '',
+    phone: '',
+    login: '',
+  });  
+  const { data } = useGetUserQuery();
+  
+  useEffect(() => {
+    if (data) {
+      const initialValues = {
+        name: data.first_name,
+        lastName: data.second_name,
+        nickname: data.display_name,
+        email: data.email,
+        phone: data.phone,
+        login: data.login,
+      };
+      handleInputChange(initialValues);
+    }
+  }, [data]);
+  console.log('1', data);
+
   const {
     validationData,
     isFormValid,
