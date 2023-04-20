@@ -48,7 +48,7 @@ const ForumPage: FC = () => {
 
   return (
     <div className="forum">
-      <Header title={'Форум'} goBackUrl={'/'} />
+      <Header title={'Форум'} />
       <main className="forum__container">
         <Themes
           pinnedThemes={
