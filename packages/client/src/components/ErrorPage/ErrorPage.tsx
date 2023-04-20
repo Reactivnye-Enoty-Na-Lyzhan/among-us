@@ -10,7 +10,7 @@ type Props = {
 
 function ErrorPage({ code, message, linkLabel }: Props) {
   const navigate = useNavigate();
-  const goBack: MouseEventHandler<HTMLAnchorElement> = (evt) => {
+  const goBack: MouseEventHandler<HTMLAnchorElement> = evt => {
     evt.preventDefault();
     navigate(-1);
   };
@@ -19,7 +19,7 @@ function ErrorPage({ code, message, linkLabel }: Props) {
     <div className="error-page">
       <h1 className="error-page__code">{code}</h1>
       <p className="error-page__message">{message}</p>
-      <Link to='..' className="error-page__return-link" onClick={goBack}>
+      <Link to=".." className="error-page__return-link" onClick={goBack}>
         {linkLabel}
       </Link>
     </div>

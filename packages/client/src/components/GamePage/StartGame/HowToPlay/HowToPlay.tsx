@@ -8,7 +8,7 @@ const HowToPlay: FC = () => {
   const navigate = useNavigate();
 
   // Вернуть пользователя на предыдущую страницу
-  const goBack: MouseEventHandler<HTMLAnchorElement> = (evt) => {
+  const goBack: MouseEventHandler<HTMLAnchorElement> = evt => {
     evt.preventDefault();
     navigate(-1);
   };
@@ -17,18 +17,19 @@ const HowToPlay: FC = () => {
     <div className="howtoplay">
       <h1 className="howtoplay__title">Как играть?</h1>
       <p className="howtoplay__helper-text">
-        Если вы очень хотите поиграть в нашу игру на её раннем этапе разработки, то почитайте советы по игре ниже!
+        Если вы очень хотите поиграть в нашу игру на её раннем этапе разработки,
+        то почитайте советы по игре ниже!
       </p>
       <ul className="howtoplay__hint-table">
-        {hintData.map((hint) =>
+        {hintData.map(hint => (
           <Hint
             title={hint.title}
             description={hint.description}
             additional={hint.additional}
           />
-        )}
+        ))}
       </ul>
-      <Link to='/game' className="howtoplay__go-back" onClick={goBack}>
+      <Link to="/game" className="howtoplay__go-back" onClick={goBack}>
         Спасибо, всё понятно! Хочу играть!
       </Link>
     </div>

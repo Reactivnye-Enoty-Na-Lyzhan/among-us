@@ -39,9 +39,9 @@
   color: var(--font-main-secondary);
   line-height: 1.2;
   text-decoration: none;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .howtoplay__go-back:hover {
-  opacity: .8;
+  opacity: 0.8;
 }
