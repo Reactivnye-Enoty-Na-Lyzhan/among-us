@@ -1,18 +1,21 @@
+import { FC } from 'react';
 import ProfilePassword from './ProfilePassword/ProfilePassword';
 import ProfilePersonalData from './ProfilePersonalData/ProfilePersonalData';
 import ProfileHeader from './ProfileHeader/ProfileHeader';
 import ProfileAvatar from './ProfileAvatar/ProfileAvatar';
 import ProfileNavigation from './ProfileNavigation/ProfileNavigation';
+import hocAuth from '@/hoc/hocAuth';
+import { SIGNIN_URL } from '@/utils/constants';
 import './Profile.css';
 
-interface Props {
+type Props = {
   choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар';
   handleChoiceChange?: (
     choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар'
   ) => void;
 }
 
-export default function Profile({ choice, handleChoiceChange }: Props) {
+const Profile: FC<Props> = ({ choice, handleChoiceChange }) => {
   return (
     /* Измени потом. Profile-page добавил, чтобы сохранить заливку */
     <div className="profile-page">
@@ -50,4 +53,9 @@ export default function Profile({ choice, handleChoiceChange }: Props) {
       )}
     </div>
   );
-}
+};
+
+export default hocAuth(Profile, {
+  onAuthenticatedRedirection: null,
+  onUnauthenticatedRedirection: SIGNIN_URL,
+});
