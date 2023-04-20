@@ -1,0 +1,33 @@
+.howtoplay__hint {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  width: 300px;
+  min-height: 150px;
+  gap: 10px;
+  background-color: var(--background-main-secondary);
+  border-radius: 5px;
+}
+
+.howtoplay__hint-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--font-main-secondary);
+  line-height: 1.2;
+}
+
+.howtoplay__hint-description {
+  margin: 0;
+  font-size: 14px;
+  color: var(--font-main-quaternary);
+  line-height: 1.2;
+}
+
+.howtoplay__hint-additional {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--font-main-quaternary);
+  line-height: 1.2;
+}

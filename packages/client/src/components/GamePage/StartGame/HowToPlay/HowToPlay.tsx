@@ -1,12 +1,15 @@
-import { FC, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC, MouseEventHandler, memo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Hint from './Hint/Hint';
+import { hintData } from '@/utils/how-to-play/hintData';
 import './HowToPlay.css';
 
 const HowToPlay: FC = () => {
   const navigate = useNavigate();
 
   // Вернуть пользователя на предыдущую страницу
-  const goBack = () => {
+  const goBack: MouseEventHandler<HTMLAnchorElement> = (evt) => {
+    evt.preventDefault();
     navigate(-1);
   };
 
@@ -14,11 +17,20 @@ const HowToPlay: FC = () => {
     <div className="howtoplay">
       <h1 className="howtoplay__title">Как играть?</h1>
       <p className="howtoplay__helper-text">
-        Никто не знает, как играть. Идите-ка обратно
+        Если вы очень хотите поиграть в нашу игру на её раннем этапе разработки, то почитайте советы по игре ниже!
       </p>
-      <button className="howtoplay__go-back" onClick={goBack}>
-        Хорошо, хорошо!
-      </button>
+      <ul className="howtoplay__hint-table">
+        {hintData.map((hint) =>
+          <Hint
+            title={hint.title}
+            description={hint.description}
+            additional={hint.additional}
+          />
+        )}
+      </ul>
+      <Link to='/game' className="howtoplay__go-back" onClick={goBack}>
+        Спасибо, всё понятно! Хочу играть!
+      </Link>
     </div>
   );
 };
