@@ -60,7 +60,7 @@ export default function SignUpForm() {
   if (signUpQueryStatus.isSuccess) {
     if (getUserQueryStatus.isSuccess) {
       navigate('/game');
-    } else {
+    } else if (getUserQueryStatus.isError) {
       navigate('/signin');
     }
   }
