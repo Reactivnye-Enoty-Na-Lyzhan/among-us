@@ -1,61 +1,56 @@
-@import '../mixins/link-hover-transition.css';
+.landing-page-main {
+  height: 70vh;
+}
 
-.landing-page {
-  .main {
-    height: 70vh;
+.landing-game-description {
+  scrollbar-color: var(--link-color-blue) var(--background-color);
+  scrollbar-width: thin;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 70%;
+  height: 100%;
+  margin: 0 auto;
+
+  font-size: 1.1em;
+}
+
+.landing-game-description__text {
+  --scrollbar-width: clamp(3px, 0.5vw, 15px);
+
+  overflow-y: auto;
+
+  max-height: 60vh;
+  margin-bottom: 1vh;
+  padding-right: min(1.5vw, calc(2 * var(--scrollbar-width)));
+
+  text-align: justify;
+
+  background-color: var(--background-color);
+  &::-webkit-scrollbar {
+    width: var(--scrollbar-width);
   }
 
-  .game-description {
-    scrollbar-color: var(--link-color-blue) var(--background-color);
-    scrollbar-width: thin;
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--link-color-blue);
+    border-radius: var(--scrollbar-width);
+  }
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  &::-webkit-scrollbar-track {
+    background: var(--background-color);
+  }
+}
 
-    width: 70%;
-    height: 100%;
-    margin: 0 auto;
+.landing-game-description__join-link {
+  color: var(--join-link-color);
+  text-align: center;
+  text-decoration: none;
+  transition: var(--link-on-hover-transition-duration);
 
-    font-size: 1.1em;
-
-    .game-description__text {
-      --scrollbar-width: clamp(3px, 0.5vw, 15px);
-
-      overflow-y: auto;
-
-      max-height: 60vh;
-      margin-bottom: 1vh;
-      padding-right: min(1.5vw, calc(2 * var(--scrollbar-width)));
-
-      text-align: justify;
-
-      background-color: var(--background-color);
-      &::-webkit-scrollbar {
-        width: var(--scrollbar-width);
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: var(--link-color-blue);
-        border-radius: var(--scrollbar-width);
-      }
-
-      &::-webkit-scrollbar-track {
-        background: var(--background-color);
-      }
-    }
-
-    .game-description__join-link {
-      @mixin link-hover-transition;
-
-      color: var(--join-link-color);
-      text-align: center;
-      text-decoration: none;
-
-      &:hover {
-        opacity: 0.8;
-      }
-    }
+  &:hover {
+    opacity: 0.8;
   }
 }

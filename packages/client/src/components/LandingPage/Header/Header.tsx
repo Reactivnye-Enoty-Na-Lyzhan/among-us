@@ -2,13 +2,13 @@ import './Header.css';
 
 export default function () {
   return (
-    <header className="header">
-      <h1 className="page-main-header">AMONG US WEB BROWSER GAME</h1>
-      <section className="game-title-section">
-        <svg className="game-title-svg">
+    <header className="landing-page-header">
+      <h1 className="landing-seo-title">AMONG US WEB BROWSER GAME</h1>
+      <section className="landing-title-section">
+        <svg className="landing-title-svg">
           <symbol id="game-title-href">
             <text
-              className="game-title-svg__text"
+              className="landing-title-svg__text"
               x="50%"
               y="50%"
               dominantBaseline="central"
@@ -17,13 +17,13 @@ export default function () {
             </text>
           </symbol>
 
-          <g className="game-title-text-copies">
+          <g className="landing-title-copies">
             <use
               href="#game-title-href"
-              className="game-title-svg__text-copy"></use>
+              className="landing-title-svg__text-copy"></use>
             <use
               href="#game-title-href"
-              className="game-title-svg__text-copy"></use>
+              className="landing-title-svg__text-copy"></use>
           </g>
         </svg>
       </section>

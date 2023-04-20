@@ -1,4 +1,4 @@
-@import './iconfont/fonts.css';
+@import '@/vendor/fonts/Iconfont/fonts.css';
 
 .landing-page {
   --game-title-primary-color: var(--font-main-primary);
@@ -6,6 +6,7 @@
 
   --join-link-color: var(--font-main-secondary);
   --link-hovered-color: var(--font-main-secondary);
+  --link-on-hover-transition-duration: 0.4s;
 
   --font-size-normal: calc(11px + 16 * ((100vw - 320px) / 1600));
   --font-color-default: var(--font-main-primary);

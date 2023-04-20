@@ -1,5 +1,3 @@
-@import '../../mixins/link-hover-transition.css';
-
 @define-placeholder flex-row-container {
   display: flex;
   flex-direction: row;
@@ -26,8 +24,6 @@
 }
 
 .landing-technologies-section__header {
-  @mixin link-hover-transition;
-
   display: block;
 
   width: min-content;
@@ -35,6 +31,8 @@
 
   font-size: 1.2em;
   color: inherit;
+
+  transition: var(--link-on-hover-transition-duration);
 }
 
 .landing-technologies-section:hover .landing-technologies-section__header {
