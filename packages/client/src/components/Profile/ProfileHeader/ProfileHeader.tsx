@@ -9,7 +9,7 @@ interface Props {
 export default function ProfileHeader({ choice }: Props) {
   const navigate = useNavigate();
 
-  const goBack: MouseEventHandler<HTMLAnchorElement> = (evt) => {
+  const goBack: MouseEventHandler<HTMLAnchorElement> = evt => {
     evt.preventDefault();
     navigate(-1);
   };
