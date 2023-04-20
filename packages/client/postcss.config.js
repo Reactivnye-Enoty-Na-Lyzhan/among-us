@@ -3,6 +3,7 @@ import cssnano from 'cssnano';
 import postcssColorMod from 'postcss-color-mod-function';
 import postcssExtend from 'postcss-extend';
 import postcssFor from 'postcss-for';
+import postcssMixins from 'postcss-mixins';
 import postcssPresetEnv from 'postcss-preset-env';
 
 const cssnanoPlugin = cssnano({
@@ -12,6 +13,7 @@ const postcssPresetEnvPlugin = postcssPresetEnv({ stage: 1 });
 
 const plugins = [
   postcssExtend,
+  postcssMixins,
   postcssFor,
   postcssColorMod,
   postcssPresetEnvPlugin,
