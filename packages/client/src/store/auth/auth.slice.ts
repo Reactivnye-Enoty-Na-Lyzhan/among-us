@@ -17,12 +17,15 @@ export const authApi = createApi({
     baseUrl: API_URL,
     credentials: 'include',
   }),
+  tagTypes: ['User'],
   endpoints: build => ({
     getUser: build.query<User, void>({
       query: () => '/user',
+      providesTags: ['User'],
     }),
     signUpUser: build.mutation<SignUpSuccessfulResponse, SignUpRequestDTO>({
       query: data => ({ url: '/signup', method: 'POST', body: data }),
+      invalidatesTags: ['User'],
     }),
     signInUser: build.mutation<SignInSuccessfulResponse, SignInRequestDTO>({
       query: data => ({
@@ -35,6 +38,7 @@ export const authApi = createApi({
             ?.includes('application/json');
           return isJson ? response.json() : response.text();
         },
+        invalidatesTags: ['User'],
       }),
     }),
   }),
