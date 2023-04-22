@@ -24,4 +24,10 @@ module.exports = {
     semi: ['error', 'always'],
   },
   ignorePatterns: ['node_modules/', 'dist/'],
+  overrides: [
+    {
+      files: ['*.cjs'],
+      rules: { '@typescript-eslint/no-var-requires': 'off' },
+    },
+  ],
 };
