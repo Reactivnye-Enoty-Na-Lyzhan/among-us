@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc && yarn sw:build && vite build",
-    "build:dev": "vite --mode=development build",
+    "build:dev": "yarn sw:build && cross-env BUILD_MODE=development vite build",
     "dev": "vite",
     "dev:with-sw": "run-p --print-label sw:dev dev",
     "sw:build": "tsc --noEmit --project src/service-worker/worker/tsconfig.sw.json && yarn sw:transpile",
