@@ -1,42 +1,37 @@
 import { getURL } from './helpers';
 
-type CacheHandler = {
-  addResourcesToCache: (resources: RequestInfo[]) => Promise<void>;
-  putInCache: ({
+export class CacheHandler {
+  private readonly _cacheName: string;
+
+  constructor(cacheName: string) {
+    this._cacheName = cacheName;
+  }
+
+  async addResourcesToCache(resources: RequestInfo[]) {
+    const cache = await caches.open(this._cacheName);
+    try {
+      await cache.addAll(resources);
+    } catch (error) {
+      console.error(
+        `FAILED TO ADD ALL ${JSON.stringify(
+          resources
+        )} RESOURCES TO CACHE: ${error}`
+      );
+    }
+  }
+
+  async putInCache({
     request,
     response,
   }: {
     request: RequestInfo;
     response: Response;
-  }) => Promise<void>;
-  deleteCache: (cacheName: string) => Promise<void>;
-  deleteOldCaches: (options?: { keepList: string[] }) => Promise<void>;
-};
-
-export function makeCacheHandler(cacheName: string): CacheHandler {
-  const addResourcesToCache: CacheHandler['addResourcesToCache'] =
-    async resources => {
-      const cache = await caches.open(cacheName);
-      try {
-        await cache.addAll(resources);
-      } catch (error) {
-        console.error(
-          `FAILED TO ADD ALL ${JSON.stringify(
-            resources
-          )} RESOURCES TO CACHE: ${error}`
-        );
-      }
-    };
-
-  const putInCache: CacheHandler['putInCache'] = async ({
-    request,
-    response,
-  }) => {
-    const cache = await caches.open(cacheName);
+  }) {
+    const cache = await caches.open(this._cacheName);
     let logString = `NETWORK REQUEST: ${getURL(request)}; STATUS: ${
       response.status
     }\n`;
-    logString += `PUT REQUEST '${getURL(request)}' TO CACHE ${cacheName}`;
+    logString += `PUT REQUEST '${getURL(request)}' TO CACHE ${this._cacheName}`;
 
     try {
       await cache.put(request, response);
@@ -45,35 +40,28 @@ export function makeCacheHandler(cacheName: string): CacheHandler {
     }
 
     console.log(logString);
-  };
+  }
 
-  const deleteCache: CacheHandler['deleteCache'] = async (
-    cacheToDelete: string
-  ) => {
+  private static async _deleteCache(cacheToDelete: string) {
     console.log(`DELETE CACHE ${cacheToDelete}`);
     try {
       await caches.delete(cacheToDelete);
     } catch (error) {
       console.error(`FAILED TO DELETE CACHE ${cacheToDelete}: ${error}`);
     }
-  };
+  }
 
-  const deleteOldCaches: CacheHandler['deleteOldCaches'] = async (
-    { keepList } = { keepList: [cacheName] }
-  ) => {
+  async deleteOldCaches({ keepList } = { keepList: [this._cacheName] }) {
     const cachesKeysList = await caches.keys();
     console.log(`CASHES: ${JSON.stringify(cachesKeysList)}`);
     const cachesToDelete = cachesKeysList.filter(
       key => !keepList.includes(key)
     );
     console.log(`DELETE OLD CACHES ${JSON.stringify(cachesToDelete)}`);
-    await Promise.all(cachesToDelete.map(deleteCache));
-  };
+    await Promise.all(cachesToDelete.map(CacheHandler._deleteCache));
+  }
 
-  return {
-    addResourcesToCache,
-    putInCache,
-    deleteCache,
-    deleteOldCaches,
-  };
+  getCacheName() {
+    return this._cacheName;
+  }
 }

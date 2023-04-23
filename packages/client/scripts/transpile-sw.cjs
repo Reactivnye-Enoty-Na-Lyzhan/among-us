@@ -4,7 +4,7 @@ const parseArgs = require('minimist');
 
 const inputFilePath = path.resolve(
   __dirname,
-  '../src/service-worker/worker/service-worker.ts'
+  '../src/service-worker/worker/_service-worker.ts'
 );
 const outFilePath = path.resolve(__dirname, '../public/', 'service-worker.js');
 
