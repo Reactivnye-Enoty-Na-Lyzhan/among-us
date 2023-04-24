@@ -1,6 +1,9 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+import { useParams } from 'react-router-dom';
 import Header from '../../Header/Header';
 import Themes from '../Themes/Themes';
+import hocAuth from '@/hoc/hocAuth';
+import { SIGNIN_URL } from '@/utils/constants';
 import './Page.css';
 
 // TBD: change mockThemes to themes from API
@@ -42,14 +45,25 @@ const themes: ForumThemeGroup = {
 };
 
 const ForumPage: FC = () => {
+  // TBD: temporary solution while we don't have an API
+  const { param } = useParams();
+
   return (
     <div className="forum">
-      <Header title={'Форум'} goBackUrl={'/'} />
+      <Header title={'Форум'} />
       <main className="forum__container">
-        <Themes pinnedThemes={pinnedThemes} themes={themes} />
+        <Themes
+          pinnedThemes={
+            param === 'empty' ? { ...pinnedThemes, themes: [] } : pinnedThemes
+          }
+          themes={param === 'empty' ? { ...themes, themes: [] } : themes}
+        />
       </main>
     </div>
   );
 };
 
-export default ForumPage;
+export default hocAuth(ForumPage, {
+  onAuthenticatedRedirection: null,
+  onUnauthenticatedRedirection: SIGNIN_URL,
+});

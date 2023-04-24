@@ -2,4 +2,5 @@
 
 .form__title {
   color: var(--text-color);
+  margin-bottom: 55px;
 }

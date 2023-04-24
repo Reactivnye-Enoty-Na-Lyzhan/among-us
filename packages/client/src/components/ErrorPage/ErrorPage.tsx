@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { MouseEventHandler } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './ErrorPage.css';
 
 type Props = {
@@ -8,11 +9,17 @@ type Props = {
 };
 
 function ErrorPage({ code, message, linkLabel }: Props) {
+  const navigate = useNavigate();
+  const goBack: MouseEventHandler<HTMLAnchorElement> = evt => {
+    evt.preventDefault();
+    navigate(-1);
+  };
+
   return (
     <div className="error-page">
       <h1 className="error-page__code">{code}</h1>
       <p className="error-page__message">{message}</p>
-      <Link to={'..'} className="error-page__return-link">
+      <Link to=".." className="error-page__return-link" onClick={goBack}>
         {linkLabel}
       </Link>
     </div>

@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import Pagination from '../../Pagination/Pagination';
 import ThemeCard from './Card/Card';
+import ForumEmpty from './Empty/Empty';
 import GroupButton from './Group/Button/Button';
 import ThemesGroup from './Group/Group';
 import ThemesSearch from './Search/Search';
@@ -39,18 +40,34 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
     callback(newFilteredThemes);
   };
 
+  if (themes.themes.length === 0 && pinnedThemes.themes.length === 0) {
+    return (
+      <section className="forum-themes">
+        <div className="form-themes__group">
+          <ThemesGroup
+            title={themes.title}
+            buttons={[<GroupButton text="+ cоздать новую тему" />]}>
+            <ForumEmpty />
+          </ThemesGroup>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="forum-themes">
       <ThemesSearch value={searchText} onValueChanged={setSearchText} />
-      <div className="form-themes__group">
-        <ThemesGroup title={pinnedThemes.title} collapsible={true}>
-          {filteredPinnedThemes.map((theme, i) => (
-            <li className="forum-themes__item" key={i}>
-              <ThemeCard theme={theme} isPinned={true} hasEditAccess={true} />
-            </li>
-          ))}
-        </ThemesGroup>
-      </div>
+      {pinnedThemes.themes.length > 0 ? (
+        <div className="form-themes__group">
+          <ThemesGroup title={pinnedThemes.title} collapsible={true}>
+            {filteredPinnedThemes.map((theme, i) => (
+              <li className="forum-themes__item" key={i}>
+                <ThemeCard theme={theme} isPinned={true} hasEditAccess={true} />
+              </li>
+            ))}
+          </ThemesGroup>
+        </div>
+      ) : null}
       <div className="form-themes__group">
         <ThemesGroup
           title={themes.title}

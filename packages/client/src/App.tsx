@@ -34,7 +34,7 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/game/*" element={<GamePage />} />
           <Route path="/leaderboard" element={<LeaderBoard />} />
-          <Route path="/forum" element={<ForumPage />} />
+          <Route path="/forum/:param?" element={<ForumPage />} />
           <Route
             path="/profile"
             element={
