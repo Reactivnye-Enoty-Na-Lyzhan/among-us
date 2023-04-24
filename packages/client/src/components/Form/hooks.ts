@@ -11,5 +11,6 @@ export function useForm(defaultValues?: Record<string, string | undefined>) {
     });
   }, []);
 
-  return { values, handleInputChange };
+  return { values, handleInputChange, setValues };
 }
+
