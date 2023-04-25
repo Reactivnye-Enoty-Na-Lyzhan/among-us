@@ -18,7 +18,7 @@ export const authApi = createApi({
       providesTags: ['User'],
     }),
     updateUser: build.mutation<User, Partial<User>>({
-      query: (data: Partial<User>) => (console.log('hjehjfehkkhfew', data), {
+      query: (data: Partial<User>) => ({
         url: '/profile',
         method: 'PUT',
         body: data,
