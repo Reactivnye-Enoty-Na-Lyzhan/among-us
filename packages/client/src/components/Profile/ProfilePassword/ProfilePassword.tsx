@@ -27,8 +27,6 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
     { field: 'repeatPassword', validation: (value: string | undefined) => validation.comparePasswords(value, values.newPassword) },
   ]);
 
-  console.log('valuesvalues', values);
-
   return (
     <div className="profile-form">
       <h1 className="profile-form__title profile-form__title_space_bottom">
