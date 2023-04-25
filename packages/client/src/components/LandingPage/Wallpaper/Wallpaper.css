@@ -14,14 +14,14 @@
 
 @for $i from 1 to 8 {
   .landing-wallpaper__stars-$(i) {
-    background-image: url('images/landing-page/wallpapers/$(i).png');
+    background-image: url('images/landing-page/wallpapers/stars-wallpaper-$(i).png');
   }
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
   @for $i from 1 to 8 {
     .landing-wallpaper__stars-$(i) {
-      background-image: url('images/landing-page/wallpapers/$(i)_2x.png');
+      background-image: url('images/landing-page/wallpapers/stars-wallpaper-$(i)-2x.png');
     }
   }
 }
