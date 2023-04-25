@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { Error404 } from './components/ErrorPage/ErrorPage';
 import ErrorToast from './components/ErrorToast/ErrorToast';
 import GamePage from './components/GamePage/GamePage';
-import LandingPage from './components/LandingPage/LandingPage';
+import LandingPage from './components/LandingPage/_Component';
 import LeaderBoard from './components/LeaderBoard/LeaderBoard';
 import LoginPage from './components/LoginPage/LoginPage';
 import Loader from './components/Loader/Loader';
