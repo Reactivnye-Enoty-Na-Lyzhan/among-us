@@ -1,12 +1,12 @@
-#avatar__button {
+.avatar__button {
   position: absolute;
-  width: 225px;
+  width: 240px;
   height: 190px;
   background: #9b9b9b;
   background-image: url(../../../images/profile/man.png);
-  background-position: center;
+  background-position: contain;
   background-repeat: no-repeat;
-  background-size: 80px;
+  background-size: 100%;
   border-radius: 50%;
   z-index: 2;
   text-indent: -9999px;

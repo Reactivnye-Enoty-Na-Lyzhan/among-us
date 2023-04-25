@@ -24,6 +24,13 @@ export const authApi = createApi({
         body: data,
       }),
     }),
+    updateAvatar: build.mutation<User, FormData>({
+      query: (data: FormData) => ( {
+        url: '/profile/avatar',
+        method: 'PUT',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -31,4 +38,5 @@ export const {
   useGetUserQuery,
   useLazyGetUserQuery,
   useUpdateUserMutation,
+  useUpdateAvatarMutation,
 } = authApi;
