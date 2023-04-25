@@ -31,6 +31,14 @@ export const authApi = createApi({
         body: data,
       }),
     }),
+    updatePassword: build.mutation<void, { oldPassword: string, newPassword: string }>({
+      query: ({ oldPassword, newPassword }) => (console.log('тут пароли', oldPassword, newPassword), {
+        url: '/password',
+        method: 'PUT',
+        body: { oldPassword, newPassword },
+      }),
+      invalidatesTags: ['User'],
+    }),
   }),
 });
 
@@ -39,4 +47,5 @@ export const {
   useLazyGetUserQuery,
   useUpdateUserMutation,
   useUpdateAvatarMutation,
+  useUpdatePasswordMutation,
 } = authApi;

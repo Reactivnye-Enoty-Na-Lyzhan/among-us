@@ -8,7 +8,7 @@ export type ValidationData = {
 
 export type ValidationRule = {
   field: string;
-  validation: (value?: string) => { isValid: boolean; text: string };
+  validation: (value: string | undefined, secondValue?: string | undefined) => { isValid: boolean; text: string };
 };
 
 export function useValidation(validations: ValidationRule[]) {

@@ -4,6 +4,7 @@ import { useForm } from '../../Form/hooks';
 import { validation } from '../../../utils/validation';
 import Button from '../../Form/Button/Button';
 import { useValidation } from '../../../hooks/useValidation';
+import { useUpdatePasswordMutation } from '../../../store/profile/profile.slice';
 import './ProfilePassword.css';
 
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
 const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
   choice;
   const { values, handleInputChange } = useForm({});
+  const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
   const {
     validationData,
     isFormValid,
@@ -22,21 +24,32 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
   } = useValidation([
     { field: 'oldPassword', validation: validation.password },
     { field: 'newPassword', validation: validation.password },
-    { field: 'repeatPassword', validation: validation.password },
+    { field: 'repeatPassword', validation: (value: string | undefined) => validation.comparePasswords(value, values.newPassword) },
   ]);
 
+  console.log('valuesvalues', values);
+
   return (
-    /* Временно изменил класс с form на profile-form. У тебя ниже идёт снова class Form*/
     <div className="profile-form">
       <h1 className="profile-form__title profile-form__title_space_bottom">
         Смена пароля члена экипажа
       </h1>
       <Form
-        onSubmit={() => {
+        onSubmit={async () => {
           if (validateForm(values)) {
-            console.log('SUBMIT', { values });
+            const oldPassword = values.oldPassword || '';
+            const newPassword = values.newPassword || '';
+            if (oldPassword && newPassword) {
+              try {
+                await updatePassword({ oldPassword, newPassword });
+                console.log('Password updated successfully');
+              } catch (err) {
+                console.log('Failed to update password', err);
+              }
+            }
           }
-        }}>
+        }}
+      >
         <Input
           value={values.oldPassword}
           handleInputChange={handleInputChange}
@@ -46,7 +59,7 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
           name={'oldPassword'}
           placeholder={''}
           label={'Старый пароль'}
-          validation={validationData.password}
+          validation={validationData.oldPassword}
         />
         <Input
           value={values.newPassword}
@@ -57,7 +70,7 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
           name={'newPassword'}
           placeholder={''}
           label={'Новый пароль'}
-          validation={validationData.password}
+          validation={validationData.newPassword}
         />
         <Input
           value={values.repeatPassword}
@@ -68,10 +81,11 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
           name={'repeatPassword'}
           placeholder={''}
           label={'Повторите новый пароль'}
-          validation={validationData.password}
+          validation={validationData.repeatPassword}
         />
         <Button disabled={!isFormValid} text={'Изменить пароль'} />
       </Form>
+      {isLoading && <span>Updating Password...</span>}
     </div>
   );
 };
