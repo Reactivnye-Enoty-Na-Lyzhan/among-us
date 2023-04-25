@@ -21,7 +21,7 @@ const ProfileAvatar = () => {
   };
   
   return (
-    <div>
+    <>
       <input
         className='avatar__button_space_right avatar__button'
         type="file"
@@ -32,7 +32,7 @@ const ProfileAvatar = () => {
         }}
       />
       {isLoading && <span>Updating Avatar...</span>}
-    </div>
+    </>
   );
 };
 
