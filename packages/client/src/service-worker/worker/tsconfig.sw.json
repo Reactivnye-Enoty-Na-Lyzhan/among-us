@@ -5,7 +5,7 @@
     "isolatedModules": false,
     "lib": ["ESNext", "WebWorker"],
     "noEmit": false,
-    "outDir": "../../../public"
+    "sourceMap": false
   },
   "include": ["."],
   "exclude": []
