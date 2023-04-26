@@ -24,6 +24,6 @@
       "*": ["types/*"]
     },
     "outDir": "dist",
-    "skipLibCheck": true,
+    "skipLibCheck": true
   }
 }
