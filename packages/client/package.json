@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "add:client": "lerna add --scope=client",
     "build": "tsc && yarn sw:build && vite build",
     "build:dev": "yarn sw:build && cross-env BUILD_MODE=development vite build",
     "dev": "vite",
@@ -13,7 +14,9 @@
     "format": "prettier --write .",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "jest --passWithNoTests  ./"
+    "preview:watch": "run-p --print-label  sw:dev  'vite:build -- --watch' preview",
+    "test": "jest --passWithNoTests  ./",
+    "vite:build": "vite build"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",

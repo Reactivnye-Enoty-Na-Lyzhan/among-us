@@ -17,6 +17,15 @@ if (IS_DEV) {
 }
 console.log(outputNamesOptions);
 
+const rollupWatchExternalPlugin = (files: string[]) => ({
+  name: 'watch-external',
+  async buildStart() {
+    for (const file of files) {
+      this.addWatchFile(file);
+    }
+  },
+});
+
 export default defineConfig({
   server: {
     port: Number(process.env.CLIENT_PORT) || 3000,
@@ -32,6 +41,7 @@ export default defineConfig({
       output: {
         ...outputNamesOptions,
       },
+      plugins: [rollupWatchExternalPlugin(['public/service-worker.js'])],
     },
   },
   css: {

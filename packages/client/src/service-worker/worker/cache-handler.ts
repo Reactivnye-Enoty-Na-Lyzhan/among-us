@@ -30,8 +30,7 @@ export class CacheHandler {
     const cache = await caches.open(this._cacheName);
     let logString = `NETWORK REQUEST: ${getURL(request)}; STATUS: ${
       response.status
-    }\n`;
-    logString += `PUT REQUEST '${getURL(request)}' TO CACHE ${this._cacheName}`;
+    }\nPUT REQUEST '${getURL(request)}' TO CACHE ${this._cacheName}`;
 
     try {
       await cache.put(request, response);
@@ -42,10 +41,25 @@ export class CacheHandler {
     console.log(logString);
   }
 
+  async getFromCache(request: RequestInfo) {
+    try {
+      const cache = await caches.open(this._cacheName);
+      const responseFromCache = await cache.match(request);
+
+      return responseFromCache;
+    } catch (error) {
+      console.error(
+        `FAILED TO GET RESPONSE ON '${getURL(
+          request
+        )} 'FROM CACHE\n ERROR: ${error}`
+      );
+    }
+  }
+
   private static async _deleteCache(cacheToDelete: string) {
-    console.log(`DELETE CACHE ${cacheToDelete}`);
     try {
       await caches.delete(cacheToDelete);
+      console.log(`CACHE DELETED  ${cacheToDelete}`);
     } catch (error) {
       console.error(`FAILED TO DELETE CACHE ${cacheToDelete}: ${error}`);
     }

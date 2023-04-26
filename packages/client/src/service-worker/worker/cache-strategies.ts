@@ -1,9 +1,11 @@
+import {
+  HandlerWithEnsuredResponse,
+  HandlerWithUnsureResponse,
+  RequestHandler,
+  RequestHandlerArgs,
+} from './_service-worker.types';
 import { CacheHandler } from './cache-handler';
 import { getURL } from './helpers';
-
-export type RequestHandler<
-  ResponseType extends Response | undefined = Response
-> = (request: RequestInfo) => Promise<ResponseType>;
 
 export class CachedRequestsHandler {
   private readonly _cacheName: string;
@@ -26,44 +28,73 @@ export class CachedRequestsHandler {
     }
 
     this._offlineFallbackURL = offlineFallbackURL;
+
+    this.getResponseFromNavigationPreload = this._withResponseCaching(
+      this.getResponseFromNavigationPreload
+    );
+    this.getResponseFromNetwork = this._withResponseCaching(
+      this.getResponseFromNetwork
+    );
   }
 
-  async getResponseFromCache(request: RequestInfo) {
-    const cache = await caches.open(this._cacheName);
-    const responseFromCache = await cache.match(request);
+  getResponseFromCache: HandlerWithUnsureResponse = async ({
+    request,
+  }: RequestHandlerArgs) => {
+    const responseFromCache = await this._cacheHandler.getFromCache(request);
 
     if (responseFromCache) {
-      console.log(`REQUEST '${getURL(request)}' FOUND IN CACHE`);
+      console.log(`RESPONSE ON '${getURL(request)}' RECEIVED FROM CACHE`);
     }
 
     return responseFromCache;
-  }
+  };
 
-  async getAndCacheNetworkResponse(request: RequestInfo) {
+  getResponseFromNavigationPreload: HandlerWithUnsureResponse = async ({
+    request,
+    preloadResponse,
+  }: RequestHandlerArgs) => {
     try {
-      const responseFromNetwork = await fetch(request);
+      const response = await preloadResponse;
 
-      if (responseFromNetwork.status === 200) {
-        this._cacheHandler.putInCache({
-          request,
-          response: responseFromNetwork.clone(),
-        });
+      if (response) {
+        console.log(
+          `RESPONSE ON '${getURL(request)}' RECEIVED FROM NAVIGATION PRELOADED`
+        );
       }
 
+      return response;
+    } catch (error) {
+      console.error(
+        `FAILED TO GET RESPONSE ON '${getURL(
+          request
+        )} 'FROM NAVIGATION PRELOADED\n ERROR: ${error}`
+      );
+    }
+  };
+
+  getResponseFromNetwork: HandlerWithUnsureResponse = async ({
+    request,
+  }: RequestHandlerArgs) => {
+    try {
+      const responseFromNetwork = await fetch(request);
+      console.info(`RESPONSE ON '${getURL(request)}' RECEIVED FROM NETWORK`);
       return responseFromNetwork;
     } catch (error) {
-      const logString = `FAILED TO GET RESPONSE ON '${getURL(
-        request
-      )} 'FROM NETWORK WITH ERROR: ${error}`;
-      console.error(logString);
+      console.error(
+        `FAILED TO GET RESPONSE ON '${getURL(
+          request
+        )} 'FROM NETWORK\n ERROR: ${error}`
+      );
     }
-  }
+  };
 
   private async _getOfflineResponse() {
     let response: Response | undefined;
 
     if (this._offlineFallbackURL) {
-      response = await this.getResponseFromCache(this._offlineFallbackURL);
+      response = await this.getResponseFromCache({
+        request: this._offlineFallbackURL,
+      });
     }
     if (!response) {
       response = new Response('Network error happened', {
@@ -76,10 +107,10 @@ export class CachedRequestsHandler {
   }
 
   withOfflineResponse(
-    requestHandler: RequestHandler<Response | undefined>
-  ): RequestHandler {
-    return async request => {
-      const response = await requestHandler(request);
+    requestHandler: HandlerWithUnsureResponse
+  ): HandlerWithEnsuredResponse {
+    return async handlerArgs => {
+      const response = await requestHandler(handlerArgs);
 
       if (!response) {
         return this._getOfflineResponse();
@@ -88,4 +119,19 @@ export class CachedRequestsHandler {
       return response;
     };
   }
+
+  private _withResponseCaching =
+    (requestHandler: RequestHandler): RequestHandler =>
+    async (handlerArgs: RequestHandlerArgs) => {
+      const response = await requestHandler(handlerArgs);
+
+      if (response && response.status === 200) {
+        await this._cacheHandler.putInCache({
+          request: handlerArgs.request,
+          response: response.clone(),
+        });
+      }
+
+      return response;
+    };
 }

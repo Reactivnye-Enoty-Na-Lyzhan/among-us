@@ -1,5 +1,7 @@
+import { PreloadResponse } from './_service-worker.types';
 import { CacheHandler } from './cache-handler';
 import { CachedRequestsHandler } from './cache-strategies';
+import { isStaticFileRequest } from './helpers';
 import { SWRequest } from './requests-handler';
 
 const sw: ServiceWorkerGlobalScope = self as any;
@@ -15,16 +17,36 @@ const requestWithCache = new CachedRequestsHandler({
 });
 const requestHandler = new SWRequest(requestWithCache);
 
-sw.addEventListener('install', event => {
-  console.log('SERVICE WORKER INSTALL');
-  event.waitUntil(cacheHandler.addResourcesToCache(URLS_TO_CACHE));
+sw.addEventListener('install', async event => {
+  event.preventDefault();
+  await cacheHandler.addResourcesToCache(URLS_TO_CACHE);
+  console.log('SERVICE WORKER INSTALLED');
 });
 
-sw.addEventListener('activate', event => {
-  console.log('SERVICE WORKER ACTIVATE');
-  event.waitUntil(cacheHandler.deleteOldCaches());
+const enableNavigationPreload = async () => {
+  if (sw.registration.navigationPreload) {
+    await sw.registration.navigationPreload.enable();
+  }
+};
+sw.addEventListener('activate', async event => {
+  event.preventDefault();
+  await cacheHandler.deleteOldCaches();
+  await enableNavigationPreload();
+  console.log('SERVICE WORKER ACTIVATED');
 });
 
 sw.addEventListener('fetch', event => {
-  event.respondWith(requestHandler.networkFirst(event.request));
+  const { request } = event;
+
+  const preloadResponse: PreloadResponse = event.preloadResponse;
+
+  const isStaticFile = isStaticFileRequest(request);
+
+  if (!isStaticFile) {
+    event.respondWith(
+      requestHandler.networkFirst({ request, preloadResponse })
+    );
+  } else {
+    event.respondWith(requestHandler.cacheFirst({ request, preloadResponse }));
+  }
 });
