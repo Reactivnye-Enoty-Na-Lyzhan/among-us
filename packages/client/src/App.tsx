@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Error404 } from './components/ErrorPage/ErrorPage';
 import ErrorToast from './components/ErrorToast/ErrorToast';
 import GamePage from './components/GamePage/GamePage';
@@ -24,27 +24,25 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="app app_theme_default">
-        <ErrorToast />
-        <Loader />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/signin" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/game/*" element={<GamePage />} />
-          <Route path="/leaderboard" element={<LeaderBoard />} />
-          <Route path="/forum/:param?" element={<ForumPage />} />
-          <Route
-            path="/profile"
-            element={
-              <Profile choice={link} handleChoiceChange={handleChoiceChange} />
-            }
-          />
-          <Route path="*" element={<Error404 />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="app app_theme_default">
+      <ErrorToast />
+      <Loader />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signin" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/game/*" element={<GamePage />} />
+        <Route path="/leaderboard" element={<LeaderBoard />} />
+        <Route path="/forum/:param?" element={<ForumPage />} />
+        <Route
+          path="/profile"
+          element={
+            <Profile choice={link} handleChoiceChange={handleChoiceChange} />
+          }
+        />
+        <Route path="*" element={<Error404 />} />
+      </Routes>
+    </div>
   );
 }
 
