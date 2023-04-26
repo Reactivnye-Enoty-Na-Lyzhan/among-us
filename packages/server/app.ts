@@ -34,7 +34,11 @@ const createServer = async () => {
   app.use(routes);
 
   // Static
-  !isDev && app.use('/assets', express.static(path.join(CLIENT_PACKAGE_PATH, './dist/assets')));
+  !isDev &&
+    app.use(
+      '/assets',
+      express.static(path.join(CLIENT_PACKAGE_PATH, './dist/assets'))
+    );
 
   // SSR Handler
   app.use('*', (req: Request, res: Response, next: NextFunction) => {

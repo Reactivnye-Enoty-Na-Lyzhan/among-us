@@ -1,9 +1,7 @@
 interface ICorsSettings {
-  origin: string[],
+  origin: string[];
 }
 
 export const corsSettings: ICorsSettings = {
-  origin: [
-    `http://localhost:${process.env.CLIENT_PORT || 3001}`,
-  ]
+  origin: [`http://localhost:${process.env.CLIENT_PORT || 3001}`],
 };
