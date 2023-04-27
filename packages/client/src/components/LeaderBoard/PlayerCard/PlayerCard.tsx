@@ -1,13 +1,13 @@
 import { FC, memo } from 'react';
 import { LeaderboardDataType } from '../../../utils/leaderboardData';
-import './LeaderBoardPlayer.css';
+import './PlayerCard.css';
 
 type Props = LeaderboardDataType & {
   owner: boolean;
 };
 
 // Компонент карточки пользователя в таблице рейтинга
-const LeaderBoardPlayer: FC<Props> = props => {
+const PlayerCard: FC<Props> = props => {
   const { avatar, nickname, games, wins, rank, owner } = props;
 
   return (
@@ -23,11 +23,11 @@ const LeaderBoardPlayer: FC<Props> = props => {
         />
         <div className="leaderboard__player-info">
           <h2 className="leaderboard__nickname">{nickname}</h2>
-          <p className="leaderboard__player-achievment">
+          <p className="leaderboard__player-achievement">
             <span className="leaderboard__accent">Победы: </span>
             {wins}%
           </p>
-          <p className="leaderboard__player-achievment">
+          <p className="leaderboard__player-achievement">
             <span className="leaderboard__accent">Количество игр: </span>
             {games}
           </p>
@@ -38,4 +38,4 @@ const LeaderBoardPlayer: FC<Props> = props => {
   );
 };
 
-export default memo(LeaderBoardPlayer);
+export default memo(PlayerCard);
