@@ -1,9 +1,9 @@
 import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
 import type { Store } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import App from './App';
 import { store } from './store/';
+import { StaticRouter } from 'react-router-dom/server';
 
 interface IRenderReturn {
   renderedHtml: string;
