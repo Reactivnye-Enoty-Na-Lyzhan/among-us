@@ -33,3 +33,9 @@ export type APIErrorResponse = {
   reason: string;
   error?: string;
 };
+
+
+export type OAuthRequestData = {
+  code: string;
+  redirect_uri: string;
+};

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
@@ -10,9 +10,11 @@ import { useValidation } from '../../hooks/useValidation';
 import { useSignIn } from './hooks/useSignIn';
 import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
+import { useSignInWithYandexMutation } from '../../store/auth/auth.slice';
 import './LoginPage.css';
 
 const LoginPage: FC = () => {
+  const [ signInWithYandex ] = useSignInWithYandexMutation();
   const { requestStatus, statusMessageClass, signIn, sendSignInQueryStatus } =
     useSignIn();
 
@@ -40,6 +42,22 @@ const LoginPage: FC = () => {
     const success = await signIn(values as SignInRequestDTO);
     success && navigate('/game');
   }
+
+  const CLIENT_ID='3abae5eaea504f2c8c65eb8221895700';
+  const REDIRECT_URI='http://localhost:3000/signin';
+
+  const handleRedirectToOAuth = () => {
+    window.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
+    };
+
+  useEffect(() => {
+    const code = new URLSearchParams(globalThis.window?.location.search).get('code');
+    if (code) {
+      signInWithYandex({ code: code, redirect_uri: 'http://localhost:3000/signin'});
+    } else {
+      return console.log('Oops');
+    }
+  }, []);
 
   return (
     <div className="login-page">
@@ -71,7 +89,9 @@ const LoginPage: FC = () => {
             label={'Пароль'}
             validation={validationData.password}
           />
-          <Button disabled={!isFormValid} text={'Отправить'} />
+          <Button disabled={!isFormValid} text={'Отправить'} onClick={handleSubmit}/>
+          <Button onClick={handleRedirectToOAuth} text="Авторизоваться через Яндекс" disabled={false}/>
+
         </Form>
         <div className="login-page__footer">
           <span>Ещё не зарегистрированы?</span>
@@ -86,5 +106,5 @@ const LoginPage: FC = () => {
 
 export default hocAuth(LoginPage, {
   onUnauthenticatedRedirection: null,
-  onAuthenticatedRedirection: '/game',
+  // onAuthenticatedRedirection: '/game',
 });
