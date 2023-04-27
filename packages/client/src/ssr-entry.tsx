@@ -1,7 +1,6 @@
 import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
 import type { Store } from '@reduxjs/toolkit';
-import { LandingPage } from './components/LandingPage/_Component/LandingPage';
+import { FC } from 'react';
 
 interface IRenderReturn {
   renderedHtml: string,
@@ -12,16 +11,18 @@ interface IRender {
   (url: string | Partial<Location>): IRenderReturn
 }
 
-export const render: IRender = (url = '') => {
-  // Здесь сконфигурировать store
-  /* const store = configureStore({...}) */
+const GreetingHtml: FC = () => {
+  return (
+    <div>
+      <h1>Привет :)</h1>
+    </div>
+  );
+};
 
+export const render: IRender = (url = '') => {
+  console.log(url);
   const renderedHtml = renderToString(
-    // Обернуть в Provider store
-    // Убрать LandingPage и добавить вместо него App
-    <StaticRouter location={url}>
-      <LandingPage />
-    </StaticRouter>
+    <GreetingHtml />
   );
 
   return {
