@@ -37,41 +37,39 @@ const CompileTsServiceWorker = () => ({
 });
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-  return {
-    server: {
-      port: Number(process.env.CLIENT_PORT) || 3000,
-      //https: true,
-    },
-    define: {
-      __SERVER_PORT__: process.env.SERVER_PORT || 3001,
-    },
-    plugins: [react(), CompileTsServiceWorker()],
-    build: {
-      outDir: OUT_DIR,
-      cssMinify: mode === 'production',
-      rollupOptions: {
-        output: {
-          ...outputNamesOptions,
-        },
+export default defineConfig({
+  server: {
+    port: Number(process.env.CLIENT_PORT) || 3000,
+    //https: true,
+  },
+  define: {
+    __SERVER_PORT__: process.env.SERVER_PORT || 3001,
+  },
+  plugins: [react(), CompileTsServiceWorker()],
+  build: {
+    outDir: OUT_DIR,
+    cssMinify: false,
+    rollupOptions: {
+      output: {
+        ...outputNamesOptions,
       },
     },
-    ssr: {
-      format: 'cjs',
-      target: 'node',
+  },
+  ssr: {
+    format: 'cjs',
+    target: 'node',
+  },
+  legacy: {
+    buildSsrCjsExternalHeuristics: true,
+  },
+  css: {
+    devSourcemap: true,
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src/'),
+      images: path.resolve(__dirname, 'src/images/'),
+      fonts: path.resolve(__dirname, 'src/vendor/fonts/'),
     },
-    legacy: {
-      buildSsrCjsExternalHeuristics: true,
-    },
-    css: {
-      devSourcemap: true,
-    },
-    resolve: {
-      alias: {
-        '@': path.resolve(__dirname, 'src/'),
-        images: path.resolve(__dirname, 'src/images/'),
-        fonts: path.resolve(__dirname, 'src/vendor/fonts/'),
-      },
-    },
-  };
+  },
 });
