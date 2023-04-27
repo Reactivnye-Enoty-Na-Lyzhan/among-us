@@ -192,6 +192,9 @@ export default function canvasProcess(
   const task = new InteractionObject(1895, 1027, 30, useActionBtn);
 
   function gameLoop() {
+    if (typeof window === 'undefined') {
+        return;
+    }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.closePath();
     background.draw();
