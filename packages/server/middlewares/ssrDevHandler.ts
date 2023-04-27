@@ -26,7 +26,7 @@ export const ssrDevHandler = async (
     const { renderedHtml } = await render(url);
 
     const html = template.replace(`<!--ssr-outlet-->`, renderedHtml);
-    res.status(200).send(html);
+    res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
   } catch (e) {
     vite.ssrFixStacktrace(e as Error);
     next(e);
