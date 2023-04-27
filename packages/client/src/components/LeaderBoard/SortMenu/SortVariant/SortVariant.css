@@ -1,0 +1,25 @@
+.leaderboard__dropdown-item {
+  display: flex;
+}
+
+.leaderboard__sort-variant {
+  cursor: pointer;
+
+  padding: 0;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--leaderboard-dropdown-fontZ);
+
+  background: transparent;
+  border: none;
+}
+
+.leaderboard__sort-variant_active {
+  font-weight: 700;
+}
+
+.leaderboard__sort-variant:hover {
+  opacity: 0.8;
+}
