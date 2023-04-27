@@ -19,14 +19,14 @@ let playerSpriteLeft: HTMLImageElement;
 let gameMap: HTMLImageElement;
 
 if (typeof window !== 'undefined') {
-    playerSpriteRight = new Image();
-    playerSpriteRight.src = playerSpriteWhiteRight;
-    
-    playerSpriteLeft = new Image();
-    playerSpriteLeft.src = playerSpriteWhiteLeft;
-    
-    gameMap = new Image();
-    gameMap.src = map;
+  playerSpriteRight = new Image();
+  playerSpriteRight.src = playerSpriteWhiteRight;
+
+  playerSpriteLeft = new Image();
+  playerSpriteLeft.src = playerSpriteWhiteLeft;
+
+  gameMap = new Image();
+  gameMap.src = map;
 }
 
 const PLAYER = {

@@ -7,7 +7,6 @@ import App from './App';
 import { registerServiceWorker } from './service-worker/register';
 import './index.css';
 
-
 if (import.meta.env.MODE === 'production') {
   window.addEventListener('load', () => {
     registerServiceWorker();

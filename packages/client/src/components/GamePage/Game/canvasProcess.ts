@@ -193,7 +193,7 @@ export default function canvasProcess(
 
   function gameLoop() {
     if (typeof window === 'undefined') {
-        return;
+      return;
     }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.closePath();
