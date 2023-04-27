@@ -6,7 +6,6 @@ import { routes } from './routes/index';
 import errorHandler from './middlewares/errorHandler';
 import { ssrDevHandler } from './middlewares/ssrDevHandler';
 import { ssrProductionHandler } from './middlewares/ssrProductionHandler';
-import { corsSettings } from './utils/corsSettings';
 import { createViteServer } from './utils/createViteServer';
 import { CLIENT_PACKAGE_PATH } from './utils/constants';
 import type { ViteDevServer } from 'vite';
@@ -28,7 +27,7 @@ const createServer = async () => {
   }
 
   // Middlewares
-  app.use(cors(corsSettings));
+  app.use(cors());
 
   // Routes
   app.use(routes);
