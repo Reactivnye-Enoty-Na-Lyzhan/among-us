@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { SortFunction } from '../types';
 import './SortVariant.css';
+import { FC, memo } from 'react';
 
 type Props = {
   isSelected: boolean;
@@ -8,11 +9,11 @@ type Props = {
   sortFunction: SortFunction;
 };
 
-export function SortMenuVariant({
+const SortMenuVariant: FC<Props> = ({
   isSelected,
   description,
   sortFunction,
-}: Props) {
+}) => {
   return (
     <li className="leaderboard__dropdown-item">
       <button
@@ -25,4 +26,6 @@ export function SortMenuVariant({
       </button>
     </li>
   );
-}
+};
+
+export default memo(SortMenuVariant);

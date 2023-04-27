@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   additionalData,
@@ -6,27 +6,21 @@ import {
   LeaderboardDataType,
 } from '../../utils/leaderboardData';
 import hocAuth from '@/hoc/hocAuth';
-import './LeaderBoard.css';
-import { RatingTable } from './RatingTable/RatingTable';
+import RatingTable from './RatingTable/RatingTable';
 import { EnumSortType } from './enum-sort-types';
-import { SortMenu } from './SortMenu/SortMenu';
+import SortMenu from './SortMenu/SortMenu';
+import './LeaderBoard.css';
 
 const LeaderBoard: FC = () => {
   const [leaderboardUsers, setLeaderboardUsers] = useState<
     LeaderboardDataType[] | []
   >([]);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
-  const [isSortedBy, setSortedBy] = useState(EnumSortType.RANK);
 
   const navigate = useNavigate();
 
   // Отображение состояния загрузки игроков из таблицы рейтинга
   const buttonTitle = isProcessing ? 'Загружаем...' : 'Показать ещё';
-
-  // Запрашиваем отсортированную таблицу по "месту в рейтинге"
-  useEffect(() => {
-    // Обращение к серверу за данными
-  }, []);
 
   // Добавляем полученные данные игроков
   useEffect(() => {
@@ -34,22 +28,19 @@ const LeaderBoard: FC = () => {
   }, [leaderboardData]);
 
   // Сортировка в зависимости от выбранного типа
-  const handleSort = (type: EnumSortType) => {
-    switch (type) {
+  const handleSort = useCallback((sortType: EnumSortType) => {
+    switch (sortType) {
       // запрос отсортированного значения
       case EnumSortType.WINRATE:
-        setSortedBy(EnumSortType.WINRATE);
         break;
       case EnumSortType.GAMES:
-        setSortedBy(EnumSortType.GAMES);
         break;
       case EnumSortType.RANK:
-        setSortedBy(EnumSortType.RANK);
         break;
       default:
         break;
     }
-  };
+  }, []);
 
   // Отобразить больше игроков
   const showMore = () => {

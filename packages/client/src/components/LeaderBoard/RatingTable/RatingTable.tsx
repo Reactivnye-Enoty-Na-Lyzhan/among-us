@@ -1,12 +1,13 @@
 import type { LeaderboardDataType } from '@/utils/leaderboardData';
 import PlayerCard from '../PlayerCard/PlayerCard';
 import './RatingTable.css';
+import { FC, memo } from 'react';
 
 type Props = {
   playersEntries: LeaderboardDataType[];
 };
 
-export function RatingTable({ playersEntries }: Props) {
+const RatingTable: FC<Props> = ({ playersEntries }) => {
   // TODO
   const currentUser = 'loshadka';
 
@@ -25,4 +26,6 @@ export function RatingTable({ playersEntries }: Props) {
       ))}
     </ul>
   );
-}
+};
+
+export default memo(RatingTable);

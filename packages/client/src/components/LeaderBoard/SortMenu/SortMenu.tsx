@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
-import { SortMenuVariant } from './SortVariant/SortVariant';
+import { FC, memo, useCallback, useMemo, useState } from 'react';
+import SortMenuVariant from './SortVariant/SortVariant';
 import { SortFunction } from './types';
 import { EnumSortType } from '../enum-sort-types';
 import './SortMenu.css';
@@ -8,7 +8,7 @@ type Props = {
   handleSort: (sortType: EnumSortType) => void;
 };
 
-export function SortMenu({ handleSort }: Props) {
+const SortMenu: FC<Props> = ({ handleSort }: Props) => {
   const [menuState, setMenuState] = useState({
     isOpened: false,
     sortTypeSelected: EnumSortType.RANK,
@@ -64,4 +64,6 @@ export function SortMenu({ handleSort }: Props) {
       </ul>
     </div>
   );
-}
+};
+
+export default memo(SortMenu);
