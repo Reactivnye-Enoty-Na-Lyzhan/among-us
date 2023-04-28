@@ -5,7 +5,6 @@ import {
   SignInSuccessfulResponse,
   SignUpRequestDTO,
   SignUpSuccessfulResponse,
-  OAuthRequestData,
 } from './auth.types';
 import { API_BASE_URL } from '../../utils/constants';
 
@@ -42,21 +41,6 @@ export const authApi = createApi({
         invalidatesTags: ['User'],
       }),
     }),
-    signInWithYandex: build.mutation<SignInSuccessfulResponse, OAuthRequestData>({
-      query: ({ code, redirect_uri }) => ({
-        url: `${API_BASE_URL}oauth/yandex`,
-        method: 'POST',
-        credentials: 'include',
-        body: { code, redirect_uri },
-        responseHandler: response => {
-          const isJson = response.headers
-            .get('Content-Type')
-            ?.includes('application/json');
-          return isJson ? response.json() : response.text();
-        },
-        invalidatesTags: ['User'],
-      }),
-    }),
   }),
 });
 
@@ -65,5 +49,4 @@ export const {
   useLazyGetUserQuery,
   useSignUpUserMutation,
   useSignInUserMutation,
-  useSignInWithYandexMutation,
 } = authApi;
