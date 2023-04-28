@@ -1,0 +1,27 @@
+.oauth-button {
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  width: 100%;
+  color: var(--form-font-primary);
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity ease-in 0.1s;
+}
+
+.oauth-logo_space_right {
+  padding-right: 10px;
+}
+
+.oauth-button:hover {
+  opacity: 0.8;
+}
+
+.oauth-button:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}

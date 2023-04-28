@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
@@ -6,15 +6,15 @@ import Input from '../Form/Input/Input';
 import { useForm } from '../Form/hooks';
 import { validation } from '../../utils/validation';
 import Button from '../Form/Button/Button';
+import OAuthButton from '../Form/OAuthButton/OAuthButton';
 import { useValidation } from '../../hooks/useValidation';
 import { useSignIn } from './hooks/useSignIn';
 import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
-import { useSignInWithYandexMutation } from '../../store/auth/auth.slice';
+import { redirectToOAuthYandex, useLazyGetServiceIdQuery } from '../../store/auth/oauth.slice';
 import './LoginPage.css';
 
 const LoginPage: FC = () => {
-  const [ signInWithYandex ] = useSignInWithYandexMutation();
   const { requestStatus, statusMessageClass, signIn, sendSignInQueryStatus } =
     useSignIn();
 
@@ -29,7 +29,7 @@ const LoginPage: FC = () => {
     { field: 'login', validation: validation.login },
     { field: 'password', validation: validation.password },
   ]);
-
+  const [getServiceId] = useLazyGetServiceIdQuery();
   const navigate = useNavigate();
 
   async function handleSubmit() {
@@ -43,21 +43,17 @@ const LoginPage: FC = () => {
     success && navigate('/game');
   }
 
-  const CLIENT_ID='3abae5eaea504f2c8c65eb8221895700';
-  const REDIRECT_URI='http://localhost:3000/signin';
+  const OAuthHandler = async () => {
+    try {
+      const { data } = await getServiceId();
 
-  const handleRedirectToOAuth = () => {
-    window.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
-    };
+      const serviceId = data?.service_id;
 
-  useEffect(() => {
-    const code = new URLSearchParams(globalThis.window?.location.search).get('code');
-    if (code) {
-      signInWithYandex({ code: code, redirect_uri: 'http://localhost:3000/signin'});
-    } else {
-      return console.log('Oops');
+      serviceId && redirectToOAuthYandex(serviceId);
+    } catch (error) {
+      return console.log(`Oops, ${error} `);
     }
-  }, []);
+  };
 
   return (
     <div className="login-page">
@@ -89,8 +85,9 @@ const LoginPage: FC = () => {
             label={'Пароль'}
             validation={validationData.password}
           />
-          <Button disabled={!isFormValid} text={'Отправить'} onClick={handleSubmit}/>
-          <Button onClick={handleRedirectToOAuth} text="Авторизоваться через Яндекс" disabled={false}/>
+          <Button disabled={!isFormValid} text={'Отправить'} />
+          <div className='login-page__text login-page__text_space_around'>&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014; или &#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</div>
+          <OAuthButton onClick={OAuthHandler} text="Войти с Яндекс ID" disabled={false}/>
 
         </Form>
         <div className="login-page__footer">
@@ -106,5 +103,5 @@ const LoginPage: FC = () => {
 
 export default hocAuth(LoginPage, {
   onUnauthenticatedRedirection: null,
-  // onAuthenticatedRedirection: '/game',
+  onAuthenticatedRedirection: '/game',
 });

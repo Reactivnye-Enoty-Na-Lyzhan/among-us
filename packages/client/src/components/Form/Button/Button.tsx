@@ -7,13 +7,12 @@ type Props = {
   onClick: () => void;
 };
 
-const Button: FC<Props> = ({ text, disabled, onClick }) => {
+const Button: FC<Props> = ({ text, disabled }) => {
   return (
     <button
       type="submit"
       className="form-button form__form-button"
-      disabled={disabled}
-      onClick={onClick}>
+      disabled={disabled}>
       {text}
     </button>
   );

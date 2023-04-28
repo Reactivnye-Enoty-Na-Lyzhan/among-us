@@ -35,7 +35,11 @@ export type APIErrorResponse = {
 };
 
 
-export type OAuthRequestData = {
+export type TOAuthData = {
   code: string;
   redirect_uri: string;
+};
+
+export type TServiceId = {
+  service_id: string;
 };
