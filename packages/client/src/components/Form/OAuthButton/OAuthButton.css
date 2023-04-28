@@ -1,13 +1,13 @@
 .oauth-button {
-  background-color: black;
+  background-color: var(--form-font-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   height: 42px;
   width: 100%;
-  color: var(--form-font-primary);
+  color: black;
   font-size: 12px;
-  border: none;
+  border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
   transition: opacity ease-in 0.1s;
