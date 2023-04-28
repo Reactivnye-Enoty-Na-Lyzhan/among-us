@@ -9,6 +9,7 @@ import { ssrProductionHandler } from './middlewares/ssrProductionHandler';
 import { createViteServer } from './utils/createViteServer';
 import { CLIENT_PACKAGE_PATH } from './utils/constants';
 import type { ViteDevServer } from 'vite';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 dotenv.config();
 
@@ -27,6 +28,17 @@ const createServer = async () => {
   }
 
   // Middlewares
+  app.use(
+    '/api/v2',
+    createProxyMiddleware({
+      changeOrigin: true,
+      cookieDomainRewrite: {
+        '*': '',
+      },
+      target: 'https://ya-praktikum.tech',
+    })
+  );
+
   app.use(cors());
 
   // Routes
