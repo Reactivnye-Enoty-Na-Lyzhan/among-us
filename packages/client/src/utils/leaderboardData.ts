@@ -1,4 +1,4 @@
-export type LeaderboardDataType = {
+export type PlayerRatingEntity = {
   avatar: string;
   nickname: string;
   games: number;

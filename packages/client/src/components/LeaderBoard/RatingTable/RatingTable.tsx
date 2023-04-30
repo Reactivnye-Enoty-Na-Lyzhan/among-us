@@ -1,27 +1,26 @@
-import type { LeaderboardDataType } from '@/utils/leaderboardData';
 import PlayerCard from '../PlayerCard/PlayerCard';
 import './RatingTable.css';
 import { FC, memo } from 'react';
+import { useGetRatingsQuery } from '@/store/api/leaderboard/leaderboard.slice';
+import { selectUserID } from '@/store/auth/selectors';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
-type Props = {
-  playersEntries: LeaderboardDataType[];
-};
+const RatingTable: FC = () => {
+  const getRatingsQuery = useGetRatingsQuery({ cursor: 0, limit: 10 });
+  const playersRatingEntries = getRatingsQuery.data ?? [];
 
-const RatingTable: FC<Props> = ({ playersEntries }) => {
-  // TODO
-  const currentUser = 'loshadka';
+  const currentUserID = useTypedSelector(selectUserID);
 
   return (
     <ul className="leaderboard__rating-table">
-      {playersEntries.map(player => (
+      {playersRatingEntries.map(ratingEntry => (
         <PlayerCard
-          key={player.nickname}
-          avatar={player.avatar}
-          nickname={player.nickname}
-          games={player.games}
-          wins={player.wins}
-          rank={player.rank}
-          owner={player.nickname === currentUser}
+          key={ratingEntry.userID}
+          nickname={`${ratingEntry.userID} v${ratingEntry.ratingID}`}
+          rank={ratingEntry.rank}
+          games={ratingEntry.games}
+          winrate={ratingEntry.winrate}
+          owner={ratingEntry.userID === currentUserID}
         />
       ))}
     </ul>

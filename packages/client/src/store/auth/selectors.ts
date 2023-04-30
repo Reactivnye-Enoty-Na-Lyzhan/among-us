@@ -1,0 +1,33 @@
+import { createSelector } from '@reduxjs/toolkit';
+import { authApi } from './auth.slice';
+import type { User } from './auth.types';
+import type {
+  NestedKeysArrayLikePaths,
+  NestedPropertyType,
+} from '@/utils/types/nested-property';
+import { getNestedPropertyByPath } from '@/utils/objects-handle/getNestedPropertyByPath';
+
+const getUserQuerySelector = authApi.endpoints.getUser.select();
+
+export function makeUserDataSelector<
+  ArrayLikePath extends NestedKeysArrayLikePaths<User>
+>(dataPath: ArrayLikePath) {
+  return createSelector(getUserQuerySelector, function (userQuery):
+    | NestedPropertyType<User, ArrayLikePath>
+    | undefined {
+    const { data } = userQuery;
+
+    if (!data) {
+      return data;
+    }
+
+    const dataByPath = getNestedPropertyByPath<User, ArrayLikePath>({
+      object: data,
+      pathArray: dataPath,
+    });
+
+    return dataByPath;
+  });
+}
+
+export const selectUserID = makeUserDataSelector<['id']>(['id']);

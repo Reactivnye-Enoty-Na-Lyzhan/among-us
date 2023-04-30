@@ -4,32 +4,13 @@
 }
 
 .leaderboard__sort-button {
-  cursor: pointer;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 133px;
-  height: 33px;
-  padding: 0;
-
-  background-color: var(--leaderboard-background-tertiary);
-  border: none;
-  border-radius: 5px;
-
-  transition: 0.4s;
-}
-
-.leaderboard__sort-button:hover {
-  opacity: 0.8;
 }
 
 .leaderboard__menu-title {
-  font-size: 12px;
-  font-weight: 500;
   line-height: 1.2;
-  color: var(--leaderboard-font-primary);
 }
 
 .leaderboard__menu-icon {

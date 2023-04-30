@@ -1,14 +1,16 @@
 import { FC, memo } from 'react';
-import { LeaderboardDataType } from '../../../utils/leaderboardData';
 import './PlayerCard.css';
+import type { RatingEntityMetrics } from '@/store/api/leaderboard/leaderboard.types';
+import { PLAYER_AVATAR_FALLBACK } from '@/images/leaderboard/player-avatar-fallback';
 
-type Props = LeaderboardDataType & {
+type Props = RatingEntityMetrics & {
+  nickname: string;
   owner: boolean;
 };
 
 // Компонент карточки пользователя в таблице рейтинга
 const PlayerCard: FC<Props> = props => {
-  const { avatar, nickname, games, wins, rank, owner } = props;
+  const { games, winrate, rank, owner, nickname } = props;
 
   return (
     <li
@@ -17,15 +19,15 @@ const PlayerCard: FC<Props> = props => {
       }`}>
       <div className="leaderboard__player-container">
         <img
-          src={avatar}
-          alt={`Аватар игрока ${nickname}.`}
+          src={PLAYER_AVATAR_FALLBACK}
+          alt={'Аватар игрока'}
           className="leaderboard__user-avatar"
         />
         <div className="leaderboard__player-info">
           <h2 className="leaderboard__nickname">{nickname}</h2>
           <p className="leaderboard__player-achievement">
             <span className="leaderboard__accent">Победы: </span>
-            {wins}%
+            {winrate}%
           </p>
           <p className="leaderboard__player-achievement">
             <span className="leaderboard__accent">Количество игр: </span>

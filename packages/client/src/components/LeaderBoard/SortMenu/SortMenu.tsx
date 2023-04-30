@@ -37,7 +37,7 @@ const SortMenu: FC<Props> = ({ handleSort }: Props) => {
   return (
     <div className="leaderboard__sort-menu">
       <button
-        className="leaderboard__sort-button"
+        className="leaderboard__sort-button leaderboard__functional-button"
         onClick={toggleIsOpenedState}>
         <span className="leaderboard__menu-title">Сортировать</span>
         <span

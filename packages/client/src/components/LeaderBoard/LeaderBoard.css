@@ -11,6 +11,33 @@
   background-color: var(--leaderboard-background-primary);
 }
 
+.leaderboard__functional-section {
+  display: flex;
+  column-gap: 50px;
+}
+
+.leaderboard__functional-button {
+  cursor: pointer;
+
+  width: 133px;
+  height: 33px;
+  padding: 0;
+
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--leaderboard-font-primary);
+
+  background-color: var(--leaderboard-background-tertiary);
+  border: none;
+  border-radius: 5px;
+
+  transition: 0.4s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
 .leaderboard__return-link {
   cursor: pointer;
 

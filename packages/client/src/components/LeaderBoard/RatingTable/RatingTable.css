@@ -11,10 +11,10 @@
   column-gap: 78px;
 
   width: 88.75vw;
-  max-width: 1136px;
-  max-height: 355px;
+  width: 1151px;
+  height: 355px;
   margin: 50px 0;
-  padding: 0 25px 0 0;
+  padding: 0 25px 0;
 
   list-style: none;
 }
