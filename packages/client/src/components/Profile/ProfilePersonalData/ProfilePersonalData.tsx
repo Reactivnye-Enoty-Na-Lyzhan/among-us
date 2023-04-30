@@ -5,7 +5,7 @@ import { useForm } from '../../Form/hooks';
 import { validation } from '../../../utils/validation';
 import Button from '../../Form/Button/Button';
 import { useValidation } from '../../../hooks/useValidation';
-import {useGetUserQuery } from '../../../store/auth/auth.slice';
+import { useGetUserQuery } from '../../../store/auth/auth.slice';
 import { useUpdateUserMutation } from '../../../store/profile/profile.slice';
 import { User } from '../../../store/profile/profile.types';
 import './ProfilePersonalData.css';
@@ -16,8 +16,8 @@ type Props = {
 
 const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
   choice;
-  const { values, handleInputChange, setValues } = useForm({});  
-  const [ updateUser ] = useUpdateUserMutation();
+  const { values, handleInputChange, setValues } = useForm({});
+  const [updateUser] = useUpdateUserMutation();
   const { data } = useGetUserQuery();
 
   useEffect(() => {
@@ -32,8 +32,7 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
       });
     }
   }, [data]);
-;
-  const handleFormSubmit = ( data: User ) => {
+  const handleFormSubmit = (data: User) => {
     console.log('это та самая дата', data);
     updateUser(data);
   };
@@ -129,7 +128,7 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
           validation={validationData.login}
         />
 
-        <Button text={'Изменить данные'} disabled={!isFormValid}/>
+        <Button text={'Изменить данные'} disabled={!isFormValid} />
       </Form>
     </div>
   );
