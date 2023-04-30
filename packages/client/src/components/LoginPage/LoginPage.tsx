@@ -46,9 +46,8 @@ const LoginPage: FC = () => {
   const OAuthHandler = async () => {
     try {
       const { data } = await getServiceId();
-
       const serviceId = data?.service_id;
-
+      console.log(1,serviceId );
       serviceId && redirectToOAuthYandex(serviceId);
     } catch (error) {
       return console.log(`Oops, ${error} `);
@@ -88,7 +87,6 @@ const LoginPage: FC = () => {
           <Button disabled={!isFormValid} text={'Отправить'} />
           <div className='login-page__text login-page__text_space_around'>&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014; или &#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</div>
           <OAuthButton onClick={OAuthHandler} text="Войти с Яндекс ID" disabled={false}/>
-
         </Form>
         <div className="login-page__footer">
           <span>Ещё не зарегистрированы?</span>

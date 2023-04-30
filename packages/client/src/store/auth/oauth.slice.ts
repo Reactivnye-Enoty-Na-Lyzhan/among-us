@@ -1,20 +1,19 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   TOAuthData,
-  TServiceId,
+  TServiceId
 } from './auth.types';
-import { API_BASE_URL, OAUTH_API_PATH } from '../../utils/constants';
+import { API_BASE_URL, OAUTH_API_PATH, } from '../../utils/constants';
+import { getRedirectUrl } from '../../utils/oauth/getRedirectUrl';
 
 const API_URL = `${API_BASE_URL}${OAUTH_API_PATH}`;
-
-export const REDIRECT_URL = new URL('http://localhost:3000/signin').toString();
 
 export const redirectToOAuthYandex = (serviceId: string) => {
   const url = new URL('https://oauth.yandex.ru/authorize');
   const params = new URLSearchParams({
     response_type: 'code',
     client_id: serviceId,
-    redirect_uri: REDIRECT_URL,
+    redirect_uri: getRedirectUrl(),
   });
 
   window.location.href = `${url}?${params}`;
@@ -32,7 +31,7 @@ export const oauthApi = createApi({
         url: `${API_URL}yandex/service-id`,
         method: 'GET',
         credentials: 'include',
-        params: { redirect_uri: REDIRECT_URL },
+        params: { redirect_uri: getRedirectUrl() },
       }),
     }),
     yandexOAuth: build.mutation<string, TOAuthData>({

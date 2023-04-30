@@ -33,6 +33,7 @@ export const authApi = createApi({
         method: 'POST',
         body: data,
         responseHandler: response => {
+          console.log('2', response );
           const isJson = response.headers
             .get('Content-Type')
             ?.includes('application/json');
