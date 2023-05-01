@@ -4,7 +4,7 @@ import hocAuth from '@/hoc/hocAuth';
 import RatingTable from './RatingTable/RatingTable';
 import SortMenu from './SortingMenu/SortingMenu';
 import './LeaderBoard.css';
-import AddCardForm from './PostCardForm/PostRatingForm';
+import AddCardForm from './PostRatingForm/PostRatingForm';
 
 const LeaderBoard: FC = () => {
   const [isAddFormActive, setIsAddFormActive] = useState<boolean>(false);

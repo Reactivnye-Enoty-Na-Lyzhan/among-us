@@ -1,7 +1,6 @@
 import { API_PATH, DEFAULT_RATING_FIELD, TEAM_NAME } from '../constants';
 import type { EnumRatingTypes } from '../enumerations';
 import type { PlayerRatingEntity } from '../leaderboard.types';
-import { createEntityAdapter } from '@reduxjs/toolkit';
 
 export type GetRatingsRequestArgs = {
   cursor: number;
@@ -10,10 +9,6 @@ export type GetRatingsRequestArgs = {
 };
 export type GetRatingsRequestDTO = Required<GetRatingsRequestArgs>;
 export type GetRatingsSuccessfulResponse = { data: PlayerRatingEntity }[];
-
-const leaderboardRatingsAdapter = createEntityAdapter<PlayerRatingEntity>({
-  selectId: ratingEntity => ratingEntity.userLogin,
-});
 
 export function getRatingsQuery({
   limit,

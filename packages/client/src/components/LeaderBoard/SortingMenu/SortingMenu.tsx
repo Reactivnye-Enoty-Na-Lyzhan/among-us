@@ -4,7 +4,7 @@ import type { OnSelectHandler } from './SortingVariant/types';
 import './SortingMenu.css';
 import { EnumRatingTypes } from '@/store/api/leaderboard/enumerations';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { useActions } from '@/hooks/useActions';
+import { leaderboardActionsDispatcher } from '@/store/leaderboard/leaderboard.dispatcher';
 
 const mapSortingTypeToDescription: Record<EnumRatingTypes, string> = {
   [EnumRatingTypes.WINRATE]: 'Высокий процент побед',
@@ -18,7 +18,6 @@ const SortMenu: FC = () => {
   const sortingTypeSelected = useTypedSelector(
     state => state.leaderboard.sortingType
   );
-  const dispatch = useActions();
 
   const toggleIsOpenedState = useCallback(() => {
     setIsOpened(isOpened => !isOpened);
@@ -30,7 +29,7 @@ const SortMenu: FC = () => {
     const onSelectHandlers = {} as Record<EnumRatingTypes, OnSelectHandler>;
     sortingTypes.forEach(sortingType => {
       const handler = () => {
-        dispatch.sortingTypeChanged({ sortingType });
+        leaderboardActionsDispatcher.setSortingType({ sortingType });
         setIsOpened(false);
       };
       onSelectHandlers[sortingType] = handler;

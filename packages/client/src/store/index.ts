@@ -16,6 +16,7 @@ export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(apiSliceBase.middleware, authApi.middleware),
 });
+export const { dispatch } = store;
 
 export type TypeRootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
