@@ -1,18 +1,18 @@
 import classNames from 'classnames';
-import { SortFunction } from '../types';
-import './SortVariant.css';
 import { FC, memo } from 'react';
+import type { OnSelectHandler } from './types';
+import './SortingVariant.css';
 
 type Props = {
-  isSelected: boolean;
   description: string;
-  sortFunction: SortFunction;
+  isSelected: boolean;
+  onSelectHandler: OnSelectHandler;
 };
 
 const SortMenuVariant: FC<Props> = ({
   isSelected,
   description,
-  sortFunction,
+  onSelectHandler,
 }) => {
   return (
     <li className="leaderboard__dropdown-item">
@@ -21,7 +21,7 @@ const SortMenuVariant: FC<Props> = ({
           'leaderboard__sort-variant_active': isSelected,
         })}
         type="button"
-        onClick={sortFunction}>
+        onClick={onSelectHandler}>
         {description}
       </button>
     </li>

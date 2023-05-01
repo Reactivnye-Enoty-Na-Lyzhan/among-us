@@ -1,30 +1,39 @@
 import PlayerCard from '../PlayerCard/PlayerCard';
-import './RatingTable.css';
 import { FC, memo } from 'react';
 import { useGetRatingsQuery } from '@/store/api/leaderboard/leaderboard.slice';
-import { selectUserID } from '@/store/auth/selectors';
+import { selectUserLogin } from '@/store/auth/selectors';
+import { PAGINATION_BATCH_SIZE } from './constants';
+import { useSelector } from 'react-redux';
+import './RatingTable.css';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 const RatingTable: FC = () => {
-  const getRatingsQuery = useGetRatingsQuery({ cursor: 0, limit: 10 });
-  const playersRatingEntries = getRatingsQuery.data ?? [];
+  const sortingType = useTypedSelector(state => state.leaderboard.sortingType);
+  const getRatingsQuery = useGetRatingsQuery({
+    cursor: 0,
+    limit: PAGINATION_BATCH_SIZE,
+    ratingFieldName: sortingType,
+  });
+  const currentUserLogin = useSelector(selectUserLogin);
 
-  const currentUserID = useTypedSelector(selectUserID);
+  const playersRatingsData = getRatingsQuery.data ?? [];
+  const RatingsList = playersRatingsData.map(ratingData => {
+    const ratingEntry = ratingData.data;
 
-  return (
-    <ul className="leaderboard__rating-table">
-      {playersRatingEntries.map(ratingEntry => (
-        <PlayerCard
-          key={ratingEntry.userID}
-          nickname={`${ratingEntry.userID} v${ratingEntry.ratingID}`}
-          rank={ratingEntry.rank}
-          games={ratingEntry.games}
-          winrate={ratingEntry.winrate}
-          owner={ratingEntry.userID === currentUserID}
-        />
-      ))}
-    </ul>
-  );
+    return (
+      <PlayerCard
+        key={ratingEntry.userLogin}
+        ratingVersion={ratingEntry.ratingID}
+        login={ratingEntry.userLogin}
+        maxScore={ratingEntry.maxScore}
+        games={ratingEntry.games}
+        winrate={ratingEntry.winrate}
+        owner={ratingEntry.userLogin === currentUserLogin}
+      />
+    );
+  });
+
+  return <ul className="leaderboard__rating-table">{RatingsList}</ul>;
 };
 
 export default memo(RatingTable);

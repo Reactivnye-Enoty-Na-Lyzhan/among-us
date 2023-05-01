@@ -3,9 +3,11 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store';
 import { gameActions } from '../store/game/game.slice';
 import { uiActions } from '@/store/ui/ui.slice';
+import { leaderboardActions } from '@/store/leaderboard/leaderboard.slice';
 
 const allActions = {
   ...gameActions,
+  ...leaderboardActions,
   ...uiActions,
 };
 

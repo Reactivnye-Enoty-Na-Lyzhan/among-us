@@ -1,25 +1,15 @@
-import { API_TEAM_NAME } from '@/utils/constants';
-import {
-  PlayerRatingEntity,
-  PostRatingRequestDTO,
-  PostRatingSuccessfulResponse,
-  PostRatingRequestArgs,
-  EnumRatingEntityIdentifiers,
-  GetRatingsRequestArgs,
-  DEFAULT_RATING_FIELD,
-} from './leaderboard.types';
-import { createEntityAdapter } from '@reduxjs/toolkit';
-import { jsonOtherwiseTextHandler } from '@/utils/api/response-handlers';
 import { apiSliceBase } from '../api.slice';
 
-const API_PATH = 'leaderboard';
-const TEAM_NAME = `${API_TEAM_NAME}Experimental `;
-
-const playersAdapter = createEntityAdapter<PlayerRatingEntity>({
-  sortComparer: (playerOne, playerTwo) => playerOne.rank - playerTwo.rank,
-});
-
-playersAdapter.getSelectors;
+import {
+  type PostRatingRequestArgs,
+  type PostRatingSuccessfulResponse,
+  postRatingQuery,
+} from './endpoints/post-rating';
+import {
+  type GetRatingsRequestArgs,
+  type GetRatingsSuccessfulResponse,
+  getRatingsQuery,
+} from './endpoints/get-ratings';
 
 export const leaderboardSlice = apiSliceBase.injectEndpoints({
   endpoints: build => ({
@@ -28,34 +18,14 @@ export const leaderboardSlice = apiSliceBase.injectEndpoints({
       PostRatingRequestArgs
     >({
       invalidatesTags: [{ type: 'Rating', id: 'list' }],
-      query: ratingData => {
-        const requestDTO: PostRatingRequestDTO = {
-          data: {
-            ...ratingData,
-          },
-          ratingFieldName: EnumRatingEntityIdentifiers.RATING_ID,
-          teamName: TEAM_NAME,
-        };
-
-        return {
-          url: API_PATH,
-          method: 'POST',
-          body: requestDTO,
-          responseHandler: jsonOtherwiseTextHandler,
-        };
-      },
+      query: postRatingQuery,
     }),
-    getRatings: build.query<PlayerRatingEntity[], GetRatingsRequestArgs>({
+    getRatings: build.query<
+      GetRatingsSuccessfulResponse,
+      GetRatingsRequestArgs
+    >({
       providesTags: [{ type: 'Rating', id: 'list' }],
-      query: ({ limit, cursor, ratingFieldName = DEFAULT_RATING_FIELD }) => ({
-        url: `${API_PATH}/${TEAM_NAME}`,
-        method: 'POST',
-        body: {
-          ratingFieldName,
-          cursor,
-          limit,
-        },
-      }),
+      query: getRatingsQuery,
     }),
   }),
 });

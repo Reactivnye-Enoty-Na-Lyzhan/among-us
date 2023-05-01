@@ -3,6 +3,7 @@ import { gameReducer } from './game/game.slice';
 import { authApi } from './auth/auth.slice';
 import { uiReducer } from './ui/ui.slice';
 import { apiSliceBase } from './api/api.slice';
+import { leaderboardReducer } from './leaderboard/leaderboard.slice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     game: gameReducer,
     ui: uiReducer,
+    leaderboard: leaderboardReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(apiSliceBase.middleware, authApi.middleware),

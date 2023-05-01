@@ -4,13 +4,16 @@ import type { RatingEntityMetrics } from '@/store/api/leaderboard/leaderboard.ty
 import { PLAYER_AVATAR_FALLBACK } from '@/images/leaderboard/player-avatar-fallback';
 
 type Props = RatingEntityMetrics & {
-  nickname: string;
+  ratingVersion: number;
+  login: string;
+  avatar?: string;
   owner: boolean;
 };
 
 // Компонент карточки пользователя в таблице рейтинга
 const PlayerCard: FC<Props> = props => {
-  const { games, winrate, rank, owner, nickname } = props;
+  const { games, winrate, maxScore, owner, login, ratingVersion, avatar } =
+    props;
 
   return (
     <li
@@ -19,23 +22,21 @@ const PlayerCard: FC<Props> = props => {
       }`}>
       <div className="leaderboard__player-container">
         <img
-          src={PLAYER_AVATAR_FALLBACK}
+          src={avatar ?? PLAYER_AVATAR_FALLBACK}
           alt={'Аватар игрока'}
           className="leaderboard__user-avatar"
         />
         <div className="leaderboard__player-info">
-          <h2 className="leaderboard__nickname">{nickname}</h2>
+          <h2 className="leaderboard__login">{`${login} (v${ratingVersion})`}</h2>
           <p className="leaderboard__player-achievement">
-            <span className="leaderboard__accent">Победы: </span>
-            {winrate}%
+            <span className="leaderboard__accent">Победы: {winrate}%</span>
           </p>
           <p className="leaderboard__player-achievement">
-            <span className="leaderboard__accent">Количество игр: </span>
-            {games}
+            <span className="leaderboard__accent">Количество игр: {games}</span>
           </p>
         </div>
       </div>
-      <span className="leaderboard__rank">{rank}</span>
+      <span className="leaderboard__rank">{maxScore}</span>
     </li>
   );
 };

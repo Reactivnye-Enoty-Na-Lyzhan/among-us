@@ -12,22 +12,26 @@ const getUserQuerySelector = authApi.endpoints.getUser.select();
 export function makeUserDataSelector<
   ArrayLikePath extends NestedKeysArrayLikePaths<User>
 >(dataPath: ArrayLikePath) {
-  return createSelector(getUserQuerySelector, function (userQuery):
-    | NestedPropertyType<User, ArrayLikePath>
-    | undefined {
-    const { data } = userQuery;
+  const userDataSelector = createSelector(
+    getUserQuerySelector,
+    function (userQuery): NestedPropertyType<User, ArrayLikePath> | undefined {
+      const { data } = userQuery;
 
-    if (!data) {
-      return data;
+      if (!data) {
+        return data;
+      }
+
+      const dataByPath = getNestedPropertyByPath<User, ArrayLikePath>({
+        object: data,
+        pathArray: dataPath,
+      });
+
+      return dataByPath;
     }
+  );
 
-    const dataByPath = getNestedPropertyByPath<User, ArrayLikePath>({
-      object: data,
-      pathArray: dataPath,
-    });
-
-    return dataByPath;
-  });
+  return userDataSelector;
 }
 
-export const selectUserID = makeUserDataSelector<['id']>(['id']);
+export const selectUserID = makeUserDataSelector(['id']);
+export const selectUserLogin = makeUserDataSelector(['login']);

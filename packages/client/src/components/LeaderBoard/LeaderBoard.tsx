@@ -2,10 +2,9 @@ import { FC, memo, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import hocAuth from '@/hoc/hocAuth';
 import RatingTable from './RatingTable/RatingTable';
-import { EnumSortType } from './enum-sort-types';
-import SortMenu from './SortMenu/SortMenu';
+import SortMenu from './SortingMenu/SortingMenu';
 import './LeaderBoard.css';
-import AddCardForm from './AddCardForm/AddCardForm';
+import AddCardForm from './PostCardForm/PostRatingForm';
 
 const LeaderBoard: FC = () => {
   const [isAddFormActive, setIsAddFormActive] = useState<boolean>(false);
@@ -14,21 +13,6 @@ const LeaderBoard: FC = () => {
 
   const toggleAddCardForm = useCallback(() => {
     setIsAddFormActive(isActive => !isActive);
-  }, []);
-
-  // Сортировка в зависимости от выбранного типа
-  const handleSort = useCallback((sortType: EnumSortType) => {
-    switch (sortType) {
-      // запрос отсортированного значения
-      case EnumSortType.WINRATE:
-        break;
-      case EnumSortType.GAMES:
-        break;
-      case EnumSortType.RANK:
-        break;
-      default:
-        break;
-    }
   }, []);
 
   // Отобразить больше игроков
@@ -44,11 +28,11 @@ const LeaderBoard: FC = () => {
       </div>
       <div className="leaderboard__container">
         <section className="leaderboard__functional-section">
-          <SortMenu handleSort={handleSort}></SortMenu>
+          <SortMenu></SortMenu>
           <button
-            className="leaderboard__add-card-button leaderboard__functional-button"
+            className="leaderboard__post-rating-button leaderboard__functional-button"
             onClick={toggleAddCardForm}>
-            Добавить карточку
+            Опубликовать рейтинг
           </button>
         </section>
         <section className="leaderboard__rating-section">

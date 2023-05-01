@@ -38,6 +38,10 @@
   }
 }
 
+.leaderboard__post-rating-button {
+  width: 180px;
+}
+
 .leaderboard__return-link {
   cursor: pointer;
 
