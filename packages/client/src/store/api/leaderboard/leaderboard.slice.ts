@@ -11,7 +11,7 @@ import {
   getRatingsQuery,
 } from './endpoints/get-ratings';
 
-export const leaderboardSlice = apiSliceBase.injectEndpoints({
+export const leaderboardAPISlice = apiSliceBase.injectEndpoints({
   endpoints: build => ({
     postRating: build.mutation<
       PostRatingSuccessfulResponse,
@@ -30,4 +30,8 @@ export const leaderboardSlice = apiSliceBase.injectEndpoints({
   }),
 });
 
-export const { usePostRatingMutation, useGetRatingsQuery } = leaderboardSlice;
+export const { usePostRatingMutation, useGetRatingsQuery } =
+  leaderboardAPISlice;
+
+export const { matchFulfilled: matchGetRatingsFulfilled } =
+  leaderboardAPISlice.endpoints.getRatings;

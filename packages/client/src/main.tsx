@@ -6,9 +6,9 @@ import App from './App';
 import { registerServiceWorker } from './service-worker/register';
 import './index.css';
 
-// window.addEventListener('load', () => {
-//   registerServiceWorker();
-// });
+window.addEventListener('load', () => {
+  registerServiceWorker();
+});
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
