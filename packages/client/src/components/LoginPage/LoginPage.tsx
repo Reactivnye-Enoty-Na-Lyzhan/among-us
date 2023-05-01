@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
@@ -11,7 +11,7 @@ import { useValidation } from '../../hooks/useValidation';
 import { useSignIn } from './hooks/useSignIn';
 import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
-import { useLazyGetServiceIdQuery } from '../../store/auth/oauth.slice';
+import { useLazyGetServiceIdQuery, useYandexOAuthMutation } from '../../store/auth/oauth.slice';
 import { redirectToOAuthYandex } from '../../utils/oauth/redirectToOAuthYandex';
 import './LoginPage.css';
 
@@ -31,7 +31,9 @@ const LoginPage: FC = () => {
     { field: 'password', validation: validation.password },
   ]);
   const [getServiceId] = useLazyGetServiceIdQuery();
+  const [yandexOAuth, { isSuccess }] = useYandexOAuthMutation();
   const navigate = useNavigate();
+
 
   async function handleSubmit() {
     if (!validateForm(values)) {
@@ -44,15 +46,21 @@ const LoginPage: FC = () => {
     success && navigate('/game');
   }
 
-  const OAuthHandler = async () => {
+  const handleOAuthSignIn = useCallback(async () => {
     try {
       const { data } = await getServiceId();
       const serviceId = data?.service_id;
       serviceId && redirectToOAuthYandex(serviceId);
     } catch (error) {
-      return console.log(`Oops, ${error} `);
+      console.log(`Oops, ${error} `);
     }
-  };
+  }, [getServiceId]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/game');
+    }
+  }, [signIn, navigate, isSuccess]);
 
   return (
     <div className="login-page">
@@ -86,7 +94,7 @@ const LoginPage: FC = () => {
           />
           <Button disabled={!isFormValid} text={'Отправить'} />
           <div className='login-page__text login-page__text_space_around'>или</div>
-          <OAuthButton onClick={OAuthHandler} text="Войти с Яндекс ID" disabled={false}/>
+          <OAuthButton onClick={handleOAuthSignIn} text="Войти с Яндекс ID" disabled={false}/>
         </Form>
         <div className="login-page__footer">
           <span>Ещё не зарегистрированы?</span>
@@ -103,3 +111,4 @@ export default hocAuth(LoginPage, {
   onUnauthenticatedRedirection: null,
   onAuthenticatedRedirection: '/game',
 });
+
