@@ -11,7 +11,8 @@ import { useValidation } from '../../hooks/useValidation';
 import { useSignIn } from './hooks/useSignIn';
 import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
-import { redirectToOAuthYandex, useLazyGetServiceIdQuery } from '../../store/auth/oauth.slice';
+import { useLazyGetServiceIdQuery } from '../../store/auth/oauth.slice';
+import { redirectToOAuthYandex } from '../../utils/oauth/redirectToOAuthYandex';
 import './LoginPage.css';
 
 const LoginPage: FC = () => {
@@ -47,7 +48,6 @@ const LoginPage: FC = () => {
     try {
       const { data } = await getServiceId();
       const serviceId = data?.service_id;
-      console.log(1,serviceId );
       serviceId && redirectToOAuthYandex(serviceId);
     } catch (error) {
       return console.log(`Oops, ${error} `);
@@ -85,7 +85,7 @@ const LoginPage: FC = () => {
             validation={validationData.password}
           />
           <Button disabled={!isFormValid} text={'Отправить'} />
-          <div className='login-page__text login-page__text_space_around'>&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014; или &#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</div>
+          <div className='login-page__text login-page__text_space_around'>или</div>
           <OAuthButton onClick={OAuthHandler} text="Войти с Яндекс ID" disabled={false}/>
         </Form>
         <div className="login-page__footer">

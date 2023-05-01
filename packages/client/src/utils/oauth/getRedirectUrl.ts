@@ -1,7 +1,7 @@
 import { RedirectUrls } from '../enums';
 
 export const getRedirectUrl = (): string => {
-  switch (window.location.href) {
+  switch (window.location.host) {
     case 'among-us-client.vercel.app':
       return RedirectUrls.VercelApp;
     case 'enoty.ya-praktikum.tech':

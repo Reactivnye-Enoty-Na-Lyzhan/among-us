@@ -4,7 +4,6 @@ import './Button.css';
 type Props = {
   text: string;
   disabled: boolean;
-  onClick: () => void;
 };
 
 const Button: FC<Props> = ({ text, disabled }) => {

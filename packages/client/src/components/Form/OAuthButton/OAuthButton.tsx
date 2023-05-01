@@ -10,7 +10,6 @@ type Props = {
 
 const OAuthButton: FC<Props> = ({ text, disabled, onClick }) => {
   return (
-    <>
     <button
       type="button"
       className="oauth-button form__oauth-button"
@@ -19,7 +18,6 @@ const OAuthButton: FC<Props> = ({ text, disabled, onClick }) => {
       <img className="oauth-logo oauth-logo_space_right" src={logo} alt='яндекс лого' />
       {text}
     </button>
-    </>
   );
 };
 

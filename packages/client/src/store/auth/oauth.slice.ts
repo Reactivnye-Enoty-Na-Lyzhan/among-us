@@ -8,17 +8,6 @@ import { getRedirectUrl } from '../../utils/oauth/getRedirectUrl';
 
 const API_URL = `${API_BASE_URL}${OAUTH_API_PATH}`;
 
-export const redirectToOAuthYandex = (serviceId: string) => {
-  const url = new URL('https://oauth.yandex.ru/authorize');
-  const params = new URLSearchParams({
-    response_type: 'code',
-    client_id: serviceId,
-    redirect_uri: getRedirectUrl(),
-  });
-
-  window.location.href = `${url}?${params}`;
-};
-
 export const oauthApi = createApi({
   reducerPath: 'oauth',
   baseQuery: fetchBaseQuery({

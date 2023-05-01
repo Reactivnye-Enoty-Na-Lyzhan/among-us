@@ -3,12 +3,12 @@ import './Button.css';
 
 type Props = {
   text: string;
-  handleOnClick: () => void;
+  disabled: boolean
 };
 
-const ForumButton: FC<Props> = ({ text, handleOnClick }) => {
+const ForumButton: FC<Props> = ({ text, disabled }) => {
   return (
-    <button type="button" onClick={handleOnClick} className="forum-button">
+    <button type="button" disabled={disabled} className="forum-button">
       {text}
     </button>
   );
