@@ -30,7 +30,7 @@ export const leaderboardAPISlice = apiSliceBase.injectEndpoints({
   }),
 });
 
-export const { usePostRatingMutation, useGetRatingsQuery } =
+export const { usePostRatingMutation, useLazyGetRatingsQuery, usePrefetch } =
   leaderboardAPISlice;
 
 export const { matchFulfilled: matchGetRatingsFulfilled } =

@@ -5,4 +5,7 @@ const ratingsSelectors = leaderboardRatingsAdapter.getSelectors(
   (state: TypeRootState) => state.leaderboard.ratingsList
 );
 
-export const { selectAll: selectAllRatings } = ratingsSelectors;
+export const {
+  selectAll: selectAllRatings,
+  selectTotal: selectRatingsListSize,
+} = ratingsSelectors;

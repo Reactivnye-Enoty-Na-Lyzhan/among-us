@@ -1,1 +1,0 @@
-export const PAGINATION_BATCH_SIZE = 12;

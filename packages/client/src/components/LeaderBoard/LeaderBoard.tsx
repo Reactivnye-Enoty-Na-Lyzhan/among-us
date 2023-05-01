@@ -5,6 +5,7 @@ import RatingTable from './RatingTable/RatingTable';
 import SortMenu from './SortingMenu/SortingMenu';
 import './LeaderBoard.css';
 import AddCardForm from './PostRatingForm/PostRatingForm';
+import ShowMoreRatingsButton from './ShowMoreRatingsButton/ShowMoreRatingsButton';
 
 const LeaderBoard: FC = () => {
   const [isAddFormActive, setIsAddFormActive] = useState<boolean>(false);
@@ -14,11 +15,6 @@ const LeaderBoard: FC = () => {
   const toggleAddCardForm = useCallback(() => {
     setIsAddFormActive(isActive => !isActive);
   }, []);
-
-  // Отобразить больше игроков
-  const showMore = () => {
-    //
-  };
 
   return (
     <main className="leaderboard">
@@ -40,9 +36,7 @@ const LeaderBoard: FC = () => {
           <RatingTable></RatingTable>
         </section>
 
-        <button className="leaderboard__show-more" onClick={showMore}>
-          Показать еще
-        </button>
+        <ShowMoreRatingsButton></ShowMoreRatingsButton>
       </div>
     </main>
   );
