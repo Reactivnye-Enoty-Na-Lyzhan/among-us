@@ -1,9 +1,8 @@
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import App from './App';
-import { store } from './store/';
 import { StaticRouter } from 'react-router-dom/server';
-import type { TypeRootState } from './store/';
+import { TypeRootState, createStore } from './store/';
 
 interface IRenderReturn {
   renderedHtml: string;
@@ -15,6 +14,7 @@ interface IRender {
 }
 
 export const render: IRender = (url = '') => {
+  const store = createStore();
   const initialState = store.getState();
   const renderedHtml = renderToString(
     <Provider store={store}>
@@ -25,7 +25,7 @@ export const render: IRender = (url = '') => {
   );
 
   return {
-    renderedHtml, 
-    initialState
+    renderedHtml,
+    initialState,
   };
 };

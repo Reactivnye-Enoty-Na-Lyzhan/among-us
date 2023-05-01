@@ -19,9 +19,12 @@ export const ssrProductionHandler = async (
     const { render } = await import(
       path.join(CLIENT_PACKAGE_PATH, './dist-ssr/ssr-entry.cjs')
     );
-    const { renderedHtml } = await render(url);
+    const { renderedHtml, initialState } = await render(url);
+    const initStateSerialized = JSON.stringify(initialState);
 
-    const html = template.replace(`<!--ssr-outlet-->`, renderedHtml);
+    const html = template
+      .replace(`<!--ssr-outlet-->`, renderedHtml)
+      .replace('<!--store-data-->', initStateSerialized);
     res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
   } catch (e) {
     next(e);
