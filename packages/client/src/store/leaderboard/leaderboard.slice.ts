@@ -24,11 +24,15 @@ const leaderboardSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addMatcher(matchGetRatingsFulfilled, (state, { payload, meta }) => {
-      const ratingsData = payload.map(ratingData => ratingData.data);
+      const fetchedRatings = payload.map(ratingData => ratingData.data);
 
-      const { isPrefetch } = meta.arg.originalArgs;
-      if (!isPrefetch) {
-        leaderboardRatingsAdapter.upsertMany(state.ratingsList, ratingsData);
+      const { isPrefetch, needListRecreation } = meta.arg.originalArgs;
+      const { ratingsList } = state;
+
+      if (needListRecreation) {
+        leaderboardRatingsAdapter.setAll(ratingsList, fetchedRatings);
+      } else if (!isPrefetch) {
+        leaderboardRatingsAdapter.upsertMany(ratingsList, fetchedRatings);
       }
     });
   },

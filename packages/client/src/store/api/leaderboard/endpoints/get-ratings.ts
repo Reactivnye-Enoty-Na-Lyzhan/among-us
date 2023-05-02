@@ -2,26 +2,30 @@ import { API_PATH, DEFAULT_RATING_FIELD, TEAM_NAME } from '../constants';
 import type { EnumRatingTypes } from '../enumerations';
 import type { PlayerRatingEntity } from '../leaderboard.api-types';
 
-export type GetRatingsRequestArgs = {
+type RequestArgs = {
   cursor: number;
   limit: number;
   ratingFieldName?: EnumRatingTypes;
+};
+
+type EntityAdapterArgs = {
+  needListRecreation?: boolean;
   isPrefetch?: boolean;
 };
-export type GetRatingsRequestDTO = Required<GetRatingsRequestArgs>;
+
+export type GetRatingsRequestArgs = RequestArgs & EntityAdapterArgs;
+export type GetRatingsRequestDTO = Required<RequestArgs>;
 export type GetRatingsSuccessfulResponse = { data: PlayerRatingEntity }[];
 
 export function getRatingsQuery({
   limit,
   cursor,
   ratingFieldName = DEFAULT_RATING_FIELD,
-  isPrefetch = false,
 }: GetRatingsRequestArgs) {
   const requestDTO: GetRatingsRequestDTO = {
     ratingFieldName,
     cursor,
     limit,
-    isPrefetch,
   };
 
   return {

@@ -5,6 +5,7 @@ import './SortingMenu.css';
 import { EnumRatingTypes } from '@/store/api/leaderboard/enumerations';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { leaderboardActionsDispatcher } from '@/store/leaderboard/leaderboard.dispatcher';
+import { selectSortingType } from '@/store/leaderboard/selectors';
 
 const mapSortingTypeToDescription: Record<EnumRatingTypes, string> = {
   [EnumRatingTypes.WINRATE]: 'Высокий процент побед',
@@ -15,9 +16,7 @@ const mapSortingTypeToDescription: Record<EnumRatingTypes, string> = {
 const SortMenu: FC = () => {
   const [isOpened, setIsOpened] = useState(false);
 
-  const sortingTypeSelected = useTypedSelector(
-    state => state.leaderboard.sortingType
-  );
+  const sortingTypeSelected = useTypedSelector(selectSortingType);
 
   const toggleIsOpenedState = useCallback(() => {
     setIsOpened(isOpened => !isOpened);

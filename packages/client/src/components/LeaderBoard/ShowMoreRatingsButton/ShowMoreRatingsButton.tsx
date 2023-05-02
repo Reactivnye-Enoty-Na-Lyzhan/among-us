@@ -1,27 +1,27 @@
+import { useLazyGetRatingsQuery } from '@/store/api/leaderboard/leaderboard.api-slice';
+import { type FC, memo, useCallback, useRef, useEffect } from 'react';
 import {
-  useLazyGetRatingsQuery,
-  usePrefetch,
-} from '@/store/api/leaderboard/leaderboard.api-slice';
-import { type FC, memo, useCallback, useRef } from 'react';
-import { RATINGS_FETCH_BATCH_SIZE } from './constants';
+  RATINGS_FETCH_BATCH_SIZE,
+  RATINGS_ON_MOUNT_MAX_COUNT,
+} from './constants';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useOnMountRatingsFetching } from './hooks/useOnMountRatingsFetching';
 import { useFetchedRatingCount } from './hooks/useFetchedRatingsCount';
 import { useUpdateFetchedRatingCount } from './hooks/useUpdateFetchedRatingCount';
+import { selectSortingType } from '@/store/leaderboard/selectors';
+import { leaderboardActionsDispatcher } from '@/store/leaderboard/leaderboard.dispatcher';
 
 const ShowMoreRatingsButton: FC = () => {
-  const sortingType = useTypedSelector(state => state.leaderboard.sortingType);
+  const sortingType = useTypedSelector(selectSortingType);
   const sortingTypeRef = useRef(sortingType);
   sortingTypeRef.current = sortingType;
 
   const { currentFetchedRatingsCount, fetchedRatingsCountRef } =
     useFetchedRatingCount();
 
-  const prefetchRatings = usePrefetch('getRatings');
   useOnMountRatingsFetching({
     currentFetchedRatingsCount: currentFetchedRatingsCount,
     sortingType,
-    prefetchFunction: prefetchRatings,
   });
 
   const [sendGetRatingsQuery, getRatingsQueryStatus] = useLazyGetRatingsQuery();
@@ -29,11 +29,24 @@ const ShowMoreRatingsButton: FC = () => {
   const downloadRatingsNextBatch = useCallback(() => {
     sendGetRatingsQuery({
       ratingFieldName: sortingTypeRef.current,
-      cursor: fetchedRatingsCountRef.current,
+      cursor: 1 + fetchedRatingsCountRef.current,
       limit: RATINGS_FETCH_BATCH_SIZE,
     });
   }, []);
 
+  // useEffect(() => {
+  //   leaderboardActionsDispatcher.setFetchedRatingsCount(
+  //     currentFetchedRatingsCount
+  //   );
+
+  //   return () => {
+  //     if (currentFetchedRatingsCount > RATINGS_ON_MOUNT_MAX_COUNT) {
+  //       leaderboardActionsDispatcher.setFetchedRatingsCount(
+  //         RATINGS_ON_MOUNT_MAX_COUNT
+  //       );
+  //     }
+  //   };
+  // }, [currentFetchedRatingsCount]);
   useUpdateFetchedRatingCount(currentFetchedRatingsCount);
 
   const { isLoading } = getRatingsQueryStatus;
