@@ -23,9 +23,12 @@ export const ssrDevHandler = async (
     const { render } = await vite.ssrLoadModule(
       path.resolve(CLIENT_PACKAGE_PATH, './src/ssr-entry.tsx')
     );
-    const { renderedHtml } = await render(url);
+    const { renderedHtml, initialState } = await render(url);
+    const initStateSerialized = JSON.stringify(initialState);
 
-    const html = template.replace(`<!--ssr-outlet-->`, renderedHtml);
+    const html = template
+      .replace(`<!--ssr-outlet-->`, renderedHtml)
+      .replace('<!--store-data-->', initStateSerialized);
     res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
   } catch (e) {
     vite.ssrFixStacktrace(e as Error);
