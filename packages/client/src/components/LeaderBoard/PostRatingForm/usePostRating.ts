@@ -1,9 +1,8 @@
-import type { PostRatingRequestArgs } from '@/store/api/leaderboard/endpoints/postRating';
 import { EnumRatingEntityIdentifiers } from '@/store/api/leaderboard/constants';
 import { usePostRatingMutation } from '@/store/api/leaderboard/leaderboard.api.slice';
-
+import type { PostRatingRequestArgs } from '@/store/api/leaderboard/leaderboard.api.types';
 import { selectUserLogin } from '@/store/auth/selectors';
-import { type FormEventHandler, useCallback } from 'react';
+import { useCallback, type FormEventHandler } from 'react';
 import { useSelector } from 'react-redux';
 
 export function useUpdateRating() {

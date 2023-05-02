@@ -1,15 +1,12 @@
 import { apiSliceBase } from '../api.slice';
-
-import {
-  type PostRatingRequestArgs,
-  type PostRatingSuccessfulResponse,
-  postRatingQuery,
-} from './endpoints/postRating';
-import {
-  type GetRatingsRequestArgs,
-  type GetRatingsSuccessfulResponse,
-  getRatingsQuery,
-} from './endpoints/getRatings';
+import { getRatingsQuery } from './endpoints/getRatings';
+import { postRatingQuery } from './endpoints/postRating';
+import type {
+  GetRatingsRequestArgs,
+  GetRatingsSuccessfulResponse,
+  PostRatingRequestArgs,
+  PostRatingSuccessfulResponse,
+} from './leaderboard.api.types';
 
 export const leaderboardAPISlice = apiSliceBase.injectEndpoints({
   endpoints: build => ({

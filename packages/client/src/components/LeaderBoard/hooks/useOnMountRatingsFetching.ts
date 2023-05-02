@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { RATINGS_FETCH_BATCH_SIZE } from '../constants';
+import { RATINGS_FETCH_BATCH_SIZE } from '../ShowMoreRatingsButton/constants';
 import { EnumRatingTypes } from '@/store/api/leaderboard/constants';
 import { usePrefetch } from '@/store/api/leaderboard/leaderboard.api.slice';
 

@@ -4,6 +4,7 @@ import { authApi } from './auth/auth.slice';
 import { uiReducer } from './ui/ui.slice';
 import { apiSliceBase } from './api/api.slice';
 import { leaderboardReducer } from './leaderboard/leaderboard.slice';
+import { leaderboardListenerMiddleware } from './leaderboard/listenerMiddleware';
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,11 @@ export const store = configureStore({
     leaderboard: leaderboardReducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(apiSliceBase.middleware, authApi.middleware),
+    getDefaultMiddleware().concat(
+      apiSliceBase.middleware,
+      authApi.middleware,
+      leaderboardListenerMiddleware.middleware
+    ),
 });
 export const { dispatch } = store;
 

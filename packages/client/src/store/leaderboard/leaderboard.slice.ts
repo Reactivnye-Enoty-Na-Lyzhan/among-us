@@ -6,6 +6,7 @@ import {
   leaderboardRatingsAdapter,
   ratingsAdapterInitialState,
 } from './ratingEntityAdapter';
+import type { PlayerRatingEntity } from '../api/leaderboard/leaderboard.api.types';
 
 const leaderboardSlice = createSlice({
   name: 'leaderboard',
@@ -21,21 +22,24 @@ const leaderboardSlice = createSlice({
     setFetchedRatingsCount: (state, action: PayloadAction<number>) => {
       state.fetchedRatingsCount = action.payload;
     },
+    ratingsListSetAll: (state, action: PayloadAction<PlayerRatingEntity[]>) => {
+      leaderboardRatingsAdapter.setAll(state.ratingsList, action.payload);
+    },
   },
-  extraReducers: builder => {
-    builder.addMatcher(matchGetRatingsFulfilled, (state, { payload, meta }) => {
-      const fetchedRatings = payload.map(ratingData => ratingData.data);
+  // extraReducers: builder => {
+  //   builder.addMatcher(matchGetRatingsFulfilled, (state, { payload, meta }) => {
+  //     const fetchedRatings = payload.map(ratingData => ratingData.data);
 
-      const { isPrefetch, needListRecreation } = meta.arg.originalArgs;
-      const { ratingsList } = state;
+  //     const { isPrefetch, needListRecreation } = meta.arg.originalArgs;
+  //     const { ratingsList } = state;
 
-      if (needListRecreation) {
-        leaderboardRatingsAdapter.setAll(ratingsList, fetchedRatings);
-      } else if (!isPrefetch) {
-        leaderboardRatingsAdapter.upsertMany(ratingsList, fetchedRatings);
-      }
-    });
-  },
+  //     if (needListRecreation) {
+  //       leaderboardRatingsAdapter.setAll(ratingsList, fetchedRatings);
+  //     } else if (!isPrefetch) {
+  //       leaderboardRatingsAdapter.upsertMany(ratingsList, fetchedRatings);
+  //     }
+  //   });
+  // },
 });
 
 export const leaderboardReducer = leaderboardSlice.reducer;

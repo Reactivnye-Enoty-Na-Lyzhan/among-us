@@ -1,15 +1,10 @@
 import { jsonOtherwiseTextHandler } from '@/utils/api/response-handlers';
 import { API_PATH, TEAM_NAME } from '../constants';
-import type { PlayerRatingEntity } from '../leaderboard.api.types';
+import type {
+  PostRatingRequestArgs,
+  PostRatingRequestDTO,
+} from '../leaderboard.api.types';
 import { EnumRatingEntityIdentifiers } from '../constants';
-
-export type PostRatingRequestArgs = PlayerRatingEntity;
-export type PostRatingRequestDTO = {
-  data: PlayerRatingEntity;
-  ratingFieldName: EnumRatingEntityIdentifiers.RATING_ID;
-  teamName: string;
-};
-export type PostRatingSuccessfulResponse = 'OK';
 
 export function postRatingQuery(ratingData: PostRatingRequestArgs) {
   const requestDTO: PostRatingRequestDTO = {

@@ -2,9 +2,9 @@ import { useLazyGetRatingsQuery } from '@/store/api/leaderboard/leaderboard.api.
 import { type FC, memo, useCallback, useRef } from 'react';
 import { RATINGS_FETCH_BATCH_SIZE } from './constants';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { useOnMountRatingsFetching } from './hooks/useOnMountRatingsFetching';
-import { useFetchedRatingCount } from './hooks/useFetchedRatingsCount';
-import { useUpdateFetchedRatingsCount } from './hooks/useUpdateFetchedRatingsCount';
+import { useOnMountRatingsFetching } from '../hooks/useOnMountRatingsFetching';
+import { useFetchedRatingCount } from '../hooks/useFetchedRatingsCount';
+import { useUpdateFetchedRatingsCount } from '../hooks/useUpdateFetchedRatingsCount';
 import { selectSortingType } from '@/store/leaderboard/selectors';
 
 const ShowMoreRatingsButton: FC = () => {
