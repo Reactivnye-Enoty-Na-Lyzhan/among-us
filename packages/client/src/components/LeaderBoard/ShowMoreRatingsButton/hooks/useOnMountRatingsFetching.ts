@@ -32,14 +32,5 @@ export function useOnMountRatingsFetching({
       },
       { force: true }
     );
-
-    prefetchFunction(
-      {
-        cursor: ratingsToFetchCount,
-        limit: ratingsToFetchCount + RATINGS_FETCH_BATCH_SIZE,
-        ratingFieldName: sortingType,
-      },
-      { force: true }
-    );
   }, []);
 }

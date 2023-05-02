@@ -4,46 +4,32 @@ import type { EnumRatingTypes } from '../api/leaderboard/enumerations';
 import { matchGetRatingsFulfilled } from '../api/leaderboard/leaderboard.api-slice';
 import {
   leaderboardRatingsAdapter,
-  ratingsAdapterState,
+  ratingsAdapterInitialState,
 } from './rating-entity-adapter';
-
-type SortingTypePayload = {
-  sortingType: EnumRatingTypes;
-};
-
-type fetchedRatingsCountPayload = {
-  fetchedRatingsCount: number;
-};
 
 const leaderboardSlice = createSlice({
   name: 'leaderboard',
   initialState: {
     sortingType: DEFAULT_RATING_FIELD,
     fetchedRatingsCount: 0,
-    ratingsList: ratingsAdapterState,
+    ratingsList: ratingsAdapterInitialState,
   },
   reducers: {
-    setSortingType: (state, action: PayloadAction<SortingTypePayload>) => {
-      state.sortingType = action.payload.sortingType;
+    setSortingType: (state, action: PayloadAction<EnumRatingTypes>) => {
+      state.sortingType = action.payload;
     },
-    setFetchedRatingsCount: (
-      state,
-      action: PayloadAction<fetchedRatingsCountPayload>
-    ) => {
-      state.fetchedRatingsCount = action.payload.fetchedRatingsCount;
+    setFetchedRatingsCount: (state, action: PayloadAction<number>) => {
+      state.fetchedRatingsCount = action.payload;
     },
   },
   extraReducers: builder => {
     builder.addMatcher(matchGetRatingsFulfilled, (state, { payload, meta }) => {
-      console.log(`MATCHER ARGS: ${JSON.stringify(meta.arg)}`);
       const ratingsData = payload.map(ratingData => ratingData.data);
-      console.log(`RATINGS UPSERT: ${JSON.stringify(ratingsData)}`);
-      const ratingsList = leaderboardRatingsAdapter.upsertMany(
-        ratingsAdapterState,
-        ratingsData
-      );
-      console.log(`RATINGS LIST ${JSON.stringify(ratingsList)}`);
-      state.ratingsList = ratingsList;
+
+      const { isPrefetch } = meta.arg.originalArgs;
+      if (!isPrefetch) {
+        leaderboardRatingsAdapter.upsertMany(state.ratingsList, ratingsData);
+      }
     });
   },
 });

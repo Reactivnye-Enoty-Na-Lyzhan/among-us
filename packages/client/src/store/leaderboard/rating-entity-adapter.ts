@@ -5,6 +5,6 @@ const leaderboardRatingsAdapter = createEntityAdapter<PlayerRatingEntity>({
   selectId: ratingEntity => ratingEntity.userLogin,
 });
 
-const ratingsAdapterState = leaderboardRatingsAdapter.getInitialState();
+const ratingsAdapterInitialState = leaderboardRatingsAdapter.getInitialState();
 
-export { leaderboardRatingsAdapter, ratingsAdapterState };
+export { leaderboardRatingsAdapter, ratingsAdapterInitialState };

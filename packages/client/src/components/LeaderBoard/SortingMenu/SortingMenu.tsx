@@ -29,7 +29,7 @@ const SortMenu: FC = () => {
     const onSelectHandlers = {} as Record<EnumRatingTypes, OnSelectHandler>;
     sortingTypes.forEach(sortingType => {
       const handler = () => {
-        leaderboardActionsDispatcher.setSortingType({ sortingType });
+        leaderboardActionsDispatcher.setSortingType(sortingType);
         setIsOpened(false);
       };
       onSelectHandlers[sortingType] = handler;

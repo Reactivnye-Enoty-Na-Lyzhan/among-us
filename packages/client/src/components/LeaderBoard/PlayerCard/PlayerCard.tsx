@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import './PlayerCard.css';
-import type { RatingEntityMetrics } from '@/store/api/leaderboard/leaderboard.types';
+import type { RatingEntityMetrics } from '@/store/api/leaderboard/leaderboard.api-types';
 import { PLAYER_AVATAR_FALLBACK } from '@/images/leaderboard/player-avatar-fallback';
 
 type Props = RatingEntityMetrics & {
