@@ -1,44 +1,38 @@
-import { useLazyGetRatingsQuery } from '@/store/api/leaderboard/leaderboard.api.slice';
-import { type FC, memo, useCallback, useRef } from 'react';
+import { type FC, memo, useEffect } from 'react';
+import { useUpdateFetchedRatingsCount } from './hooks/useUpdateFetchedRatingsCount';
+import { selectRatingsListSize } from '@/store/leaderboard/selectors';
+import { useFetchRatingsNextBatch } from './hooks/useFetchRatingsNextBatch';
+import { useSelector } from 'react-redux';
 import { RATINGS_FETCH_BATCH_SIZE } from './constants';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { useOnMountRatingsFetching } from '../hooks/useOnMountRatingsFetching';
-import { useFetchedRatingCount } from '../hooks/useFetchedRatingsCount';
-import { useUpdateFetchedRatingsCount } from '../hooks/useUpdateFetchedRatingsCount';
-import { selectSortingType } from '@/store/leaderboard/selectors';
+import { EnumRatingSListUpdateMethod } from '@/store/api/leaderboard/constants';
 
 const ShowMoreRatingsButton: FC = () => {
-  const sortingType = useTypedSelector(selectSortingType);
-  const sortingTypeRef = useRef(sortingType);
-  sortingTypeRef.current = sortingType;
+  const currentFetchedRatingsCount = useSelector(selectRatingsListSize);
+  const { fetchRatingsNextBatch, fetchRatingsBatchQueryState } =
+    useFetchRatingsNextBatch(currentFetchedRatingsCount);
 
-  const { currentFetchedRatingsCount, fetchedRatingsCountRef } =
-    useFetchedRatingCount();
+  useEffect(() => {
+    const firstFetchBatchSize = Math.max(
+      currentFetchedRatingsCount,
+      RATINGS_FETCH_BATCH_SIZE
+    );
 
-  useOnMountRatingsFetching({
-    currentFetchedRatingsCount: currentFetchedRatingsCount,
-    sortingType,
-  });
-
-  const [sendGetRatingsQuery, getRatingsQueryStatus] = useLazyGetRatingsQuery();
-
-  const downloadRatingsNextBatch = useCallback(() => {
-    sendGetRatingsQuery({
-      ratingFieldName: sortingTypeRef.current,
-      cursor: fetchedRatingsCountRef.current,
-      limit: RATINGS_FETCH_BATCH_SIZE,
+    fetchRatingsNextBatch({
+      cursor: 0,
+      limit: firstFetchBatchSize,
+      ratingsListUpdateMethod: EnumRatingSListUpdateMethod.REPLACE,
     });
   }, []);
 
   useUpdateFetchedRatingsCount(currentFetchedRatingsCount);
 
-  const { isLoading } = getRatingsQueryStatus;
+  const { isLoading } = fetchRatingsBatchQueryState;
   const buttonLabel = isLoading ? 'Загружаем...' : 'Показать еще';
   return (
     <button
       className="leaderboard__show-more"
       disabled={isLoading}
-      onClick={downloadRatingsNextBatch}>
+      onClick={() => fetchRatingsNextBatch()}>
       {buttonLabel}
     </button>
   );

@@ -1,4 +1,8 @@
-import type { EnumRatingEntityIdentifiers, EnumRatingTypes } from './constants';
+import type {
+  EnumRatingEntityIdentifiers,
+  EnumRatingTypes,
+  EnumRatingSListUpdateMethod,
+} from './constants';
 
 export type RatingEntityMetrics = {
   [EnumRatingTypes.GAMES]: number;
@@ -11,14 +15,13 @@ export type RatingEntityIdentifiers = {
 };
 export type PlayerRatingEntity = RatingEntityIdentifiers & RatingEntityMetrics;
 
-type GetRatingsRequestSpecificArgs = {
+export type GetRatingsRequestSpecificArgs = {
   cursor: number;
   limit: number;
   ratingFieldName?: EnumRatingTypes;
 };
-type GetRatingsRequestEntityAdapterSpecificArgs = {
-  needListRecreation?: boolean;
-  isPrefetch?: boolean;
+export type GetRatingsRequestEntityAdapterSpecificArgs = {
+  ratingsListUpdateMethod?: EnumRatingSListUpdateMethod;
 };
 export type GetRatingsRequestArgs = GetRatingsRequestSpecificArgs &
   GetRatingsRequestEntityAdapterSpecificArgs;

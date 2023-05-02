@@ -1,12 +1,15 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { DEFAULT_RATING_FIELD } from '../api/leaderboard/constants';
+import {
+  DEFAULT_RATING_FIELD,
+  EnumRatingSListUpdateMethod,
+} from '../api/leaderboard/constants';
 import type { EnumRatingTypes } from '../api/leaderboard/constants';
-import { matchGetRatingsFulfilled } from '../api/leaderboard/leaderboard.api.slice';
 import {
   leaderboardRatingsAdapter,
   ratingsAdapterInitialState,
 } from './ratingEntityAdapter';
 import type { PlayerRatingEntity } from '../api/leaderboard/leaderboard.api.types';
+import { matchGetRatingsFulfilled } from '../api/leaderboard/leaderboard.api.slice';
 
 const leaderboardSlice = createSlice({
   name: 'leaderboard',
@@ -26,20 +29,25 @@ const leaderboardSlice = createSlice({
       leaderboardRatingsAdapter.setAll(state.ratingsList, action.payload);
     },
   },
-  // extraReducers: builder => {
-  //   builder.addMatcher(matchGetRatingsFulfilled, (state, { payload, meta }) => {
-  //     const fetchedRatings = payload.map(ratingData => ratingData.data);
+  extraReducers: builder => {
+    builder.addMatcher(matchGetRatingsFulfilled, (state, { payload, meta }) => {
+      const { ratingsListUpdateMethod } = meta.arg.originalArgs;
+      if (ratingsListUpdateMethod === undefined) {
+        return;
+      }
 
-  //     const { isPrefetch, needListRecreation } = meta.arg.originalArgs;
-  //     const { ratingsList } = state;
+      const fetchedRatings = payload.map(ratingData => ratingData.data);
+      const { ratingsList } = state;
 
-  //     if (needListRecreation) {
-  //       leaderboardRatingsAdapter.setAll(ratingsList, fetchedRatings);
-  //     } else if (!isPrefetch) {
-  //       leaderboardRatingsAdapter.upsertMany(ratingsList, fetchedRatings);
-  //     }
-  //   });
-  // },
+      if (ratingsListUpdateMethod === EnumRatingSListUpdateMethod.REPLACE) {
+        leaderboardRatingsAdapter.setAll(ratingsList, fetchedRatings);
+      } else if (
+        ratingsListUpdateMethod === EnumRatingSListUpdateMethod.UPSERT
+      ) {
+        leaderboardRatingsAdapter.upsertMany(ratingsList, fetchedRatings);
+      }
+    });
+  },
 });
 
 export const leaderboardReducer = leaderboardSlice.reducer;

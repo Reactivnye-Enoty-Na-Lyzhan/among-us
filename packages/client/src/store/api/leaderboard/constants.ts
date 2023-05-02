@@ -16,3 +16,8 @@ export const API_PATH = 'leaderboard';
 export const TEAM_NAME = `${API_TEAM_NAME}-experimental-1`;
 
 export const DEFAULT_RATING_FIELD = EnumRatingTypes.MAX_SCORE;
+
+export enum EnumRatingSListUpdateMethod {
+  UPSERT,
+  REPLACE,
+}

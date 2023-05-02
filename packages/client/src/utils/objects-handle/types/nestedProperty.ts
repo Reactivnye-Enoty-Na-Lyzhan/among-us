@@ -1,4 +1,4 @@
-import type { ObjectKey, ObjectType } from './object';
+import type { ObjectKey, ObjectType } from './objectType';
 
 export type NestedKeysArrayLikePaths<InputType> = {
   [Key in keyof InputType & ObjectKey]: InputType[Key] extends ObjectType

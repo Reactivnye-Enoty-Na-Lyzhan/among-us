@@ -3,7 +3,6 @@ import { leaderboardActions } from './leaderboard.slice';
 import type { TypeRootState, AppDispatch } from '..';
 import type { TypedStartListening } from '@reduxjs/toolkit';
 import { leaderboardAPISlice } from '../api/leaderboard/leaderboard.api.slice';
-import { appDispatcher } from '../appActions';
 
 const listenerMiddleware = createListenerMiddleware();
 export const startListening =
@@ -23,7 +22,7 @@ startListening({
 
     const getRatingsArgs = {
       cursor: 0,
-      limit: 1,
+      limit: fetchedRatingsCount,
       ratingFieldName: sortingType,
     };
     const getRatingsRequestAction =

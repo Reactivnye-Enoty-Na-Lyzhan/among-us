@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { RATINGS_ON_MOUNT_MAX_COUNT } from '../ShowMoreRatingsButton/constants';
+import { RATINGS_ON_MOUNT_MAX_COUNT } from '../constants';
 import { useActions } from '@/hooks/useActions';
 
 export function useUpdateFetchedRatingsCount(

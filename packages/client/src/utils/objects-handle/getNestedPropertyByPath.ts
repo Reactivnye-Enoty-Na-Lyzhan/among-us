@@ -1,5 +1,5 @@
-import { NestedPropertyType } from '../types/nested-property';
-import { ObjectKey } from '../types/object';
+import { NestedPropertyType } from './types/nestedProperty';
+import { ObjectKey } from './types/objectType';
 import { isObject } from './isObject';
 
 export function getNestedPropertyByPath<
