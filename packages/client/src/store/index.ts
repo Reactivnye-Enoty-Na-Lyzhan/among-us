@@ -4,25 +4,33 @@ import { leaderboardApi } from './leaderboard/leaderboard.api';
 import { authApi } from './auth/auth.slice';
 import { oauthApi } from './auth/oauth.slice';
 import { uiReducer } from './ui/ui.slice';
+import { IGameState } from './game/game.types';
+import { IUiState } from './ui/ui.types';
 
-export const store = configureStore({
-  reducer: {
-    [leaderboardApi.reducerPath]: leaderboardApi.reducer,
-    [authApi.reducerPath]: authApi.reducer,
-    [oauthApi.reducerPath]: oauthApi.reducer,
+export const createStore = (preloadedState?: TypeRootState) => {
+  return configureStore({
+    reducer: {
+      [leaderboardApi.reducerPath]: leaderboardApi.reducer,
+      [authApi.reducerPath]: authApi.reducer,
+      [oauthApi.reducerPath]: oauthApi.reducer,
     game: gameReducer,
-    ui: uiReducer,
-  },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(
-      leaderboardApi.middleware,
-      authApi.middleware,
+      ui: uiReducer,
+    },
+    preloadedState,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware().concat(
+        leaderboardApi.middleware,
+        authApi.middleware,
       oauthApi.middleware
-    ),
-});
+      ),
+  });
+};
 
-export type TypeRootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type TypeRootState = {
+  game: IGameState;
+  ui: IUiState;
+};
+export type AppDispatch = ReturnType<typeof createStore>['dispatch'];
 
 /*
   ************* HOW TO USE: ****************
