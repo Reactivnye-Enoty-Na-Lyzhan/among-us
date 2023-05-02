@@ -6,7 +6,7 @@ import { useUpdateRating } from './usePostRating';
 import {
   EnumRatingEntityIdentifiers,
   EnumRatingTypes,
-} from '@/store/api/leaderboard/enumerations';
+} from '@/store/api/leaderboard/constants';
 
 type FormFieldValue = string | number;
 type FormFieldProps = Pick<InputHTMLAttributes<HTMLInputElement>, 'type'> & {

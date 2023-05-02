@@ -4,12 +4,12 @@ import {
   type PostRatingRequestArgs,
   type PostRatingSuccessfulResponse,
   postRatingQuery,
-} from './endpoints/post-rating';
+} from './endpoints/postRating';
 import {
   type GetRatingsRequestArgs,
   type GetRatingsSuccessfulResponse,
   getRatingsQuery,
-} from './endpoints/get-ratings';
+} from './endpoints/getRatings';
 
 export const leaderboardAPISlice = apiSliceBase.injectEndpoints({
   endpoints: build => ({

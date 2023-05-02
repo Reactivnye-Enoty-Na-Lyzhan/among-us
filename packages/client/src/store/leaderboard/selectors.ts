@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { TypeRootState } from '..';
-import { leaderboardRatingsAdapter } from './rating-entity-adapter';
-import type { EnumRatingTypes } from '../api/leaderboard/enumerations';
+import { leaderboardRatingsAdapter } from './ratingEntityAdapter';
+import type { EnumRatingTypes } from '../api/leaderboard/constants';
 import { DEFAULT_RATING_FIELD } from '../api/leaderboard/constants';
 
 const ratingsSelectors = leaderboardRatingsAdapter.getSelectors(

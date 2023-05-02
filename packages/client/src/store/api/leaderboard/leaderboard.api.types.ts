@@ -1,7 +1,4 @@
-import type {
-  EnumRatingEntityIdentifiers,
-  EnumRatingTypes,
-} from './enumerations';
+import type { EnumRatingEntityIdentifiers, EnumRatingTypes } from './constants';
 
 export type RatingEntityMetrics = {
   [EnumRatingTypes.GAMES]: number;

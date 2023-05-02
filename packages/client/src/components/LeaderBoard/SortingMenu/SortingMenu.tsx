@@ -2,10 +2,10 @@ import { FC, memo, useCallback, useMemo, useState } from 'react';
 import SortMenuVariant from './SortingVariant/SortingVariant';
 import type { OnSelectHandler } from './SortingVariant/types';
 import './SortingMenu.css';
-import { EnumRatingTypes } from '@/store/api/leaderboard/enumerations';
+import { EnumRatingTypes } from '@/store/api/leaderboard/constants';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { leaderboardActionsDispatcher } from '@/store/leaderboard/leaderboard.dispatcher';
 import { selectSortingType } from '@/store/leaderboard/selectors';
+import { useActions } from '@/hooks/useActions';
 
 const mapSortingTypeToDescription: Record<EnumRatingTypes, string> = {
   [EnumRatingTypes.WINRATE]: 'Высокий процент побед',
@@ -17,6 +17,7 @@ const SortMenu: FC = () => {
   const [isOpened, setIsOpened] = useState(false);
 
   const sortingTypeSelected = useTypedSelector(selectSortingType);
+  const { setSortingType } = useActions();
 
   const toggleIsOpenedState = useCallback(() => {
     setIsOpened(isOpened => !isOpened);
@@ -28,7 +29,7 @@ const SortMenu: FC = () => {
     const onSelectHandlers = {} as Record<EnumRatingTypes, OnSelectHandler>;
     sortingTypes.forEach(sortingType => {
       const handler = () => {
-        leaderboardActionsDispatcher.setSortingType(sortingType);
+        setSortingType(sortingType);
         setIsOpened(false);
       };
       onSelectHandlers[sortingType] = handler;

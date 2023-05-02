@@ -1,6 +1,6 @@
-import type { PostRatingRequestArgs } from '@/store/api/leaderboard/endpoints/post-rating';
-import { EnumRatingEntityIdentifiers } from '@/store/api/leaderboard/enumerations';
-import { usePostRatingMutation } from '@/store/api/leaderboard/leaderboard.api-slice';
+import type { PostRatingRequestArgs } from '@/store/api/leaderboard/endpoints/postRating';
+import { EnumRatingEntityIdentifiers } from '@/store/api/leaderboard/constants';
+import { usePostRatingMutation } from '@/store/api/leaderboard/leaderboard.api.slice';
 
 import { selectUserLogin } from '@/store/auth/selectors';
 import { type FormEventHandler, useCallback } from 'react';

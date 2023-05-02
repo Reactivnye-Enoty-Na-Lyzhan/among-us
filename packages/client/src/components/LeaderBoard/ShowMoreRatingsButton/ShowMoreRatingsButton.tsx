@@ -1,10 +1,10 @@
-import { useLazyGetRatingsQuery } from '@/store/api/leaderboard/leaderboard.api-slice';
+import { useLazyGetRatingsQuery } from '@/store/api/leaderboard/leaderboard.api.slice';
 import { type FC, memo, useCallback, useRef } from 'react';
 import { RATINGS_FETCH_BATCH_SIZE } from './constants';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useOnMountRatingsFetching } from './hooks/useOnMountRatingsFetching';
 import { useFetchedRatingCount } from './hooks/useFetchedRatingsCount';
-import { useUpdateFetchedRatingCount } from './hooks/useUpdateFetchedRatingCount';
+import { useUpdateFetchedRatingsCount } from './hooks/useUpdateFetchedRatingsCount';
 import { selectSortingType } from '@/store/leaderboard/selectors';
 
 const ShowMoreRatingsButton: FC = () => {
@@ -25,12 +25,12 @@ const ShowMoreRatingsButton: FC = () => {
   const downloadRatingsNextBatch = useCallback(() => {
     sendGetRatingsQuery({
       ratingFieldName: sortingTypeRef.current,
-      cursor: 1 + fetchedRatingsCountRef.current,
+      cursor: fetchedRatingsCountRef.current,
       limit: RATINGS_FETCH_BATCH_SIZE,
     });
   }, []);
 
-  useUpdateFetchedRatingCount(currentFetchedRatingsCount);
+  useUpdateFetchedRatingsCount(currentFetchedRatingsCount);
 
   const { isLoading } = getRatingsQueryStatus;
   const buttonLabel = isLoading ? 'Загружаем...' : 'Показать еще';

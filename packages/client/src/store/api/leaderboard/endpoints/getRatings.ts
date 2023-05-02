@@ -1,6 +1,6 @@
 import { API_PATH, DEFAULT_RATING_FIELD, TEAM_NAME } from '../constants';
-import type { EnumRatingTypes } from '../enumerations';
-import type { PlayerRatingEntity } from '../leaderboard.api-types';
+import type { EnumRatingTypes } from '../constants';
+import type { PlayerRatingEntity } from '../leaderboard.api.types';
 
 type RequestArgs = {
   cursor: number;

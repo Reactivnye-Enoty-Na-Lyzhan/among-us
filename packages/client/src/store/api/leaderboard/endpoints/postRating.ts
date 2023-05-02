@@ -1,7 +1,7 @@
 import { jsonOtherwiseTextHandler } from '@/utils/api/response-handlers';
 import { API_PATH, TEAM_NAME } from '../constants';
-import type { PlayerRatingEntity } from '../leaderboard.api-types';
-import { EnumRatingEntityIdentifiers } from '../enumerations';
+import type { PlayerRatingEntity } from '../leaderboard.api.types';
+import { EnumRatingEntityIdentifiers } from '../constants';
 
 export type PostRatingRequestArgs = PlayerRatingEntity;
 export type PostRatingRequestDTO = {

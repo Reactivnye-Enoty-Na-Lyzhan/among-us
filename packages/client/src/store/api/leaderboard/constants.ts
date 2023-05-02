@@ -1,5 +1,15 @@
 import { API_TEAM_NAME } from '@/utils/constants';
-import { EnumRatingTypes } from './enumerations';
+
+export enum EnumRatingTypes {
+  GAMES = 'games',
+  WINRATE = 'winrate',
+  MAX_SCORE = 'maxScore',
+}
+
+export enum EnumRatingEntityIdentifiers {
+  RATING_ID = 'ratingID',
+  USER_LOGIN = 'userLogin',
+}
 
 export const API_PATH = 'leaderboard';
 
