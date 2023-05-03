@@ -14,14 +14,12 @@ export const leaderboardAPISlice = apiSliceBase.injectEndpoints({
       PostRatingSuccessfulResponse,
       PostRatingRequestArgs
     >({
-      invalidatesTags: [{ type: 'Rating', id: 'list' }],
       query: postRatingQuery,
     }),
     getRatings: build.query<
       GetRatingsSuccessfulResponse,
       GetRatingsRequestArgs
     >({
-      providesTags: [{ type: 'Rating', id: 'list' }],
       query: getRatingsQuery,
     }),
   }),
@@ -32,3 +30,5 @@ export const { usePostRatingMutation, useLazyGetRatingsQuery, usePrefetch } =
 
 export const { matchFulfilled: matchGetRatingsFulfilled } =
   leaderboardAPISlice.endpoints.getRatings;
+export const { matchFulfilled: matchPostRatingFulfilled } =
+  leaderboardAPISlice.endpoints.postRating;

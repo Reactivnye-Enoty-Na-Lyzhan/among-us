@@ -1,8 +1,11 @@
-import { createListenerMiddleware } from '@reduxjs/toolkit';
+import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
 import { leaderboardActions } from './leaderboard.slice';
 import type { TypeRootState, AppDispatch } from '..';
 import type { TypedStartListening } from '@reduxjs/toolkit';
-import { leaderboardAPISlice } from '../api/leaderboard/leaderboard.api.slice';
+import {
+  leaderboardAPISlice,
+  matchPostRatingFulfilled,
+} from '../api/leaderboard/leaderboard.api.slice';
 
 const listenerMiddleware = createListenerMiddleware();
 export const startListening =
@@ -12,13 +15,11 @@ export const startListening =
   >;
 
 startListening({
-  actionCreator: leaderboardActions.setSortingType,
+  matcher: isAnyOf(leaderboardActions.setSortingType, matchPostRatingFulfilled),
   effect: async (action, listenerApi) => {
     let state = listenerApi.getState();
     const { fetchedRatingsCount } = state.leaderboard;
-    const sortingType = action.payload;
-
-    console.log(`MIDDLEWARE: SORTING TYPE -> ${sortingType}`);
+    const sortingType = state.leaderboard.sortingType;
 
     const getRatingsArgs = {
       cursor: 0,
@@ -44,7 +45,7 @@ startListening({
     state = listenerApi.getState();
     const getRatingsRequestState = selectGetRatingsState(state);
     const { isSuccess, data } = getRatingsRequestState;
-    console.log(`MIDDLEWARE RESULT: ${JSON.stringify(getRatingsRequestState)}`);
+
     if (isSuccess) {
       const fetchedRatingsList = data.map(ratingData => ratingData.data);
       listenerApi.dispatch(
