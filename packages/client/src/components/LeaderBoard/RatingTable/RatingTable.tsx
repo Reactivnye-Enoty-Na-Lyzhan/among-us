@@ -1,10 +1,9 @@
-import PlayerCard from '../PlayerCard/PlayerCard';
 import { type FC, memo } from 'react';
 import { selectUserLogin } from '@/store/auth/selectors';
 import { useSelector } from 'react-redux';
-
-import './RatingTable.css';
 import { selectAllRatings } from '@/store/leaderboard/selectors';
+import PlayerCard from './PlayerCard/PlayerCard';
+import './RatingTable.css';
 
 const RatingTable: FC = () => {
   const currentUserLogin = useSelector(selectUserLogin);

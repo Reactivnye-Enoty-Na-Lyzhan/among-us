@@ -2,6 +2,7 @@ import { FC, memo } from 'react';
 import './PlayerCard.css';
 import type { RatingEntityMetrics } from '@/store/api/leaderboard/leaderboard.api.types';
 import { PLAYER_AVATAR_FALLBACK } from '@/images/leaderboard/player-avatar-fallback';
+import classNames from 'classnames';
 
 type Props = RatingEntityMetrics & {
   ratingVersion: number;
@@ -17,9 +18,9 @@ const PlayerCard: FC<Props> = props => {
 
   return (
     <li
-      className={`leaderboard__player${
-        owner ? ' leaderboard__player_type_owner' : ''
-      }`}>
+      className={classNames('leaderboard__player', {
+        leaderboard__player_type_owner: owner,
+      })}>
       <div className="leaderboard__player-container">
         <img
           src={avatar ?? PLAYER_AVATAR_FALLBACK}
