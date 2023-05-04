@@ -15,7 +15,11 @@ const OAuthButton: FC<Props> = ({ text, disabled, onClick }) => {
       className="oauth-button form__oauth-button"
       disabled={disabled}
       onClick={onClick}>
-      <img className="oauth-logo oauth-logo_space_right" src={logo} alt='яндекс лого' />
+      <img
+        className="oauth-logo oauth-logo_space_right"
+        src={logo}
+        alt="яндекс лого"
+      />
       {text}
     </button>
   );

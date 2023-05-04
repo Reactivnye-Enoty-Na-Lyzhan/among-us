@@ -5,7 +5,7 @@ export type User = {
   display_name: string;
   login: string;
   email: string;
-  password: string,
+  password: string;
   phone: string;
   avatar: string;
 };
@@ -34,7 +34,6 @@ export type APIErrorResponse = {
   reason: string;
   error?: string;
 };
-
 
 export type TOAuthData = {
   code: string;

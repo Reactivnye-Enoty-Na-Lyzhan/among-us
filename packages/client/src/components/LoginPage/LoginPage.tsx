@@ -11,7 +11,10 @@ import { useValidation } from '../../hooks/useValidation';
 import { useSignIn } from './hooks/useSignIn';
 import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
-import { useLazyGetServiceIdQuery, useYandexOAuthMutation } from '../../store/auth/oauth.slice';
+import {
+  useLazyGetServiceIdQuery,
+  useYandexOAuthMutation,
+} from '../../store/auth/oauth.slice';
 import { useLazyGetUserQuery } from '../../store/auth/auth.slice';
 import { redirectToOAuthYandex } from '../../utils/oauth/redirectToOAuthYandex';
 import { getRedirectUrl } from '../../utils/oauth/getRedirectUrl';
@@ -39,7 +42,6 @@ const LoginPage: FC = () => {
 
   const location = useLocation();
 
-
   async function handleSubmit() {
     if (!validateForm(values)) {
       return;
@@ -60,7 +62,7 @@ const LoginPage: FC = () => {
       console.log(`Oops, ${error} `);
     }
   }, [getServiceId]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       const searchParams = new URLSearchParams(location.search);
@@ -68,7 +70,10 @@ const LoginPage: FC = () => {
       if (code) {
         try {
           console.log(code);
-          const { isSuccess } = await yandexOAuth({ code, redirect_uri: getRedirectUrl() });
+          const { isSuccess } = await yandexOAuth({
+            code,
+            redirect_uri: getRedirectUrl(),
+          });
           if (isSuccess) {
             const user = await getUser();
             if (user) {
@@ -80,7 +85,7 @@ const LoginPage: FC = () => {
         }
       }
     };
-  
+
     fetchData();
   }, [location.search, yandexOAuth, getUser, navigate]);
 
@@ -115,8 +120,14 @@ const LoginPage: FC = () => {
             validation={validationData.password}
           />
           <Button disabled={!isFormValid} text={'Отправить'} />
-          <div className='login-page__text login-page__text_space_around'>или</div>
-          <OAuthButton onClick={handleOAuthSignIn} text="Войти с Яндекс ID" disabled={false}/>
+          <div className="login-page__text login-page__text_space_around">
+            или
+          </div>
+          <OAuthButton
+            onClick={handleOAuthSignIn}
+            text="Войти с Яндекс ID"
+            disabled={false}
+          />
         </Form>
         <div className="login-page__footer">
           <span>Ещё не зарегистрированы?</span>
