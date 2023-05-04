@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
 import Input from '../Form/Input/Input';
@@ -33,9 +33,11 @@ const LoginPage: FC = () => {
     { field: 'password', validation: validation.password },
   ]);
   const [getServiceId] = useLazyGetServiceIdQuery();
-  const [yandexOAuth] = useYandexOAuthMutation();
+  const [yandexOAuth, { isSuccess }] = useYandexOAuthMutation();
   const [getUser] = useLazyGetUserQuery();
   const navigate = useNavigate();
+
+  const location = useLocation();
 
 
   async function handleSubmit() {
@@ -53,34 +55,34 @@ const LoginPage: FC = () => {
     try {
       const { data } = await getServiceId();
       const serviceId = data?.service_id;
-      if (!serviceId) {
-        throw new Error('Не удалось получить идентификатор сервиса.');
-      }
-      redirectToOAuthYandex(serviceId);
+      serviceId && redirectToOAuthYandex(serviceId);
     } catch (error) {
       console.log(`Oops, ${error} `);
     }
   }, [getServiceId]);
   
-
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get('code');
-    if (code) {
-      yandexOAuth({ code, redirect_uri: getRedirectUrl() }).then(result => {
-        const token = result.data.token;
-        localStorage.setItem('accessToken', token);
-        getUser().unwrap().then(user => {
-          signIn(user);
-          navigate('/game');
-        }).catch(error => {
+    const fetchData = async () => {
+      const searchParams = new URLSearchParams(location.search);
+      const code = searchParams.get('code');
+      if (code) {
+        try {
+          console.log(code);
+          const { isSuccess } = await yandexOAuth({ code, redirect_uri: getRedirectUrl() });
+          if (isSuccess) {
+            const user = await getUser();
+            if (user) {
+              navigate('/game');
+            }
+          }
+        } catch (error) {
           console.log(`Oops, ${error} `);
-        });
-      }).catch(error => {
-        console.log(`Oops, ${error} `);
-      });
-    }
-  }, [yandexOAuth, signIn, getUser, navigate]);
+        }
+      }
+    };
+  
+    fetchData();
+  }, [location.search, yandexOAuth, getUser, navigate]);
 
   return (
     <div className="login-page">
@@ -131,4 +133,3 @@ export default hocAuth(LoginPage, {
   onUnauthenticatedRedirection: null,
   onAuthenticatedRedirection: '/game',
 });
-
