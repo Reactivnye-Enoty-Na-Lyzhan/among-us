@@ -20,6 +20,7 @@ import { redirectToOAuthYandex } from '../../utils/oauth/redirectToOAuthYandex';
 import { getRedirectUrl } from '../../utils/oauth/getRedirectUrl';
 import './LoginPage.css';
 
+
 const LoginPage: FC = () => {
   const { requestStatus, statusMessageClass, signIn, sendSignInQueryStatus } =
     useSignIn();
@@ -36,7 +37,7 @@ const LoginPage: FC = () => {
     { field: 'password', validation: validation.password },
   ]);
   const [getServiceId] = useLazyGetServiceIdQuery();
-  const [yandexOAuth, { isSuccess }] = useYandexOAuthMutation();
+  const [yandexOAuth] = useYandexOAuthMutation();
   const [getUser] = useLazyGetUserQuery();
   const navigate = useNavigate();
 
@@ -73,7 +74,7 @@ const LoginPage: FC = () => {
           const { isSuccess } = await yandexOAuth({
             code,
             redirect_uri: getRedirectUrl(),
-          });
+          }).unwrap();
           if (isSuccess) {
             const user = await getUser();
             if (user) {
