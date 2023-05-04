@@ -19,24 +19,25 @@ export function getNestedPropertyByPath<
   }
 
   let value: any = object;
-  let pathExisting: ObjectKey[] = pathArray;
-  for (let i = 0; i < pathExisting.length; i++) {
-    const currentPath = pathArray[i];
+  let existingPathIndex: number | null = null;
+  pathArray.every((currentPath, index) => {
+    const isPathExisting = isObject(value) && Object.hasOwn(value, currentPath);
 
-    if (!isObject(value) || !Object.hasOwn(value, currentPath)) {
-      pathExisting = pathExisting.slice(0, i);
-      value = undefined;
-      break;
+    if (isPathExisting) {
+      value = value[currentPath];
+      existingPathIndex = index;
     }
 
-    const valueForCurrentPath = value[currentPath];
-    value = valueForCurrentPath;
-  }
+    return isPathExisting;
+  });
 
+  const existingPath = existingPathIndex
+    ? pathArray.slice(0, existingPathIndex)
+    : [];
   if (isLogNeeded) {
     console.log(
       `PATH GET '${pathArray}' EXISTING PART: ` +
-        `${pathExisting}\n` +
+        `${existingPath}\n` +
         `value: ${JSON.stringify(value)}`
     );
   }
