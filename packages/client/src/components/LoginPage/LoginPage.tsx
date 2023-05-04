@@ -12,7 +12,9 @@ import { useSignIn } from './hooks/useSignIn';
 import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
 import { useLazyGetServiceIdQuery, useYandexOAuthMutation } from '../../store/auth/oauth.slice';
+import { useLazyGetUserQuery } from '../../store/auth/auth.slice';
 import { redirectToOAuthYandex } from '../../utils/oauth/redirectToOAuthYandex';
+import { getRedirectUrl } from '../../utils/oauth/getRedirectUrl';
 import './LoginPage.css';
 
 const LoginPage: FC = () => {
@@ -31,7 +33,8 @@ const LoginPage: FC = () => {
     { field: 'password', validation: validation.password },
   ]);
   const [getServiceId] = useLazyGetServiceIdQuery();
-  const [yandexOAuth, { isSuccess }] = useYandexOAuthMutation();
+  const [yandexOAuth] = useYandexOAuthMutation();
+  const [getUser] = useLazyGetUserQuery();
   const navigate = useNavigate();
 
 
@@ -50,17 +53,34 @@ const LoginPage: FC = () => {
     try {
       const { data } = await getServiceId();
       const serviceId = data?.service_id;
-      serviceId && redirectToOAuthYandex(serviceId);
+      if (!serviceId) {
+        throw new Error('Не удалось получить идентификатор сервиса.');
+      }
+      redirectToOAuthYandex(serviceId);
     } catch (error) {
       console.log(`Oops, ${error} `);
     }
   }, [getServiceId]);
+  
 
   useEffect(() => {
-    if (isSuccess) {
-      navigate('/game');
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    if (code) {
+      yandexOAuth({ code, redirect_uri: getRedirectUrl() }).then(result => {
+        const token = result.data.token;
+        localStorage.setItem('accessToken', token);
+        getUser().unwrap().then(user => {
+          signIn(user);
+          navigate('/game');
+        }).catch(error => {
+          console.log(`Oops, ${error} `);
+        });
+      }).catch(error => {
+        console.log(`Oops, ${error} `);
+      });
     }
-  }, [signIn, navigate, isSuccess]);
+  }, [yandexOAuth, signIn, getUser, navigate]);
 
   return (
     <div className="login-page">

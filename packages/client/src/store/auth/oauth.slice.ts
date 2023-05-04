@@ -24,7 +24,7 @@ export const oauthApi = createApi({
       }),
     }),
     yandexOAuth: build.mutation<string, TOAuthData>({
-      query: oauthData => ({ url: `${API_URL}yandex`, method: 'POST', body: oauthData, responseHandler: 'text' }),
+      query: oauthData => ({ url: `${API_URL}yandex`, method: 'POST', body: oauthData }),
     }),
   }),
 });
