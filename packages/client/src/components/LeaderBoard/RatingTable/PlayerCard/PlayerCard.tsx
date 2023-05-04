@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import './PlayerCard.css';
 import type { RatingEntityMetrics } from '@/store/api/leaderboard/leaderboard.api.types';
-import { PLAYER_AVATAR_FALLBACK } from '@/images/leaderboard/player-avatar-fallback';
+import playerAvatarFallback from '@/images/leaderboard/player-avatar-fallback.png';
 import classNames from 'classnames';
 
 type Props = RatingEntityMetrics & {
@@ -23,7 +23,7 @@ const PlayerCard: FC<Props> = props => {
       })}>
       <div className="leaderboard__player-container">
         <img
-          src={avatar ?? PLAYER_AVATAR_FALLBACK}
+          src={avatar ?? playerAvatarFallback}
           alt={'Аватар игрока'}
           className="leaderboard__user-avatar"
         />
