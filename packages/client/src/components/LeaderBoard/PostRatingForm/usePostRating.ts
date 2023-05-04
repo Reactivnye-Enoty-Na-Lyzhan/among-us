@@ -13,10 +13,7 @@ export function useUpdateRating() {
     event => {
       event.preventDefault();
       const formData = new FormData(event.currentTarget);
-      const formDataObject = formDataToObject(formData) as Omit<
-        PostRatingRequestArgs,
-        EnumRatingEntityIdentifiers.USER_LOGIN
-      >;
+      const formDataObject = formDataToObject(formData);
 
       const requestData = { ...formDataObject, userLogin };
       console.log(`FORM DATA; ${JSON.stringify(requestData)}`);
@@ -38,20 +35,16 @@ export function useUpdateRating() {
   return { postRatingHandler, queryStatusMessage };
 }
 
-function formDataToObject(formData: FormData) {
-  const dataObject = {} as Record<string, unknown>;
+type FormDataObject = Omit<
+  PostRatingRequestArgs,
+  EnumRatingEntityIdentifiers.USER_LOGIN
+>;
+function formDataToObject(formData: FormData): FormDataObject {
+  const dataObject = {} as FormDataObject;
 
-  for (const [field, value] of formData) {
-    let formValue: string | number = value as string;
-
-    if (typeof value === 'string') {
-      const intParsedValue = parseInt(value);
-      if (intParsedValue) {
-        formValue = intParsedValue;
-      }
-    }
-
-    dataObject[field] = formValue;
+  for (const [field, formValue] of formData) {
+    const intParsedValue = parseInt(formValue as string);
+    dataObject[field as keyof FormDataObject] = intParsedValue;
   }
 
   return dataObject;
