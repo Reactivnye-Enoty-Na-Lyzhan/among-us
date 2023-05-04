@@ -10,7 +10,7 @@ const RatingTable: FC = () => {
   const currentUserLogin = useSelector(selectUserLogin);
   const playersRatings = useSelector(selectAllRatings);
 
-  const RatingsList = playersRatings.map(ratingEntry => {
+  const ratingsList = playersRatings.map(ratingEntry => {
     return (
       <PlayerCard
         key={ratingEntry.userLogin}
@@ -24,7 +24,7 @@ const RatingTable: FC = () => {
     );
   });
 
-  return <ul className="leaderboard__rating-table">{RatingsList}</ul>;
+  return <ul className="leaderboard__rating-table">{ratingsList}</ul>;
 };
 
 export default memo(RatingTable);

@@ -2,10 +2,10 @@ import { FC, memo, useCallback, useMemo, useState } from 'react';
 import SortMenuVariant from './SortingVariant/SortingVariant';
 import type { OnSelectHandler } from './SortingVariant/types';
 import './SortingMenu.css';
-import { EnumRatingTypes } from '@/store/api/leaderboard/constants';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { selectSortingType } from '@/store/leaderboard/selectors';
 import { useActions } from '@/hooks/useActions';
+import { EnumRatingTypes } from '@-constants/leaderboard/ratings.constants';
 
 const mapSortingTypeToDescription: Record<EnumRatingTypes, string> = {
   [EnumRatingTypes.WINRATE]: 'Высокий процент побед',
@@ -46,9 +46,8 @@ const SortMenu: FC = () => {
         key={sortingType}
         description={mapSortingTypeToDescription[sortingType]}
         isSelected={sortingType === sortingTypeSelected}
-        onSelectHandler={
-          mapSortingTypeToOnSelectHandler[sortingType]
-        }></SortMenuVariant>
+        onSelectHandler={mapSortingTypeToOnSelectHandler[sortingType]}
+      />
     ));
 
     return components;

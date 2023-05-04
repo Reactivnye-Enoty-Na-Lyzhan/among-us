@@ -1,4 +1,8 @@
-import { API_PATH, DEFAULT_RATING_FIELD, TEAM_NAME } from '../constants';
+import {
+  API_PATH,
+  DEFAULT_RATING_FIELD,
+  TEAM_NAME,
+} from '@-constants/leaderboard/api.constants';
 import type {
   GetRatingsRequestArgs,
   GetRatingsRequestDTO,

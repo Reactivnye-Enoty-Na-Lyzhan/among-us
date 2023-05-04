@@ -1,4 +1,6 @@
-import { API_TEAM_NAME } from '@/utils/constants';
+export const RATINGS_FETCH_BATCH_SIZE = 3;
+
+export const RATINGS_ON_MOUNT_MAX_COUNT = 12;
 
 export enum EnumRatingTypes {
   GAMES = 'games',
@@ -10,12 +12,6 @@ export enum EnumRatingEntityIdentifiers {
   RATING_ID = 'ratingID',
   USER_LOGIN = 'userLogin',
 }
-
-export const API_PATH = 'leaderboard';
-
-export const TEAM_NAME = `${API_TEAM_NAME}-experimental-1`;
-
-export const DEFAULT_RATING_FIELD = EnumRatingTypes.MAX_SCORE;
 
 export enum EnumRatingSListUpdateMethod {
   UPSERT,

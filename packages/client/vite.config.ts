@@ -60,6 +60,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src/'),
+      '@-constants': path.resolve(__dirname, 'src/utils/constants'),
       images: path.resolve(__dirname, 'src/images/'),
       fonts: path.resolve(__dirname, 'src/vendor/fonts/'),
     },

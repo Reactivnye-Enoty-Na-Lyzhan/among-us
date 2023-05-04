@@ -1,10 +1,10 @@
 import { jsonOtherwiseTextHandler } from '@/utils/api/response-handlers';
-import { API_PATH, TEAM_NAME } from '../constants';
 import type {
   PostRatingRequestArgs,
   PostRatingRequestDTO,
 } from '../leaderboard.api.types';
-import { EnumRatingEntityIdentifiers } from '../constants';
+import { EnumRatingEntityIdentifiers } from '@-constants/leaderboard/ratings.constants';
+import { API_PATH, TEAM_NAME } from '@-constants/leaderboard/api.constants';
 
 export function postRatingQuery(ratingData: PostRatingRequestArgs) {
   const requestDTO: PostRatingRequestDTO = {

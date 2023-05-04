@@ -3,8 +3,10 @@ import { useUpdateFetchedRatingsCount } from './hooks/useUpdateFetchedRatingsCou
 import { selectRatingsListSize } from '@/store/leaderboard/selectors';
 import { useFetchRatingsNextBatch } from './hooks/useFetchRatingsNextBatch';
 import { useSelector } from 'react-redux';
-import { RATINGS_FETCH_BATCH_SIZE } from './constants';
-import { EnumRatingSListUpdateMethod } from '@/store/api/leaderboard/constants';
+import {
+  EnumRatingSListUpdateMethod,
+  RATINGS_FETCH_BATCH_SIZE,
+} from '@-constants/leaderboard/ratings.constants';
 
 const ShowMoreRatingsButton: FC = () => {
   const currentFetchedRatingsCount = useSelector(selectRatingsListSize);

@@ -1,8 +1,8 @@
 import type {
   EnumRatingEntityIdentifiers,
-  EnumRatingTypes,
   EnumRatingSListUpdateMethod,
-} from './constants';
+  EnumRatingTypes,
+} from '@-constants/leaderboard/ratings.constants';
 
 export type RatingEntityMetrics = {
   [EnumRatingTypes.GAMES]: number;

@@ -6,7 +6,7 @@ import { useUpdateRating } from './usePostRating';
 import {
   EnumRatingEntityIdentifiers,
   EnumRatingTypes,
-} from '@/store/api/leaderboard/constants';
+} from '@-constants/leaderboard/ratings.constants';
 
 type FormFieldValue = string | number;
 type FormFieldProps = Pick<InputHTMLAttributes<HTMLInputElement>, 'type'> & {
@@ -49,14 +49,11 @@ const AddCardForm: FC = () => {
       <form className="leaderboard-add-card-form" onSubmit={postRatingHandler}>
         <FormField
           label="RatingID"
-          name={EnumRatingEntityIdentifiers.RATING_ID}></FormField>
-        <FormField
-          label="Лучший счёт"
-          name={EnumRatingTypes.MAX_SCORE}></FormField>
-        <FormField label="Победы" name={EnumRatingTypes.WINRATE}></FormField>
-        <FormField
-          label="Количество игр"
-          name={EnumRatingTypes.GAMES}></FormField>
+          name={EnumRatingEntityIdentifiers.RATING_ID}
+        />
+        <FormField label="Лучший счёт" name={EnumRatingTypes.MAX_SCORE} />
+        <FormField label="Победы" name={EnumRatingTypes.WINRATE} />
+        <FormField label="Количество игр" name={EnumRatingTypes.GAMES} />
         <button type="submit" className="leaderboard__functional-button">
           Отправить
         </button>

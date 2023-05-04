@@ -1,15 +1,15 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
-  DEFAULT_RATING_FIELD,
-  EnumRatingSListUpdateMethod,
-} from '../api/leaderboard/constants';
-import type { EnumRatingTypes } from '../api/leaderboard/constants';
-import {
   leaderboardRatingsAdapter,
   ratingsAdapterInitialState,
 } from './ratingEntityAdapter';
 import type { PlayerRatingEntity } from '../api/leaderboard/leaderboard.api.types';
 import { matchGetRatingsFulfilled } from '../api/leaderboard/leaderboard.api.slice';
+import { DEFAULT_RATING_FIELD } from '@-constants/leaderboard/api.constants';
+import {
+  EnumRatingSListUpdateMethod,
+  EnumRatingTypes,
+} from '@-constants/leaderboard/ratings.constants';
 
 const leaderboardSlice = createSlice({
   name: 'leaderboard',

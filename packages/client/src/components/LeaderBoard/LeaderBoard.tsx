@@ -24,7 +24,7 @@ const LeaderBoard: FC = () => {
       </div>
       <div className="leaderboard__container">
         <section className="leaderboard__functional-section">
-          <SortMenu></SortMenu>
+          <SortMenu />
           <button
             className="leaderboard__post-rating-button leaderboard__functional-button"
             onClick={toggleAddCardForm}>
@@ -32,11 +32,11 @@ const LeaderBoard: FC = () => {
           </button>
         </section>
         <section className="leaderboard__rating-section">
-          {isAddFormActive && <AddCardForm></AddCardForm>}
-          <RatingTable></RatingTable>
+          {isAddFormActive && <AddCardForm />}
+          <RatingTable />
         </section>
 
-        <ShowMoreRatingsButton></ShowMoreRatingsButton>
+        <ShowMoreRatingsButton />
       </div>
     </main>
   );
