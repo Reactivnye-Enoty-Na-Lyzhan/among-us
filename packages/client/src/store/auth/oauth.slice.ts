@@ -28,9 +28,11 @@ export const oauthApi = createApi({
         url: `${API_URL}yandex`,
         method: 'POST',
         body: oauthData,
-        responseHandler: async response => {
-          const text = await response.text();
-          return { isSuccess: response.ok, data: text };
+        responseHandler: response => {
+          const isJson = response.headers
+            .get('Content-Type')
+            ?.includes('application/json');
+          return isJson ? response.json() : response.text();
         },
       }),
     }),

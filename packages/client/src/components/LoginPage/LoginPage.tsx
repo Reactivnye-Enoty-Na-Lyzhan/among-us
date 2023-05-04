@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
 import Input from '../Form/Input/Input';
@@ -41,7 +41,7 @@ const LoginPage: FC = () => {
   const [getUser] = useLazyGetUserQuery();
   const navigate = useNavigate();
 
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
 
   async function handleSubmit() {
     if (!validateForm(values)) {
@@ -66,21 +66,16 @@ const LoginPage: FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const searchParams = new URLSearchParams(location.search);
       const code = searchParams.get('code');
       if (code) {
         try {
-          console.log(code);
           const { isSuccess } = await yandexOAuth({
             code,
             redirect_uri: getRedirectUrl(),
           }).unwrap();
-          if (isSuccess) {
-            const user = await getUser();
-            if (user) {
-              navigate('/game');
-            }
-          }
+          if (!isSuccess) return;
+          const user = await getUser();
+          if (user) navigate('/game');            
         } catch (error) {
           console.log(`Oops, ${error} `);
         }
@@ -88,7 +83,7 @@ const LoginPage: FC = () => {
     };
 
     fetchData();
-  }, [location.search, yandexOAuth, getUser, navigate]);
+  }, [searchParams]);
 
   return (
     <div className="login-page">
