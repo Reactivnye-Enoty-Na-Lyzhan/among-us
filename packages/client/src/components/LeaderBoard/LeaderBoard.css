@@ -11,11 +11,6 @@
   background-color: var(--leaderboard-background-primary);
 }
 
-.leaderboard__functional-section {
-  display: flex;
-  column-gap: 50px;
-}
-
 .leaderboard__functional-button {
   cursor: pointer;
 
@@ -36,10 +31,6 @@
   &:hover {
     opacity: 0.8;
   }
-}
-
-.leaderboard__post-rating-button {
-  width: 180px;
 }
 
 .leaderboard__return-link {
