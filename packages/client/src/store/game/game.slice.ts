@@ -19,9 +19,10 @@ const initialState: IGameState = {
     meetingCooldown: 30,
   },
   player: {
+    id: '',
     color: 'white',
   },
-  startCooldown: 10,
+  startCooldown: 1,
   results: {
     result: 'init',
     score: 0,
@@ -70,6 +71,9 @@ export const gameSlice = createSlice({
     selectColor: (state, action: PayloadAction<ColorType>) => {
       state.player.color = action.payload;
     },
+    setPlayerId: (state, action: PayloadAction<string>) => {
+      state.player.id = action.payload;
+    },
   },
 });
 
@@ -78,3 +82,4 @@ export const gameActions = gameSlice.actions;
 
 export const selectOnline = (state: TypeRootState) => state.game.online;
 export const selectResults = (state: TypeRootState) => state.game.results;
+export const selectPlayer = (state: TypeRootState) => state.game.player;

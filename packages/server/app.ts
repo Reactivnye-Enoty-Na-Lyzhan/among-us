@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import { createServer as createHttpServer } from 'http';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
@@ -8,6 +9,7 @@ import { ssrDevHandler } from './middlewares/ssrDevHandler';
 import { ssrProductionHandler } from './middlewares/ssrProductionHandler';
 import { createViteServer } from './utils/createViteServer';
 import { CLIENT_PACKAGE_PATH } from './utils/constants';
+import { connectIO } from './socket';
 import type { ViteDevServer } from 'vite';
 
 dotenv.config();
@@ -18,6 +20,10 @@ const isDev = NODE_ENV === 'development';
 
 const createServer = async () => {
   const app = express();
+
+  const server = createHttpServer(app);
+  
+  connectIO(server);
 
   let vite: ViteDevServer | undefined;
 
@@ -50,7 +56,7 @@ const createServer = async () => {
 
   app.use(errorHandler);
 
-  return { app, vite };
+  return { server, vite };
 };
 
 export default createServer;

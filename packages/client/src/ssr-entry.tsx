@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import { StaticRouter } from 'react-router-dom/server';
 import { TypeRootState, createStore } from './store/';
+import { GameSocketContext, gameSocket } from './utils/socket/gameSocket';
 
 interface IRenderReturn {
   renderedHtml: string;
@@ -17,11 +18,13 @@ export const render: IRender = (url = '') => {
   const store = createStore();
   const initialState = store.getState();
   const renderedHtml = renderToString(
-    <Provider store={store}>
-      <StaticRouter location={url}>
-        <App />
-      </StaticRouter>
-    </Provider>
+    <StaticRouter location={url}>
+      <Provider store={store}>
+        <GameSocketContext.Provider value={gameSocket}>
+          <App />
+        </GameSocketContext.Provider>
+      </Provider>
+    </StaticRouter >
   );
 
   return {

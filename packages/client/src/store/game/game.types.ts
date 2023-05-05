@@ -28,6 +28,7 @@ export type GameStageType =
   | 'finishing';
 
 export interface IPlayer {
+  id: string,
   color: ColorType;
 }
 
