@@ -5,7 +5,7 @@ import type {
   NestedKeysArrayLikePaths,
   NestedPropertyType,
 } from '@/utils/objects-handle/types/nestedProperty';
-import { getNestedPropertyByPath } from '@/utils/objects-handle/getNestedPropertyByPath';
+import { getNestedPropertyByPath } from '@/utils/objects-handle/get-nested-property';
 
 const getUserQuerySelector = authApi.endpoints.getUser.select();
 
