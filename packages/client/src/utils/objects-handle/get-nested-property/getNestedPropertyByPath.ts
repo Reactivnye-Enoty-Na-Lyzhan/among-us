@@ -17,7 +17,7 @@ export function getNestedPropertyByPath<
 >({
   object,
   pathArray,
-  isLogNeeded = true,
+  isLogNeeded = false,
   logger = defaultLogger,
 }: {
   object: InputObject;
