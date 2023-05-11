@@ -1,18 +1,17 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { createServer as createHttpServer } from 'http';
-import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import { routes } from './routes/index';
+import celebrateErrorHandler from './middlewares/celebrateErrorHandler';
 import errorHandler from './middlewares/errorHandler';
 import { ssrDevHandler } from './middlewares/ssrDevHandler';
 import { ssrProductionHandler } from './middlewares/ssrProductionHandler';
-import { createViteServer } from './utils/createViteServer';
+import { connectDataBase } from './utils/connectDataBase';
 import { CLIENT_PACKAGE_PATH } from './utils/constants';
 import { connectIO } from './socket';
-import type { ViteDevServer } from 'vite';
-
-dotenv.config();
 
 const { NODE_ENV } = process.env;
 
@@ -22,15 +21,22 @@ const createServer = async () => {
   const app = express();
 
   const server = createHttpServer(app);
-  
+
+  await connectDataBase();
+
   connectIO(server);
 
-  let vite: ViteDevServer | undefined;
+  let vite: import('vite').ViteDevServer | undefined;
 
   if (isDev) {
+    const { createViteServer } = await import('./utils/createViteServer');
     vite = await createViteServer();
     app.use(vite.middlewares);
   }
+
+  // Parsers
+  app.use(bodyParser.json());
+  app.use(cookieParser());
 
   // Middlewares
   app.use(cors());
@@ -54,9 +60,13 @@ const createServer = async () => {
     }
   });
 
+  // Celebrate Error
+  app.use(celebrateErrorHandler);
+
+  // Common Errors
   app.use(errorHandler);
 
-  return { server, vite };
+  return { server };
 };
 
 export default createServer;
