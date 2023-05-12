@@ -8,5 +8,5 @@ export const redirectToOAuthYandex = (serviceId: string) => {
     redirect_uri: getRedirectUrl(),
   });
 
-  window.location.href = `${url}?${params}`;
+  location.assign(`${url}?${params}`);
 };

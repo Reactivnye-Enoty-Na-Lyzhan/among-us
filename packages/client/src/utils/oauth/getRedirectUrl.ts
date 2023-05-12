@@ -1,12 +1,5 @@
-import { RedirectUrls } from '../enums';
+import { SIGNIN_URL } from '../../utils/constants';
 
-export const getRedirectUrl = (): string => {
-  switch (window.location.host) {
-    case 'among-us-client.vercel.app/signin':
-      return RedirectUrls.VercelApp;
-    case 'enoty.ya-praktikum.tech/signin':
-      return RedirectUrls.YaPraktikumTech;
-    default:
-      return RedirectUrls.VercelApp;
-  }
-};
+  export const getRedirectUrl = (): string => {
+    return `${window.location.origin}/${SIGNIN_URL}`;
+  };

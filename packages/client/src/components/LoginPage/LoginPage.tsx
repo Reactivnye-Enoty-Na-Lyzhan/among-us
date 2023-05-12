@@ -1,5 +1,5 @@
-import { FC, useCallback, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
 import Input from '../Form/Input/Input';
@@ -11,13 +11,7 @@ import { useValidation } from '../../hooks/useValidation';
 import { useSignIn } from './hooks/useSignIn';
 import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
-import {
-  useLazyGetServiceIdQuery,
-  useYandexOAuthMutation,
-} from '../../store/auth/oauth.slice';
-import { useLazyGetUserQuery } from '../../store/auth/auth.slice';
-import { redirectToOAuthYandex } from '../../utils/oauth/redirectToOAuthYandex';
-import { getRedirectUrl } from '../../utils/oauth/getRedirectUrl';
+import  useOAuth from '../../hooks/useOAuth';
 import './LoginPage.css';
 
 
@@ -36,12 +30,8 @@ const LoginPage: FC = () => {
     { field: 'login', validation: validation.login },
     { field: 'password', validation: validation.password },
   ]);
-  const [getServiceId] = useLazyGetServiceIdQuery();
-  const [yandexOAuth] = useYandexOAuthMutation();
-  const [getUser] = useLazyGetUserQuery();
+  const { handleOAuthSignIn, requestToken } = useOAuth();
   const navigate = useNavigate();
-
-  const [searchParams] = useSearchParams();
 
   async function handleSubmit() {
     if (!validateForm(values)) {
@@ -54,36 +44,9 @@ const LoginPage: FC = () => {
     success && navigate('/game');
   }
 
-  const handleOAuthSignIn = useCallback(async () => {
-    try {
-      const { data } = await getServiceId();
-      const serviceId = data?.service_id;
-      serviceId && redirectToOAuthYandex(serviceId);
-    } catch (error) {
-      console.log(`Oops, ${error} `);
-    }
-  }, [getServiceId]);
-
   useEffect(() => {
-    const fetchData = async () => {
-      const code = searchParams.get('code');
-      if (code) {
-        try {
-          const { isSuccess } = await yandexOAuth({
-            code,
-            redirect_uri: getRedirectUrl(),
-          }).unwrap();
-          if (!isSuccess) return;
-          const user = await getUser();
-          if (user) navigate('/game');            
-        } catch (error) {
-          console.log(`Oops, ${error} `);
-        }
-      }
-    };
-
-    fetchData();
-  }, [searchParams]);
+    requestToken();
+  }, [requestToken]);
 
   return (
     <div className="login-page">
