@@ -6,6 +6,7 @@ import SignUpPage from './../components/SignUpPage/SignUpPage';
 import ForumPage from './../components/Forum/Page/Page';
 import Profile from '@/components/Profile/Profile';
 import { Error404 } from '@/components/ErrorPage/ErrorPage';
+import ConnectWires from '@/components/Minigames/ConnectWires/ConnectWires';
 
 export const routes = [
   {
@@ -39,5 +40,9 @@ export const routes = [
   {
     path: '/*',
     element: <Error404 />,
+  },
+  {
+    path: '/connwires',
+    element: <ConnectWires />,
   },
 ];
