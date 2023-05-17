@@ -1,5 +1,16 @@
 import type { Namespace, Socket } from 'socket.io';
 
+export type GameParams = {
+  discussion: number,
+  impostors: number,
+  interval: number,
+  meetings: number,
+}
+
+export type GameStatus = 'init' | 'preparing' | 'active' | 'finished';
+
+export type GameRole = 'impostor' | 'civil';
+
 export type SuitColorsType = {
   [k in (typeof suitsColors)[number]]: boolean;
 };

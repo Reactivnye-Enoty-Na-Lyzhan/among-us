@@ -8,6 +8,9 @@ export const celebrateErrors: Record<string, string> = {
   'string.length': 'Длина {#label} должна быть {#limit} символа',
   'string.hex': '{#label} должен быть указан в шестнадцетеричном формате',
   'string.pattern.base': '{#label} имеет некорректный формат данных. Проверьте данные и повторите запрос!',
+  'number.min': 'значение {#label} должно быть больше или равно {#limit}',
+  'number.max': 'значение {#label} должно быть меньше или равно {#limit}',
   'object.unknown': 'поле {#label} запрещено',
   'any.required': '{#label} обязательно!',
+  'any.only': '{#label} должен быть {if(#valids.length == 1, "", "одним из ")}{{#valids}}',
 };

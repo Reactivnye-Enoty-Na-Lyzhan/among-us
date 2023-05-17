@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { isCelebrateError } from 'celebrate';
-import { WrongDataError } from '../utils/errors/wrongDataError';
+import { WrongDataError } from '../utils/errors/commonErrors/WrongDataError';
 
 interface ResponseError extends Error {
   statusCode?: number;

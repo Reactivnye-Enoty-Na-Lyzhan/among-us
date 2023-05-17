@@ -11,6 +11,7 @@ import { ssrDevHandler } from './middlewares/ssrDevHandler';
 import { ssrProductionHandler } from './middlewares/ssrProductionHandler';
 import { connectDataBase } from './utils/connectDataBase';
 import { CLIENT_PACKAGE_PATH } from './utils/constants';
+import { helmetSettings } from './utils/securityData/helmetSettings';
 import { connectIO } from './socket';
 
 const { NODE_ENV } = process.env;
@@ -20,12 +21,19 @@ const isDev = NODE_ENV === 'development';
 const createServer = async () => {
   const app = express();
 
+  // Http-server for express and sockets
   const server = createHttpServer(app);
 
+  // Helmet
+  app.use(helmetSettings);
+
+  // DataBase
   await connectDataBase();
 
+  // Sockets
   connectIO(server);
 
+  // Vite Dev-server
   let vite: import('vite').ViteDevServer | undefined;
 
   if (isDev) {
@@ -41,9 +49,6 @@ const createServer = async () => {
   // Middlewares
   app.use(cors());
 
-  // Routes
-  app.use(routes);
-
   // Static
   !isDev &&
     app.use(
@@ -53,12 +58,17 @@ const createServer = async () => {
 
   // SSR Handler
   app.use('*', (req: Request, res: Response, next: NextFunction) => {
+    if (req.originalUrl.startsWith('/api')) return next();
+    
     if (isDev && vite) {
       ssrDevHandler(req, res, next, vite);
     } else {
       ssrProductionHandler(req, res, next);
     }
   });
+  
+  // Routes
+  app.use(routes);
 
   // Celebrate Error
   app.use(celebrateErrorHandler);

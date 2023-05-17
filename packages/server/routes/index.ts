@@ -1,12 +1,26 @@
-import { Router } from 'express';
-import commonRouter from './commons';
+import { Request, Response, Router } from 'express';
+import authRouter from './auth';
+import gameRouter from './game';
 import userRouter from './users';
+import checkAuthHandler from '../middlewares/checkAuthHandler';
 
 const router = Router();
 
-// Пример подключения группы маршрутов
-router.use('/api', commonRouter);
+// Регистрация и авторизация
+router.use('/api/', authRouter);
 
-router.use('/users', userRouter);
+// Проверка авторизации
+router.use(checkAuthHandler);
+
+router.use('/api/game', gameRouter);
+
+router.use('/api/user', userRouter);
+
+// Страница не найдена
+router.use('/api/*',(_req: Request, res: Response) => {
+  res.status(404).send({
+    message: 'Упс. 404',
+  });
+});
 
 export { router as routes };

@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { createUser } from '../controllers/users';
-import { createUserValidation } from '../utils/validation/requestValidation';
+import { logoutUser } from '../controllers/users';
 
 const router = Router();
 
-router.post('/create', createUserValidation, createUser);
+// Выход пользователя из системы
+router.post('/logout', logoutUser);
 
 export default router;
