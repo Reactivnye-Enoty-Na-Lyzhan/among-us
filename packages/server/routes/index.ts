@@ -17,7 +17,7 @@ router.use('/api/game', gameRouter);
 router.use('/api/user', userRouter);
 
 // Страница не найдена
-router.use('/api/*',(_req: Request, res: Response) => {
+router.use('/api/*', (_req: Request, res: Response) => {
   res.status(404).send({
     message: 'Упс. 404',
   });

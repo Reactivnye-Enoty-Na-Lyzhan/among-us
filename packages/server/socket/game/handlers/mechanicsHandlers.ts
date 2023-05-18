@@ -1,11 +1,19 @@
-import { CompleteTask, EmergencyMeeting, GameSocket, GameSocketNamespace } from '../../../types/socket/game/gameSocket.types';
+import {
+  CompleteTask,
+  EmergencyMeeting,
+  GameSocket,
+  GameSocketNamespace,
+} from '../../../types/socket/game/gameSocket.types';
 
-export const mechanicsHandlers = (gameSocket: GameSocketNamespace, socket: GameSocket) => {
-  const completeTask: CompleteTask = (taskId) => {
+export const mechanicsHandlers = (
+  gameSocket: GameSocketNamespace,
+  socket: GameSocket
+) => {
+  const completeTask: CompleteTask = taskId => {
     console.log(taskId);
   };
 
-  const assembleMeeting: EmergencyMeeting = (initiatorId) => {
+  const assembleMeeting: EmergencyMeeting = initiatorId => {
     gameSocket.emit('emergencyMeeting', initiatorId);
   };
 

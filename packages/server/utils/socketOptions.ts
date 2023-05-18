@@ -4,5 +4,5 @@ export const socketOptions = {
   },
   connectTimeout: 30000,
   pingTimeout: 25000,
-  transport: ['websocket']
+  transport: ['websocket'],
 };

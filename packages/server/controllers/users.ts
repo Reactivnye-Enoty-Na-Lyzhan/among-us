@@ -9,21 +9,21 @@ import { CURRENT_HOST } from '../utils/constants';
 import type { NextFunction, Request, Response } from 'express';
 
 interface ICreateUserBody {
-  username: string,
-  firstName: string,
-  lastName: string,
-  phone: string,
-  email: string,
-  password: string,
+  username: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  password: string;
 }
 
 interface ILoginUserBody {
-  username: string,
-  password: string,
+  username: string;
+  password: string;
 }
 
 interface IRequest<T> extends Request {
-  body: T,
+  body: T;
 }
 
 dotenv.config({
@@ -33,15 +33,12 @@ dotenv.config({
 const { JWT_SECRET = 'secret', NODE_ENV } = process.env;
 
 // Создание пользователя
-export const createUser = async (req: IRequest<ICreateUserBody>, res: Response, next: NextFunction) => {
-  const {
-    username,
-    firstName,
-    lastName,
-    phone,
-    email,
-    password,
-  } = req.body;
+export const createUser = async (
+  req: IRequest<ICreateUserBody>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { username, firstName, lastName, phone, email, password } = req.body;
 
   try {
     const passwordHash = await hash(password, 10);
@@ -62,7 +59,6 @@ export const createUser = async (req: IRequest<ICreateUserBody>, res: Response, 
       email: user.email,
       id: user.id,
     });
-
   } catch (err: any) {
     if (Number(err.parent.code) === 23505) {
       const existed: string = err.errors[0]?.path;
@@ -91,7 +87,11 @@ export const createUser = async (req: IRequest<ICreateUserBody>, res: Response, 
 };
 
 // Авторизация пользователя
-export const loginUser = async (req: IRequest<ILoginUserBody>, res: Response, next: NextFunction) => {
+export const loginUser = async (
+  req: IRequest<ILoginUserBody>,
+  res: Response,
+  next: NextFunction
+) => {
   const { username, password } = req.body;
   try {
     // Проверяем, существует ли пользователь
@@ -100,10 +100,10 @@ export const loginUser = async (req: IRequest<ILoginUserBody>, res: Response, ne
     if (user && user instanceof User) {
       const token = sign(
         {
-          id: user.id
+          id: user.id,
         },
         NODE_ENV === 'production' ? JWT_SECRET : 'secret',
-        { expiresIn: '7d' },
+        { expiresIn: '7d' }
       );
       res
         .cookie('jwt', token, {
@@ -116,7 +116,6 @@ export const loginUser = async (req: IRequest<ILoginUserBody>, res: Response, ne
           username: user.username,
         });
     }
-
   } catch (err) {
     next(err);
   }

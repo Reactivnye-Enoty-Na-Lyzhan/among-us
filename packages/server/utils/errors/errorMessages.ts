@@ -11,4 +11,5 @@ export enum ErrorMessages {
   notInQueue = 'Вы не состояли в очереди на подключение',
   alreadyInQueue = 'Вы уже подключены к очереди в игру',
   alreadyConnected = 'Вы уже присоединились к игре',
-};
+  teamNotExist = 'Ошибка! Команда игрока не найдена',
+}

@@ -1,5 +1,8 @@
 import type { baseSocketServer } from '../../types/socket/baseSocket.types';
-import type { GameSocket, GameSocketNamespace } from '../../types/socket/game/gameSocket.types';
+import type {
+  GameSocket,
+  GameSocketNamespace,
+} from '../../types/socket/game/gameSocket.types';
 import { connectionHandlers } from './handlers/connectionHandlers';
 import { movementSyncHandlers } from './handlers/movementSyncHandlers';
 import { configurationHandlers } from './handlers/configurationHandlers';

@@ -15,18 +15,29 @@ import { NotInQueueError } from '../utils/errors/gameErrors/NotInQueueError';
 import { AlreadyExistError } from '../utils/errors/commonErrors/AlreadyExistError';
 import { ResponseMessages } from '../utils/ResponseMessages';
 import { roleDistributor } from '../utils/game/rolePicker';
+import { getScore } from '../utils/game/getScore';
 import { MAX_PLAYERS } from '../utils/constants';
 import type { NextFunction, Request, Response } from 'express';
-import type { GameParams, GameRole, SuitColorsType } from '../types/socket/game/gameSocket.types';
+import type {
+  GameParams,
+  GameRole,
+  SuitColorsType,
+} from '../types/socket/game/gameSocket.types';
+
+interface IBodyCompleteTask {
+  gameId: number;
+  taskId: number;
+  playerId: number;
+}
 
 interface IBodyJoinGame {
-  gameId: number,
-  color: keyof SuitColorsType,
-  role: GameRole,
+  gameId: number;
+  color: keyof SuitColorsType;
+  role: GameRole;
 }
 
 interface IBodyTakeQueue {
-  gameId: number,
+  gameId: number;
 }
 
 interface IBodyGetGames {
@@ -35,19 +46,19 @@ interface IBodyGetGames {
 }
 
 interface IBodyFindGame {
-  title: string,
+  title: string;
   offset: number;
   limit: number;
 }
 
 interface IBodyCreateGame {
-  title: string,
-  params: GameParams,
+  title: string;
+  params: GameParams;
 }
 
 interface IBodyLeaveGame {
-  gameId: number,
-  playerId?: number,
+  gameId: number;
+  playerId?: number;
 }
 
 interface IBodyKillPlayer {
@@ -60,11 +71,15 @@ interface IUser {
 
 interface IRequest<T = unknown> extends Request {
   user?: IUser;
-  body: T,
+  body: T;
 }
 
 // Создание новой игры
-export const createGame = async (req: IRequest<IBodyCreateGame>, res: Response, next: NextFunction) => {
+export const createGame = async (
+  req: IRequest<IBodyCreateGame>,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
   const { title, params } = req.body;
 
@@ -72,7 +87,6 @@ export const createGame = async (req: IRequest<IBodyCreateGame>, res: Response, 
     if (!id) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
 
     const { result } = await sequelize.transaction(async () => {
-
       // Создаём игру
       const newGame = await Game.create({
         title,
@@ -83,11 +97,13 @@ export const createGame = async (req: IRequest<IBodyCreateGame>, res: Response, 
       // Добавляем команды
       const teams = await Team.bulkCreate([
         {
-          title: 'civil',
+          title: 'civils',
+          role: 'civil',
           score: 0,
         },
         {
           title: 'impostors',
+          role: 'impostor',
           score: 0,
         },
       ]);
@@ -107,18 +123,20 @@ export const createGame = async (req: IRequest<IBodyCreateGame>, res: Response, 
             grey: false,
           },
         }),
-        newGame.setTeams(teams)]
-      );
+        newGame.setTeams(teams),
+      ]);
 
       // Получаем готовый результат для отправки клиенту
       const result = await Game.findOne({
         where: {
           id: newGame.id,
         },
-        include: [{
-          model: GameParam,
-          as: 'param',
-        }],
+        include: [
+          {
+            model: GameParam,
+            as: 'param',
+          },
+        ],
       });
 
       return { result };
@@ -133,7 +151,11 @@ export const createGame = async (req: IRequest<IBodyCreateGame>, res: Response, 
 };
 
 // Получение списка всех игр
-export const getGames = async (req: IRequest<IBodyGetGames>, res: Response, next: NextFunction) => {
+export const getGames = async (
+  req: IRequest<IBodyGetGames>,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
   const { offset, limit } = req.body;
 
@@ -144,10 +166,12 @@ export const getGames = async (req: IRequest<IBodyGetGames>, res: Response, next
     const foundGames = await Game.findAll({
       offset,
       limit,
-      include: [{
-        model: GameParam,
-        as: 'param',
-      }],
+      include: [
+        {
+          model: GameParam,
+          as: 'param',
+        },
+      ],
     });
 
     res.send({ foundGames });
@@ -157,7 +181,11 @@ export const getGames = async (req: IRequest<IBodyGetGames>, res: Response, next
 };
 
 // Поиск игр по условию
-export const findGames = async (req: IRequest<IBodyFindGame>, res: Response, next: NextFunction) => {
+export const findGames = async (
+  req: IRequest<IBodyFindGame>,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
   const { title, offset, limit } = req.body;
 
@@ -173,14 +201,15 @@ export const findGames = async (req: IRequest<IBodyFindGame>, res: Response, nex
       },
       offset,
       limit,
-      include: [{
-        model: GameParam,
-        as: 'param',
-      }],
+      include: [
+        {
+          model: GameParam,
+          as: 'param',
+        },
+      ],
     });
 
     res.send({ foundGames });
-
   } catch (err: unknown) {
     next(err);
   }
@@ -188,7 +217,11 @@ export const findGames = async (req: IRequest<IBodyFindGame>, res: Response, nex
 
 // Быстрый поиск игры
 // На данный момент просто ищет игру, созданную раньше
-export const findHotGame = async (req: IRequest, res: Response, next: NextFunction) => {
+export const findHotGame = async (
+  req: IRequest,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
 
   try {
@@ -198,23 +231,24 @@ export const findHotGame = async (req: IRequest, res: Response, next: NextFuncti
       where: {
         status: 'init',
       },
-      order: [
-        ['id', 'ASC'],
-      ],
+      order: [['id', 'ASC']],
       attributes: ['id'],
     });
 
     res.send({
       game,
     });
-
   } catch (err: unknown) {
     next(err);
   }
 };
 
 // Подключаемся к очереди в игру
-export const takeQueue = async (req: IRequest<IBodyTakeQueue>, res: Response, next: NextFunction) => {
+export const takeQueue = async (
+  req: IRequest<IBodyTakeQueue>,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
   const { gameId } = req.body;
 
@@ -230,7 +264,7 @@ export const takeQueue = async (req: IRequest<IBodyTakeQueue>, res: Response, ne
     if (!foundGame) throw new NotExistError(ErrorMessages.gameNotExist);
 
     // Если нет места для подключения, сообщаем об этом пользователю
-    if (await foundGame.countGameQueues() >= MAX_PLAYERS) {
+    if ((await foundGame.countGameQueues()) >= MAX_PLAYERS) {
       throw new ReachLimitsError(ErrorMessages.playerLimits);
     }
 
@@ -256,36 +290,44 @@ export const takeQueue = async (req: IRequest<IBodyTakeQueue>, res: Response, ne
       where: {
         id: gameId,
       },
-      include: [{
-        model: Player,
-        as: 'players',
-        include: [{
-          model: User,
-          as: 'user',
-          // Из пользователя получаем только username и nickname (может быть null)
-          attributes: ['username', 'nickname'],
-        }],
-      },
-      {
-        model: GameParam,
-        as: 'param',
-      }, {
-        model: GameColor,
-        as: 'color',
-      }],
+      include: [
+        {
+          model: Player,
+          as: 'players',
+          include: [
+            {
+              model: User,
+              as: 'user',
+              // Из пользователя получаем только username и nickname (может быть null)
+              attributes: ['username', 'nickname'],
+            },
+          ],
+        },
+        {
+          model: GameParam,
+          as: 'param',
+        },
+        {
+          model: GameColor,
+          as: 'color',
+        },
+      ],
     });
 
     res.send({
       game,
     });
-
   } catch (err: unknown) {
     next(err);
   }
 };
 
 // Подключение к игре
-export const joinGame = async (req: IRequest<IBodyJoinGame>, res: Response, next: NextFunction) => {
+export const joinGame = async (
+  req: IRequest<IBodyJoinGame>,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
   const { gameId, color } = req.body;
 
@@ -305,7 +347,7 @@ export const joinGame = async (req: IRequest<IBodyJoinGame>, res: Response, next
     const players = await foundGame.getPlayers({
       where: {
         userId: id,
-      }
+      },
     });
 
     if (players.length > 0) {
@@ -324,11 +366,11 @@ export const joinGame = async (req: IRequest<IBodyJoinGame>, res: Response, next
     }
 
     // Если имеются свободные места
-    if (await foundGame.countPlayers() >= MAX_PLAYERS) {
+    if ((await foundGame.countPlayers()) >= MAX_PLAYERS) {
       throw new ReachLimitsError(ErrorMessages.playerLimits);
-    };
+    }
 
-    await foundGame.createPlayer({
+    const player = await foundGame.createPlayer({
       alive: true,
       color,
       lastPosition: {
@@ -341,16 +383,19 @@ export const joinGame = async (req: IRequest<IBodyJoinGame>, res: Response, next
     });
 
     res.send({
-      message: `${ResponseMessages.onJoinGame} ${gameId}`,
+      player,
     });
-
   } catch (err: unknown) {
     next(err);
   }
 };
 
 // Получение активной игры пользователя
-export const getCurrentGame = async (req: IRequest<IUser>, res: Response, next: NextFunction) => {
+export const getCurrentGame = async (
+  req: IRequest<IUser>,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
 
   try {
@@ -361,16 +406,15 @@ export const getCurrentGame = async (req: IRequest<IUser>, res: Response, next: 
       where: {
         userId: id,
       },
-      include: [{
-        model: Game,
-        as: 'game',
-        where: {
-          [Op.or]: [
-            { status: 'active' },
-            { status: 'init' },
-          ],
+      include: [
+        {
+          model: Game,
+          as: 'game',
+          where: {
+            [Op.or]: [{ status: 'active' }, { status: 'init' }],
+          },
         },
-      }],
+      ],
     });
 
     if (!player) {
@@ -387,19 +431,28 @@ export const getCurrentGame = async (req: IRequest<IUser>, res: Response, next: 
         {
           model: Player,
           as: 'players',
-          include: [{
-            model: User,
-            as: 'user',
-            // Из пользователя получаем только username и nickname (может быть null)
-            attributes: ['username', 'nickname'],
-          }],
-        }, {
+          include: [
+            {
+              model: User,
+              as: 'user',
+              // Из пользователя получаем только username и nickname (может быть null)
+              attributes: ['username', 'nickname'],
+            },
+          ],
+        },
+        {
           model: GameParam,
           as: 'param',
-        }, {
+        },
+        {
           model: GameColor,
           as: 'color',
-        }],
+        },
+        {
+          model: Team,
+          as: 'teams',
+        },
+      ],
     });
 
     res.send({ game });
@@ -408,7 +461,11 @@ export const getCurrentGame = async (req: IRequest<IUser>, res: Response, next: 
   }
 };
 
-export const killPlayer = async (req: IRequest<IBodyKillPlayer>, res: Response, next: NextFunction) => {
+export const killPlayer = async (
+  req: IRequest<IBodyKillPlayer>,
+  res: Response,
+  next: NextFunction
+) => {
   const { userId } = req.body;
 
   try {
@@ -433,7 +490,11 @@ export const killPlayer = async (req: IRequest<IBodyKillPlayer>, res: Response, 
 };
 
 // Выход пользователя из игры
-export const leaveGame = async (req: IRequest<IBodyLeaveGame>, res: Response, next: NextFunction) => {
+export const leaveGame = async (
+  req: IRequest<IBodyLeaveGame>,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
   const { gameId } = req.body;
 
@@ -450,21 +511,23 @@ export const leaveGame = async (req: IRequest<IBodyLeaveGame>, res: Response, ne
 
       if (!game) {
         throw new NotExistError(ErrorMessages.gameNotExist);
-      };
+      }
 
       // Проверяем, существует ли player
       const player = await Player.findOne({
         where: {
           gameId,
         },
-        include: [{
-          model: User,
-          as: 'user',
-          where: {
-            id,
+        include: [
+          {
+            model: User,
+            as: 'user',
+            where: {
+              id,
+            },
+            attributes: [],
           },
-          attributes: [],
-        }],
+        ],
       });
 
       // Если игрок найден - удаляем
@@ -478,7 +541,7 @@ export const leaveGame = async (req: IRequest<IBodyLeaveGame>, res: Response, ne
         where: {
           gameId,
           userId: id,
-        }
+        },
       });
 
       if (!queue) throw new NotInQueueError(ErrorMessages.notInQueue);
@@ -491,6 +554,52 @@ export const leaveGame = async (req: IRequest<IBodyLeaveGame>, res: Response, ne
 
     res.send({
       message: ResponseMessages.onLeftGame,
+    });
+  } catch (err: unknown) {
+    next(err);
+  }
+};
+
+export const completeTask = async (
+  req: IRequest<IBodyCompleteTask>,
+  res: Response,
+  next: NextFunction
+) => {
+  const id = req.user?.id;
+  const { gameId, taskId, playerId } = req.body;
+
+  try {
+    if (!id) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
+
+    const player = await Player.findOne({
+      where: {
+        id: playerId,
+      },
+    });
+
+    if (!player) throw new NotExistError(ErrorMessages.playerNotExist);
+
+    const playerRole = player.role;
+
+    const team = await Team.findOne({
+      where: {
+        gameId,
+        role: playerRole,
+      },
+    });
+
+    if (!team) throw new NotExistError(ErrorMessages.teamNotExist);
+
+    const score = getScore(taskId);
+
+    await team.update({
+      score: team.score + score,
+    });
+
+    await team.save();
+
+    res.send({
+      message: 'Счёт команды успешно обновлён!',
     });
   } catch (err: unknown) {
     next(err);

@@ -1,11 +1,11 @@
 import type { Namespace, Socket } from 'socket.io';
 
 export type GameParams = {
-  discussion: number,
-  impostors: number,
-  interval: number,
-  meetings: number,
-}
+  discussion: number;
+  impostors: number;
+  interval: number;
+  meetings: number;
+};
 
 export type GameStatus = 'init' | 'preparing' | 'active' | 'finished';
 
@@ -49,7 +49,11 @@ export type CreateGame = () => void;
 
 export type FindGame = () => void;
 
-export type ColorSelect = (color: keyof SuitColorsType, oldColor: keyof SuitColorsType, callback: (newColor: keyof SuitColorsType) => void) => void;
+export type ColorSelect = (
+  color: keyof SuitColorsType,
+  oldColor: keyof SuitColorsType,
+  callback: (newColor: keyof SuitColorsType) => void
+) => void;
 
 interface IMoveParams {
   id: string;
@@ -81,7 +85,7 @@ export interface IGameClienToServerEvents {
   completeTask: CompleteTask;
   playerReady: SetPlayerReady;
   getPlayers: GetPlayers;
-  assembleMeeting: EmergencyMeeting; 
+  assembleMeeting: EmergencyMeeting;
 }
 
 // Inter-server
@@ -95,5 +99,15 @@ export interface IGameSocketData {
   age: number;
 }
 
-export type GameSocketNamespace = Namespace<IGameClienToServerEvents, IGameServerToClientEvents, IGameInterServerEvents, IGameSocketData>;
-export type GameSocket = Socket<IGameClienToServerEvents, IGameServerToClientEvents, IGameInterServerEvents, IGameSocketData>;
+export type GameSocketNamespace = Namespace<
+  IGameClienToServerEvents,
+  IGameServerToClientEvents,
+  IGameInterServerEvents,
+  IGameSocketData
+>;
+export type GameSocket = Socket<
+  IGameClienToServerEvents,
+  IGameServerToClientEvents,
+  IGameInterServerEvents,
+  IGameSocketData
+>;

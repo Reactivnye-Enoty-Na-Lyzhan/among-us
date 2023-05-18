@@ -1,4 +1,8 @@
-import { EndMove, GameSocket, Move } from '../../../types/socket/game/gameSocket.types';
+import {
+  EndMove,
+  GameSocket,
+  Move,
+} from '../../../types/socket/game/gameSocket.types';
 
 export const movementSyncHandlers = (socket: GameSocket) => {
   // TODO: playerMoving
@@ -7,7 +11,7 @@ export const movementSyncHandlers = (socket: GameSocket) => {
     socket.broadcast.emit('move', { id, x, y });
   };
 
-  const endMove: EndMove = (id) => {
+  const endMove: EndMove = id => {
     // Трансилруем событие всем, кроме инициатора
     socket.broadcast.emit('endMove', id);
   };

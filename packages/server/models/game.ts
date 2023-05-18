@@ -22,7 +22,10 @@ import { GameColor } from './gameColor';
 import { sequelize } from '../utils/connectDataBase';
 import type { GameStatus } from 'socket/game/gameSocket.types';
 
-export class Game extends Model<InferAttributes<Game>, InferCreationAttributes<Game>> {
+export class Game extends Model<
+  InferAttributes<Game>,
+  InferCreationAttributes<Game>
+> {
   declare id: CreationOptional<number>;
   declare title: string;
   declare status: GameStatus;
@@ -42,26 +45,29 @@ export class Game extends Model<InferAttributes<Game>, InferCreationAttributes<G
   declare getParam: HasOneGetAssociationMixin<GameParam>;
 }
 
-Game.init({
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+Game.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
-  status: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-}, {
-  sequelize,
-  tableName: 'games',
-  paranoid: true,
-  timestamps: false,
-});
+  {
+    sequelize,
+    tableName: 'games',
+    paranoid: true,
+    timestamps: false,
+  }
+);
 
 Game.hasMany(Player, { as: 'players', sourceKey: 'id', foreignKey: 'gameId' });
 Player.belongsTo(Game, { as: 'game', targetKey: 'id', foreignKey: 'gameId' });
@@ -69,11 +75,23 @@ Player.belongsTo(Game, { as: 'game', targetKey: 'id', foreignKey: 'gameId' });
 Game.hasOne(GameParam, { as: 'param' });
 GameParam.belongsTo(Game, { as: 'param' });
 
-Game.hasMany(Team, { as: 'teams', sourceKey: 'id', foreignKey: 'teamId' });
-Team.belongsTo(Game, { as: 'team', targetKey: 'id', foreignKey: 'teamId' });
+Game.hasMany(Team, { as: 'teams', sourceKey: 'id', foreignKey: 'gameId' });
+Team.belongsTo(Game, { as: 'team', targetKey: 'id', foreignKey: 'gameId' });
 
-Game.hasMany(GameQueue, { as: 'gameQueues', sourceKey: 'id', foreignKey: 'gameId' });
-GameQueue.belongsTo(Game, { as: 'gameQueue', targetKey: 'id', foreignKey: 'gameId' });
+Game.hasMany(GameQueue, {
+  as: 'gameQueues',
+  sourceKey: 'id',
+  foreignKey: 'gameId',
+});
+GameQueue.belongsTo(Game, {
+  as: 'gameQueue',
+  targetKey: 'id',
+  foreignKey: 'gameId',
+});
 
-Game.hasOne(GameColor, {as: 'color', sourceKey: 'id', foreignKey: 'gameId' });
-GameColor.belongsTo(Game, {as: 'color', targetKey: 'id', foreignKey: 'gameId' });
+Game.hasOne(GameColor, { as: 'color', sourceKey: 'id', foreignKey: 'gameId' });
+GameColor.belongsTo(Game, {
+  as: 'color',
+  targetKey: 'id',
+  foreignKey: 'gameId',
+});

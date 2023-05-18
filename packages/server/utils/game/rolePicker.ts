@@ -3,10 +3,13 @@ import { Game } from '../../models/game';
 import { MAX_PLAYERS } from '../../utils/constants';
 
 function getRandom(): GameRole {
-  return (Math.random() < 0.50 ? 'civil' : 'impostor');
+  return Math.random() < 0.5 ? 'civil' : 'impostor';
 }
 
-export const roleDistributor = async (game: Game, gameId: number): Promise<GameRole> => {
+export const roleDistributor = async (
+  game: Game,
+  gameId: number
+): Promise<GameRole> => {
   const players = await game.getPlayers({
     where: {
       gameId,
@@ -21,7 +24,7 @@ export const roleDistributor = async (game: Game, gameId: number): Promise<GameR
   const { impostors: maxImpostors } = await game.getParam();
 
   const civilsLeft = MAX_PLAYERS - maxImpostors;
-  const civils = (players.filter((player) => player.role === 'civil')).length;
+  const civils = players.filter(player => player.role === 'civil').length;
   const impostors = playersCount - civils;
 
   if (impostors < maxImpostors) {
@@ -33,5 +36,4 @@ export const roleDistributor = async (game: Game, gameId: number): Promise<GameR
   }
 
   return 'civil';
-
 };

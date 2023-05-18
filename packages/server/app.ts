@@ -59,14 +59,14 @@ const createServer = async () => {
   // SSR Handler
   app.use('*', (req: Request, res: Response, next: NextFunction) => {
     if (req.originalUrl.startsWith('/api')) return next();
-    
+
     if (isDev && vite) {
       ssrDevHandler(req, res, next, vite);
     } else {
       ssrProductionHandler(req, res, next);
     }
   });
-  
+
   // Routes
   app.use(routes);
 

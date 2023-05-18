@@ -15,7 +15,10 @@ import { ErrorMessages } from '../utils/errors/errorMessages';
 import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
 import { sequelize } from '../utils/connectDataBase';
 
-export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+export class User extends Model<
+  InferAttributes<User>,
+  InferCreationAttributes<User>
+> {
   declare username: string;
   declare firstName: string;
   declare lastName: string;
@@ -28,7 +31,10 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
   declare addGame: BelongsToManyAddAssociationMixin<Game, number>;
 
   // Метод проверки данных пользователя
-  static async findByCredentials(username: string, password: string): Promise<User | unknown> {
+  static async findByCredentials(
+    username: string,
+    password: string
+  ): Promise<User | unknown> {
     try {
       const user = await this.scope('withPassword').findOne({
         where: {
@@ -37,83 +43,97 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
       });
 
       if (!user) {
-        return Promise.reject(new WrongDataError(ErrorMessages.wrongPasswordOrUsername));
+        return Promise.reject(
+          new WrongDataError(ErrorMessages.wrongPasswordOrUsername)
+        );
       }
 
       const passwordMatched = await compare(password, user.password);
 
       if (!passwordMatched) {
-        return Promise.reject(new NotAuthorizedError(ErrorMessages.wrongPasswordOrUsername));
+        return Promise.reject(
+          new NotAuthorizedError(ErrorMessages.wrongPasswordOrUsername)
+        );
       }
 
       return user;
-
     } catch (err: unknown) {
       return err;
     }
   }
 }
 
-User.init({
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  firstName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  lastName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  nickname: {
-    type: DataTypes.STRING,
-  },
-  phone: {
-    allowNull: false,
-    type: DataTypes.STRING,
-    unique: true,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  avatar: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-}, {
-  defaultScope: {
-    attributes: {
-      exclude: ['password'],
+User.init(
+  {
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    nickname: {
+      type: DataTypes.STRING,
+    },
+    phone: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
   },
-  scopes: {
-    withPassword: {
+  {
+    defaultScope: {
       attributes: {
-        include: ['password'],
+        exclude: ['password'],
       },
     },
-  },
-  sequelize,
-  tableName: 'users',
-  timestamps: false,
-});
+    scopes: {
+      withPassword: {
+        attributes: {
+          include: ['password'],
+        },
+      },
+    },
+    sequelize,
+    tableName: 'users',
+    timestamps: false,
+  }
+);
 
 User.hasMany(Player, { as: 'users', sourceKey: 'id', foreignKey: 'userId' });
 Player.belongsTo(User, { as: 'user', targetKey: 'id', foreignKey: 'userId' });
 
-User.hasMany(GameQueue, { as: 'userQueues', sourceKey: 'id', foreignKey: 'userId' });
-GameQueue.belongsTo(User, { as: 'userQueue', targetKey: 'id', foreignKey: 'userId' });
+User.hasMany(GameQueue, {
+  as: 'userQueues',
+  sourceKey: 'id',
+  foreignKey: 'userId',
+});
+GameQueue.belongsTo(User, {
+  as: 'userQueue',
+  targetKey: 'id',
+  foreignKey: 'userId',
+});

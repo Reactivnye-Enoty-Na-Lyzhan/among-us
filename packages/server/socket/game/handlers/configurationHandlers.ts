@@ -1,4 +1,8 @@
-import { ColorSelect, GameSocket, SuitColorsType } from '../../../types/socket/game/gameSocket.types';
+import {
+  ColorSelect,
+  GameSocket,
+  SuitColorsType,
+} from '../../../types/socket/game/gameSocket.types';
 
 export const configurationHandlers = (socket: GameSocket) => {
   const selectedColors: SuitColorsType = {
@@ -17,7 +21,7 @@ export const configurationHandlers = (socket: GameSocket) => {
     if (oldColor) {
       selectedColors[oldColor] = false;
     }
-    
+
     const chosenColor = selectedColors[color];
     if (!chosenColor) {
       selectedColors[color] = true;

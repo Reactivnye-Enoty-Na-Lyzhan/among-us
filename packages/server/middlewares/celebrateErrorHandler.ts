@@ -21,7 +21,6 @@ export default (
 
     const message = err.details.get('body')?.message || 'Ошибка валидации';
     return next(new WrongDataError(message));
-
   }
 
   return next(err);

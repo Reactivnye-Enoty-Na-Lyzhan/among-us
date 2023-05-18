@@ -6,4 +6,4 @@ export class ReachLimitsError extends BaseError {
     this.name = 'ReachLimits';
     this.statusCode = 400;
   }
-};
+}

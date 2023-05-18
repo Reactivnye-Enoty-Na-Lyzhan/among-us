@@ -17,7 +17,7 @@ const {
 const sequelizeOptions: SequelizeOptions = {
   host: POSTGRES_HOST,
   port: Number(POSTGRES_PORT),
-  username: POSTGRES_USER ,
+  username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   dialect: 'postgres',
@@ -31,7 +31,7 @@ export const sequelize = new Sequelize(sequelizeOptions);
 export const connectDataBase = async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({alter: true});
+    await sequelize.sync({ alter: true });
   } catch (err: unknown) {
     console.log(err);
     console.error('Ошибка при подключении к Базе данных');

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+  completeTask,
   createGame,
   findGames,
   findHotGame,
@@ -11,6 +12,7 @@ import {
   takeQueue,
 } from '../controllers/games';
 import {
+  completeTaskValidation,
   createGameValidation,
   findGamesValidation,
   joinGameValidation,
@@ -36,13 +38,16 @@ router.post('/find', findGamesValidation, findGames);
 router.post('/create', createGameValidation, createGame);
 
 // Добавление игрока в очередь к игре
-router.put('/queue', takeQueueValidation, takeQueue);
+router.post('/queue', takeQueueValidation, takeQueue);
 
 // Подключение в игру (создание персонажа)
-router.put('/join', joinGameValidation, joinGame);
+router.post('/join', joinGameValidation, joinGame);
 
 // Убийство персонажа
 router.patch('/kill', killPlayer);
+
+// Обонвление счёта команды
+router.patch('/score', completeTaskValidation, completeTask);
 
 // Выход из игры
 router.delete('/leave', leaveGameValidation, leaveGame);

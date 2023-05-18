@@ -24,4 +24,5 @@ export const CLIENT_PACKAGE_PATH = path.resolve(
 
 export const MAX_PLAYERS = 9;
 
-export const CURRENT_HOST = NODE_ENV === 'production' ? 'localhost' : 'localhost';
+export const CURRENT_HOST =
+  NODE_ENV === 'production' ? 'localhost' : 'localhost';

@@ -4,7 +4,7 @@ import type {
   JoinGame,
   SetPlayerReady,
   FindGame,
-/*   GameReady, */
+  /*   GameReady, */
   GetPlayers,
 } from '../../../types/socket/game/gameSocket.types';
 
@@ -12,7 +12,7 @@ const players: Set<string> = new Set();
 const readyPlayers: Set<string> = new Set();
 
 export const connectionHandlers = (socket: GameSocket) => {
-  const joinGame: JoinGame = (callback) => {
+  const joinGame: JoinGame = callback => {
     const playerId = Math.floor(Math.random() * 100000000).toString();
     players.add(playerId);
     callback(playerId);
@@ -26,17 +26,17 @@ export const connectionHandlers = (socket: GameSocket) => {
     console.log('findGame');
   };
 
-  const setPlayerReady: SetPlayerReady = (playerId) => {
+  const setPlayerReady: SetPlayerReady = playerId => {
     readyPlayers.add(playerId);
     console.log('Player: ', playerId);
   };
 
-  const getPlayers: GetPlayers = (callback) => {
+  const getPlayers: GetPlayers = callback => {
     console.log(players, readyPlayers);
     callback([...readyPlayers.keys()]);
   };
 
-/*   const broadcastGameReady: GameReady = () => {
+  /*   const broadcastGameReady: GameReady = () => {
     socket.emit('gameReady', [...readyPlayers.keys()] || ['s']);
   }; */
 

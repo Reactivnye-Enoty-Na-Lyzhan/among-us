@@ -6,4 +6,4 @@ export class AlreadyExistError extends BaseError {
     this.name = 'AlreadyExist';
     this.statusCode = 409;
   }
-};
+}

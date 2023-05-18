@@ -6,7 +6,7 @@ export const helmetSettings = helmet({
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
-      connectSrc: ["*"],
+      connectSrc: ['*'],
     },
   },
   hsts: false,

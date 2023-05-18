@@ -1,4 +1,4 @@
-import type { Server } from "socket.io";
+import type { Server } from 'socket.io';
 
 // Broadcasting
 export interface IServerToClientEvents {
@@ -26,4 +26,9 @@ export interface ISocketData {
   age: number;
 }
 
-export type baseSocketServer = Server<IClienToServerEvents, IServerToClientEvents, IInterServerEvents, ISocketData>;
+export type baseSocketServer = Server<
+  IClienToServerEvents,
+  IServerToClientEvents,
+  IInterServerEvents,
+  ISocketData
+>;

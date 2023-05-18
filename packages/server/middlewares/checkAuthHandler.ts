@@ -14,8 +14,8 @@ interface ICookies {
 }
 
 interface IRequest<T> extends Request {
-  user?: JwtPayload | string,
-  cookies: T,
+  user?: JwtPayload | string;
+  cookies: T;
 }
 
 dotenv.config({
@@ -27,7 +27,7 @@ const { JWT_SECRET = 'secret', NODE_ENV } = process.env;
 export default async (
   req: IRequest<ICookies>,
   _res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const { jwt } = req.cookies;
 

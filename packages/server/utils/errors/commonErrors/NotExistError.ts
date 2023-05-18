@@ -6,4 +6,4 @@ export class NotExistError extends BaseError {
     this.name = 'GameNotExist';
     this.statusCode = 404;
   }
-};
+}
