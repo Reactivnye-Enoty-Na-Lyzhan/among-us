@@ -13,7 +13,7 @@ export const createStore = (preloadedState?: TypeRootState) => {
       [leaderboardApi.reducerPath]: leaderboardApi.reducer,
       [authApi.reducerPath]: authApi.reducer,
       [oauthApi.reducerPath]: oauthApi.reducer,
-    game: gameReducer,
+      game: gameReducer,
       ui: uiReducer,
     },
     preloadedState,
@@ -21,7 +21,7 @@ export const createStore = (preloadedState?: TypeRootState) => {
       getDefaultMiddleware().concat(
         leaderboardApi.middleware,
         authApi.middleware,
-      oauthApi.middleware
+        oauthApi.middleware
       ),
   });
 };
