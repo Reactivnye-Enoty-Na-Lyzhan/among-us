@@ -10,7 +10,7 @@ import { IGameState } from './game/game.types';
 import { IUiState } from './ui/ui.types';
 import { ILeaderboardState } from './leaderboard/leaderboard.types';
 
-export const createStore = (preloadedState?: TypeRootState) => {
+export const createStore = (preloadedState?: PreloadedState) => {
   return configureStore({
     reducer: {
       [apiSliceBase.reducerPath]: apiSliceBase.reducer,
@@ -26,17 +26,20 @@ export const createStore = (preloadedState?: TypeRootState) => {
         apiSliceBase.middleware,
         authApi.middleware,
         oauthApi.middleware,
-        leaderboardListenerMiddleware.middleware,
+        leaderboardListenerMiddleware.middleware
       ),
   });
 };
 
-export type TypeRootState = {
-  api: any;
+export type PreloadedState = {
   game: IGameState;
   ui: IUiState;
   leaderboard: ILeaderboardState;
 };
+
+export type TypeRootState = ReturnType<
+  ReturnType<typeof createStore>['getState']
+>;
 export type AppDispatch = ReturnType<typeof createStore>['dispatch'];
 
 /*
