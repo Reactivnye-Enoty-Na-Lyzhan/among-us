@@ -23,6 +23,7 @@
     "paths": {
       "*": ["types/*"]
     },
-    "outDir": "dist"
+    "outDir": "dist",
+    "skipLibCheck": true
   }
 }

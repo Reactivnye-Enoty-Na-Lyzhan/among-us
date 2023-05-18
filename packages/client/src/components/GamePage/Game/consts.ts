@@ -13,14 +13,21 @@ const CANVAS = {
   width: 1280,
   height: 720,
 };
-const playerSpriteRight = new Image();
-playerSpriteRight.src = playerSpriteWhiteRight;
 
-const playerSpriteLeft = new Image();
-playerSpriteLeft.src = playerSpriteWhiteLeft;
+let playerSpriteRight: HTMLImageElement;
+let playerSpriteLeft: HTMLImageElement;
+let gameMap: HTMLImageElement;
 
-const gameMap = new Image();
-gameMap.src = map;
+if (typeof window !== 'undefined') {
+  playerSpriteRight = new Image();
+  playerSpriteRight.src = playerSpriteWhiteRight;
+
+  playerSpriteLeft = new Image();
+  playerSpriteLeft.src = playerSpriteWhiteLeft;
+
+  gameMap = new Image();
+  gameMap.src = map;
+}
 
 const PLAYER = {
   height: 50,
