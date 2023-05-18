@@ -1,30 +1,40 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { gameReducer } from './game/game.slice';
 import { authApi } from './auth/auth.slice';
+import { oauthApi } from './auth/oauth.slice';
 import { uiReducer } from './ui/ui.slice';
 import { apiSliceBase } from './api/api.slice';
 import { leaderboardReducer } from './leaderboard/leaderboard.slice';
 import { leaderboardListenerMiddleware } from './leaderboard/listenerMiddleware';
+import { IGameState } from './game/game.types';
+import { IUiState } from './ui/ui.types';
 
-export const store = configureStore({
-  reducer: {
-    [apiSliceBase.reducerPath]: apiSliceBase.reducer,
-    [authApi.reducerPath]: authApi.reducer,
-    game: gameReducer,
-    ui: uiReducer,
-    leaderboard: leaderboardReducer,
-  },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(
-      apiSliceBase.middleware,
-      authApi.middleware,
-      leaderboardListenerMiddleware.middleware
-    ),
-});
-export const { dispatch } = store;
+export const createStore = (preloadedState?: TypeRootState) => {
+  return configureStore({
+    reducer: {
+      [apiSliceBase.reducerPath]: apiSliceBase.reducer,
+      [authApi.reducerPath]: authApi.reducer,
+      [oauthApi.reducerPath]: oauthApi.reducer,
+      game: gameReducer,
+      ui: uiReducer,
+      leaderboard: leaderboardReducer,
+    },
+    preloadedState,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware().concat(
+        apiSliceBase.middleware,
+        authApi.middleware,
+        oauthApi.middleware,
+        leaderboardListenerMiddleware.middleware,
+      ),
+  });
+};
 
-export type TypeRootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type TypeRootState = {
+  game: IGameState;
+  ui: IUiState;
+};
+export type AppDispatch = ReturnType<typeof createStore>['dispatch'];
 
 /*
   ************* HOW TO USE: ****************
