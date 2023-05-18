@@ -5,6 +5,7 @@ export type User = {
   display_name: string;
   login: string;
   email: string;
+  password: string;
   phone: string;
   avatar: string;
 };
@@ -32,4 +33,13 @@ export type SignUpSuccessfulResponse = {
 export type APIErrorResponse = {
   reason: string;
   error?: string;
+};
+
+export type TOAuthData = {
+  code: string;
+  redirect_uri: string;
+};
+
+export type TServiceId = {
+  service_id: string;
 };
