@@ -11,13 +11,17 @@ import {
   EnumRatingTypes,
 } from '@-constants/leaderboard/ratings.constants';
 
+import type { ILeaderboardState } from './leaderboard.types';
+
+const initialState: ILeaderboardState = {
+  sortingType: DEFAULT_RATING_FIELD,
+  fetchedRatingsCount: 0,
+  ratingsList: ratingsAdapterInitialState,
+};
+
 const leaderboardSlice = createSlice({
   name: 'leaderboard',
-  initialState: {
-    sortingType: DEFAULT_RATING_FIELD,
-    fetchedRatingsCount: 0,
-    ratingsList: ratingsAdapterInitialState,
-  },
+  initialState,
   reducers: {
     setSortingType: (state, action: PayloadAction<EnumRatingTypes>) => {
       state.sortingType = action.payload;

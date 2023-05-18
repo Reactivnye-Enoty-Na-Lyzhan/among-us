@@ -8,6 +8,7 @@ import { leaderboardReducer } from './leaderboard/leaderboard.slice';
 import { leaderboardListenerMiddleware } from './leaderboard/listenerMiddleware';
 import { IGameState } from './game/game.types';
 import { IUiState } from './ui/ui.types';
+import { ILeaderboardState } from './leaderboard/leaderboard.types';
 
 export const createStore = (preloadedState?: TypeRootState) => {
   return configureStore({
@@ -31,8 +32,10 @@ export const createStore = (preloadedState?: TypeRootState) => {
 };
 
 export type TypeRootState = {
+  api: any;
   game: IGameState;
   ui: IUiState;
+  leaderboard: ILeaderboardState;
 };
 export type AppDispatch = ReturnType<typeof createStore>['dispatch'];
 
