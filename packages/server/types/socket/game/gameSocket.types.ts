@@ -27,11 +27,17 @@ export const suitsColors = [
   'grey',
 ] as const;
 
+export type GameId = number;
+
 export type EmergencyMeeting = (initiatorId: string) => void;
 
 export type GetPlayers = (callback: (players: string[]) => void) => void;
 
 export type SelectedColors = (colors: SuitColorsType) => void;
+
+export type GetSelectedColors = (gameId: GameId, callback: (selectedColors: SuitColorsType) => void) => void;
+
+export type UnselectColor = (gameId: GameId, color: keyof SuitColorsType) => void;
 
 export type SetPlayerReady = (playerId: string) => void;
 
@@ -43,6 +49,8 @@ export type KillPlayer = (id: string, callback: (id: string) => void) => void;
 
 export type EndMove = (id: string) => void;
 
+// playerId:number
+// /* gameId: GameId */, 
 export type JoinGame = (callback: (playerId: string) => void) => void;
 
 export type CreateGame = () => void;
@@ -52,6 +60,7 @@ export type FindGame = () => void;
 export type ColorSelect = (
   color: keyof SuitColorsType,
   oldColor: keyof SuitColorsType,
+  //gameId: number,
   callback: (newColor: keyof SuitColorsType) => void
 ) => void;
 
@@ -81,6 +90,8 @@ export interface IGameClienToServerEvents {
   move: Move;
   endMove: EndMove;
   colorSelect: ColorSelect;
+  getSelectedColors: GetSelectedColors;
+  unselectColor: UnselectColor;
   killPlayer: KillPlayer;
   completeTask: CompleteTask;
   playerReady: SetPlayerReady;

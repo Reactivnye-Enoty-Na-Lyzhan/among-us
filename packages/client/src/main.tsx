@@ -22,7 +22,6 @@ const store = createStore(initialState);
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
-  <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
         <GameSocketContext.Provider value={gameSocket}>
@@ -30,5 +29,4 @@ ReactDOM.hydrateRoot(
         </GameSocketContext.Provider>
       </Provider>
     </BrowserRouter>
-  </React.StrictMode>
 );

@@ -2,6 +2,7 @@ import type { baseSocketServer } from '../../types/socket/baseSocket.types';
 import type {
   GameSocket,
   GameSocketNamespace,
+  JoinGame,
 } from '../../types/socket/game/gameSocket.types';
 import { connectionHandlers } from './handlers/connectionHandlers';
 import { movementSyncHandlers } from './handlers/movementSyncHandlers';

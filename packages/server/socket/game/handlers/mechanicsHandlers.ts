@@ -1,5 +1,4 @@
-import {
-  CompleteTask,
+import type {
   EmergencyMeeting,
   GameSocket,
   GameSocketNamespace,
@@ -9,14 +8,9 @@ export const mechanicsHandlers = (
   gameSocket: GameSocketNamespace,
   socket: GameSocket
 ) => {
-  const completeTask: CompleteTask = taskId => {
-    console.log(taskId);
-  };
-
   const assembleMeeting: EmergencyMeeting = initiatorId => {
     gameSocket.emit('emergencyMeeting', initiatorId);
   };
 
-  socket.on('completeTask', completeTask);
   socket.on('assembleMeeting', assembleMeeting);
 };
