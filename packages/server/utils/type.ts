@@ -2,25 +2,43 @@ import type { Request } from 'express';
 import type { Message } from '../models/forum/message';
 import type { Post } from '../models/forum/post';
 
-export interface RequestPostMessage extends Request {
+export interface IRequestPostMessage extends Request {
   body: Message;
 }
 
-export interface RequestGetAllMessageByIdPost extends Request {
+export interface IRequestGetAllMessageByIdPost extends Request {
   query: { postId: string };
 }
-export interface RequestPostPost extends Request {
+
+export interface IRequestDeleteMessage extends Request{
+  params: { messageId: string };
+}
+
+export interface IRequestReplyToMessage extends Request {
+  body: {
+    postId: number;
+    text: string;
+    parentId?: number;
+    login: string;
+    date: Date;
+  };
+}
+export interface IRequestPostPost extends Request {
   body: Post;
 }
 
-export interface RequestGetPostById extends Request {
+export interface IRequestGetPostById extends Request {
   params: { postId: string };
 }
 
-export interface RequestGetTheme extends Request {
+export interface IRequestGetTheme extends Request {
   params: { id: string };
 }
 
-export interface RequestGetMode extends Request {
+export interface IRequestGetMode extends Request {
   params: { id: string };
 }
+
+export interface IRequestDeletePost extends Request {
+  params: { postId: string };
+};

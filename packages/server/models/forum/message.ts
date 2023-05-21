@@ -1,21 +1,27 @@
-import { Model, DataTypes, Deferrable } from 'sequelize';
+import { Model, DataTypes, Deferrable, ForeignKey, CreationOptional } from 'sequelize';
 import type { InferAttributes, InferCreationAttributes } from 'sequelize';
 import { sequelize } from '../../utils/connectDataBase';
-import { PostModel } from './post';
+import { Post } from './post';
+import { User } from '../user';
 
 
-export class Message extends Model<InferAttributes<Message>, InferCreationAttributes<Message>> {
+export class Message extends Model<InferAttributes<Message>, InferCreationAttributes<Message, { omit: 'id' }>> {
   declare id?: number;
   declare text: string;
-  declare authorId: number;
+  declare authorId: ForeignKey<User['id']>;
   declare login: string;
-  declare postId: number;
+  declare postId: ForeignKey<Post['id']>;
   declare date: Date;
-  declare mainMessageId: number;
+  declare parentId?: CreationOptional<number>;
 }
 
-export const MessageModel = Message.init(
+Message.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     text: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -31,7 +37,7 @@ export const MessageModel = Message.init(
     postId: {
       type: DataTypes.INTEGER,
       references: {
-        model: PostModel,
+        model: Post,
         key: 'id',
         deferrable: Deferrable.NOT(),
       },
@@ -40,14 +46,20 @@ export const MessageModel = Message.init(
       type: DataTypes.DATE,
       allowNull: false,
     },
-    mainMessageId: {
+    parentId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {
     sequelize,
     timestamps: false,
-    tableName: 'Messages',
+    tableName: 'messages',
   }
 );
+
+Message.belongsTo(Post, { foreignKey: 'postId', as: 'post' });
+Post.hasMany(Message, { foreignKey: 'postId', as: 'messages' });
+
+Message.belongsTo(User, { foreignKey: 'authorId', as: 'author' });
+User.hasMany(Message, { foreignKey: 'authorId', as: 'messages' });
