@@ -26,3 +26,5 @@ export const MAX_PLAYERS = 9;
 
 export const CURRENT_HOST =
   NODE_ENV === 'production' ? 'localhost' : 'localhost';
+
+export const MAX_UPLOAD_IMAGE_SIZE = 0.5 * Math.pow(1024, 2);

@@ -76,7 +76,7 @@ Game.hasOne(GameParam, { as: 'param' });
 GameParam.belongsTo(Game, { as: 'param' });
 
 Game.hasMany(Team, { as: 'teams', sourceKey: 'id', foreignKey: 'gameId' });
-Team.belongsTo(Game, { as: 'team', targetKey: 'id', foreignKey: 'gameId' });
+Team.belongsTo(Game, { as: 'game', targetKey: 'id', foreignKey: 'gameId' });
 
 Game.hasMany(GameQueue, {
   as: 'gameQueues',

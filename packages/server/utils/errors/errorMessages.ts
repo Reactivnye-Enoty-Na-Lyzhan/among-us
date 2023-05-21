@@ -12,4 +12,7 @@ export enum ErrorMessages {
   alreadyInQueue = 'Вы уже подключены к очереди в игру',
   alreadyConnected = 'Вы уже присоединились к игре',
   teamNotExist = 'Ошибка! Команда игрока не найдена',
+  sameNewPassword = 'Ошибка! Старый и новый пароль совпадают',
+  incorrectPassword = 'Вы указали некорректный текущий пароль',
+  noImageProvided = 'Ошибка! Изображение не было передано при запросе, или передано некорректно!',
 }
