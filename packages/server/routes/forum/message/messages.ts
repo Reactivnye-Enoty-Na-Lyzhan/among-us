@@ -4,7 +4,7 @@ import {
   postMessage,
   deleteMessage,
   replyToMessage,
-} from '../../controllers/message/messages';
+} from '../../../controllers/message/messages';
 
 export const router = Router();
 
