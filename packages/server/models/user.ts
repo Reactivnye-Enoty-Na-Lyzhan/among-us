@@ -118,13 +118,23 @@ User.init(
   {
     defaultScope: {
       attributes: {
-        exclude: ['password'],
+        exclude: ['password', 'accessToken', 'refreshToken'],
       },
     },
     scopes: {
       withPassword: {
         attributes: {
           include: ['password'],
+        },
+      },
+      withRefreshToken: {
+        attributes: {
+          include: ['refreshToken'],
+        },
+      },
+      withTokens: {
+        attributes: {
+          include: ['accessToken', 'refreshToken'],
         },
       },
     },
