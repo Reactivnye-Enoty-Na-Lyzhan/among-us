@@ -17,6 +17,7 @@ const limit = Joi.number().positive().default(9);
 const gameId = idFormat;
 const taskId = idFormat;
 const playerId = idFormat;
+const themeId = Joi.number().integer().min(1).max(3);
 const color = Joi.string()
   .required()
   .valid(
@@ -112,3 +113,7 @@ export const updateProfileValidation = validateBody<string>({
   lastName,
   phone,
 });
+
+export const addThemeValidation = validateBody<number>({
+    themeId,
+  });

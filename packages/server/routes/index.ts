@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import authRouter from './auth';
 import gameRouter from './game';
 import userRouter from './users';
+import themeRouter from './themes';
 import checkAuthHandler from '../middlewares/checkAuthHandler';
 
 const router = Router();
@@ -15,6 +16,8 @@ router.use(checkAuthHandler);
 router.use('/api/game', gameRouter);
 
 router.use('/api/user', userRouter);
+
+router.use('/api/theme', themeRouter);
 
 // Страница не найдена
 router.use('/api/*', (_req: Request, res: Response) => {

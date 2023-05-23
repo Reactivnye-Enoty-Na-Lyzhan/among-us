@@ -26,7 +26,7 @@ COPY --from=builder /app/packages/client/dist/ /app/packages/client/dist
 COPY --from=builder /app/packages/client/dist-ssr/ /app/packages/client/dist-ssr
 COPY --from=builder /app/packages/client/src/ /app/packages/client/src
 COPY --from=builder /app/packages/server/dist/ /app/packages/server/dist
-COPY --from=builder /app/package.json /app/yarn.lock /app/lerna.json /app
+COPY --from=builder /app/package.json /app/yarn.lock /app/lerna.json /app/
 COPY --from=builder /app/packages/client/package.json /app/packages/client/package.json
 COPY --from=builder /app/packages/server/package.json /app/packages/server/package.json
 
