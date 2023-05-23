@@ -115,5 +115,5 @@ export const updateProfileValidation = validateBody<string>({
 });
 
 export const addThemeValidation = validateBody<number>({
-    themeId,
-  });
+  themeId,
+});
