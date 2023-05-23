@@ -1,6 +1,6 @@
 import type { Request } from 'express';
-import type { Message } from '../models/forum/message';
-import type { Post } from '../models/forum/post';
+import type { Message } from '../../models/forum/message';
+import type { Post } from '../../models/forum/post';
 
 export interface IRequestPostMessage extends Request {
   body: Message;
@@ -10,7 +10,7 @@ export interface IRequestGetAllMessageByIdPost extends Request {
   query: { postId: string };
 }
 
-export interface IRequestDeleteMessage extends Request{
+export interface IRequestDeleteMessage extends Request {
   params: { messageId: string };
 }
 
@@ -19,8 +19,8 @@ export interface IRequestReplyToMessage extends Request {
     postId: number;
     text: string;
     parentId?: number;
-    login: string;
     date: Date;
+    authorId: number;
   };
 }
 export interface IRequestPostPost extends Request {
@@ -41,4 +41,4 @@ export interface IRequestGetMode extends Request {
 
 export interface IRequestDeletePost extends Request {
   params: { postId: string };
-};
+}

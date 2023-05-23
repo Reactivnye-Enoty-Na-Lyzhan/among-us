@@ -1,18 +1,21 @@
-import { Model, DataTypes, Deferrable, ForeignKey, CreationOptional } from 'sequelize';
+import { Model, DataTypes, ForeignKey, CreationOptional } from 'sequelize';
 import type { InferAttributes, InferCreationAttributes } from 'sequelize';
 import { sequelize } from '../../utils/connectDataBase';
 import { Post } from './post';
 import { User } from '../user';
 
-
-export class Message extends Model<InferAttributes<Message>, InferCreationAttributes<Message, { omit: 'id' }>> {
-  declare id?: number;
+export class Message extends Model<
+  InferAttributes<Message>,
+  InferCreationAttributes<Message>
+> {
+  declare id: CreationOptional<number>;
   declare text: string;
   declare authorId: ForeignKey<User['id']>;
-  declare login: string;
   declare postId: ForeignKey<Post['id']>;
   declare date: Date;
   declare parentId?: CreationOptional<number>;
+  declare getParent: () => Promise<Message | null>;
+  declare getAuthor: () => Promise<User | null>;
 }
 
 Message.init(
@@ -26,29 +29,9 @@ Message.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    authorId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    login: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    postId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Post,
-        key: 'id',
-        deferrable: Deferrable.NOT(),
-      },
-    },
     date: {
       type: DataTypes.DATE,
       allowNull: false,
-    },
-    parentId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
     },
   },
   {
@@ -63,3 +46,11 @@ Post.hasMany(Message, { foreignKey: 'postId', as: 'messages' });
 
 Message.belongsTo(User, { foreignKey: 'authorId', as: 'author' });
 User.hasMany(Message, { foreignKey: 'authorId', as: 'messages' });
+
+Message.prototype.getParent = async function () {
+  return Message.findByPk(this.parentId);
+};
+
+Message.prototype.getAuthor = async function () {
+  return User.findByPk(this.authorId);
+};

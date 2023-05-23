@@ -18,4 +18,6 @@ export enum ErrorMessages {
   tokenError = 'Ошибка при получении токена авторизации OAuth. Попробуйте ещё раз!',
   refreshTokenError = 'Ошибка при обновлении токена авторизации OAuth',
   notFound = 'Упс. Ничего не найдено',
+  invalidPostId = 'Ошибка! Пост с указанным ID не существует',
+  invalidMessageId = 'Ошибка! Сообщение с указанным ID не существует',
 }
