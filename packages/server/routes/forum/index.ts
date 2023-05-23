@@ -7,4 +7,4 @@ const forumRouter = Router();
 forumRouter.use('/posts', postRouter);
 forumRouter.use('/messages', messageRouter);
 
-export { forumRouter };
+export default forumRouter;
