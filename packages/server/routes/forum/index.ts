@@ -2,9 +2,9 @@ import { Router } from 'express';
 import { router as postRouter } from './post/posts';
 import { router as messageRouter } from './message/messages';
 
-const combinedRouter = Router();
+const forumRouter = Router();
 
-combinedRouter.use('/posts', postRouter);
-combinedRouter.use('/messages', messageRouter);
+forumRouter.use('/posts', postRouter);
+forumRouter.use('/messages', messageRouter);
 
-export { combinedRouter as forumRouter };
+export { forumRouter };
