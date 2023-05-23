@@ -21,9 +21,10 @@ router.use('/api/user', userRouter);
 
 router.use('/api/theme', themeRouter);
 
-router.use('/api/messages', messageRouter);
+// Сообщения форума
+router.use('/api/forum/messages', messageRouter);
 
-router.use('/api/posts', postRouter);
+router.use('/api/forum/posts', postRouter);
 
 // Страница не найдена
 router.use('/api/*', (_req: Request, res: Response) => {
