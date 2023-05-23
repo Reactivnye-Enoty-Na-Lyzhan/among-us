@@ -3,7 +3,7 @@ import authRouter from './auth';
 import gameRouter from './game';
 import userRouter from './users';
 import checkAuthHandler from '../middlewares/checkAuthHandler';
-import { messageRouter, postRouter } from './forum';
+import { forumRouter } from './forum';
 
 const router = Router();
 
@@ -17,9 +17,8 @@ router.use('/api/game', gameRouter);
 
 router.use('/api/user', userRouter);
 
-// Сообщения форума
-router.use('/api/forum/messages', messageRouter);
-router.use('/api/forum/posts', postRouter);
+// Форум
+router.use('/api/forum', forumRouter);
 
 // Страница не найдена
 router.use('/api/*', (_req: Request, res: Response) => {
