@@ -10,7 +10,7 @@ export const router = Router();
 
 router.post('/', postPost);
 
-router.post('/', getPostById);
+router.get('/:postId', getPostById);
 
 router.get('/', getPosts);
 

@@ -15,12 +15,8 @@ export const postMessage = async (
   next: NextFunction
 ) => {
   try {
-    const { body } = req;
-    const data = await Message.create({
-      text: body.text,
-      authorId: body.authorId,
-      date: body.date,
-    });
+    const { text, authorId, date, userId } = req.body;
+    const data = await Message.create({ text, authorId, date, userId });
     res.send(data.dataValues);
   } catch (err) {
     next(err);
@@ -33,7 +29,7 @@ export const getMessages = async (
   next: NextFunction
 ) => {
   try {
-    const { postId } = req.query;
+    const { postId } = req.params;
     const parsedPostId = Number(postId);
     if (isNaN(parsedPostId)) {
       throw new Error(ErrorMessages.invalidPostId);
@@ -69,7 +65,7 @@ export const deleteMessage = async (
     if (deleteMessage === 0) {
       throw new NotExistError(ErrorMessages.notFound);
     }
-    res.send();
+    res.send({ messageId: parsedMessageId });
   } catch (err) {
     next(err);
   }
@@ -81,13 +77,14 @@ export const replyToMessage = async (
   next: NextFunction
 ) => {
   try {
-    const { postId, text, parentId, date, authorId } = req.body;
+    const { postId, text, parentId, date, authorId, userId } = req.body;
     const data = await Message.create({
       postId,
       text,
       parentId,
       date,
       authorId,
+      userId,
     });
     res.send(data.dataValues);
   } catch (err) {

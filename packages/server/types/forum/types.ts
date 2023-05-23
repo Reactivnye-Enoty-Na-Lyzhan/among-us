@@ -1,9 +1,11 @@
 import type { Request } from 'express';
-import type { Message } from '../../models/forum/message';
-import type { Post } from '../../models/forum/post';
-
 export interface IRequestPostMessage extends Request {
-  body: Message;
+  body: {
+    text: string;
+    authorId: number;
+    date: Date;
+    userId: number;
+  };
 }
 
 export interface IRequestGetAllMessageByIdPost extends Request {
@@ -21,24 +23,22 @@ export interface IRequestReplyToMessage extends Request {
     parentId?: number;
     date: Date;
     authorId: number;
+    userId: number;
   };
 }
 export interface IRequestPostPost extends Request {
-  body: Post;
+  body: {
+    text: string;
+    authorId: number;
+    date?: Date;
+    pinned?: boolean;
+    userId: number;
+  };
 }
 
 export interface IRequestGetPostById extends Request {
   params: { postId: string };
 }
-
-export interface IRequestGetTheme extends Request {
-  params: { id: string };
-}
-
-export interface IRequestGetMode extends Request {
-  params: { id: string };
-}
-
 export interface IRequestDeletePost extends Request {
   params: { postId: string };
 }
