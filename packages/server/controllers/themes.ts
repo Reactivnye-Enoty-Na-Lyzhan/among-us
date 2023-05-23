@@ -49,15 +49,12 @@ export const getTheme = async (
 ) => {
   const userId = req.user?.id;
   try {
-    console.log(userId);
     if (!userId) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
 
     const theme = await UserTheme.findOne({ where: { userId } });
-    console.log(theme);
     //1 - id дефолтной темы, возвращаем если юзер не менял ее раньше;
     const themeId = theme?.theme ? theme.theme : 1;
-    console.log(themeId);
-
+    
     res.send({ themeId: themeId });
   } catch (err: unknown) {
     next(err);
