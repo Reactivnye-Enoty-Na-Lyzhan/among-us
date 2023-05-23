@@ -1,24 +1,49 @@
 import type { NextFunction, Response } from 'express';
-import type { IRequestGetAllMessageByIdPost, IRequestPostMessage, IRequestDeleteMessage, IRequestReplyToMessage } from '../../utils/type';
+import type {
+  IRequestGetAllMessageByIdPost,
+  IRequestPostMessage,
+  IRequestDeleteMessage,
+  IRequestReplyToMessage,
+} from '../../types/forum/types';
 import { Message } from '../../models/forum/message';
 import { NotExistError } from '../../utils/errors/commonErrors/NotExistError';
 import { ErrorMessages } from '../../utils/errors/errorMessages';
 
-export const postMessage = async (req: IRequestPostMessage, res: Response, next: NextFunction) => {
+export const postMessage = async (
+  req: IRequestPostMessage,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const data = await Message.create({ ...req.body });
-    res.status(201).send(data.dataValues);
+    const { body } = req;
+    const data = await Message.create({
+      text: body.text,
+      authorId: body.authorId,
+      date: body.date,
+    });
+    res.send(data.dataValues);
   } catch (err) {
     next(err);
   }
 };
 
-export const getMessages = async (req: IRequestGetAllMessageByIdPost, res: Response, next: NextFunction) => {
+export const getMessages = async (
+  req: IRequestGetAllMessageByIdPost,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { postId } = req.query;
-    const data = await Message.findAll({ where: { postId: Number(postId) }, raw: true });
-    if (data && data.length) {
-      res.status(200).send(data);
+    const parsedPostId = Number(postId);
+    if (isNaN(parsedPostId)) {
+      throw new Error(ErrorMessages.invalidPostId);
+    }
+    const data = await Message.findAll({
+      where: { postId: parsedPostId },
+      raw: true,
+    });
+    if (data.length > 0) {
+      res.send(data);
     } else {
       throw new NotExistError(ErrorMessages.notFound);
     }
@@ -27,24 +52,44 @@ export const getMessages = async (req: IRequestGetAllMessageByIdPost, res: Respo
   }
 };
 
-export const deleteMessage = async (req: IRequestDeleteMessage, res: Response, next: NextFunction) => {
+export const deleteMessage = async (
+  req: IRequestDeleteMessage,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { messageId } = req.params;
-    const deleteMessage = await Message.destroy({ where: { id: messageId } });
+    const parsedMessageId = Number(messageId);
+    if (isNaN(parsedMessageId)) {
+      throw new Error(ErrorMessages.invalidMessageId);
+    }
+    const deleteMessage = await Message.destroy({
+      where: { id: parsedMessageId },
+    });
     if (deleteMessage === 0) {
       throw new NotExistError(ErrorMessages.notFound);
     }
-    res.status(204).send();
+    res.send();
   } catch (err) {
     next(err);
   }
 };
 
-
-export const replyToMessage = async (req: IRequestReplyToMessage, res: Response, next: NextFunction) => {
+export const replyToMessage = async (
+  req: IRequestReplyToMessage,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const data = await Message.create({ ...req.body});
-    res.status(201).send(data.dataValues);
+    const { postId, text, parentId, date, authorId } = req.body;
+    const data = await Message.create({
+      postId,
+      text,
+      parentId,
+      date,
+      authorId,
+    });
+    res.send(data.dataValues);
   } catch (err) {
     next(err);
   }

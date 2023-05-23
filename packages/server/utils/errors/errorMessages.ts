@@ -13,4 +13,6 @@ export enum ErrorMessages {
   alreadyConnected = 'Вы уже присоединились к игре',
   teamNotExist = 'Ошибка! Команда игрока не найдена',
   notFound = 'Упс. Ничего не найдено',
+  invalidPostId = 'Ошибка! Пост с указанным ID не существует',
+  invalidMessageId = 'Ошибка! Сообщение с указанным ID не существует',
 }
