@@ -14,6 +14,7 @@ export class Message extends Model<
   declare postId: ForeignKey<Post['id']>;
   declare date: Date;
   declare parentId?: CreationOptional<number>;
+  declare userId: ForeignKey<User['id']>;
   declare getParent: () => Promise<Message | null>;
   declare getAuthor: () => Promise<User | null>;
 }

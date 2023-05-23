@@ -10,8 +10,9 @@ export class Post extends Model<
   declare id: CreationOptional<number>;
   declare text: string;
   declare authorId: ForeignKey<User['id']>;
-  declare date: Date;
+  declare date?: Date;
   declare pinned: CreationOptional<boolean>;
+  declare userId: ForeignKey<User['id']>;
   declare getAuthor: () => Promise<User | null>;
 }
 
@@ -30,6 +31,7 @@ Post.init(
     date: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
     pinned: {
       type: DataTypes.BOOLEAN,

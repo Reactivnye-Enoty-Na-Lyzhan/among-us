@@ -14,7 +14,8 @@ export const postPost = async (
   next: NextFunction
 ) => {
   try {
-    const data = await Post.create({ ...req.body });
+    const { text, authorId, date, pinned, userId } = req.body;
+    const data = await Post.create({ text, authorId, date, pinned, userId });
     res.send(data.dataValues);
   } catch (err) {
     next(err);
@@ -64,7 +65,7 @@ export const deletePost = async (
     if (!data) {
       throw new NotExistError(ErrorMessages.notFound);
     }
-    res.end();
+    res.json({ postId: parsedPostId });
   } catch (err) {
     next(err);
   }
