@@ -3,7 +3,7 @@ import authRouter from './auth';
 import gameRouter from './game';
 import userRouter from './users';
 import checkAuthHandler from '../middlewares/checkAuthHandler';
-import { forumRouter } from './forum';
+import forumRouter from './forum';
 
 const router = Router();
 
