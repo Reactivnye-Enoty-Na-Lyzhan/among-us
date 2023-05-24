@@ -30,6 +30,7 @@ Message.init(
     date: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
     parentId: {
       type: DataTypes.INTEGER,
