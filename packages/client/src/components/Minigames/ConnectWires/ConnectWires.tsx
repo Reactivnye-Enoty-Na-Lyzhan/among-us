@@ -1,12 +1,16 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import ConnWiresTile from './Tile/Tile';
 import './ConnectWires.css';
-import { INITIAL_STATE, TILES } from './constants';
+import { INITIAL_GAME_STATES, TILES } from './constants';
 import classNames from 'classnames';
-import { TileData, TileParams } from './types';
+import { checkIsWin, randomizeGame } from './utils';
 
 const ConnectWires: FC = () => {
-  const [gameState, setGameState] = useState(INITIAL_STATE);
+  const [gameState, setGameState] = useState(INITIAL_GAME_STATES[0]);
+
+  useEffect(() => {
+    setGameState(randomizeGame());
+  }, []);
 
   const handleTileClick = useCallback(
     (id: number) => {
@@ -16,7 +20,6 @@ const ConnectWires: FC = () => {
 
       if (row) {
         const tileData = row.find(t => t.id === id);
-        console.log({ id, tileData });
 
         if (tileData) {
           const { rotate } = tileData;
@@ -27,7 +30,7 @@ const ConnectWires: FC = () => {
         setGameState(newGameState);
       }
 
-      checkIsWin();
+      checkIsWin(newGameState);
     },
     [gameState]
   );
@@ -77,112 +80,6 @@ const ConnectWires: FC = () => {
 
     return tiles;
   }, [gameState]);
-
-  const checkIsWin = () => {
-    let result = false;
-    const row = gameState.wireStart;
-    const col = 0;
-    const tileData = gameState.tiles[gameState.wireStart][0];
-    const tile = TILES.find(t => t.code === tileData.code);
-
-    if (tile) {
-      result = checkTile(tileData, tile, 4, row, col);
-      if (result) {
-        alert('You win!');
-      }
-      console.log(result);
-    }
-
-    return result;
-  };
-
-  const checkTile = (
-    tileData: TileData,
-    tile: TileParams,
-    entry: number,
-    row: number,
-    col: number
-  ) => {
-    let actualWireEndA = tile.wireEndA;
-    let actualWireEndB = tile.wireEndB;
-
-    for (let i = 0; i < tileData.rotate; i++) {
-      actualWireEndA = actualWireEndA === 4 ? 1 : actualWireEndA + 1;
-      actualWireEndB = actualWireEndB === 4 ? 1 : actualWireEndB + 1;
-    }
-    console.log({
-      tileData,
-      tile,
-      entry,
-      row,
-      col,
-      actualWireEndA,
-      actualWireEndB,
-    });
-
-    if (actualWireEndA === entry || actualWireEndB === entry) {
-      console.log('FOUND');
-      // Если один из концов соединяется с входом
-      const isA = actualWireEndA === entry;
-      let newRow: number | undefined = undefined;
-      let newCol: number | undefined = undefined;
-      let newEntry: number | undefined = undefined;
-
-      if (col === 2 && (actualWireEndA === 2 || actualWireEndB === 2)) {
-        if (row === gameState.wireEnd) {
-          return true;
-        }
-      }
-
-      switch (isA ? actualWireEndB : actualWireEndA) {
-        case 1:
-          // up
-          if (row > 0) {
-            newRow = row - 1;
-            newCol = col;
-            newEntry = 3;
-          }
-          break;
-        case 2:
-          // right
-          if (col < 2) {
-            newRow = row;
-            newCol = col + 1;
-            newEntry = 4;
-          }
-          break;
-        case 3:
-          // down
-          if (row < 2) {
-            newRow = row + 1;
-            newCol = col;
-            newEntry = 1;
-          }
-          break;
-        case 4:
-          // left
-          if (col > 0) {
-            newRow = row;
-            newCol = col - 1;
-            newEntry = 2;
-          }
-          break;
-      }
-
-      console.log({ newRow, newCol, newEntry });
-      if (newRow !== undefined && newCol !== undefined && newEntry) {
-        const newTileData = gameState.tiles[newRow][newCol];
-        if (newTileData) {
-          const newTile = TILES.find(t => t.code === newTileData?.code);
-          if (newTile) {
-            return checkTile(newTileData, newTile, newEntry, newRow, newCol);
-          }
-        }
-      }
-    }
-
-    return false;
-  };
 
   return (
     <div className="connwires">
