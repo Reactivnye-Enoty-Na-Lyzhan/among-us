@@ -65,7 +65,7 @@ interface IBodyKillPlayer {
   userId: string;
 }
 
-interface IUser {
+export interface IUser {
   id: number;
 }
 
