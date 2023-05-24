@@ -8,9 +8,9 @@ import {
 
 export const router = Router();
 
-router.post('/:postId/messages', postMessage);
+router.post('/', postMessage); router.post('/:postId/messages', postMessage);
 
-router.get('/', getMessages);
+router.get('/:postId', getMessages);
 
 router.delete('/:messageId', deleteMessage);
 
