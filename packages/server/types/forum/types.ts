@@ -3,13 +3,14 @@ import { IUser } from '../../controllers/games';
 export interface IRequestPostMessage extends Request {
   user?: IUser;
   body: {
+    postId: number;
     text: string;
     date: Date;
   };
 }
 
 export interface IRequestGetAllMessageByIdPost extends Request {
-  query: { postId: string };
+  params: { postId: string };
 }
 
 export interface IRequestDeleteMessage extends Request {
