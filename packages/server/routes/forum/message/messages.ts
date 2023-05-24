@@ -8,7 +8,7 @@ import {
 
 export const router = Router();
 
-router.post('/', postMessage);
+router.post('/:postId/messages', postMessage);
 
 router.get('/', getMessages);
 
