@@ -43,5 +43,5 @@ Post.init(
   }
 );
 
-User.hasMany(Post, { as: 'posts', foreignKey: 'userId' });
-Post.belongsTo(User, { as: 'user', foreignKey: 'userId' });
+User.hasMany(Post, { as: 'posts', foreignKey: 'authorId' });
+Post.belongsTo(User, { as: 'user', foreignKey: 'authorId' });
