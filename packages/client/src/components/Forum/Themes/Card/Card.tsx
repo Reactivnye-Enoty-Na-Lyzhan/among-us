@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import './Card.css';
+import { ForumPostType } from '@/store/forum/forum.types';
 
 type Props = {
-  theme: ForumTheme;
+  theme: ForumPostType;
   hasEditAccess?: boolean;
   isPinned?: boolean;
 };
@@ -15,20 +16,21 @@ const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
         <div
           className="theme-card-info__avatar"
           style={
-            theme.avatarUrl
-              ? { backgroundImage: `url(${theme.avatarUrl})` }
-              : undefined
+            undefined
+            // theme.avatarUrl
+            //   ? { backgroundImage: `url('${theme.avatarUrl}')` }
+            //   : undefined
           }></div>
         <div className="theme-card-info__container">
-          <div className="theme-card-info__title">{theme.title}</div>
+          <div className="theme-card-info__title">{theme.text}</div>
           <div className="theme-card-info__author">
             Автор:
-            <span>{theme.author}</span>
+            <span>{theme.authorId}</span>
           </div>
         </div>
       </div>
       <div className="theme-card__messages">
-        Сообщений: <span>{theme.messagesCount}</span>
+        Сообщений: <span>{0}</span>
       </div>
       {hasEditAccess ? (
         <div className="theme-card__tools">
@@ -47,7 +49,7 @@ const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
           />
         </div>
       ) : null}
-      {theme.lastMessage ? (
+      {/* {theme.lastMessage ? (
         <div className="theme-card-last-message theme-card__last-message">
           <div className="theme-card-last-message__container">
             <div className="theme-card-last-message__date">
@@ -67,7 +69,7 @@ const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
                 : undefined
             }></div>
         </div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };

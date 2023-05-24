@@ -1,10 +1,4 @@
-interface ForumTheme {
-  title: string;
-  author: string;
-  avatarUrl: string | null;
-  messagesCount: number;
-  lastMessage: ForumThemeMessage | null;
-}
+import { ForumPostType } from '@/store/forum/forum.types';
 
 interface ForumThemeMessage {
   date: string;
@@ -15,5 +9,5 @@ interface ForumThemeMessage {
 
 interface ForumThemeGroup {
   title: string;
-  themes: ForumTheme[];
+  themes: ForumPostType[];
 }

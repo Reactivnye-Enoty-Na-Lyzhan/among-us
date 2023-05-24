@@ -6,6 +6,8 @@ import GroupButton from './Group/Button/Button';
 import ThemesGroup from './Group/Group';
 import ThemesSearch from './Search/Search';
 import './Themes.css';
+import { ForumThemeGroup } from '../types';
+import { ForumPostType } from '@/store/forum/forum.types';
 
 type Props = {
   pinnedThemes: ForumThemeGroup;
@@ -15,9 +17,9 @@ type Props = {
 const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState('');
-  const [filteredThemes, setFilteredThemes] = useState<ForumTheme[]>([]);
+  const [filteredThemes, setFilteredThemes] = useState<ForumPostType[]>([]);
   const [filteredPinnedThemes, setFilteredPinnedThemes] = useState<
-    ForumTheme[]
+    ForumPostType[]
   >([]);
 
   useEffect(() => {
@@ -28,13 +30,13 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
   }, [themes, searchText]);
 
   const filterThemes = (
-    themesList: ForumTheme[],
-    callback: (newFilteredThemes: ForumTheme[]) => void
+    themesList: ForumPostType[],
+    callback: (newFilteredThemes: ForumPostType[]) => void
   ) => {
     let newFilteredThemes = [...themesList];
     if (searchText) {
       newFilteredThemes = newFilteredThemes.filter(t =>
-        t.title.toLowerCase().includes(searchText.toLowerCase())
+        t.text.toLowerCase().includes(searchText.toLowerCase())
       );
     }
     callback(newFilteredThemes);
@@ -60,8 +62,8 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
       {pinnedThemes.themes.length > 0 ? (
         <div className="form-themes__group">
           <ThemesGroup title={pinnedThemes.title} collapsible={true}>
-            {filteredPinnedThemes.map((theme, i) => (
-              <li className="forum-themes__item" key={i}>
+            {filteredPinnedThemes.map(theme => (
+              <li className="forum-themes__item" key={theme.id}>
                 <ThemeCard theme={theme} isPinned={true} hasEditAccess={true} />
               </li>
             ))}
@@ -72,8 +74,8 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
         <ThemesGroup
           title={themes.title}
           buttons={[<GroupButton text="+ cоздать новую тему" />]}>
-          {filteredThemes.map((theme, i) => (
-            <li className="forum-themes__item" key={i}>
+          {filteredThemes.map(theme => (
+            <li className="forum-themes__item" key={theme.id}>
               <ThemeCard theme={theme} hasEditAccess={true} />
             </li>
           ))}
@@ -81,8 +83,8 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
       </div>
       <Pagination
         currentPage={currentPage}
-        totalCount={100}
-        pageSize={10}
+        totalCount={themes.themes.length}
+        pageSize={3}
         onPageChange={setCurrentPage}
       />
     </section>
