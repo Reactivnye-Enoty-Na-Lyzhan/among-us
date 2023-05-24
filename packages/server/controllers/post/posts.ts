@@ -14,8 +14,9 @@ export const postPost = async (
   next: NextFunction
 ) => {
   try {
-    const { text, authorId, date, pinned, userId } = req.body;
-    const data = await Post.create({ text, authorId, date, pinned, userId });
+    const { text, date, pinned } = req.body;
+    const authorId = req.user?.id;
+    const data = await Post.create({ text, authorId, date, pinned });
     res.send(data.dataValues);
   } catch (err) {
     next(err);

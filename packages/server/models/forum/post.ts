@@ -10,10 +10,8 @@ export class Post extends Model<
   declare id: CreationOptional<number>;
   declare text: string;
   declare authorId: ForeignKey<User['id']>;
-  declare date?: Date;
+  declare date: CreationOptional<Date>;
   declare pinned: CreationOptional<boolean>;
-  declare userId: ForeignKey<User['id']>;
-  declare getAuthor: () => Promise<User | null>;
 }
 
 Post.init(
@@ -47,7 +45,3 @@ Post.init(
 
 User.hasMany(Post, { as: 'posts', foreignKey: 'userId' });
 Post.belongsTo(User, { as: 'user', foreignKey: 'userId' });
-
-Post.prototype.getAuthor = function () {
-  return User.findByPk(this.authorId);
-};

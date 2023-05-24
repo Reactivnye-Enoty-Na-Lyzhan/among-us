@@ -1,10 +1,10 @@
 import type { Request } from 'express';
+import { IUser } from '../../controllers/games';
 export interface IRequestPostMessage extends Request {
+  user?: IUser;
   body: {
     text: string;
-    authorId: number;
     date: Date;
-    userId: number;
   };
 }
 
@@ -17,22 +17,20 @@ export interface IRequestDeleteMessage extends Request {
 }
 
 export interface IRequestReplyToMessage extends Request {
+  user?: IUser;
   body: {
     postId: number;
     text: string;
     parentId?: number;
     date: Date;
-    authorId: number;
-    userId: number;
   };
 }
 export interface IRequestPostPost extends Request {
+  user?: IUser;
   body: {
     text: string;
-    authorId: number;
     date?: Date;
     pinned?: boolean;
-    userId: number;
   };
 }
 

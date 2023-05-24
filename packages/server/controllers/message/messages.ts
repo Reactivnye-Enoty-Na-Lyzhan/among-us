@@ -15,8 +15,9 @@ export const postMessage = async (
   next: NextFunction
 ) => {
   try {
-    const { text, authorId, date, userId } = req.body;
-    const data = await Message.create({ text, authorId, date, userId });
+    const { text, date } = req.body;
+    const authorId = req.user?.id;
+    const data = await Message.create({ text, authorId, date });
     res.send(data.dataValues);
   } catch (err) {
     next(err);
@@ -77,14 +78,14 @@ export const replyToMessage = async (
   next: NextFunction
 ) => {
   try {
-    const { postId, text, parentId, date, authorId, userId } = req.body;
+    const { postId, text, parentId, date } = req.body;
+    const authorId = req.user?.id;
     const data = await Message.create({
       postId,
       text,
       parentId,
       date,
       authorId,
-      userId,
     });
     res.send(data.dataValues);
   } catch (err) {

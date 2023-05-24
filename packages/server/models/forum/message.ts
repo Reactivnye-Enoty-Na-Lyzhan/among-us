@@ -12,11 +12,8 @@ export class Message extends Model<
   declare text: string;
   declare authorId: ForeignKey<User['id']>;
   declare postId: ForeignKey<Post['id']>;
-  declare date: Date;
-  declare parentId?: CreationOptional<number>;
-  declare userId: ForeignKey<User['id']>;
-  declare getParent: () => Promise<Message | null>;
-  declare getAuthor: () => Promise<User | null>;
+  declare date: CreationOptional<Date>;
+  declare parentId: CreationOptional<number>;
 }
 
 Message.init(
@@ -34,6 +31,10 @@ Message.init(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    parentId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   {
     sequelize,
@@ -48,10 +49,3 @@ Post.hasMany(Message, { foreignKey: 'postId', as: 'messages' });
 Message.belongsTo(User, { foreignKey: 'authorId', as: 'author' });
 User.hasMany(Message, { foreignKey: 'authorId', as: 'messages' });
 
-Message.prototype.getParent = async function () {
-  return Message.findByPk(this.parentId);
-};
-
-Message.prototype.getAuthor = async function () {
-  return User.findByPk(this.authorId);
-};
