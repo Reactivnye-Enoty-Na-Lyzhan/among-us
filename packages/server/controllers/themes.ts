@@ -27,12 +27,15 @@ export const addTheme = async (
   try {
     if (!userId) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
 
-    let theme = await UserTheme.findOne({ where: { userId } });
-    if (!theme) {
-      theme = await UserTheme.create({ userId, theme: themeId });
-    } else {
-      await theme.update({ theme: themeId });
-    }
+    const theme = (
+      await UserTheme.findOrCreate({
+        where: { userId },
+        defaults: {
+          theme: 1,
+        },
+      })
+    )[0];
+    await theme.update({ theme: themeId });
 
     res.send({
       message: ResponseMessages.onThemeChange,
@@ -54,7 +57,7 @@ export const getTheme = async (
     const theme = await UserTheme.findOne({ where: { userId } });
     //1 - id дефолтной темы, возвращаем если юзер не менял ее раньше;
     const themeId = theme?.theme ? theme.theme : 1;
-    
+
     res.send({ themeId: themeId });
   } catch (err: unknown) {
     next(err);
