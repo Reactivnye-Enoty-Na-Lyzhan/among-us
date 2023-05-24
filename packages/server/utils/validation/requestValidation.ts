@@ -10,9 +10,10 @@ const lastName = Joi.string().required().min(3).max(15);
 const phone = Joi.string().required().min(10).max(12);
 const email = Joi.string().required().email();
 const password = Joi.string().required();
+const nickname = Joi.string().required();
 const title = Joi.string().required();
-const offset = Joi.number().default(0);
-const limit = Joi.number().default(9);
+const offset = Joi.number().positive().default(0);
+const limit = Joi.number().positive().default(9);
 const gameId = idFormat;
 const taskId = idFormat;
 const playerId = idFormat;
@@ -97,4 +98,17 @@ export const completeTaskValidation = validateBody<number>({
   gameId,
   taskId,
   playerId,
+});
+
+export const changePasswordValidation = validateBody<string>({
+  oldPassword: password,
+  newPassword: Joi.string().required().invalid(Joi.in('oldPassword')),
+});
+
+export const updateProfileValidation = validateBody<string>({
+  nickname,
+  email,
+  firstName,
+  lastName,
+  phone,
 });
