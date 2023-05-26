@@ -9,6 +9,7 @@ export class Post extends Model<
 > {
   declare id: CreationOptional<number>;
   declare text: string;
+  declare title: string;
   declare authorId: ForeignKey<User['id']>;
   declare date: CreationOptional<Date>;
   declare pinned: CreationOptional<boolean>;
@@ -24,7 +25,10 @@ Post.init(
     text: {
       type: DataTypes.TEXT,
       allowNull: false,
-      primaryKey: true,
+    },
+    title: {
+      type: DataTypes.TEXT,
+      allowNull: false,
     },
     date: {
       type: DataTypes.DATE,
@@ -45,3 +49,4 @@ Post.init(
 
 User.hasMany(Post, { as: 'posts', foreignKey: 'authorId' });
 Post.belongsTo(User, { as: 'user', foreignKey: 'authorId' });
+Post.hasOne(User, { as: 'author', sourceKey: 'authorId', foreignKey: 'id' });

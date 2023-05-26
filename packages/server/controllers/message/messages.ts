@@ -8,6 +8,7 @@ import type {
 import { Message } from '../../models/forum/message';
 import { NotExistError } from '../../utils/errors/commonErrors/NotExistError';
 import { ErrorMessages } from '../../utils/errors/errorMessages';
+import { User } from '../../models/user';
 
 export const postMessage = async (
   req: IRequestPostMessage,
@@ -37,7 +38,13 @@ export const getMessages = async (
     }
     const data = await Message.findAll({
       where: { postId: parsedPostId },
-      raw: true,
+      include: [
+        {
+          model: User,
+          as: 'author',
+          attributes: ['username', 'avatar', 'firstName', 'lastName'],
+        },
+      ],
     });
     if (data.length > 0) {
       res.send(data);

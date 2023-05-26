@@ -16,21 +16,20 @@ const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
         <div
           className="theme-card-info__avatar"
           style={
-            undefined
-            // theme.avatarUrl
-            //   ? { backgroundImage: `url('${theme.avatarUrl}')` }
-            //   : undefined
+            theme.author.avatar
+              ? { backgroundImage: `url('${theme.author.avatar}')` }
+              : undefined
           }></div>
         <div className="theme-card-info__container">
-          <div className="theme-card-info__title">{theme.text}</div>
+          <div className="theme-card-info__title">{theme.title}</div>
           <div className="theme-card-info__author">
             Автор:
-            <span>{theme.authorId}</span>
+            <span>{theme.author.username}</span>
           </div>
         </div>
       </div>
       <div className="theme-card__messages">
-        Сообщений: <span>{0}</span>
+        Сообщений: <span>{theme.messagesCount}</span>
       </div>
       {hasEditAccess ? (
         <div className="theme-card__tools">
@@ -49,27 +48,27 @@ const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
           />
         </div>
       ) : null}
-      {/* {theme.lastMessage ? (
+      {theme.lastMessage && theme.lastMessage.length ? (
         <div className="theme-card-last-message theme-card__last-message">
           <div className="theme-card-last-message__container">
             <div className="theme-card-last-message__date">
-              {theme.lastMessage.date}
+              {new Date(theme.lastMessage[0].date).toLocaleString()}
             </div>
             <div className="theme-card-last-message__author">
-              {theme.lastMessage.author}
+              {theme.lastMessage[0].author.username}
             </div>
           </div>
           <div
             className="theme-card-last-message__avatar"
             style={
-              theme.lastMessage.avatarUrl
+              theme.lastMessage[0].author.avatar
                 ? {
-                    backgroundImage: `url(${theme.lastMessage.avatarUrl})`,
+                    backgroundImage: `url(${theme.lastMessage[0].author.avatar})`,
                   }
                 : undefined
             }></div>
         </div>
-      ) : null} */}
+      ) : null}
     </div>
   );
 };

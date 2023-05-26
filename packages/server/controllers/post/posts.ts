@@ -7,6 +7,9 @@ import type {
   IRequestDeletePost,
 } from '../../types/forum/types';
 import { ErrorMessages } from '../../utils/errors/errorMessages';
+import { User } from '../../models/user';
+import { Message } from '../../models/forum/message';
+import { Sequelize } from 'sequelize-typescript';
 
 export const postPost = async (
   req: IRequestPostPost,
@@ -14,9 +17,9 @@ export const postPost = async (
   next: NextFunction
 ) => {
   try {
-    const { text, date, pinned } = req.body;
+    const { text, title, date, pinned } = req.body;
     const authorId = req.user?.id;
-    const data = await Post.create({ text, authorId, date, pinned });
+    const data = await Post.create({ text, title, authorId, date, pinned });
     res.send(data.dataValues);
   } catch (err) {
     next(err);
@@ -29,7 +32,46 @@ export const getPosts = async (
   next: NextFunction
 ) => {
   try {
-    const data = await Post.findAll();
+    const data = await Post.findAll({
+      attributes: [
+        [
+          Sequelize.literal(
+            `(SELECT COUNT (*)::int  FROM messages WHERE "postId" = "Post"."id")`
+          ),
+          'messagesCount',
+        ],
+        'title',
+        'text',
+        'date',
+        'pinned',
+      ],
+      include: [
+        {
+          model: User,
+          as: 'author',
+          attributes: ['username', 'avatar', 'firstName', 'lastName'],
+        },
+        {
+          model: Message,
+          as: 'messages',
+          attributes: [],
+        },
+        {
+          model: Message,
+          as: 'lastMessage',
+          limit: 1,
+          attributes: ['text', 'date'],
+          order: [['id', 'DESC']],
+          include: [
+            {
+              model: User,
+              as: 'author',
+              attributes: ['username', 'avatar', 'firstName', 'lastName'],
+            },
+          ],
+        },
+      ],
+    });
     res.send(data);
   } catch (err) {
     next(err);
@@ -44,7 +86,16 @@ export const getPostById = async (
   try {
     const { postId } = req.params;
     const parsedPostId = Number(postId);
-    const data = await Post.findOne({ where: { id: parsedPostId } });
+    const data = await Post.findOne({
+      where: { id: parsedPostId },
+      include: [
+        {
+          model: User,
+          as: 'author',
+          attributes: ['username', 'avatar', 'firstName', 'lastName'],
+        },
+      ],
+    });
     if (!data) {
       throw new NotExistError(ErrorMessages.notFound);
     }
