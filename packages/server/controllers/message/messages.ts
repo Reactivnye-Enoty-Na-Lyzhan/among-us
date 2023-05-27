@@ -1,4 +1,4 @@
-import type { NextFunction, Response } from 'express';
+import type { Response } from 'express';
 import type {
   IRequestGetAllMessageByIdPost,
   IRequestPostMessage,
@@ -8,29 +8,19 @@ import type {
 import { Message } from '../../models/forum/message';
 import { NotExistError } from '../../utils/errors/commonErrors/NotExistError';
 import { ErrorMessages } from '../../utils/errors/errorMessages';
-import { User } from '../../models/user';
+import { withErrorHandler } from '../../utils/errors/errorHandler';
 
-export const postMessage = async (
-  req: IRequestPostMessage,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const postMessage = withErrorHandler(
+  async (req: IRequestPostMessage, res: Response) => {
     const { text, postId, parentId } = req.body;
     const authorId = req.user?.id;
     const data = await Message.create({ text, authorId, postId, parentId });
     res.send(data.dataValues);
-  } catch (err) {
-    next(err);
   }
-};
+);
 
-export const getMessages = async (
-  req: IRequestGetAllMessageByIdPost,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const getMessages = withErrorHandler(
+  async (req: IRequestGetAllMessageByIdPost, res: Response) => {
     const { postId } = req.params;
     const parsedPostId = Number(postId);
     if (isNaN(parsedPostId)) {
@@ -51,17 +41,11 @@ export const getMessages = async (
     } else {
       throw new NotExistError(ErrorMessages.notFound);
     }
-  } catch (err) {
-    next(err);
   }
-};
+);
 
-export const deleteMessage = async (
-  req: IRequestDeleteMessage,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const deleteMessage = withErrorHandler(
+  async (req: IRequestDeleteMessage, res: Response) => {
     const { messageId } = req.params;
     const parsedMessageId = Number(messageId);
     if (isNaN(parsedMessageId)) {
@@ -74,27 +58,14 @@ export const deleteMessage = async (
       throw new NotExistError(ErrorMessages.notFound);
     }
     res.send({ messageId: parsedMessageId });
-  } catch (err) {
-    next(err);
   }
-};
+);
 
-export const replyToMessage = async (
-  req: IRequestReplyToMessage,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const replyToMessage = withErrorHandler(
+  async (req: IRequestReplyToMessage, res: Response) => {
     const { postId, text, parentId } = req.body;
     const authorId = req.user?.id;
-    const data = await Message.create({
-      postId,
-      text,
-      parentId,
-      authorId,
-    });
+    const data = await Message.create({ postId, text, parentId, authorId });
     res.send(data.dataValues);
-  } catch (err) {
-    next(err);
   }
-};
+);
