@@ -18,9 +18,9 @@ export const postPost = async (
   next: NextFunction
 ) => {
   try {
-    const { text, title, date, pinned } = req.body;
+    const { text, title } = req.body;
     const authorId = req.user?.id;
-    const data = await Post.create({ text, title, authorId, date, pinned });
+    const data = await Post.create({ text, title, authorId });
     res.send(data.dataValues);
   } catch (err) {
     next(err);
@@ -33,10 +33,10 @@ export const putPost = async (
   next: NextFunction
 ) => {
   try {
-    const { id, text, title, date, pinned } = req.body;
+    const { id, text, title, pinned } = req.body;
     const authorId = req.user?.id;
     const data = await Post.update(
-      { text, title, authorId, date, pinned },
+      { text, title, authorId, pinned },
       { where: { id: id } }
     );
     res.send(data);

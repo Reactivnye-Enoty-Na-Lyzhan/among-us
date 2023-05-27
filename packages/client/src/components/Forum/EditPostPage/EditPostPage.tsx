@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import './../Page/Page.css';
 import './EditPostPage.css';
 import ForumEditPostForm from '../EditForm/EditForm';
+import hocAuth from '@/hoc/hocAuth';
+import { SIGNIN_URL } from '@/utils/constants';
 
 const ForumEditPostPage: FC = () => {
   const { postId } = useParams();
@@ -20,4 +22,7 @@ const ForumEditPostPage: FC = () => {
   );
 };
 
-export default ForumEditPostPage;
+export default hocAuth(ForumEditPostPage, {
+  onAuthenticatedRedirection: null,
+  onUnauthenticatedRedirection: SIGNIN_URL,
+});

@@ -21,5 +21,6 @@ export type ForumMessageType = {
   text: string;
   date: string;
   parentId: number;
+  authorId: number;
   author: ForumAuthorType;
 };

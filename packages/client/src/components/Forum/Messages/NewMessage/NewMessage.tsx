@@ -21,19 +21,22 @@ const ForumPostNewMessage: FC<Props> = ({ postId, refetchMessages }) => {
 
   return (
     <div className="forum-post-new-message">
-      <textarea
-        className="forum-post-new-message__textarea"
-        value={value}
-        onChange={e => {
-          setValue(e.target.value);
-        }}></textarea>
-      <button
-        type="button"
-        className="forum-post-new-message__button"
-        onClick={onNewMessageButtonClick}
-        disabled={!value}>
-        Отправить комментарий
-      </button>
+      <div className="forum-post-new-message__container">
+        <textarea
+          className="forum-post-new-message__textarea"
+          value={value}
+          maxLength={2000}
+          onChange={e => {
+            setValue(e.target.value);
+          }}></textarea>
+        <button
+          type="button"
+          className="forum-post-new-message__button"
+          onClick={onNewMessageButtonClick}
+          disabled={!value}>
+          Отправить комментарий
+        </button>
+      </div>
     </div>
   );
 };

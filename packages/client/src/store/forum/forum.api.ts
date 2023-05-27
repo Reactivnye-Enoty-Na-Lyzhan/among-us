@@ -32,7 +32,7 @@ export const forumApi = createApi({
         body: data,
       }),
     }),
-    deletePost: build.mutation<ForumMessageType, { postId: number }>({
+    deletePost: build.mutation<ForumPostType, { postId: number }>({
       query: ({ postId }) => ({
         url: `forum/posts/${postId}`,
         method: 'DELETE',
@@ -45,7 +45,7 @@ export const forumApi = createApi({
       }),
     }),
     createMessage: build.mutation<
-      ForumMessageType[],
+      ForumMessageType,
       { postId: number; text: string }
     >({
       query: ({ postId, text }) => ({
@@ -54,15 +54,22 @@ export const forumApi = createApi({
         body: { postId, text },
       }),
     }),
+    deleteMessage: build.mutation<ForumMessageType, { id: number }>({
+      query: ({ id }) => ({
+        url: `forum/messages/${id}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
 export const {
   useGetPostsDataQuery,
   useGetPostDataQuery,
-  useGetMessagesDataQuery,
-  useCreateMessageMutation,
   useCreatePostMutation,
   useDeletePostMutation,
   useUpdatePostMutation,
+  useGetMessagesDataQuery,
+  useCreateMessageMutation,
+  useDeleteMessageMutation,
 } = forumApi;

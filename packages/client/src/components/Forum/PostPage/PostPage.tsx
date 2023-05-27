@@ -11,10 +11,12 @@ import {
 } from '@/store/forum/forum.api';
 import ForumMessages from '../Messages/Messages';
 import ForumPostNewMessage from '../Messages/NewMessage/NewMessage';
+import { useGetUserQuery } from '@/store/auth/auth.slice';
 
 const ForumPostPage: FC = () => {
   const { postId } = useParams();
 
+  const { data: user } = useGetUserQuery();
   const { data } = useGetPostDataQuery({
     postId: postId ? Number(postId) : 0,
   });
@@ -32,7 +34,11 @@ const ForumPostPage: FC = () => {
       <Header title={data?.title ?? ''} />
       <main className="forum__container forum-post__container">
         <div className="forum-post__text">{data?.text}</div>
-        <ForumMessages messages={messages ?? []} />
+        <ForumMessages
+          messages={messages ?? []}
+          user={user}
+          postId={Number(postId)}
+        />
         <ForumPostNewMessage
           refetchMessages={refetchMessages}
           postId={Number(postId)}

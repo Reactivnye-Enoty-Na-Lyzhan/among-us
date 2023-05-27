@@ -47,6 +47,7 @@ const ForumEditPostForm: FC = () => {
         <input
           className="forum-input__input"
           value={title}
+          maxLength={250}
           onChange={e => {
             clearFieldValidation('title');
             validateField('title', e.currentTarget.value);
@@ -76,6 +77,7 @@ const ForumEditPostForm: FC = () => {
         <textarea
           className="forum-input__textarea"
           value={text}
+          maxLength={2000}
           onChange={e => {
             clearFieldValidation('text');
             validateField('text', e.currentTarget.value);

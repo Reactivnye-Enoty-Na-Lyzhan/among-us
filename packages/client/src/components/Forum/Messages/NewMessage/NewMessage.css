@@ -1,9 +1,15 @@
 .forum-post-new-message {
-  height: 128px;
   position: fixed;
   bottom: 25px;
   left: 72px;
   right: 72px;
+}
+
+.forum-post-new-message__container {
+  position: relative;
+  max-width: 1280px;
+  height: 128px;
+  margin: 0 auto;
 }
 
 .forum-post-new-message__textarea {
@@ -20,6 +26,7 @@
   font-size: 12px;
   line-height: 1.8em;
   resize: none;
+  outline: none;
 }
 
 .forum-post-new-message__button {

@@ -53,6 +53,8 @@
 }
 
 .theme-card-info__title {
+  display: inline-block;
+  width: 100%;
   font-size: 16px;
   font-weight: 500;
   overflow: hidden;
