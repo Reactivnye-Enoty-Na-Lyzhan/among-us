@@ -5,6 +5,7 @@ import type {
   IRequestPostPost,
   IRequestGetPostById,
   IRequestDeletePost,
+  IRequestPutPost,
 } from '../../types/forum/types';
 import { ErrorMessages } from '../../utils/errors/errorMessages';
 import { User } from '../../models/user';
@@ -26,6 +27,24 @@ export const postPost = async (
   }
 };
 
+export const putPost = async (
+  req: IRequestPutPost,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id, text, title, date, pinned } = req.body;
+    const authorId = req.user?.id;
+    const data = await Post.update(
+      { text, title, authorId, date, pinned },
+      { where: { id: id } }
+    );
+    res.send(data);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getPosts = async (
   _req: Request,
   res: Response,
@@ -40,6 +59,7 @@ export const getPosts = async (
           ),
           'messagesCount',
         ],
+        'id',
         'title',
         'text',
         'date',
@@ -56,20 +76,20 @@ export const getPosts = async (
           as: 'messages',
           attributes: [],
         },
-        {
-          model: Message,
-          as: 'lastMessage',
-          limit: 1,
-          attributes: ['id', 'text', 'date', 'parentId'],
-          order: [['id', 'DESC']],
-          include: [
-            {
-              model: User,
-              as: 'author',
-              attributes: ['username', 'avatar', 'firstName', 'lastName'],
-            },
-          ],
-        },
+        // {
+        //   model: Message,
+        //   as: 'lastMessage',
+        //   limit: 1,
+        //   attributes: ['id', 'text', 'date', 'parentId'],
+        //   order: [['id', 'DESC']],
+        //   include: [
+        //     {
+        //       model: User,
+        //       as: 'author',
+        //       attributes: ['username', 'avatar', 'firstName', 'lastName'],
+        //     },
+        //   ],
+        // },
       ],
     });
     res.send(data);

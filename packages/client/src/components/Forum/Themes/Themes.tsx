@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import Pagination from '../../Pagination/Pagination';
+// import Pagination from '../../Pagination/Pagination';
 import ThemeCard from './Card/Card';
 import ForumEmpty from './Empty/Empty';
 import GroupButton from './Group/Button/Button';
@@ -8,6 +8,7 @@ import ThemesSearch from './Search/Search';
 import './Themes.css';
 import { ForumThemeGroup } from '../types';
 import { ForumPostType } from '@/store/forum/forum.types';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   pinnedThemes: ForumThemeGroup;
@@ -15,12 +16,14 @@ type Props = {
 };
 
 const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState('');
   const [filteredThemes, setFilteredThemes] = useState<ForumPostType[]>([]);
   const [filteredPinnedThemes, setFilteredPinnedThemes] = useState<
     ForumPostType[]
   >([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // для вопросов по игре
@@ -36,7 +39,7 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
     let newFilteredThemes = [...themesList];
     if (searchText) {
       newFilteredThemes = newFilteredThemes.filter(t =>
-        t.text.toLowerCase().includes(searchText.toLowerCase())
+        t.title.toLowerCase().includes(searchText.toLowerCase())
       );
     }
     callback(newFilteredThemes);
@@ -48,7 +51,14 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
         <div className="form-themes__group">
           <ThemesGroup
             title={themes.title}
-            buttons={[<GroupButton text="+ cоздать новую тему" />]}>
+            buttons={[
+              <GroupButton
+                text="+ cоздать новую тему"
+                onClick={() => {
+                  navigate('/forum/create');
+                }}
+              />,
+            ]}>
             <ForumEmpty />
           </ThemesGroup>
         </div>
@@ -73,7 +83,14 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
       <div className="form-themes__group">
         <ThemesGroup
           title={themes.title}
-          buttons={[<GroupButton text="+ cоздать новую тему" />]}>
+          buttons={[
+            <GroupButton
+              text="+ cоздать новую тему"
+              onClick={() => {
+                navigate('/forum/create');
+              }}
+            />,
+          ]}>
           {filteredThemes.map(theme => (
             <li className="forum-themes__item" key={theme.id}>
               <ThemeCard theme={theme} hasEditAccess={true} />
@@ -81,12 +98,12 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
           ))}
         </ThemesGroup>
       </div>
-      <Pagination
+      {/* <Pagination
         currentPage={currentPage}
         totalCount={themes.themes.length}
         pageSize={3}
         onPageChange={setCurrentPage}
-      />
+      /> */}
     </section>
   );
 };

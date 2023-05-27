@@ -1,8 +1,11 @@
 import React, { FC } from 'react';
 import ForumButton from '../../Button/Button';
 import './Empty.css';
+import { useNavigate } from 'react-router-dom';
 
 const ForumEmpty: FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="forum-themes-empty">
       <div className="forum-themes-empty__container">
@@ -18,7 +21,7 @@ const ForumEmpty: FC = () => {
           <ForumButton
             text="Создать тему"
             handleOnClick={() => {
-              console.log('CLick');
+              navigate('/forum/create');
             }}
           />
         </div>

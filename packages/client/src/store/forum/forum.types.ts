@@ -1,5 +1,5 @@
 export type ForumPostType = {
-  id: string;
+  id: number;
   text: string;
   title: string;
   pinned: boolean;

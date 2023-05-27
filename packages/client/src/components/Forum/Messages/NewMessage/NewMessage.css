@@ -14,6 +14,11 @@
   border: none;
   border-radius: 7px;
   color: var(--color-white);
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.8em;
   resize: none;
 }
 

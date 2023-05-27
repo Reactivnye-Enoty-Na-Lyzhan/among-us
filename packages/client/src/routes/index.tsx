@@ -7,6 +7,7 @@ import ForumPage from './../components/Forum/Page/Page';
 import ForumPostPage from '../components/Forum/PostPage/PostPage';
 import Profile from '@/components/Profile/Profile';
 import { Error404 } from '@/components/ErrorPage/ErrorPage';
+import ForumEditPostPage from '@/components/Forum/EditPostPage/EditPostPage';
 
 export const routes = [
   {
@@ -28,6 +29,14 @@ export const routes = [
   {
     path: '/leaderboard',
     element: <LeaderBoard />,
+  },
+  {
+    path: '/forum/create',
+    element: <ForumEditPostPage />,
+  },
+  {
+    path: '/forum/edit/:postId',
+    element: <ForumEditPostPage />,
   },
   {
     path: '/forum/:postId',

@@ -35,6 +35,16 @@ export interface IRequestPostPost extends Request {
     pinned?: boolean;
   };
 }
+export interface IRequestPutPost extends Request {
+  user?: IUser;
+  body: {
+    id: number;
+    text: string;
+    title: string;
+    date?: Date;
+    pinned?: boolean;
+  };
+}
 
 export interface IRequestGetPostById extends Request {
   params: { postId: string };
