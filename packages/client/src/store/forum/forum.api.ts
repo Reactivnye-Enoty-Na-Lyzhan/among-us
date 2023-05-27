@@ -46,12 +46,12 @@ export const forumApi = createApi({
     }),
     createMessage: build.mutation<
       ForumMessageType,
-      { postId: number; text: string }
+      { postId: number; text: string; parentId?: number }
     >({
-      query: ({ postId, text }) => ({
+      query: ({ postId, text, parentId }) => ({
         url: `forum/messages`,
         method: 'POST',
-        body: { postId, text },
+        body: { postId, text, parentId },
       }),
     }),
     deleteMessage: build.mutation<ForumMessageType, { id: number }>({

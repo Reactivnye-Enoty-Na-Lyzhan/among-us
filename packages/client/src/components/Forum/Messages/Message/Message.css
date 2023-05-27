@@ -33,6 +33,37 @@
   font-size: 12px;
 }
 
+.forum-post-message__parent {
+  color: var(--color-white);
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.forum-post-message__parent > a {
+  margin-left: 5px;
+  color: var(--color-white);
+}
+
+.forum-post-message__answer {
+  display: flex;
+  justify-content: right;
+  margin-top: 5px;
+}
+
+.forum-post-message__answer > button {
+  border: none;
+  background-color: transparent;
+  color: var(--color-white);
+  font-size: 12px;
+  opacity: 0.3;
+  transition: opacity 0.1s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 .forum-post-message__text {
   border: 1px solid var(--color-purple);
   border-radius: 3px;
@@ -55,7 +86,7 @@
   margin: 0 3px;
   margin-left: 10px;
   transition: opacity ease-in 0.1s;
-  opacity: 0.7;
+  opacity: 0.3;
 
   &:hover {
     opacity: 1;

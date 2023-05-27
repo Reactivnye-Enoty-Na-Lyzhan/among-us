@@ -16,9 +16,9 @@ export const postMessage = async (
   next: NextFunction
 ) => {
   try {
-    const { text, postId } = req.body;
+    const { text, postId, parentId } = req.body;
     const authorId = req.user?.id;
-    const data = await Message.create({ text, authorId, postId });
+    const data = await Message.create({ text, authorId, postId, parentId });
     res.send(data.dataValues);
   } catch (err) {
     next(err);

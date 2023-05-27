@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../../Header/Header';
 import hocAuth from '@/hoc/hocAuth';
@@ -12,9 +12,14 @@ import {
 import ForumMessages from '../Messages/Messages';
 import ForumPostNewMessage from '../Messages/NewMessage/NewMessage';
 import { useGetUserQuery } from '@/store/auth/auth.slice';
+import { ForumMessageType } from '@/store/forum/forum.types';
 
 const ForumPostPage: FC = () => {
   const { postId } = useParams();
+
+  const [messageParent, setMessageParent] = useState<
+    ForumMessageType | undefined
+  >(undefined);
 
   const { data: user } = useGetUserQuery();
   const { data } = useGetPostDataQuery({
@@ -38,10 +43,14 @@ const ForumPostPage: FC = () => {
           messages={messages ?? []}
           user={user}
           postId={Number(postId)}
+          messageParent={messageParent}
+          setMessageParent={setMessageParent}
         />
         <ForumPostNewMessage
-          refetchMessages={refetchMessages}
           postId={Number(postId)}
+          refetchMessages={refetchMessages}
+          messageParent={messageParent}
+          setMessageParent={setMessageParent}
         />
       </main>
     </div>

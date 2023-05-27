@@ -8,13 +8,36 @@
 .forum-post-new-message__container {
   position: relative;
   max-width: 1280px;
-  height: 128px;
   margin: 0 auto;
+}
+
+.forum-post-new-message__answer {
+  color: var(--color-white);
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.forum-post-new-message__answer > a {
+  color: var(--color-white);
+}
+
+.forum-post-new-message__answer > button {
+  border: none;
+  color: var(--color-white);
+  background-color: transparent;
+  padding: 2px 5px;
+  cursor: pointer;
+  transition: opacity ease-in 0.1s;
+  opacity: 0.3;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .forum-post-new-message__textarea {
   width: 100%;
-  height: 100%;
+  height: 128px;
   background-color: var(--color-main-blue);
   padding: 15px 30px;
   border: none;

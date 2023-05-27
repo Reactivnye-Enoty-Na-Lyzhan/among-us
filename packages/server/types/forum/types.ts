@@ -6,6 +6,7 @@ export interface IRequestPostMessage extends Request {
     postId: number;
     text: string;
     date?: Date;
+    parentId?: number;
   };
 }
 

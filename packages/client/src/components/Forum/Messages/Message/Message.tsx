@@ -12,9 +12,11 @@ type Props = {
   postId: number;
   data: ForumMessageType;
   user: User | undefined;
+  messageParent: ForumMessageType | undefined;
+  setMessageParent: (message: ForumMessageType | undefined) => void;
 };
 
-const ForumMessage: FC<Props> = ({ postId, data, user }) => {
+const ForumMessage: FC<Props> = ({ postId, data, user, setMessageParent }) => {
   const [deleteMessage] = useDeleteMessageMutation();
   const { refetch } = useGetMessagesDataQuery({ postId });
 
@@ -24,7 +26,7 @@ const ForumMessage: FC<Props> = ({ postId, data, user }) => {
   };
 
   return (
-    <div className="forum-post-message">
+    <div className="forum-post-message" id={`${data.id}`}>
       <div className="forum-post-message__header">
         <div
           className="forum-post-message__avatar"
@@ -44,14 +46,30 @@ const ForumMessage: FC<Props> = ({ postId, data, user }) => {
         <span className="forum-post-message__date">
           {new Date(data.date).toLocaleString()}
         </span>
+        {data.parentId ? (
+          <span className="forum-post-message__parent">
+            в ответ на
+            <a href={`#${data.parentId}`}>комментарий</a>
+          </span>
+        ) : null}
+
         <button
           type="button"
           className="forum-post-message__delete"
           title="Удалить"
           onClick={onDeleteButtonClick}
+          hidden={data.authorId !== user?.id}
         />
       </div>
       <div className="forum-post-message__text">{data.text}</div>
+      <div className="forum-post-message__answer">
+        <button
+          onClick={() => {
+            setMessageParent(data);
+          }}>
+          ответить
+        </button>
+      </div>
     </div>
   );
 };
