@@ -11,4 +11,3 @@ export const withErrorHandler = (handler: RequestHandler) => {
     }
   };
 };
-

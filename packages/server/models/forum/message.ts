@@ -49,4 +49,3 @@ Post.hasMany(Message, { foreignKey: 'postId', as: 'messages' });
 
 Message.belongsTo(User, { foreignKey: 'authorId', as: 'author' });
 User.hasMany(Message, { foreignKey: 'authorId', as: 'messages' });
-

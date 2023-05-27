@@ -16,7 +16,7 @@ const Game: FC = () => {
 
   const handleFinishGame = () => {
     // player id должен быть игрока, которого шлёпнуть. Для примера - id нашего игрока
-    socket.emit('killPlayer', playerId , (id) => {
+    socket.emit('killPlayer', playerId, id => {
       console.log(id);
     });
 
@@ -48,7 +48,7 @@ const Game: FC = () => {
   }, []);
 
   useEffect(() => {
-    socket.emit('getPlayers', (players) => {
+    socket.emit('getPlayers', players => {
       console.log(players);
     });
   }, [socket]);
