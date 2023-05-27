@@ -22,12 +22,8 @@ export const postPost = withErrorHandler(
   }
 );
 
-export const putPost = async (
-  req: IRequestPutPost,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const putPost = withErrorHandler(
+  async (req: IRequestPutPost, res: Response) => {
     const { id, text, title, pinned } = req.body;
     const authorId = req.user?.id;
     const data = await Post.update(
@@ -35,10 +31,8 @@ export const putPost = async (
       { where: { id: id } }
     );
     res.send(data);
-  } catch (err) {
-    next(err);
   }
-};
+);
 
 export const getPosts = withErrorHandler(
   async (_req: Request, res: Response) => {
@@ -67,21 +61,8 @@ export const getPosts = withErrorHandler(
           as: 'messages',
           attributes: [],
         },
-        // {
-        //   model: Message,
-        //   as: 'lastMessage',
-        //   limit: 1,
-        //   attributes: ['id', 'text', 'date', 'parentId'],
-        //   order: [['id', 'DESC']],
-        //   include: [
-        //     {
-        //       model: User,
-        //       as: 'author',
-        //       attributes: ['username', 'avatar', 'firstName', 'lastName'],
-        //     },
-        //   ],
-        // },
       ],
+      order: [['id', 'DESC']],
     });
     res.send(data);
   }

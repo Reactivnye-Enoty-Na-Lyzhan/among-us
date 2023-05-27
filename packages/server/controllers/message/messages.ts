@@ -9,6 +9,7 @@ import { Message } from '../../models/forum/message';
 import { NotExistError } from '../../utils/errors/commonErrors/NotExistError';
 import { ErrorMessages } from '../../utils/errors/errorMessages';
 import { withErrorHandler } from '../../utils/errors/errorHandler';
+import { User } from '../../models/user';
 
 export const postMessage = withErrorHandler(
   async (req: IRequestPostMessage, res: Response) => {
