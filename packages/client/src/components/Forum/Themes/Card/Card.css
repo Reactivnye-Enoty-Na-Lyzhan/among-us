@@ -59,6 +59,12 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   margin-bottom: 5px;
+  color: var(--color-white);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .theme-card-info__author {

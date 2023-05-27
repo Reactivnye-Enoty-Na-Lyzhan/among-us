@@ -1,0 +1,38 @@
+.forum-post-message {
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.forum-post-message__header {
+  margin-bottom: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.forum-post-message__avatar {
+  background-image: url(images/forum/default-avatar.svg);
+  background-size: contain;
+  height: 19px;
+  width: 19px;
+  border-radius: 50%;
+}
+
+.forum-post-message__author {
+  color: var(--color-red-pink);
+  font-size: 14px;
+  margin: 0 10px;
+}
+
+.forum-post-message__date {
+  color: var(--color-white);
+  font-size: 12px;
+}
+
+.forum-post-message__text {
+  border: 1px solid var(--color-purple);
+  border-radius: 3px;
+  color: var(--color-white);
+  padding: 10px 15px;
+  font-size: 12px;
+}

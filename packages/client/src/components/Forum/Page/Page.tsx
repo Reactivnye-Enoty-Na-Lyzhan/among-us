@@ -9,16 +9,13 @@ import { useGetPostsDataQuery } from '@/store/forum/forum.api';
 import { ForumThemeGroup } from '../types';
 
 const ForumPage: FC = () => {
-  // TBD: temporary solution while we don't have an API
   const { param } = useParams();
-
   const { data } = useGetPostsDataQuery();
 
   const [pinnedThemes, setPinnedThemes] = useState<ForumThemeGroup>({
     title: 'Закрепленные темы',
     themes: [],
   });
-
   const [themes, setThemes] = useState<ForumThemeGroup>({
     title: 'Вопросы по игре',
     themes: [],

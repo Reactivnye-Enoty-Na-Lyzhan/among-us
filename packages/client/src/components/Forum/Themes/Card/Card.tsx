@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { FC } from 'react';
 import './Card.css';
 import { ForumPostType } from '@/store/forum/forum.types';
+import { Link } from 'react-router-dom';
 
 type Props = {
   theme: ForumPostType;
@@ -21,7 +22,9 @@ const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
               : undefined
           }></div>
         <div className="theme-card-info__container">
-          <div className="theme-card-info__title">{theme.title}</div>
+          <Link to={`/forum/${theme.id}`} className="theme-card-info__title">
+            {theme.title}
+          </Link>
           <div className="theme-card-info__author">
             Автор:
             <span>{theme.author.username}</span>

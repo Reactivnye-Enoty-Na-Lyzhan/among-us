@@ -5,8 +5,8 @@ export type ForumPostType = {
   pinned: boolean;
   date: string;
   author: ForumAuthorType;
-  messagesCount: string;
-  lastMessage: ForumLastMessageType[];
+  messagesCount?: string;
+  lastMessage?: ForumMessageType[];
 };
 
 export type ForumAuthorType = {
@@ -16,8 +16,10 @@ export type ForumAuthorType = {
   lastName: string;
 };
 
-export type ForumLastMessageType = {
+export type ForumMessageType = {
+  id: number;
   text: string;
   date: string;
+  parentId: number;
   author: ForumAuthorType;
 };

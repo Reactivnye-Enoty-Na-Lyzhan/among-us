@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '../../utils/constants';
-import { ForumPostType } from './forum.types';
+import { ForumMessageType, ForumPostType } from './forum.types';
 
 export const forumApi = createApi({
   reducerPath: 'forum/api',
@@ -12,7 +12,34 @@ export const forumApi = createApi({
     getPostsData: build.query<ForumPostType[], void>({
       query: () => `forum/posts`,
     }),
+    getPostData: build.query<ForumPostType, { postId: number }>({
+      query: ({ postId }) => ({
+        url: `forum/posts/${postId}`,
+        method: 'GET',
+      }),
+    }),
+    getMessagesData: build.query<ForumMessageType[], { postId: number }>({
+      query: ({ postId }) => ({
+        url: `forum/messages/${postId}`,
+        method: 'GET',
+      }),
+    }),
+    createMessage: build.mutation<
+      ForumMessageType[],
+      { postId: number; text: string }
+    >({
+      query: ({ postId, text }) => ({
+        url: `forum/messages`,
+        method: 'POST',
+        body: { postId, text },
+      }),
+    }),
   }),
 });
 
-export const { useGetPostsDataQuery } = forumApi;
+export const {
+  useGetPostsDataQuery,
+  useGetPostDataQuery,
+  useGetMessagesDataQuery,
+  useCreateMessageMutation,
+} = forumApi;

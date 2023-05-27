@@ -60,7 +60,7 @@ export const getPosts = async (
           model: Message,
           as: 'lastMessage',
           limit: 1,
-          attributes: ['text', 'date'],
+          attributes: ['id', 'text', 'date', 'parentId'],
           order: [['id', 'DESC']],
           include: [
             {
