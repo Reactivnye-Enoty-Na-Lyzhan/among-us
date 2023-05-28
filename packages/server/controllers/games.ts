@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, literal } from 'sequelize';
 import { Player } from '../models/player';
 import { Game } from '../models/game';
 import { User } from '../models/user';
@@ -13,7 +13,6 @@ import { NotExistError } from '../utils/errors/commonErrors/NotExistError';
 import { ReachLimitsError } from '../utils/errors/gameErrors/ReachLimitsError';
 import { NotInQueueError } from '../utils/errors/gameErrors/NotInQueueError';
 import { AlreadyExistError } from '../utils/errors/commonErrors/AlreadyExistError';
-import { ResponseMessages } from '../utils/ResponseMessages';
 import { roleDistributor } from '../utils/game/rolePicker';
 import { getScore } from '../utils/game/getScore';
 import { MAX_PLAYERS } from '../utils/constants';
@@ -91,7 +90,7 @@ export const createGame = async (
       const newGame = await Game.create({
         title,
         status: 'init',
-        userId: id,
+        creatorId: id,
       });
 
       // Добавляем команды
@@ -123,8 +122,12 @@ export const createGame = async (
             grey: false,
           },
         }),
+        newGame.createGameQueue({
+          userId: id,
+        }),
         newGame.setTeams(teams),
       ]);
+
 
       // Получаем готовый результат для отправки клиенту
       const result = await Game.findOne({
@@ -142,9 +145,7 @@ export const createGame = async (
       return { result };
     });
 
-    res.send({
-      game: result,
-    });
+    res.send(result);
   } catch (err: unknown) {
     next(err);
   }
@@ -163,19 +164,29 @@ export const getGames = async (
     if (!id) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
 
     // Получаем все существующие игры со смещением и лимитом
-    const foundGames = await Game.findAll({
+    const foundGames = await Game.scope('withCreator').findAll({
+      where: {
+        status: 'init',
+      },
+      attributes: {
+        include: [
+          [literal(`(SELECT COUNT (*)::int  FROM players WHERE "gameId" = "Game"."id")`), 'players'],
+        ],
+      },
       offset,
       limit,
       include: [
         {
           model: GameParam,
           as: 'param',
+          attributes: ['impostors'],
         },
       ],
     });
 
     res.send({ foundGames });
   } catch (err: unknown) {
+    console.log(err);
     next(err);
   }
 };
@@ -193,11 +204,17 @@ export const findGames = async (
     if (!id) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
 
     // Получаем все игры, соответствующие запросу, с учётом смещения и лимита
-    const foundGames = await Game.findAll({
+    const foundGames = await Game.scope('withCreator').findAll({
       where: {
         title: {
           [Op.iLike]: title,
         },
+        status: 'init',
+      },
+      attributes: {
+        include: [
+          [literal(`(SELECT COUNT (*)::int  FROM players WHERE "gameId" = "Game"."id")`), 'players'],
+        ],
       },
       offset,
       limit,
@@ -205,11 +222,14 @@ export const findGames = async (
         {
           model: GameParam,
           as: 'param',
+          attributes: ['impostors'],
         },
       ],
     });
 
-    res.send({ foundGames });
+    res.send({
+      games: foundGames,
+    });
   } catch (err: unknown) {
     next(err);
   }
@@ -281,7 +301,6 @@ export const takeQueue = async (
 
     // Подключаем пользователя
     await foundGame.createGameQueue({
-      gameId,
       userId: id,
     });
 
@@ -314,9 +333,7 @@ export const takeQueue = async (
       ],
     });
 
-    res.send({
-      game,
-    });
+    res.send(game);
   } catch (err: unknown) {
     next(err);
   }
@@ -553,7 +570,7 @@ export const leaveGame = async (
     });
 
     res.send({
-      message: ResponseMessages.onLeftGame,
+      gameId,
     });
   } catch (err: unknown) {
     next(err);
@@ -599,7 +616,7 @@ export const completeTask = async (
     await team.save();
 
     res.send({
-      message: 'Счёт команды успешно обновлён!',
+      score: team.score,
     });
   } catch (err: unknown) {
     next(err);

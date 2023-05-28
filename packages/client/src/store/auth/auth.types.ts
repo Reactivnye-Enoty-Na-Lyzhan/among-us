@@ -1,9 +1,9 @@
 export type User = {
   id: number;
-  first_name: string;
-  second_name: string;
-  display_name: string;
-  login: string;
+  firstname: string;
+  secondname: string;
+  nickname: string;
+  username: string;
   email: string;
   password: string;
   phone: string;
@@ -12,13 +12,13 @@ export type User = {
 
 export type SignInRequestDTO = {
   password: string;
-  login: string;
+  username: string;
 };
 
 export type SignUpRequestDTO = {
-  first_name: string;
-  second_name: string;
-  login: string;
+  firstName: string;
+  lastName: string;
+  username: string;
   email: string;
   password: string;
   phone: string;

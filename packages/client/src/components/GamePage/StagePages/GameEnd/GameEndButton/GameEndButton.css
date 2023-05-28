@@ -1,5 +1,3 @@
-@import '../../utils/game-end/variables.css';
-
 .game-end__button-name {
   display: flex;
   align-items: center;
@@ -15,6 +13,8 @@
   background-color: inherit;
   text-decoration: none;
   cursor: pointer;
+  --screen-content-background: #010318;
+  --text-color: #fafafa;
 }
 
 .game-end__button-name:hover {

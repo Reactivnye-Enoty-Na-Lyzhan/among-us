@@ -1,8 +1,9 @@
 import { FC, memo, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useActions } from '@/hooks/useActions';
 import Form from './Form/Form';
 import LeaveGame from './LeaveGame/LeaveGame';
+import { useActions } from '@/hooks/useActions';
+import { useCreateGameMutation } from '@/store/game/game.api';
 import { InputsParamsType } from '@/utils/gameParams';
 import './CreateGame.css';
 
@@ -11,21 +12,34 @@ const CreateGame: FC = () => {
   const [formStep, setFormStep] = useState<number>(1);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
-  const navigate = useNavigate();
+  // Запросы
+  const [createServerGame] = useCreateGameMutation();
 
-  const { startFastGame } = useActions();
+  const { setGame, setGameStatus } = useActions();
+  const navigate = useNavigate();
 
   const heading =
     formStep === 1 ? 'Установите параметры игры' : 'Вы почти готовы';
 
   // Создание игры
-  const createGame = (values: InputsParamsType) => {
+  const createGame = async (values: InputsParamsType) => {
     // Действия для создания игры
-    startFastGame();
-    // Просто вывод данных в консоль (прототип)
-    console.log(values);
+    const game = await createServerGame({
+      title: values.title,
+      params: {
+        impostors: Number(values.impostor),
+        discussion: Number(values.discussion),
+        meetings: Number(values.meeting),
+        interval: Number(values.interval),
+      }
+    });
+
+    if ('error' in game) return;
+
+    setGame(game.data);
+    setGameStatus('characterSelection');
     setIsProcessing(false);
-    navigate('../assembling');
+    navigate('/game');
   };
 
   const changeFormStep = (step: number) => {

@@ -12,8 +12,8 @@ const email = Joi.string().required().email();
 const password = Joi.string().required();
 const nickname = Joi.string().required();
 const title = Joi.string().required();
-const offset = Joi.number().positive().default(0);
-const limit = Joi.number().positive().default(9);
+const offset = Joi.number().positive().allow(0).default(0);
+const limit = Joi.number().positive().default(12);
 const gameId = idFormat;
 const taskId = idFormat;
 const playerId = idFormat;
@@ -73,6 +73,11 @@ export const loginUserValidation = validateBody<string>({
 export const createGameValidation = validateBody<string | IParams>({
   title,
   params,
+});
+
+export const getAllGamesValidation = validateBody<number>({
+  offset,
+  limit,
 });
 
 export const findGamesValidation = validateBody<string | number>({

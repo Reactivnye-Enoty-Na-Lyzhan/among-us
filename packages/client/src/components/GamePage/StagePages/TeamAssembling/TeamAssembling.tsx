@@ -1,35 +1,75 @@
 import { memo, FC, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useActions } from '@/hooks/useActions';
 import Navigation from '../Navigation/Navigation';
+import { useActions } from '@/hooks/useActions';
+import { GameIdType } from '@/store/game/game.types';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { selectGame } from '@/store/game/game.slice';
+import {
+  useFindHotGameQuery,
+  useLeaveGameMutation,
+  useTakeQueueMutation,
+} from '@/store/game/game.api';
 import './TeamAssembling.css';
 
 // Экран подбора команды
 const TeamAssembling: FC = () => {
   const [isSearching, setIsSearching] = useState<boolean>(true);
   const [counter, setCounter] = useState<number>(0);
+  const [pollingInterval, setPollingInterval] = useState<number>(15000);
 
-  const { cancelGame } = useActions();
+  // Состояние
+  const gameId = useTypedSelector(selectGame);
 
-  const navigate = useNavigate();
+  // Запросы
+  const { data, isSuccess: findGameSuccess } = useFindHotGameQuery({}, { pollingInterval: pollingInterval });
+  const [takeQueue] = useTakeQueueMutation();
+  const [leaveGame] = useLeaveGameMutation();
 
-  // Для прототипа
+  const { setGame, setGameStatus, cancelGame } = useActions();
+
+  // Когда получим ID доступной игры - подключаемся к очереди
   useEffect(() => {
-    const timeout = setTimeout(() => navigate('../preparing'), 5000);
+    console.log(data?.game, findGameSuccess);
+    if (data?.game !== null && findGameSuccess) {
+      setPollingInterval(0);
 
-    return () => clearTimeout(timeout);
-  }, []);
+      takeGameQueue(data.game.id);
+    }
+  }, [data]);
 
   // Отсчёт. В дальнейшем будет связан со временем создания игры
   useEffect(() => {
     isSearching && setTimeout(() => setCounter(counter + 1), 1000);
   }, [counter, isSearching]);
 
+
+  // Подключение к очереди в игру
+  const takeGameQueue = async (gameId: GameIdType) => {
+    try {
+      const gameData = await takeQueue({
+        gameId,
+      });
+
+      if ('error' in gameData) {
+        throw new Error;
+      }
+
+      setGame(gameData.data);
+      setGameStatus('characterSelection');
+    } catch {
+      setPollingInterval(15000);
+    }
+  };
+
   // Отмена поиска игры
-  function handleCancelSearch() {
+  async function handleCancelSearch() {
+    if (gameId) {
+      await leaveGame({
+        gameId,
+      });
+    }
     setIsSearching(false);
     cancelGame();
-    navigate('..');
   }
 
   return (

@@ -11,9 +11,9 @@ const readyPlayers: Set<string> = new Set();
 
 export const connectionHandlers = (socket: GameSocket) => {
   // @ts-ignore
-  const joinGame: JoinGame = (gameId, callback) => {
-    socket.join(gameId.toSting());
-    callback(gameId);
+  const joinGame: JoinGame = (gameId, /* callback */) => {
+    socket.join(gameId.toString());
+/*     callback(gameId); */
   };
 
   const setPlayerReady: SetPlayerReady = playerId => {

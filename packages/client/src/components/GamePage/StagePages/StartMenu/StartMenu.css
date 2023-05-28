@@ -35,11 +35,15 @@
 }
 
 .start-menu__fast-start {
+  padding: 0;
   font-size: 48px;
   font-weight: 500;
   color: var(--button-font-primary);
   line-height: 1.2;
   text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
   transition: 0.4s;
 }
 

@@ -1,42 +1,61 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TypeRootState } from '..';
-import {
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { TypeRootState } from '..';
+import type {
   IGameState,
   IGameStateParams,
-  ColorType,
-  IResults,
+  GameStatusType,
+  IPlayer,
+  IGameWithParams,
 } from './game.types';
+import type { SuitColorsType } from '@/utils/gameParams';
 
 const initialState: IGameState = {
-  online: false,
+  online: true,
+  gameId: null,
   title: 'Игра',
-  status: 'start',
+  status: 'init',
   stage: 'init',
   params: {
     impostors: 2,
     meetings: 5,
-    meetingDuration: 50,
-    meetingCooldown: 30,
+    discussion: 50,
+    interval: 30,
   },
   player: {
-    id: '',
-    color: 'white',
-  },
-  startCooldown: 1,
-  results: {
-    result: 'init',
+    id: null,
+    alive: true,
+    color: 'red',
+    lastPosition: {
+      x: 0,
+      y: 0,
+    },
+    role: 'impostor',
     score: 0,
   },
+  results: {
+    result: 'win',
+    score: 15,
+  },
+  startCooldown: 1,
 };
 
 export const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    startFastGame: state => {
-      state.stage = 'preparing';
-      state.results = initialState.results;
+    startFastGame: state => { // корректно
+      state.status = 'assembling';
     },
+    setGameStatus: (state, action: PayloadAction<GameStatusType>) => { // корректно
+      state.status = action.payload;
+    },
+    setCurrentPlayer: (state, action: PayloadAction<IPlayer>) => { // корректно?
+      const { id, color, role } = action.payload;
+      state.player.id = id;
+      state.player.color = color;
+      state.player.role = role;
+    },
+    //
     cancelGame: state => {
       state.status = initialState.status;
       state.stage = initialState.stage;
@@ -51,13 +70,8 @@ export const gameSlice = createSlice({
       state.stage = initialState.stage;
       state.player = initialState.player;
     },
-    updateResults: (state, action: PayloadAction<IResults>) => {
-      state.results = action.payload;
-    },
-    finishGame: (state, action: PayloadAction<IResults>) => {
+    finishGame: (state) => {
       state.status = 'finished';
-      state.stage = 'finishing';
-      state.results = action.payload;
     },
     setGameParams: (state, action: PayloadAction<IGameStateParams>) => {
       state.params = action.payload;
@@ -68,11 +82,17 @@ export const gameSlice = createSlice({
     setOnlineMode: (state, action: PayloadAction<boolean>) => {
       state.online = action.payload;
     },
-    selectColor: (state, action: PayloadAction<ColorType>) => {
+    selectColor: (state, action: PayloadAction<keyof SuitColorsType>) => {
       state.player.color = action.payload;
     },
-    setPlayerId: (state, action: PayloadAction<string>) => {
+    setPlayerId: (state, action: PayloadAction<number>) => {
       state.player.id = action.payload;
+    },
+    setGame: (state, action: PayloadAction<IGameWithParams>) => {
+      const { id, title, param } = action.payload;
+      state.gameId = id;
+      state.title = title;
+      state.params = param;
     },
   },
 });
@@ -83,3 +103,4 @@ export const gameActions = gameSlice.actions;
 export const selectOnline = (state: TypeRootState) => state.game.online;
 export const selectResults = (state: TypeRootState) => state.game.results;
 export const selectPlayer = (state: TypeRootState) => state.game.player;
+export const selectGame = (state: TypeRootState) => state.game.gameId;

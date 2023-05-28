@@ -8,13 +8,10 @@ import {
 } from './auth.types';
 import { API_BASE_URL } from '../../utils/constants';
 
-const AUTH_API_PATH = 'auth';
-const API_URL = `${API_BASE_URL}${AUTH_API_PATH}`;
-
 export const authApi = createApi({
-  reducerPath: 'auth/api',
+  reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: API_URL,
+    baseUrl: API_BASE_URL,
     credentials: 'include',
   }),
   tagTypes: ['User'],

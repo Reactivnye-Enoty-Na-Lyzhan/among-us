@@ -29,7 +29,7 @@ export class Game extends Model<
   declare id: CreationOptional<number>;
   declare title: string;
   declare status: GameStatus;
-  declare userId: ForeignKey<User['id']>;
+  declare creatorId: ForeignKey<User['id']>;
   declare createParam: HasOneCreateAssociationMixin<GameParam>;
   declare createPlayer: HasManyCreateAssociationMixin<Player>;
   declare removePlayer: HasManyRemoveAssociationMixin<Player, number>;
@@ -62,6 +62,23 @@ Game.init(
     },
   },
   {
+    defaultScope: {
+      attributes: {
+        exclude: ['creatorId'],
+      },
+    },
+    scopes: {
+      withCreator: {
+        include: {
+          model: User,
+          as: 'creator',
+          attributes: ['username', 'avatar'],
+        },
+        attributes: {
+          exclude: ['creatorId'],
+        },
+      },
+    },
     sequelize,
     tableName: 'games',
     paranoid: true,
@@ -72,8 +89,8 @@ Game.init(
 Game.hasMany(Player, { as: 'players', sourceKey: 'id', foreignKey: 'gameId' });
 Player.belongsTo(Game, { as: 'game', targetKey: 'id', foreignKey: 'gameId' });
 
-Game.hasOne(GameParam, { as: 'param' });
-GameParam.belongsTo(Game, { as: 'param' });
+Game.hasOne(GameParam, { as: 'param', sourceKey: 'id', foreignKey: 'gameId' });
+GameParam.belongsTo(Game, { as: 'game', targetKey: 'id', foreignKey: 'gameId' });
 
 Game.hasMany(Team, { as: 'teams', sourceKey: 'id', foreignKey: 'gameId' });
 Team.belongsTo(Game, { as: 'game', targetKey: 'id', foreignKey: 'gameId' });
@@ -91,7 +108,10 @@ GameQueue.belongsTo(Game, {
 
 Game.hasOne(GameColor, { as: 'color', sourceKey: 'id', foreignKey: 'gameId' });
 GameColor.belongsTo(Game, {
-  as: 'color',
+  as: 'game',
   targetKey: 'id',
   foreignKey: 'gameId',
 });
+
+User.hasOne(Game, { as: 'game', sourceKey: 'id', foreignKey: 'creatorId' });
+Game.belongsTo(User, { as: 'creator', targetKey: 'id', foreignKey: 'creatorId' });

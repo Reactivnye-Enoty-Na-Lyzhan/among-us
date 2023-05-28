@@ -1,16 +1,18 @@
 import { FC, memo, useCallback, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import ColorButton from './ColorButton/ColorButton';
+import { useJoinGameMutation, useLeaveGameMutation } from '@/store/game/game.api';
+import { selectGame } from '@/store/game/game.slice';
 import { GameSocketContext } from '@/utils/socket/gameSocket';
 import { SuitColorsType, suitsColors } from '../../../../utils/gameParams';
-import './FinalPreparing.css';
+import './CharacterSelection.css';
 
 // Экран выбора цвета скафандра (нужна игру уже найдена)
-const FinalPreparing: FC = () => {
+const CharacterSelection: FC = () => {
   const { color: userSuitColor, id: playerId } = useTypedSelector(state => state.game.player);
+  const gameId = useTypedSelector(selectGame);
 
   // Для мультиплеера. Блокирует возможность выбора цвета, если он уже выбран другим игроком
   const [usedColors, setUsedColors] = useState<SuitColorsType>({
@@ -25,16 +27,25 @@ const FinalPreparing: FC = () => {
     grey: false,
   });
 
-  const navigate = useNavigate();
+  // Запросы
+  const [leaveGame] = useLeaveGameMutation();
 
   const socket = useContext(GameSocketContext);
 
-  const { cancelGame, setPlayerId, selectColor } = useActions();
+  const {
+    setGameStatus,
+    cancelGame,
+    setPlayerId,
+    selectColor,
+    setCurrentPlayer,
+  } = useActions();
+
+  const [joinGameResponse] = useJoinGameMutation();
 
   useEffect(() => {
     socket.on('selectedColors', setUsedColors);
     socket.emit('joinGame', (newPlayerId) => {
-      setPlayerId(newPlayerId);
+      setPlayerId(Number(newPlayerId));
     });
 
     return () => {
@@ -43,8 +54,8 @@ const FinalPreparing: FC = () => {
   }, [socket]);
 
   // TODO: Добавить смену цвета
-  const crewmanClass = classNames('finalpreparing__crewman', {
-    [`finalpreparing__crewman_suit_${userSuitColor}`]: false, //selectedColor !== '',
+  const crewmanClass = classNames('character-selection__crewman', {
+    [`character-selection__crewman_suit_${userSuitColor}`]: false, //selectedColor !== '',
   });
 
   // Предпосылки для мультиплеера
@@ -52,36 +63,47 @@ const FinalPreparing: FC = () => {
   const handleColorPick = useCallback((color: keyof SuitColorsType) => {
     socket.emit('colorSelect', color, userSuitColor, (newColor) => {
       selectColor(newColor);
-      socket.emit('playerReady', playerId);
+      socket.emit('playerReady', 'playerId');
     });
 
   }, [userSuitColor, playerId]);
 
-  // Выход из игры
-  // TODO: Выход из игры в режиме мультиплеера
-  const handleExitGame = () => {
-    // отмена игры;
-    cancelGame();
-    navigate('..');
+  // Начало игры с выбранным цветом скафандра
+  const handleStartGame = async () => {
+    if (!userSuitColor) return;
+    if (!gameId) return;
+    const playerData = await joinGameResponse({
+      gameId,
+      color: userSuitColor,
+    });
+
+    if ('error' in playerData) return;
+
+    setCurrentPlayer(playerData.data.player);
+    setGameStatus('startAwaiting');
   };
 
-  // Начало игры с выбранным цветом скафандра
-  const handleStartGame = () => {
-    if (!userSuitColor) return;
-
-    navigate('../await');
+  // Выход из игры
+  const handleExitGame = async () => {
+    // отмена игры;
+    if (gameId) {
+      await leaveGame({
+        gameId,
+      });
+    }
+    cancelGame();
   };
 
   return (
-    <div className="finalpreparing finalpreparing_spacing_outer">
-      <h1 className="finalpreparing__title">
+    <div className="character-selection character-selection_spacing_outer">
+      <h1 className="character-selection__title">
         Какой цвет скафандра у тебя будет?
       </h1>
-      <div className="finalpreparing__container">
+      <div className="character-selection__container">
         <div className={crewmanClass}></div>
-        <ul className="finalpreparing__colors-list">
+        <ul className="character-selection__colors-list">
           {suitsColors.map(color => (
-            <li className="finalpreparing__list-item" key={color}>
+            <li className="character-selection__list-item" key={color}>
               <ColorButton
                 color={color}
                 selected={userSuitColor === color}
@@ -92,15 +114,15 @@ const FinalPreparing: FC = () => {
           ))}
         </ul>
         <button
-          className="finalpreparing__navigation"
+          className="character-selection__navigation"
           type="button"
           onClick={handleStartGame}>
-          <span className="finalpreparing__button-title">Играть</span>
-          <span className="finalpreparing__button-icon"></span>
+          <span className="character-selection__button-title">Играть</span>
+          <span className="character-selection__button-icon"></span>
         </button>
       </div>
       <button
-        className="finalpreparing__leave-game"
+        className="character-selection__leave-game"
         type="button"
         onClick={handleExitGame}>
         Выйти из игры
@@ -109,4 +131,4 @@ const FinalPreparing: FC = () => {
   );
 };
 
-export default memo(FinalPreparing);
+export default memo(CharacterSelection);

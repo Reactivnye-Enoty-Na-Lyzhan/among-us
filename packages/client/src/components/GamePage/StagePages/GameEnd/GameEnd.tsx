@@ -3,7 +3,7 @@ import { FC, useCallback } from 'react';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { selectResults } from '@/store/game/game.slice';
-import GameEndButton from '../GameEndButton/GameEndButton';
+import GameEndButton from './GameEndButton/GameEndButton';
 import './GameEnd.css';
 
 type Config = {

@@ -15,6 +15,7 @@ import {
   completeTaskValidation,
   createGameValidation,
   findGamesValidation,
+  getAllGamesValidation,
   joinGameValidation,
   leaveGameValidation,
   takeQueueValidation,
@@ -23,7 +24,7 @@ import {
 const router = Router();
 
 // Получить список игр
-router.get('/', getGames);
+router.post('/', getAllGamesValidation, getGames);
 
 // Быстрый поиск игры
 router.get('/hot', findHotGame);

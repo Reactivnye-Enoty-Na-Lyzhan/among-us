@@ -1,4 +1,4 @@
-.await-start {
+.start-awaiting {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -8,13 +8,13 @@
   height: 100%;
 }
 
-.await-start__timer {
+.start-awaiting__timer {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.await-start__title {
+.start-awaiting__title {
   margin: 29.86vh 0 0;
   font-size: 48px;
   font-weight: 500;
@@ -22,28 +22,28 @@
   line-height: 1.2;
 }
 
-.await-start__time-left {
+.start-awaiting__time-left {
   font-size: 36px;
   color: var(--font-main-secondary);
   line-height: 1.2;
   text-align: center;
 }
 
-.await-start__degree {
+.start-awaiting__degree {
   font-size: 24px;
   color: var(--font-main-secondary);
   line-height: 1.2;
   vertical-align: super;
 }
 
-.await-start__content {
+.start-awaiting__content {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
 }
 
-.await-start__settings-list {
+.start-awaiting__settings-list {
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -52,11 +52,11 @@
   list-style: none;
 }
 
-.await-start__list-item {
+.start-awaiting__list-item {
   display: flex;
 }
 
-.await-start__param-name {
+.start-awaiting__param-name {
   margin: 0;
   font-size: 16px;
   font-weight: 500;
@@ -64,14 +64,14 @@
   line-height: 1.2;
 }
 
-.await-start__param-value {
+.start-awaiting__param-value {
   margin-left: 5px;
   font-size: 16px;
   color: var(--font-main-primary);
   line-height: 1.2;
 }
 
-.await-start__crewman {
+.start-awaiting__crewman {
   width: 181px;
   height: 247px;
   background-image: url(../../../../images/crewman/crewman-white.svg);
@@ -80,7 +80,7 @@
   background-repeat: no-repeat;
 }
 
-.await-start__leave-game {
+.start-awaiting__leave-game {
   margin-bottom: 55px;
   padding: 0;
   font-family: inherit;
@@ -93,20 +93,20 @@
   transition: 0.4s;
 }
 
-.await-start__leave-game:hover {
+.start-awaiting__leave-game:hover {
   opacity: 0.8;
 }
 
 @media screen and (min-width: 1700px) {
-  .await-start__title {
+  .start-awaiting__title {
     font-size: 72px;
   }
 
-  .await-start__time-left {
+  .start-awaiting__time-left {
     font-size: 48px;
   }
 
-  .await-start__degree {
+  .start-awaiting__degree {
     font-size: 32px;
   }
 }

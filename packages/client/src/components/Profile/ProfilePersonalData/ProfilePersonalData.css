@@ -1,6 +1,4 @@
-@import '../../../utils/game-end/variables.css';
-
 .form__title {
-  color: var(--text-color);
+  color: var(--font-main-primary);
   margin-bottom: 55px;
 }

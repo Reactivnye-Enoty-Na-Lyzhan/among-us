@@ -1,14 +1,25 @@
-import { FC, memo } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { selectIsLoading } from '@/store/ui/ui.slice';
 import './Loader.css';
 
 const Loader: FC = () => {
+  const [isDisplayed, setIsDisplayed] = useState<boolean>(false);
   const isLoading = useTypedSelector(selectIsLoading);
+
+  useEffect(() => {
+    if (isLoading) {
+      setIsDisplayed(true);
+    } else {
+      setTimeout(() => {
+        setIsDisplayed(false);
+      }, 1500);
+    }
+  }, [isLoading]);
 
   return (
     <>
-      {isLoading && (
+      {isDisplayed && (
         <div className="loader">
           <div className="loader__stars"></div>
           <div className="loader__stars loader__stars_position_middle"></div>

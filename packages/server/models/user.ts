@@ -97,7 +97,8 @@ User.init(
     },
     avatar: {
       type: DataTypes.STRING,
-      allowNull: true,
+      defaultValue: '0c386102f8faef94b8c8',
+      allowNull: false,
     },
     id: {
       type: DataTypes.INTEGER,
