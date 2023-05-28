@@ -20,7 +20,7 @@ import './GamePage.css';
 
 type IConditionTable = {
   [k in GameStatusType]: () => JSX.Element;
-}
+};
 
 // Основной компонент игры
 const GamePage: FC = () => {
@@ -47,18 +47,17 @@ const GamePage: FC = () => {
   }, []);
 
   const hashReturner: IConditionTable = {
-    'init': () => <StartMenu />,
-    'assembling': () => <TeamAssembling />,
-    'characterSelection': () => <CharacterSelection />,
-    'startAwaiting': () => <StartAwaiting />,
-    'active': () => <Game />,
-    'finished': () => <GameEnd />,
+    init: () => <StartMenu />,
+    assembling: () => <TeamAssembling />,
+    characterSelection: () => <CharacterSelection />,
+    startAwaiting: () => <StartAwaiting />,
+    active: () => <Game />,
+    finished: () => <GameEnd />,
   };
 
   const currentPage = useCallback(() => {
     return hashReturner[status]();
   }, [status]);
-
 
   return (
     <main className="game-page">

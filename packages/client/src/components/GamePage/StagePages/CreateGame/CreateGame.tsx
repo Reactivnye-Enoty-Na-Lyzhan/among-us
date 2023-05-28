@@ -31,7 +31,7 @@ const CreateGame: FC = () => {
         discussion: Number(values.discussion),
         meetings: Number(values.meeting),
         interval: Number(values.interval),
-      }
+      },
     });
 
     if ('error' in game) return;

@@ -9,7 +9,10 @@ import type {
 import { Game } from '../../../models/game';
 import { WrongDataError } from '../../../utils/errors/commonErrors/WrongDataError';
 
-export const playerInteractionHandlers = (socket: GameSocket, io: GameSocketNamespace) => {
+export const playerInteractionHandlers = (
+  socket: GameSocket,
+  io: GameSocketNamespace
+) => {
   const killPlayer: KillPlayer = async (gameId, targetId) => {
     try {
       const game = await Game.findOne({
@@ -24,7 +27,7 @@ export const playerInteractionHandlers = (socket: GameSocket, io: GameSocketName
 
       if (!players) throw new WrongDataError(ErrorMessages.gameNotExist);
 
-      const targetPlayer = players.find((player) => player.id === targetId);
+      const targetPlayer = players.find(player => player.id === targetId);
 
       if (!targetPlayer) throw new WrongDataError(ErrorMessages.playerNotExist);
 
@@ -32,8 +35,12 @@ export const playerInteractionHandlers = (socket: GameSocket, io: GameSocketName
         alive: false,
       });
 
-      const impostorsAlive = players.filter((player) => player.role === 'impostor' && player.alive);
-      const civilsAlive = players.filter((player) => player.role === 'civil' && player.alive);
+      const impostorsAlive = players.filter(
+        player => player.role === 'impostor' && player.alive
+      );
+      const civilsAlive = players.filter(
+        player => player.role === 'civil' && player.alive
+      );
 
       io.to(gameId.toString()).emit('onPlayerKill', targetId);
 
@@ -41,7 +48,6 @@ export const playerInteractionHandlers = (socket: GameSocket, io: GameSocketName
         console.log('asdasdasd');
         io.to(gameId.toString()).emit('onGameEnd', 'impostor');
       }
-
     } catch (err: unknown) {
       console.log(err);
     }

@@ -17,7 +17,8 @@ export const NOT_FOUNT_MESSAGE =
 
 export const CLIENT_PACKAGE_PATH = path.resolve(
   __dirname,
-  `${process.env.NODE_ENV === 'development' ? '../../client' : '../../../client'
+  `${
+    process.env.NODE_ENV === 'development' ? '../../client' : '../../../client'
   }`
 );
 

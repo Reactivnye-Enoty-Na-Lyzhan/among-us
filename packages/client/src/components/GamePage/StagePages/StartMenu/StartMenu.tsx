@@ -19,9 +19,7 @@ const StartMenu: FC = () => {
       </h1>
       <div className="start-menu__container">
         <div className="start-menu__controls">
-          <button
-            className="start-menu__fast-start"
-            onClick={handleStart}>
+          <button className="start-menu__fast-start" onClick={handleStart}>
             Быстрая игра
           </button>
           <span className="start-menu__controls-divider">или</span>

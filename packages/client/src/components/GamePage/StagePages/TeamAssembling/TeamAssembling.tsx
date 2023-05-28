@@ -21,7 +21,10 @@ const TeamAssembling: FC = () => {
   const gameId = useTypedSelector(selectGame);
 
   // Запросы
-  const { data, isSuccess: findGameSuccess } = useFindHotGameQuery({}, { pollingInterval: pollingInterval });
+  const { data, isSuccess: findGameSuccess } = useFindHotGameQuery(
+    {},
+    { pollingInterval: pollingInterval }
+  );
   const [takeQueue] = useTakeQueueMutation();
   const [leaveGame] = useLeaveGameMutation();
 
@@ -41,7 +44,6 @@ const TeamAssembling: FC = () => {
     isSearching && setTimeout(() => setCounter(counter + 1), 1000);
   }, [counter, isSearching]);
 
-
   // Подключение к очереди в игру
   const takeGameQueue = async (gameId: GameIdType) => {
     try {
@@ -50,7 +52,7 @@ const TeamAssembling: FC = () => {
       });
 
       if ('error' in gameData) {
-        throw new Error;
+        throw new Error();
       }
 
       setGame(gameData.data);

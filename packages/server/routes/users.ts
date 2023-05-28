@@ -1,8 +1,14 @@
 import { Router } from 'express';
-import { changePassword, getCurrentUser, logoutUser, updateProfile } from '../controllers/users';
-import { 
-  changePasswordValidation, updateProfileValidation,
- } from '../utils/validation/requestValidation';
+import {
+  changePassword,
+  getCurrentUser,
+  logoutUser,
+  updateProfile,
+} from '../controllers/users';
+import {
+  changePasswordValidation,
+  updateProfileValidation,
+} from '../utils/validation/requestValidation';
 import { uploadImage } from '../controllers/images';
 import { upload } from '../utils/multer/multerConfig';
 

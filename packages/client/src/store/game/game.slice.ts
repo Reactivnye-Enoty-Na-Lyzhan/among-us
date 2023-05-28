@@ -67,7 +67,7 @@ export const gameSlice = createSlice({
       state.players = action.payload;
     },
     killPlayer: (state, action: PayloadAction<IPlayer['id']>) => {
-      const player = state.players.find((player) => player.id === action.payload);
+      const player = state.players.find(player => player.id === action.payload);
       if (!player) return;
 
       player.alive = false;
@@ -108,5 +108,6 @@ export const gameActions = gameSlice.actions;
 export const selectOnline = (state: TypeRootState) => state.game.online;
 export const selectResults = (state: TypeRootState) => state.game.results;
 export const selectPlayer = (state: TypeRootState) => state.game.player;
-export const selectPlayersAmount = (state: TypeRootState) => state.game.playersAmount;
+export const selectPlayersAmount = (state: TypeRootState) =>
+  state.game.playersAmount;
 export const selectGame = (state: TypeRootState) => state.game.gameId;

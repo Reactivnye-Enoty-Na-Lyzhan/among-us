@@ -33,13 +33,25 @@ export type AssembleMeeting = (gameId: GameId, initiatorId: string) => void;
 
 export type EmergencyMeeting = (initiatorId: string) => void;
 
-export type GetPlayers = (gameId: GameId, callback: (players: number) => void) => void;
+export type GetPlayers = (
+  gameId: GameId,
+  callback: (players: number) => void
+) => void;
 
-export type SelectedColors = (newColor: keyof SuitColorsType, oldColor: keyof SuitColorsType | null) => void;
+export type SelectedColors = (
+  newColor: keyof SuitColorsType,
+  oldColor: keyof SuitColorsType | null
+) => void;
 
-export type GetSelectedColors = (gameId: GameId, callback: (selectedColors: SuitColorsType) => void) => void;
+export type GetSelectedColors = (
+  gameId: GameId,
+  callback: (selectedColors: SuitColorsType) => void
+) => void;
 
-export type UnselectColor = (gameId: GameId, color: keyof SuitColorsType) => void;
+export type UnselectColor = (
+  gameId: GameId,
+  color: keyof SuitColorsType
+) => void;
 
 export type SetPlayerReady = (playerId: string) => void;
 
@@ -73,7 +85,7 @@ export type SelectColor = (
   gameId: number | null,
   color: keyof SuitColorsType,
   oldColor: keyof SuitColorsType | null,
-  callback: (newColor: keyof SuitColorsType) => void,
+  callback: (newColor: keyof SuitColorsType) => void
 ) => void;
 
 interface IMoveParams {
@@ -131,7 +143,7 @@ export interface IPlayer {
   lastPosition: {
     x: number;
     y: number;
-  },
+  };
   role: PlayerRoleType;
   score: number;
 }

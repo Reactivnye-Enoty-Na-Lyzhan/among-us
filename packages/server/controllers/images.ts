@@ -16,7 +16,11 @@ interface IRequest<T = unknown> extends Request {
 }
 
 // Загрузка изображения
-export const uploadImage = async (req: IRequest, res: Response, next: NextFunction) => {
+export const uploadImage = async (
+  req: IRequest,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
 
   try {
@@ -38,7 +42,7 @@ export const uploadImage = async (req: IRequest, res: Response, next: NextFuncti
     // Загружаем изображение в хранилище
     const result = await uploadSingleImage(file);
 
-    if (result instanceof Error) throw(result);
+    if (result instanceof Error) throw result;
 
     // Получаем предыдущий аватар
     const currentAvatar = user.avatar;

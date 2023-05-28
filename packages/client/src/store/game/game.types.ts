@@ -44,7 +44,7 @@ export interface IGameWithParams extends IGame {
 }
 
 export interface IFindGameResponse {
-  games: IFoundGame[],
+  games: IFoundGame[];
 }
 
 export interface IFindGameRequest {
@@ -78,10 +78,10 @@ export interface IHotGame {
 }
 
 export interface ITakeQueueResponse extends IGameWithParams {
-  players: IPlayer[],
+  players: IPlayer[];
   color: {
-    colors: SuitColorsType,
-  }
+    colors: SuitColorsType;
+  };
 }
 
 export interface ITakeQueueRequest {
@@ -91,18 +91,18 @@ export interface ITakeQueueRequest {
 export interface ICurentGame extends IGame {
   players: {
     id: number;
-  }[],
+  }[];
   param: {
     id: number;
-  },
+  };
   color: {
     id: number;
-  },
+  };
   teams: {
     title: string;
     role: GameRole;
     score: number;
-  }[],
+  }[];
 }
 
 export interface IGame {
@@ -118,7 +118,7 @@ export interface IPlayer {
   lastPosition: {
     x: number;
     y: number;
-  },
+  };
   role: PlayerRoleType;
   score: number;
 }
@@ -151,18 +151,14 @@ export interface IGameStateParams {
 
 /* export type GameStatusType = 'start' | 'preparing' | 'active' | 'finished'; */
 export type GameStatusType =
-  'init' |
-  'assembling' |
-  'characterSelection' |
-  'startAwaiting' |
-  'active' |
-  'finished';
-
-export type GameStageType =
   | 'init'
-  | 'starting'
-  | 'preparing'
-  | 'activating';
+  | 'assembling'
+  | 'characterSelection'
+  | 'startAwaiting'
+  | 'active'
+  | 'finished';
+
+export type GameStageType = 'init' | 'starting' | 'preparing' | 'activating';
 
 export type PlayerRoleType = 'impostor' | 'civil';
 

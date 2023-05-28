@@ -11,9 +11,8 @@ import { useValidation } from '../../hooks/useValidation';
 import { useSignIn } from './hooks/useSignIn';
 import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
-import  useOAuth from '../../hooks/useOAuth';
+import useOAuth from '../../hooks/useOAuth';
 import './LoginPage.css';
-
 
 const LoginPage: FC = () => {
   const { requestStatus, statusMessageClass, signIn, sendSignInQueryStatus } =

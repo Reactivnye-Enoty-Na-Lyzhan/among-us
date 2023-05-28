@@ -6,7 +6,7 @@ export const helmetSettings = helmet({
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "https://storage.yandexcloud.net"],
+      imgSrc: ["'self'", 'https://storage.yandexcloud.net'],
       connectSrc: ['*'],
     },
   },

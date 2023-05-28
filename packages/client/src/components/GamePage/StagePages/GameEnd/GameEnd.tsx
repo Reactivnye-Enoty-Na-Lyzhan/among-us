@@ -12,11 +12,11 @@ type Config = {
 };
 
 const config: Record<string, Config> = {
-  'impostor': {
+  impostor: {
     imageLeftSrc: () => ' ',
     imageRightSrc: () => 'game-end__image_impostor_dead',
   },
-  'civil': {
+  civil: {
     imageLeftSrc: (score: number) =>
       score > 10
         ? 'game-end__image_impostor_red'
@@ -33,7 +33,8 @@ const GameEnd: FC = () => {
 
   const { playMore } = useActions();
 
-  const { imageLeftSrc, imageRightSrc } = winners === 'impostor' ? config['impostor'] : config['civil'];
+  const { imageLeftSrc, imageRightSrc } =
+    winners === 'impostor' ? config['impostor'] : config['civil'];
 
   const handleGameStart = useCallback(() => {
     playMore();

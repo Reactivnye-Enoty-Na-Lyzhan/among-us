@@ -90,7 +90,11 @@ Game.hasMany(Player, { as: 'players', sourceKey: 'id', foreignKey: 'gameId' });
 Player.belongsTo(Game, { as: 'game', targetKey: 'id', foreignKey: 'gameId' });
 
 Game.hasOne(GameParam, { as: 'param', sourceKey: 'id', foreignKey: 'gameId' });
-GameParam.belongsTo(Game, { as: 'game', targetKey: 'id', foreignKey: 'gameId' });
+GameParam.belongsTo(Game, {
+  as: 'game',
+  targetKey: 'id',
+  foreignKey: 'gameId',
+});
 
 Game.hasMany(Team, { as: 'teams', sourceKey: 'id', foreignKey: 'gameId' });
 Team.belongsTo(Game, { as: 'game', targetKey: 'id', foreignKey: 'gameId' });
@@ -114,4 +118,8 @@ GameColor.belongsTo(Game, {
 });
 
 User.hasOne(Game, { as: 'game', sourceKey: 'id', foreignKey: 'creatorId' });
-Game.belongsTo(User, { as: 'creator', targetKey: 'id', foreignKey: 'creatorId' });
+Game.belongsTo(User, {
+  as: 'creator',
+  targetKey: 'id',
+  foreignKey: 'creatorId',
+});

@@ -12,7 +12,12 @@ import type {
 
 export const configurationHandlers = (socket: GameSocket) => {
   // Выбор цвета игроком
-  const selectColor: SelectColor = async (gameId, color, oldColor, callback,) => {
+  const selectColor: SelectColor = async (
+    gameId,
+    color,
+    oldColor,
+    callback
+  ) => {
     if (!gameId) throw new NotExistError(ErrorMessages.gameNotExist);
 
     try {
@@ -39,7 +44,6 @@ export const configurationHandlers = (socket: GameSocket) => {
       callback(color);
       // Возвращаем всем, кроме текущего клиента, объект со всеми цветами
       socket.to(gameId.toString()).emit('selectedColors', color, oldColor);
-      console.log(gameId.toString());
     } catch (err: unknown) {
       console.log(err);
     }
@@ -82,14 +86,16 @@ export const configurationHandlers = (socket: GameSocket) => {
         return { playerColors };
       });
 
-      socket.broadcast.to(gameId.toString()).emit('selectedColors', color, color);
+      socket.broadcast
+        .to(gameId.toString())
+        .emit('selectedColors', color, color);
     } catch (err: unknown) {
       console.log(err);
     }
   };
 
   // Устанавливаем рейтинг пользователя с сервера
-  const setPlayerRating: SetPlayerRating = async (playerId) => {
+  const setPlayerRating: SetPlayerRating = async playerId => {
     console.log(playerId);
   };
 

@@ -41,7 +41,7 @@ const useOAuth = () => {
       }).unwrap();
       if (!isSuccess) return;
       const user = await getUser();
-      if (user) navigate('/game');            
+      if (user) navigate('/game');
     } catch (error) {
       console.log(`Oops, ${error} `);
     }

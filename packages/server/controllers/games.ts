@@ -128,7 +128,6 @@ export const createGame = async (
         newGame.setTeams(teams),
       ]);
 
-
       // Получаем готовый результат для отправки клиенту
       const result = await Game.findOne({
         where: {
@@ -170,7 +169,12 @@ export const getGames = async (
       },
       attributes: {
         include: [
-          [literal(`(SELECT COUNT (*)::int  FROM players WHERE "gameId" = "Game"."id")`), 'players'],
+          [
+            literal(
+              `(SELECT COUNT (*)::int  FROM players WHERE "gameId" = "Game"."id")`
+            ),
+            'players',
+          ],
         ],
       },
       offset,
@@ -213,7 +217,12 @@ export const findGames = async (
       },
       attributes: {
         include: [
-          [literal(`(SELECT COUNT (*)::int  FROM players WHERE "gameId" = "Game"."id")`), 'players'],
+          [
+            literal(
+              `(SELECT COUNT (*)::int  FROM players WHERE "gameId" = "Game"."id")`
+            ),
+            'players',
+          ],
         ],
       },
       offset,

@@ -103,8 +103,7 @@ const Game: FC = () => {
         <button
           ref={miniGameAction}
           className="game__action-btn"
-          onClick={() => handleCompleteTask()}
-        >
+          onClick={() => handleCompleteTask()}>
           <img src={startMiniGameIcon} />
         </button>
 
@@ -115,8 +114,7 @@ const Game: FC = () => {
         <button
           ref={killAction}
           className="game__action-btn"
-          onClick={() => handlePlayerKill()}
-        >
+          onClick={() => handlePlayerKill()}>
           <img src={killIcon} />
         </button>
       </div>

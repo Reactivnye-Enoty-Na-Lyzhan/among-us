@@ -1,7 +1,11 @@
 import { FC, memo, useContext, useEffect } from 'react';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from '@/hooks/useActions';
-import { selectGame, selectPlayer, selectPlayersAmount } from '@/store/game/game.slice';
+import {
+  selectGame,
+  selectPlayer,
+  selectPlayersAmount,
+} from '@/store/game/game.slice';
 import { useLeaveGameMutation } from '@/store/game/game.api';
 import { getPluralSeconds } from '@/utils/helpers/getPlural';
 import { MAX_PLAYERS } from '@/utils/gameParams';
@@ -37,7 +41,7 @@ const AwaitStart: FC = () => {
     socket.on('onGameReady', handleGameReady);
 
     if (gameId) {
-      socket.emit('getPlayersAmount', gameId, (playersAmount) => {
+      socket.emit('getPlayersAmount', gameId, playersAmount => {
         setPlayersAmount(playersAmount);
       });
     }
@@ -58,7 +62,8 @@ const AwaitStart: FC = () => {
     }
   }, [playersAmount]);
 
-  const heading = playersAmount !== MAX_PLAYERS ? 'Ожидаем игроков' : 'Запускаем!';
+  const heading =
+    playersAmount !== MAX_PLAYERS ? 'Ожидаем игроков' : 'Запускаем!';
 
   // Обработчик готовности игры
   const handleGameReady = (players: IPlayer[]) => {
@@ -91,13 +96,14 @@ const AwaitStart: FC = () => {
         <ul className="start-awaiting__settings-list">
           <li className="start-awaiting__list-item">
             <h2 className="start-awaiting__param-name">Экстренных собраний:</h2>
-            <span className="start-awaiting__param-value">{params.meetings}</span>
+            <span className="start-awaiting__param-value">
+              {params.meetings}
+            </span>
           </li>
           <li className="start-awaiting__list-item">
             <h2 className="start-awaiting__param-name">Время на обсуждение:</h2>
             <span className="start-awaiting__param-value">
-              {params.discussion}{' '}
-              {getPluralSeconds(params.discussion)}
+              {params.discussion} {getPluralSeconds(params.discussion)}
             </span>
           </li>
           <li className="start-awaiting__list-item">
@@ -105,8 +111,7 @@ const AwaitStart: FC = () => {
               Перерыв между собраниями:
             </h2>
             <span className="start-awaiting__param-value">
-              {params.interval}{' '}
-              {getPluralSeconds(params.interval)}
+              {params.interval} {getPluralSeconds(params.interval)}
             </span>
           </li>
         </ul>

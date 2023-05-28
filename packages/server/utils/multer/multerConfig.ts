@@ -5,5 +5,5 @@ import { MAX_UPLOAD_IMAGE_SIZE } from '../../utils/constants';
 export const upload = multer({
   limits: {
     fileSize: MAX_UPLOAD_IMAGE_SIZE,
-  }
+  },
 });

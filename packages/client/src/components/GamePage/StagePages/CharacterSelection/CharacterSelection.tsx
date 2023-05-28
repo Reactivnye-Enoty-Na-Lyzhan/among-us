@@ -3,7 +3,10 @@ import classNames from 'classnames';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import ColorButton from './ColorButton/ColorButton';
-import { useJoinGameMutation, useLeaveGameMutation } from '@/store/game/game.api';
+import {
+  useJoinGameMutation,
+  useLeaveGameMutation,
+} from '@/store/game/game.api';
 import { selectGame } from '@/store/game/game.slice';
 import { GameSocketContext } from '@/utils/socket/gameSocket';
 import { SuitColorsType, suitsColors } from '../../../../utils/gameParams';
@@ -33,11 +36,7 @@ const CharacterSelection: FC = () => {
 
   const socket = useContext(GameSocketContext);
 
-  const {
-    setGameStatus,
-    cancelGame,
-    setCurrentPlayer,
-  } = useActions();
+  const { setGameStatus, cancelGame, setCurrentPlayer } = useActions();
 
   useEffect(() => {
     socket.on('selectedColors', handleSelectedColors);
@@ -58,31 +57,33 @@ const CharacterSelection: FC = () => {
     [`character-selection__crewman_suit_${userColor}`]: false, //selectedColor !== '',
   });
 
-  const handleSelectedColors = useCallback((
-    newColor: keyof SuitColorsType,
-    oldColor: keyof SuitColorsType | null,
-  ) => {
-    if (oldColor) {
-      setUsedColors((colors) => ({
-        ...colors,
-        [newColor]: true,
-        [oldColor]: false
-      }));
-    } else {
-      setUsedColors((colors) => ({
-        ...colors,
-        [newColor]: true,
-      }));
-    }
-  }, []);
+  const handleSelectedColors = useCallback(
+    (newColor: keyof SuitColorsType, oldColor: keyof SuitColorsType | null) => {
+      if (oldColor) {
+        setUsedColors(colors => ({
+          ...colors,
+          [newColor]: true,
+          [oldColor]: false,
+        }));
+      } else {
+        setUsedColors(colors => ({
+          ...colors,
+          [newColor]: true,
+        }));
+      }
+    },
+    []
+  );
 
   // Выбор цвета
-  const handleColorPick = useCallback((color: keyof SuitColorsType) => {
-    socket.emit('selectColor', gameId, color, userColor, (newColor) => {
-      setUserColor(newColor);
-    });
-
-  }, [userColor]);
+  const handleColorPick = useCallback(
+    (color: keyof SuitColorsType) => {
+      socket.emit('selectColor', gameId, color, userColor, newColor => {
+        setUserColor(newColor);
+      });
+    },
+    [userColor]
+  );
 
   // Начало игры с выбранным цветом скафандра
   const handleStartGame = async () => {
@@ -126,7 +127,13 @@ const CharacterSelection: FC = () => {
               <ColorButton
                 color={color}
                 selected={userColor === color}
-                disabled={color === userColor ? false : (usedColors ? usedColors[color] : false)}
+                disabled={
+                  color === userColor
+                    ? false
+                    : usedColors
+                    ? usedColors[color]
+                    : false
+                }
                 onSelect={handleColorPick}
               />
             </li>

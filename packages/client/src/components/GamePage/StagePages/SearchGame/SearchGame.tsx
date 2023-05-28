@@ -4,9 +4,13 @@ import classNames from 'classnames';
 import Navigation from '../../StagePages/Navigation/Navigation';
 import FoundGame from './FoundGame/FoundGame';
 import NotFoundGame from './NotFoundGame/NotFoundGame';
-import { useActions } from '@/hooks/useActions';;
+import { useActions } from '@/hooks/useActions';
 import { gameNamePattern } from '../../../../utils/gameParams';
-import { useFindGameMutation, useGetGamesMutation, useTakeQueueMutation } from '@/store/game/game.api';
+import {
+  useFindGameMutation,
+  useGetGamesMutation,
+  useTakeQueueMutation,
+} from '@/store/game/game.api';
 import type { IFoundGame } from '@/store/game/game.types';
 import './SearchGame.css';
 
@@ -16,7 +20,9 @@ const SearchGame: FC = () => {
   const [searchResults, setSearchResults] = useState<IFoundGame[] | []>([]);
   const [isProcessing, setIsProcessing] = useState<boolean>(true);
   const [isSearching, setIsSearching] = useState<boolean>(false);
-  const [timer, setTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+  const [timer, setTimer] = useState<ReturnType<typeof setTimeout> | null>(
+    null
+  );
   const [inputValue, setInputValue] = useState<string>('');
   const [inputValidity, setInputValidity] = useState<boolean>(true);
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -58,9 +64,11 @@ const SearchGame: FC = () => {
 
       const resultsLength = games.data.foundGames.length;
 
-      setGamesList((gamesList) => [...gamesList, ...games.data.foundGames]);
-      setFoundResults((results) => resultsLength === 12 ? results + resultsLength : 0);
-      setCurrentStep((step) => resultsLength === 12 ? step + 12 : step);
+      setGamesList(gamesList => [...gamesList, ...games.data.foundGames]);
+      setFoundResults(results =>
+        resultsLength === 12 ? results + resultsLength : 0
+      );
+      setCurrentStep(step => (resultsLength === 12 ? step + 12 : step));
     } catch (err: unknown) {
       console.error(err);
     } finally {
@@ -157,8 +165,8 @@ const SearchGame: FC = () => {
             value={inputValue}
             required
           />
-          {hasGames
-            ? <ul className="search-game__table">
+          {hasGames ? (
+            <ul className="search-game__table">
               {(isSearching ? searchResults : gamesList).map(game => (
                 <FoundGame
                   game={game}
@@ -167,8 +175,10 @@ const SearchGame: FC = () => {
                 />
               ))}
             </ul>
-            : <NotFoundGame />}
-          {!isSearching && (gamesList.length < foundResults) && (
+          ) : (
+            <NotFoundGame />
+          )}
+          {!isSearching && gamesList.length < foundResults && (
             <button
               className="search-game__show-more"
               onClick={handleShowMore}

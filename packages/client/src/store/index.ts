@@ -24,7 +24,7 @@ export const createStore = (preloadedState?: TypeRootState) => {
         leaderboardApi.middleware,
         authApi.middleware,
         oauthApi.middleware,
-        gameApi.middleware,
+        gameApi.middleware
       ),
   });
 };

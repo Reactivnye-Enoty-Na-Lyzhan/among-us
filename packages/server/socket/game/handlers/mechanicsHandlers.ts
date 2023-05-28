@@ -11,13 +11,13 @@ import type {
 
 export const mechanicsHandlers = (
   socket: GameSocket,
-  io: GameSocketNamespace,
+  io: GameSocketNamespace
 ) => {
   const assembleMeeting: AssembleMeeting = (gameId, initiatorId) => {
     socket.to(gameId.toString()).emit('emergencyMeeting', initiatorId);
   };
 
-  const completeTask: CompleteTask = async (gameId) => {
+  const completeTask: CompleteTask = async gameId => {
     try {
       const civilTeam = await Team.findOne({
         where: {

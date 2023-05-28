@@ -11,15 +11,17 @@ import type {
   GameSocketNamespace,
 } from '../../../types/socket/game/gameSocket.types';
 
-
-export const connectionHandlers = (socket: GameSocket, io: GameSocketNamespace) => {
+export const connectionHandlers = (
+  socket: GameSocket,
+  io: GameSocketNamespace
+) => {
   // Подключаем пользователя к комнате
-  const joinGame: JoinGame = (gameId) => {
+  const joinGame: JoinGame = gameId => {
     socket.join(gameId.toString());
     socket.to(gameId.toString()).emit('onPlayerJoin'); // Попробовать через leave socket убирать игрока из игры...?
   };
 
-  const leaveGame: LeaveGame = (gameId) => {
+  const leaveGame: LeaveGame = gameId => {
     socket.broadcast.to(gameId.toString()).emit('onLeaveGame');
   };
 
