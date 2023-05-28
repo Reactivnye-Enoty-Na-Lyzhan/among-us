@@ -2,19 +2,17 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { TypeRootState } from '..';
 import type {
   IGameState,
-  IGameStateParams,
   GameStatusType,
   IPlayer,
   IGameWithParams,
+  PlayerRoleType,
 } from './game.types';
-import type { SuitColorsType } from '@/utils/gameParams';
 
 const initialState: IGameState = {
   online: true,
   gameId: null,
-  title: 'Игра',
+  title: '',
   status: 'init',
-  stage: 'init',
   params: {
     impostors: 2,
     meetings: 5,
@@ -32,61 +30,68 @@ const initialState: IGameState = {
     role: 'impostor',
     score: 0,
   },
+  playersAmount: 0,
+  players: [],
   results: {
-    result: 'win',
-    score: 15,
+    winners: null,
   },
-  startCooldown: 1,
+  startCooldown: 15,
 };
 
 export const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    startFastGame: state => { // корректно
+    startFastGame: state => {
       state.status = 'assembling';
     },
-    setGameStatus: (state, action: PayloadAction<GameStatusType>) => { // корректно
+    setGameStatus: (state, action: PayloadAction<GameStatusType>) => {
       state.status = action.payload;
     },
-    setCurrentPlayer: (state, action: PayloadAction<IPlayer>) => { // корректно?
+    setCurrentPlayer: (state, action: PayloadAction<IPlayer>) => {
       const { id, color, role } = action.payload;
       state.player.id = id;
       state.player.color = color;
       state.player.role = role;
     },
-    //
+    addPlayerToList: state => {
+      state.playersAmount += 1;
+    },
+    setPlayersAmount: (state, action: PayloadAction<number>) => {
+      state.playersAmount = action.payload;
+    },
+    removePlayerFromList: state => {
+      state.playersAmount -= 1;
+    },
+    setGamePlayers: (state, action: PayloadAction<IPlayer[]>) => {
+      state.players = action.payload;
+    },
+    killPlayer: (state, action: PayloadAction<IPlayer['id']>) => {
+      const player = state.players.find((player) => player.id === action.payload);
+      if (!player) return;
+
+      player.alive = false;
+    },
+    finishGame: (state, action: PayloadAction<PlayerRoleType>) => {
+      state.status = 'finished';
+      state.results.winners = action.payload;
+      state.player = initialState.player;
+      state.playersAmount = 0;
+      state.results = initialState.results;
+      state.players = initialState.players;
+    },
     cancelGame: state => {
       state.status = initialState.status;
-      state.stage = initialState.stage;
-      state.player.color = initialState.player.color;
+      state.player = initialState.player;
+      state.playersAmount = 0;
+      state.results = initialState.results;
+      state.players = initialState.players;
     },
     launchGame: state => {
       state.status = 'active';
-      state.stage = 'activating';
     },
     playMore: state => {
       state.status = initialState.status;
-      state.stage = initialState.stage;
-      state.player = initialState.player;
-    },
-    finishGame: (state) => {
-      state.status = 'finished';
-    },
-    setGameParams: (state, action: PayloadAction<IGameStateParams>) => {
-      state.params = action.payload;
-    },
-    setGameTitle: (state, action: PayloadAction<string>) => {
-      state.title = action.payload;
-    },
-    setOnlineMode: (state, action: PayloadAction<boolean>) => {
-      state.online = action.payload;
-    },
-    selectColor: (state, action: PayloadAction<keyof SuitColorsType>) => {
-      state.player.color = action.payload;
-    },
-    setPlayerId: (state, action: PayloadAction<number>) => {
-      state.player.id = action.payload;
     },
     setGame: (state, action: PayloadAction<IGameWithParams>) => {
       const { id, title, param } = action.payload;
@@ -103,4 +108,5 @@ export const gameActions = gameSlice.actions;
 export const selectOnline = (state: TypeRootState) => state.game.online;
 export const selectResults = (state: TypeRootState) => state.game.results;
 export const selectPlayer = (state: TypeRootState) => state.game.player;
+export const selectPlayersAmount = (state: TypeRootState) => state.game.playersAmount;
 export const selectGame = (state: TypeRootState) => state.game.gameId;

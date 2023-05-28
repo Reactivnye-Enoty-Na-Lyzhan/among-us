@@ -123,15 +123,10 @@ export interface IPlayer {
   score: number;
 }
 
-
-
-
-
 //////////////////////////////
 
 interface IResults {
-  result: 'win' | 'lose';
-  score: number;
+  winners: PlayerRoleType | null;
 }
 
 export interface IGameState {
@@ -139,9 +134,10 @@ export interface IGameState {
   gameId: GameIdType | null;
   title: string;
   status: GameStatusType;
-  stage: GameStageType;
   params: IGameStateParams;
   player: IPlayer;
+  playersAmount: number;
+  players: IPlayer[] | [];
   results: IResults;
   startCooldown: number;
 }
@@ -168,8 +164,6 @@ export type GameStageType =
   | 'preparing'
   | 'activating';
 
-
-type PlayerRoleType = 'impostor' | 'civil';
+export type PlayerRoleType = 'impostor' | 'civil';
 
 export type ColorType = keyof SuitColorsType;
-

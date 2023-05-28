@@ -1,16 +1,40 @@
+import { Team } from '../../../models/team';
+import { NotExistError } from '../../../utils/errors/commonErrors/NotExistError';
+import { ErrorMessages } from '../../../utils/errors/errorMessages';
+import { CIVIL_VICTORY_SCORE } from '../../../utils/constants';
 import type {
-  EmergencyMeeting,
+  AssembleMeeting,
+  CompleteTask,
   GameSocket,
   GameSocketNamespace,
 } from '../../../types/socket/game/gameSocket.types';
 
 export const mechanicsHandlers = (
-  gameSocket: GameSocketNamespace,
-  socket: GameSocket
+  socket: GameSocket,
+  io: GameSocketNamespace,
 ) => {
-  const assembleMeeting: EmergencyMeeting = initiatorId => {
-    gameSocket.emit('emergencyMeeting', initiatorId);
+  const assembleMeeting: AssembleMeeting = (gameId, initiatorId) => {
+    socket.to(gameId.toString()).emit('emergencyMeeting', initiatorId);
+  };
+
+  const completeTask: CompleteTask = async (gameId) => {
+    try {
+      const civilTeam = await Team.findOne({
+        where: {
+          gameId,
+        },
+      });
+
+      if (!civilTeam) throw new NotExistError(ErrorMessages.gameNotExist);
+
+      if (civilTeam.score >= CIVIL_VICTORY_SCORE) {
+        io.to(gameId.toString()).emit('onGameEnd', 'civil');
+      }
+    } catch (err: unknown) {
+      console.log(err);
+    }
   };
 
   socket.on('assembleMeeting', assembleMeeting);
+  socket.on('completeTask', completeTask);
 };

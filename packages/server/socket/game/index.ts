@@ -14,7 +14,7 @@ export const connectGameSocket = (io: baseSocketServer) => {
 
   const onConnect = (socket: GameSocket) => {
     // Обработчики начала и завершения игры
-    connectionHandlers(socket);
+    connectionHandlers(socket, gameSocket);
 
     // Синхронизация движения игроков
     movementSyncHandlers(socket);
@@ -23,10 +23,10 @@ export const connectGameSocket = (io: baseSocketServer) => {
     configurationHandlers(socket);
 
     // Взаимодействие игроков
-    playerInteractionHandlers(socket);
+    playerInteractionHandlers(socket, gameSocket);
 
     // Мехники
-    mechanicsHandlers(gameSocket, socket);
+    mechanicsHandlers(socket, gameSocket);
 
     socket.on('disconnect', () => {
       console.log('соединение разорвано');

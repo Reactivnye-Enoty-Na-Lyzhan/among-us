@@ -11,10 +11,9 @@ import './CharacterSelection.css';
 
 // Экран выбора цвета скафандра (нужна игру уже найдена)
 const CharacterSelection: FC = () => {
-  const { color: userSuitColor, id: playerId } = useTypedSelector(state => state.game.player);
   const gameId = useTypedSelector(selectGame);
 
-  // Для мультиплеера. Блокирует возможность выбора цвета, если он уже выбран другим игроком
+  // Блокирует возможность выбора цвета, если он уже выбран другим игроком
   const [usedColors, setUsedColors] = useState<SuitColorsType>({
     white: false,
     red: false,
@@ -26,55 +25,72 @@ const CharacterSelection: FC = () => {
     brown: false,
     grey: false,
   });
+  const [userColor, setUserColor] = useState<keyof SuitColorsType | null>(null);
 
   // Запросы
   const [leaveGame] = useLeaveGameMutation();
+  const [joinGame] = useJoinGameMutation();
 
   const socket = useContext(GameSocketContext);
 
   const {
     setGameStatus,
     cancelGame,
-    setPlayerId,
-    selectColor,
     setCurrentPlayer,
   } = useActions();
 
-  const [joinGameResponse] = useJoinGameMutation();
-
   useEffect(() => {
-    socket.on('selectedColors', setUsedColors);
-    socket.emit('joinGame', (newPlayerId) => {
-      setPlayerId(Number(newPlayerId));
-    });
+    socket.on('selectedColors', handleSelectedColors);
 
+    if (gameId) {
+      socket.emit('joinGame', gameId);
+      socket.emit('getSelectedColors', gameId, (colors: SuitColorsType) => {
+        setUsedColors(colors);
+      });
+    }
     return () => {
-      socket.off('selectedColors', setUsedColors);
+      socket.off('selectedColors', handleSelectedColors);
     };
   }, [socket]);
 
   // TODO: Добавить смену цвета
   const crewmanClass = classNames('character-selection__crewman', {
-    [`character-selection__crewman_suit_${userSuitColor}`]: false, //selectedColor !== '',
+    [`character-selection__crewman_suit_${userColor}`]: false, //selectedColor !== '',
   });
 
-  // Предпосылки для мультиплеера
-  // TODO: Устанавливаем выбранный цвет только по итогу ответа сервера
+  const handleSelectedColors = useCallback((
+    newColor: keyof SuitColorsType,
+    oldColor: keyof SuitColorsType | null,
+  ) => {
+    if (oldColor) {
+      setUsedColors((colors) => ({
+        ...colors,
+        [newColor]: true,
+        [oldColor]: false
+      }));
+    } else {
+      setUsedColors((colors) => ({
+        ...colors,
+        [newColor]: true,
+      }));
+    }
+  }, []);
+
+  // Выбор цвета
   const handleColorPick = useCallback((color: keyof SuitColorsType) => {
-    socket.emit('colorSelect', color, userSuitColor, (newColor) => {
-      selectColor(newColor);
-      socket.emit('playerReady', 'playerId');
+    socket.emit('selectColor', gameId, color, userColor, (newColor) => {
+      setUserColor(newColor);
     });
 
-  }, [userSuitColor, playerId]);
+  }, [userColor]);
 
   // Начало игры с выбранным цветом скафандра
   const handleStartGame = async () => {
-    if (!userSuitColor) return;
+    if (!userColor) return;
     if (!gameId) return;
-    const playerData = await joinGameResponse({
+    const playerData = await joinGame({
       gameId,
-      color: userSuitColor,
+      color: userColor,
     });
 
     if ('error' in playerData) return;
@@ -90,6 +106,9 @@ const CharacterSelection: FC = () => {
       await leaveGame({
         gameId,
       });
+      if (userColor) {
+        socket.emit('unselectColor', gameId, userColor);
+      }
     }
     cancelGame();
   };
@@ -106,8 +125,8 @@ const CharacterSelection: FC = () => {
             <li className="character-selection__list-item" key={color}>
               <ColorButton
                 color={color}
-                selected={userSuitColor === color}
-                disabled={usedColors[color]}
+                selected={userColor === color}
+                disabled={color === userColor ? false : (usedColors ? usedColors[color] : false)}
                 onSelect={handleColorPick}
               />
             </li>

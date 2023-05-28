@@ -31,11 +31,6 @@ GameColor.init(
     },
   },
   {
-    defaultScope: {
-      attributes: {
-        exclude: ['id'],
-      },
-    },
     sequelize,
     tableName: 'gameColors',
     timestamps: false,

@@ -23,10 +23,10 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
   useEffect(() => {
     if (data) {
       setValues({
-        first_name: data.first_name,
-        second_name: data.second_name,
-        display_name: data.display_name,
-        login: data.login,
+        first_name: data.firstName,
+        second_name: data.lastName,
+        display_name: data.nickname,
+        login: data.username,
         email: data.email,
         phone: data.phone,
       });

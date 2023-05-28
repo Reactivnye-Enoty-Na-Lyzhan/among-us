@@ -29,7 +29,6 @@ const TeamAssembling: FC = () => {
 
   // Когда получим ID доступной игры - подключаемся к очереди
   useEffect(() => {
-    console.log(data?.game, findGameSuccess);
     if (data?.game !== null && findGameSuccess) {
       setPollingInterval(0);
 

@@ -3,21 +3,22 @@ import { GameColor } from '../../../models/gameColor';
 import { NotExistError } from '../../../utils/errors/commonErrors/NotExistError';
 import { ErrorMessages } from '../../../utils/errors/errorMessages';
 import type {
-  ColorSelect,
   GameSocket,
   GetSelectedColors,
+  SelectColor,
+  SetPlayerRating,
   UnselectColor,
 } from '../../../types/socket/game/gameSocket.types';
 
 export const configurationHandlers = (socket: GameSocket) => {
-  // раскоммитить gameId
   // Выбор цвета игроком
-  const selectColor: ColorSelect = async (color, oldColor, /* gameId, */ callback) => {
-    console.log(socket.rooms, socket.rooms.has('1'));
+  const selectColor: SelectColor = async (gameId, color, oldColor, callback,) => {
+    if (!gameId) throw new NotExistError(ErrorMessages.gameNotExist);
+
     try {
       const colorsTable = await GameColor.findOne({
         where: {
-               gameId: socket.rooms.has('1') ? 1 : 2,
+          gameId,
         },
       });
 
@@ -25,7 +26,10 @@ export const configurationHandlers = (socket: GameSocket) => {
 
       const playerColors = colorsTable.colors;
 
-      playerColors[oldColor] = false;
+      if (oldColor) {
+        playerColors[oldColor] = false;
+      }
+
       playerColors[color] = true;
 
       colorsTable.changed('colors', true);
@@ -34,7 +38,8 @@ export const configurationHandlers = (socket: GameSocket) => {
       // Отдаём клиенту
       callback(color);
       // Возвращаем всем, кроме текущего клиента, объект со всеми цветами
-      socket.emit('selectedColors', playerColors);
+      socket.to(gameId.toString()).emit('selectedColors', color, oldColor);
+      console.log(gameId.toString());
     } catch (err: unknown) {
       console.log(err);
     }
@@ -60,7 +65,7 @@ export const configurationHandlers = (socket: GameSocket) => {
   // Если пользователь выходит или что-то ещё, освобождаем его цвет
   const unselectColor: UnselectColor = async (gameId, color) => {
     try {
-      const { playerColors } = await sequelize.transaction(async () => {
+      await sequelize.transaction(async () => {
         const colorsTable = await GameColor.findOne({
           where: {
             gameId,
@@ -77,13 +82,19 @@ export const configurationHandlers = (socket: GameSocket) => {
         return { playerColors };
       });
 
-      socket.broadcast.emit('selectedColors', playerColors);
+      socket.broadcast.to(gameId.toString()).emit('selectedColors', color, color);
     } catch (err: unknown) {
       console.log(err);
     }
   };
 
-  socket.on('colorSelect', selectColor);
+  // Устанавливаем рейтинг пользователя с сервера
+  const setPlayerRating: SetPlayerRating = async (playerId) => {
+    console.log(playerId);
+  };
+
+  socket.on('setPlayerRating', setPlayerRating);
+  socket.on('selectColor', selectColor);
   socket.on('getSelectedColors', getSelectedColors);
   socket.on('unselectColor', unselectColor);
 };

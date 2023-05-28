@@ -1,37 +1,70 @@
-import { FC, memo, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC, memo, useContext, useEffect } from 'react';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from '@/hooks/useActions';
-import { selectGame } from '@/store/game/game.slice';
+import { selectGame, selectPlayer, selectPlayersAmount } from '@/store/game/game.slice';
 import { useLeaveGameMutation } from '@/store/game/game.api';
 import { getPluralSeconds } from '@/utils/helpers/getPlural';
+import { MAX_PLAYERS } from '@/utils/gameParams';
+import { GameSocketContext } from '@/utils/socket/gameSocket';
+import type { IPlayer } from '@/store/game/game.types';
 import './StartAwaiting.css';
 
 // Экран ожидания начала игры
 const AwaitStart: FC = () => {
-  const { params, startCooldown } = useTypedSelector(state => state.game);
-  const [counter, setCounter] = useState<number>(startCooldown);
-  
+  const { params } = useTypedSelector(state => state.game);
+  const { color } = useTypedSelector(selectPlayer);
+
   // Состояние
   const gameId = useTypedSelector(selectGame);
+  const playersAmount = useTypedSelector(selectPlayersAmount);
 
   // Запросы
   const [leaveGame] = useLeaveGameMutation();
 
-  const { launchGame, cancelGame } = useActions();
-  const navigate = useNavigate();
+  const {
+    addPlayerToList,
+    setPlayersAmount,
+    removePlayerFromList,
+    setGamePlayers,
+    launchGame,
+    cancelGame,
+  } = useActions();
+  const socket = useContext(GameSocketContext);
+
+  useEffect(() => {
+    socket.on('onPlayerJoin', addPlayerToList);
+    socket.on('onLeaveGame', removePlayerFromList);
+    socket.on('onGameReady', handleGameReady);
+
+    if (gameId) {
+      socket.emit('getPlayersAmount', gameId, (playersAmount) => {
+        setPlayersAmount(playersAmount);
+      });
+    }
+
+    return () => {
+      socket.off('onPlayerJoin', addPlayerToList);
+      socket.off('onLeaveGame', removePlayerFromList);
+      socket.off('onGameReady', handleGameReady);
+    };
+  }, [socket]);
 
   // Обратный отсчёт
   useEffect(() => {
-    if (counter > 0) {
-      setTimeout(() => setCounter(counter - 1), 1000);
-    } else {
-      launchGame();
-      navigate('/game');
+    if (playersAmount === MAX_PLAYERS) {
+      setTimeout(() => {
+        launchGame();
+      }, 3000);
     }
-  }, [counter]);
+  }, [playersAmount]);
 
-  const heading = counter > 0 ? 'Старт игры через' : 'Игра начинается!';
+  const heading = playersAmount !== MAX_PLAYERS ? 'Ожидаем игроков' : 'Запускаем!';
+
+  // Обработчик готовности игры
+  const handleGameReady = (players: IPlayer[]) => {
+    setGamePlayers(players);
+    launchGame();
+  };
 
   // Выход из игры
   const handleExitGame = async () => {
@@ -40,6 +73,8 @@ const AwaitStart: FC = () => {
       await leaveGame({
         gameId,
       });
+      socket.emit('unselectColor', gameId, color);
+      socket.emit('leaveGame', gameId);
     }
     cancelGame();
   };
@@ -48,16 +83,9 @@ const AwaitStart: FC = () => {
     <div className="start-awaiting">
       <div className="start-awaiting__timer">
         <h1 className="start-awaiting__title">{heading}</h1>
-        {counter > 0 && (
-          <span className="start-awaiting__time-left">
-            {counter} * 10<sup className="start-awaiting__degree">3</sup> мс
-          </span>
-        )}
-        {counter === 0 && (
-          <span className="start-awaiting__time-left">
-            Скоро ты всё узнаешь...
-          </span>
-        )}
+        <span className="start-awaiting__time-left">
+          {`${playersAmount} / ${MAX_PLAYERS}`}
+        </span>
       </div>
       <div className="start-awaiting__content">
         <ul className="start-awaiting__settings-list">

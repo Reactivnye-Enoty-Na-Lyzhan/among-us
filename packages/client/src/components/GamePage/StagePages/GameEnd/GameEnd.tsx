@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { FC, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { selectResults } from '@/store/game/game.slice';
@@ -12,11 +12,11 @@ type Config = {
 };
 
 const config: Record<string, Config> = {
-  lose: {
+  'impostor': {
     imageLeftSrc: () => ' ',
     imageRightSrc: () => 'game-end__image_impostor_dead',
   },
-  win: {
+  'civil': {
     imageLeftSrc: (score: number) =>
       score > 10
         ? 'game-end__image_impostor_red'
@@ -29,11 +29,11 @@ const config: Record<string, Config> = {
 };
 
 const GameEnd: FC = () => {
-  const { result, score } = useTypedSelector(selectResults);
+  const { winners } = useTypedSelector(selectResults);
 
   const { playMore } = useActions();
 
-  const { imageLeftSrc, imageRightSrc } = config[result];
+  const { imageLeftSrc, imageRightSrc } = winners === 'impostor' ? config['impostor'] : config['civil'];
 
   const handleGameStart = useCallback(() => {
     playMore();
@@ -43,11 +43,11 @@ const GameEnd: FC = () => {
     <div className="game-end game-end_spacing_below">
       <div
         className={`game-end__image ${imageLeftSrc(
-          score
+          15
         )} game-end__image_left`}></div>
       <div className="game-end__wrapper">
         <h1 className="game-end__title game-end__title_spacing_above-below">
-          {result === 'lose' ? 'Как же так-то?' : 'Победа!'}
+          {winners === 'impostor' ? 'Как же так-то?' : 'Победа!'}
         </h1>
         <div className="game-end__container">
           <GameEndButton
@@ -66,7 +66,7 @@ const GameEnd: FC = () => {
       </div>
       <div
         className={`game-end__image ${imageRightSrc(
-          score
+          15
         )} game-end__image_right`}></div>
     </div>
   );
