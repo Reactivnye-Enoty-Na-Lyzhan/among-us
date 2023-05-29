@@ -1,5 +1,7 @@
 import { Request, Response, Router } from 'express';
+import checkAuthHandler from '../middlewares/checkAuthHandler';
 import authRouter from './auth';
+import forumRouter from './forum';
 import gameRouter from './game';
 import userRouter from './users';
 import themeRouter from './themes';
