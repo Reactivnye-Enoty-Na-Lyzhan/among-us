@@ -9,12 +9,13 @@ import { Message } from '../../models/forum/message';
 import { NotExistError } from '../../utils/errors/commonErrors/NotExistError';
 import { ErrorMessages } from '../../utils/errors/errorMessages';
 import { withErrorHandler } from '../../utils/errors/errorHandler';
+import { User } from '../../models/user';
 
 export const postMessage = withErrorHandler(
   async (req: IRequestPostMessage, res: Response) => {
-    const { text, postId } = req.body;
+    const { text, postId, parentId } = req.body;
     const authorId = req.user?.id;
-    const data = await Message.create({ text, authorId, postId });
+    const data = await Message.create({ text, authorId, postId, parentId });
     res.send(data.dataValues);
   }
 );
@@ -28,7 +29,13 @@ export const getMessages = withErrorHandler(
     }
     const data = await Message.findAll({
       where: { postId: parsedPostId },
-      raw: true,
+      include: [
+        {
+          model: User,
+          as: 'author',
+          attributes: ['username', 'avatar', 'firstName', 'lastName'],
+        },
+      ],
     });
     if (data.length > 0) {
       res.send(data);

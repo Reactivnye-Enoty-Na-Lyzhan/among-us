@@ -6,6 +6,7 @@ import { oauthApi } from './auth/oauth.slice';
 import { uiReducer } from './ui/ui.slice';
 import { IGameState } from './game/game.types';
 import { IUiState } from './ui/ui.types';
+import { forumApi } from './forum/forum.api';
 
 export const createStore = (preloadedState?: TypeRootState) => {
   return configureStore({
@@ -13,6 +14,7 @@ export const createStore = (preloadedState?: TypeRootState) => {
       [leaderboardApi.reducerPath]: leaderboardApi.reducer,
       [authApi.reducerPath]: authApi.reducer,
       [oauthApi.reducerPath]: oauthApi.reducer,
+      [forumApi.reducerPath]: forumApi.reducer,
       game: gameReducer,
       ui: uiReducer,
     },
@@ -21,7 +23,8 @@ export const createStore = (preloadedState?: TypeRootState) => {
       getDefaultMiddleware().concat(
         leaderboardApi.middleware,
         authApi.middleware,
-        oauthApi.middleware
+        oauthApi.middleware,
+        forumApi.middleware
       ),
   });
 };

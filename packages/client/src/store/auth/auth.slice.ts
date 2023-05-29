@@ -8,7 +8,7 @@ import {
 } from './auth.types';
 import { API_BASE_URL } from '../../utils/constants';
 
-const AUTH_API_PATH = 'auth';
+const AUTH_API_PATH = '';
 const API_URL = `${API_BASE_URL}${AUTH_API_PATH}`;
 
 export const authApi = createApi({

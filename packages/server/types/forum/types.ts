@@ -5,7 +5,8 @@ export interface IRequestPostMessage extends Request {
   body: {
     postId: number;
     text: string;
-    date: Date;
+    date?: Date;
+    parentId?: number;
   };
 }
 
@@ -23,13 +24,24 @@ export interface IRequestReplyToMessage extends Request {
     postId: number;
     text: string;
     parentId?: number;
-    date: Date;
+    date?: Date;
   };
 }
 export interface IRequestPostPost extends Request {
   user?: IUser;
   body: {
     text: string;
+    title: string;
+    date?: Date;
+    pinned?: boolean;
+  };
+}
+export interface IRequestPutPost extends Request {
+  user?: IUser;
+  body: {
+    id: number;
+    text: string;
+    title: string;
     date?: Date;
     pinned?: boolean;
   };
