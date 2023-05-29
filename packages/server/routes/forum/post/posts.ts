@@ -4,11 +4,14 @@ import {
   getPosts,
   postPost,
   deletePost,
+  putPost,
 } from '../../../controllers/post/posts';
 
 export const router = Router();
 
 router.post('/', postPost);
+
+router.put('/', putPost);
 
 router.get('/:postId', getPostById);
 

@@ -1,0 +1,12 @@
+.forum-post__container {
+  padding-bottom: 150px;
+}
+
+.forum-post__text {
+  border: 1px var(--color-medium-grey) solid;
+  border-radius: 7px;
+  padding: 25px 23px;
+  color: var(--color-white);
+  font-size: 12px;
+  max-width: 920px;
+}
