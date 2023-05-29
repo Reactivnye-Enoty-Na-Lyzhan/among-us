@@ -90,7 +90,7 @@ const Game: FC = () => {
   const handleFinishGame = (winner: PlayerRoleType) => {
     // Выставляем рейтинг игроку
     if (playerId) {
-      socket.emit('setPlayerRating', playerId);
+      socket.emit('setPlayerRating', playerId, winner);
     }
     finishGame(winner);
   };

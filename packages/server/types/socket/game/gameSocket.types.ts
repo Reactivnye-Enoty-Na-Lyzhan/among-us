@@ -79,7 +79,10 @@ export type OnGameEnd = (role: PlayerRoleType) => void;
 
 export type OnPlayerKill = (playerId: number) => void;
 
-export type SetPlayerRating = (playerId: number) => void;
+export type SetPlayerRating = (
+  playerId: number,
+  status: PlayerRoleType
+) => void;
 
 export type SelectColor = (
   gameId: number | null,

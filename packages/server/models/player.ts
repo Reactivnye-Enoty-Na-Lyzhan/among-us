@@ -34,6 +34,7 @@ export class Player extends Model<
   declare userId: ForeignKey<User['id']>;
   declare gameId: ForeignKey<Game['id']>;
   declare getGame: BelongsToGetAssociationMixin<Game>;
+  declare getUser: BelongsToGetAssociationMixin<User>;
 }
 
 Player.init(

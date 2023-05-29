@@ -3,6 +3,7 @@ import authRouter from './auth';
 import gameRouter from './game';
 import userRouter from './users';
 import checkAuthHandler from '../middlewares/checkAuthHandler';
+import leaderBoard from './leaderboard';
 
 const router = Router();
 
@@ -15,6 +16,8 @@ router.use(checkAuthHandler);
 router.use('/api/game', gameRouter);
 
 router.use('/api/user', userRouter);
+
+router.use('/api/leaderboard', leaderBoard);
 
 // Страница не найдена
 router.use('/api/*', (_req: Request, res: Response) => {
