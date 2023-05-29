@@ -19,7 +19,7 @@ export class User extends Model<
   InferAttributes<User>,
   InferCreationAttributes<User>
 > {
-  declare username: string;
+  declare login: string;
   declare firstName: string;
   declare lastName: string;
   declare nickname: CreationOptional<string>;
@@ -32,19 +32,19 @@ export class User extends Model<
 
   // Метод проверки данных пользователя
   static async findByCredentials(
-    username: string,
+    login: string,
     password: string
   ): Promise<User | unknown> {
     try {
       const user = await this.scope('withPassword').findOne({
         where: {
-          username,
+          login,
         },
       });
 
       if (!user) {
         return Promise.reject(
-          new WrongDataError(ErrorMessages.wrongPasswordOrUsername)
+          new WrongDataError(ErrorMessages.wrongPasswordOrLogin)
         );
       }
 
@@ -52,7 +52,7 @@ export class User extends Model<
 
       if (!passwordMatched) {
         return Promise.reject(
-          new NotAuthorizedError(ErrorMessages.wrongPasswordOrUsername)
+          new NotAuthorizedError(ErrorMessages.wrongPasswordOrLogin)
         );
       }
 
@@ -65,7 +65,7 @@ export class User extends Model<
 
 User.init(
   {
-    username: {
+    login: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,

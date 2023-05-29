@@ -1,9 +1,9 @@
 export enum ErrorMessages {
   emailExist = 'Указанный email уже зарегистрирован',
-  usernameExist = 'Указанный login уже зарегистрирован',
+  loginExist = 'Указанный login уже зарегистрирован',
   phoneExist = 'Указанный номер телефона уже зарегистрирован',
   alreadyExist = 'Пользователь с указанными данными уже зарегистрирован',
-  wrongPasswordOrUsername = 'Некорректные имя пользователя или пароль',
+  wrongPasswordOrLogin = 'Некорректные имя пользователя или пароль',
   notAuthorized = 'Ошибка авторизации',
   gameNotExist = 'Ошибка! Игра с указанным ID не существует или завершена',
   playerNotExist = 'Ошибка! Игрок с указанным ID не существует',

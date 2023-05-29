@@ -27,7 +27,7 @@ interface IRequestUser {
 }
 
 interface ICreateUserBody {
-  username: string;
+  login: string;
   firstName: string;
   lastName: string;
   phone: string;
@@ -36,7 +36,7 @@ interface ICreateUserBody {
 }
 
 interface ILoginUserBody {
-  username: string;
+  login: string;
   password: string;
 }
 
@@ -57,12 +57,12 @@ export const createUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { username, firstName, lastName, phone, email, password } = req.body;
+  const { login, firstName, lastName, phone, email, password } = req.body;
 
   try {
     const passwordHash = await hash(password, 10);
     const user = await User.create({
-      username,
+      login,
       firstName,
       lastName,
       phone,
@@ -71,7 +71,7 @@ export const createUser = async (
     });
 
     res.send({
-      username: user.username,
+      login: user.login,
       firstName,
       lastName,
       phone,
@@ -87,8 +87,8 @@ export const createUser = async (
         case 'email':
           message = ErrorMessages.emailExist;
           break;
-        case 'username':
-          message = ErrorMessages.usernameExist;
+        case 'login':
+          message = ErrorMessages.loginExist;
           break;
         case 'phone':
           message = ErrorMessages.phoneExist;
@@ -111,10 +111,10 @@ export const loginUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { username, password } = req.body;
+  const { login, password } = req.body;
   try {
     // Проверяем, существует ли пользователь
-    const user = await User.findByCredentials(username, password);
+    const user = await User.findByCredentials(login, password);
     // Если существует - выставляем cookie
     if (user && user instanceof User) {
       const token = sign(
@@ -132,7 +132,7 @@ export const loginUser = async (
           sameSite: NODE_ENV === 'production',
         })
         .send({
-          username: user.username,
+          login: user.login,
         });
     } else {
       // Пробрасываем ошибку дальше
@@ -231,8 +231,8 @@ export const updateProfile = async (
         case 'email':
           message = ErrorMessages.emailExist;
           break;
-        case 'username':
-          message = ErrorMessages.usernameExist;
+        case 'login':
+          message = ErrorMessages.loginExist;
           break;
         case 'phone':
           message = ErrorMessages.phoneExist;

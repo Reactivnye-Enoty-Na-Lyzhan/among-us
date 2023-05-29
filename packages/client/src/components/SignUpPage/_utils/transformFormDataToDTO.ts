@@ -5,8 +5,8 @@ export function transformFormDataToDTO(
   formData: SignUpFormData
 ): SignUpRequestDTO {
   return {
-    first_name: formData.name,
-    second_name: formData.secondName,
+    firstName: formData.name,
+    lastName: formData.secondName,
     login: formData.login,
     email: formData.email,
     password: formData.password,
