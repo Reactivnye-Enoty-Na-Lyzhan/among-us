@@ -4,6 +4,7 @@ import ProfilePersonalData from './ProfilePersonalData/ProfilePersonalData';
 import ProfileHeader from './ProfileHeader/ProfileHeader';
 import ProfileAvatar from './ProfileAvatar/ProfileAvatar';
 import ProfileNavigation from './ProfileNavigation/ProfileNavigation';
+import ProfileThemeSlider from './ProfileThemeSlider/ProfileThemeSlider';
 import hocAuth from '@/hoc/hocAuth';
 import { SIGNIN_URL } from '@/utils/constants';
 import './Profile.css';
@@ -22,6 +23,7 @@ const Profile: FC = () => {
   return (
     /* Измени потом. Profile-page добавил, чтобы сохранить заливку */
     <div className="profile-page">
+        <ProfileThemeSlider/>
       <ProfileHeader choice={choice} />
       {choice === 'Персональные данные' && (
         <div className="profile__form profile__form_space_left">

@@ -1,3 +1,6 @@
+export type ThemeId = 1 | 2 | 3; 
+
 export interface IUiState {
-  isLoading: boolean;
-}
+    isLoading: boolean;
+    themeId: ThemeId;
+  }

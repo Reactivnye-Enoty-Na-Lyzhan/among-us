@@ -4,7 +4,7 @@ import type { StringSchema, Schema } from 'joi';
 
 const idFormat = Joi.number().required();
 
-const username = Joi.string().required().min(2).max(15);
+const login = Joi.string().required().min(2).max(15);
 const firstName = Joi.string().required().min(3).max(15);
 const lastName = Joi.string().required().min(3).max(15);
 const phone = Joi.string().required().min(10).max(12);
@@ -58,7 +58,7 @@ const validateBody = <T>(options: IBodyObject<T>) => {
 };
 
 export const createUserValidation = validateBody<string>({
-  username,
+  login,
   firstName,
   lastName,
   phone,
@@ -67,7 +67,7 @@ export const createUserValidation = validateBody<string>({
 });
 
 export const loginUserValidation = validateBody<string>({
-  username,
+  login,
   password,
 });
 
