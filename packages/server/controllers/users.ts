@@ -36,7 +36,7 @@ interface ICreateUserBody {
 }
 
 interface ILoginUserBody {
-    login: string;
+  login: string;
   password: string;
 }
 

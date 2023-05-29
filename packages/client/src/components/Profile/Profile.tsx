@@ -23,7 +23,7 @@ const Profile: FC = () => {
   return (
     /* Измени потом. Profile-page добавил, чтобы сохранить заливку */
     <div className="profile-page">
-        <ProfileThemeSlider/>
+      <ProfileThemeSlider />
       <ProfileHeader choice={choice} />
       {choice === 'Персональные данные' && (
         <div className="profile__form profile__form_space_left">

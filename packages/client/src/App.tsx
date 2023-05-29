@@ -6,7 +6,7 @@ import { routes } from './routes';
 import useTheme from './hooks/useTheme';
 
 function App() {
-  const {themeClassName} = useTheme();
+  const { themeClassName } = useTheme();
 
   return (
     <div className={`app ${themeClassName}`}>

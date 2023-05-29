@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TypeRootState } from '..';
 import { IUiState, ThemeId } from './ui.types';
 
-
 const initialState: IUiState = {
   isLoading: false,
   themeId: 1,
