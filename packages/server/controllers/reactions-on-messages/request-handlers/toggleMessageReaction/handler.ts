@@ -41,7 +41,7 @@ const toggleMessageReaction: PostRequestsHandler<RequestBody> = async (
   });
 
   const currentValue = reactionsEntry.reactions[reaction_id];
-  const toggledValue = currentValue === 1 ? 0 : 1;
+  const toggledValue = !currentValue;
   reactionsEntry.reactions[`${reaction_id}`] = toggledValue;
   reactionsEntry.changed('reactions', true);
   await reactionsEntry.save();

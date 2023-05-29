@@ -1,8 +1,8 @@
-import { Model, DataTypes, ForeignKey, CreationOptional } from 'sequelize';
 import type { InferAttributes, InferCreationAttributes } from 'sequelize';
+import { CreationOptional, DataTypes, ForeignKey, Model } from 'sequelize';
 import { sequelize } from '../../utils/connectDataBase';
-import { Post } from './post';
 import { User } from '../user';
+import { Post } from './post';
 
 export class Message extends Model<
   InferAttributes<Message>,

@@ -1,7 +1,7 @@
-import { User } from '../../models/user';
-import { sequelize } from '../../utils/connectDataBase';
 import { InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 import { DataType } from 'sequelize-typescript';
+import { User } from '../../models/user';
+import { sequelize } from '../../utils/connectDataBase';
 import { Message } from './message';
 
 export class ReactionsOnMessage extends Model<
@@ -10,7 +10,7 @@ export class ReactionsOnMessage extends Model<
 > {
   declare message_id: number;
   declare user_id: number;
-  declare reactions: Record<string, 0 | 1>;
+  declare reactions: Record<string, boolean>;
 }
 
 const inNotNegativeInteger = (value: number) =>
@@ -18,7 +18,7 @@ const inNotNegativeInteger = (value: number) =>
 
 const isCorrectReactionsJSON = (reactionsJSON: Record<string, unknown>) => {
   return Object.entries(reactionsJSON).every(([_, isReactionPutFlag]) => {
-    return isReactionPutFlag === 0 || isReactionPutFlag === 1;
+    return typeof isReactionPutFlag === 'boolean';
   });
 };
 

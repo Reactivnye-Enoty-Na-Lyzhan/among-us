@@ -1,8 +1,8 @@
 import { BaseError } from '../../../../utils/errors/BaseError';
 
-export class IncorrectDataError extends BaseError {
+export class IncorrectParametersError extends BaseError {
   constructor(message: string) {
     super(message);
-    this.name = 'ToggleMessageReactionRequestIncorrectDataError';
+    this.name = 'getMessageReactionsIncorrectParametersError';
   }
 }

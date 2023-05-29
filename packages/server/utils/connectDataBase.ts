@@ -1,7 +1,7 @@
-import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { createNamespace } from 'cls-hooked';
 import dotenv from 'dotenv';
 import path from 'path';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 
 const nameSpace = createNamespace('sequilize-cls');
 (Sequelize as any).__proto__.useCLS(nameSpace);
