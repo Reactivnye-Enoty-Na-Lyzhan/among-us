@@ -1,11 +1,11 @@
+import { sequelize } from '../../utils/connectDataBase';
 import {
   CreationOptional,
-  Model,
   InferAttributes,
   InferCreationAttributes,
+  Model,
 } from 'sequelize';
 import { DataType } from 'sequelize-typescript';
-import { sequelize } from '../../utils/connectDataBase';
 
 export class Emoji extends Model<
   InferAttributes<Emoji>,

@@ -9,14 +9,14 @@ export default (
   err: ResponseError,
   _req: Request,
   res: Response,
-  next: NextFunction
+  _: NextFunction
 ) => {
   console.log('ERROR HANDLER MIDDLEWARE');
 
   const { statusCode = DEFAULT_ERROR_CODE, message } = err;
-  if (res.headersSent) {
-    return next(err);
-  }
+  // if (res.headersSent) {
+  //   return next(err);
+  // }
 
   return res.status(statusCode).send({
     message:

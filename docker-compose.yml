@@ -6,7 +6,7 @@ services:
     image: server
     build:
       context: .
-      dockerfile: dockerfile.dev.server
+      dockerfile: dockerfile.server.dev
       args:
         SERVER_PORT: ${SERVER_PORT}
     restart: always

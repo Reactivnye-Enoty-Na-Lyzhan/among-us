@@ -12,10 +12,7 @@ COPY packages/server/package.json  packages/server/package.json
 RUN yarn lerna bootstrap
 
 COPY packages/ packages/
-RUN rm -rf /app/packages/client/dist/ && \
-    rm -rf /app/packages/client/dist-ssr/ && \
-    rm -rf /app/packages/server/dist/ && \
-    yarn build
+RUN  yarn build
 COPY .env /app/packages/server/dist
 
 CMD [ "node", "/app/packages/server/dist/server.js" ]

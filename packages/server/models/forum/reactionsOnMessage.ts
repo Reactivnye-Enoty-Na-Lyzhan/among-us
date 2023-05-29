@@ -1,8 +1,8 @@
-import { Model, InferAttributes, InferCreationAttributes } from 'sequelize';
-import { DataType } from 'sequelize-typescript';
-import { sequelize } from '../../utils/connectDataBase';
-import { Message } from './message';
 import { User } from '../../models/user';
+import { sequelize } from '../../utils/connectDataBase';
+import { InferAttributes, InferCreationAttributes, Model } from 'sequelize';
+import { DataType } from 'sequelize-typescript';
+import { Message } from './message';
 
 export class ReactionsOnMessage extends Model<
   InferAttributes<ReactionsOnMessage>,
