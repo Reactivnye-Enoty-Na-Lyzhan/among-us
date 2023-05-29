@@ -33,10 +33,14 @@
 
 .found-game__title {
   margin: 0;
+  max-width: 100px;
   font-size: 14px;
   font-weight: 500;
   color: var(--font-main-primary);
   line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .found-game__game-params {

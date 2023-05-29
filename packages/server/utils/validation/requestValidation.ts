@@ -30,6 +30,10 @@ const color = Joi.string()
     'brown',
     'grey'
   );
+const sortField = Joi.string()
+  .required()
+  .valid('winrate', 'games', 'wins', 'losses');
+
 const params = Joi.object<IParams>().keys({
   discussion: Joi.number().required().min(30).max(90),
   impostors: Joi.number().required().min(1).max(4),
@@ -116,4 +120,10 @@ export const updateProfileValidation = validateBody<string>({
   firstName,
   lastName,
   phone,
+});
+
+export const getLeaderboardValidation = validateBody<number | string>({
+  sortField,
+  offset,
+  limit,
 });

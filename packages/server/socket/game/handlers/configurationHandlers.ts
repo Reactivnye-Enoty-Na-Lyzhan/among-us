@@ -1,7 +1,10 @@
 import { sequelize } from '../../../utils/connectDataBase';
 import { GameColor } from '../../../models/gameColor';
+import { LeaderBoard } from '../../../models/leaderboard';
+import { Player } from '../../../models/player';
 import { NotExistError } from '../../../utils/errors/commonErrors/NotExistError';
 import { ErrorMessages } from '../../../utils/errors/errorMessages';
+import { getWinrate } from '../../../utils/game/getWinrate';
 import type {
   GameSocket,
   GetSelectedColors,
@@ -95,8 +98,46 @@ export const configurationHandlers = (socket: GameSocket) => {
   };
 
   // Устанавливаем рейтинг пользователя с сервера
-  const setPlayerRating: SetPlayerRating = async playerId => {
-    console.log(playerId);
+  const setPlayerRating: SetPlayerRating = async (playerId, winner) => {
+    try {
+      const player = await Player.findOne({
+        where: {
+          id: playerId,
+        },
+      });
+
+      if (!player) throw new NotExistError(ErrorMessages.playerNotExist);
+
+      const user = await player.getUser();
+
+      // Проверяем, является ли команда пользователя победителями
+      const isWinner = player.role === winner;
+
+      const [leaderBoard] = await LeaderBoard.findOrCreate({
+        where: {
+          userId: user.id,
+        },
+        defaults: {
+          wins: 0,
+          losses: 0,
+        },
+      });
+
+      // Обновляем результаты пользователя
+      if (isWinner) {
+        await leaderBoard.increment(['wins', 'games']);
+      } else {
+        await leaderBoard.increment(['losses', 'games']);
+      }
+
+      const winrate = getWinrate(leaderBoard.wins, leaderBoard.losses);
+
+      await leaderBoard.update({
+        winrate,
+      });
+    } catch (err: unknown) {
+      console.log(err);
+    }
   };
 
   socket.on('setPlayerRating', setPlayerRating);
