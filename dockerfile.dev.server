@@ -1,0 +1,22 @@
+ARG NODE_VERSION=18.16.0
+
+FROM node:$NODE_VERSION-bullseye
+
+WORKDIR /app
+
+COPY package.json yarn.lock lerna.json ./
+RUN yarn install --frozen-lockfile
+
+COPY packages/client/package.json  packages/client/package.json 
+COPY packages/server/package.json  packages/server/package.json
+RUN yarn lerna bootstrap
+
+COPY packages/ packages/
+RUN rm -rf /app/packages/client/dist/ && \
+    rm -rf /app/packages/client/dist-ssr/ && \
+    rm -rf /app/packages/server/dist/ && \
+    yarn build
+COPY .env /app/packages/server/dist
+
+CMD [ "node", "/app/packages/server/dist/server.js" ]
+# CMD [ "tail", "-f", "/dev/null" ]

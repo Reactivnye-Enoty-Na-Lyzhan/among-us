@@ -11,6 +11,8 @@ export default (
   res: Response,
   next: NextFunction
 ) => {
+  console.log('ERROR HANDLER MIDDLEWARE');
+
   const { statusCode = DEFAULT_ERROR_CODE, message } = err;
   if (res.headersSent) {
     return next(err);

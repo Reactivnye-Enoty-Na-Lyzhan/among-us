@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import authRouter from './auth';
 import gameRouter from './game';
 import userRouter from './users';
-import checkAuthHandler from '../middlewares/checkAuthHandler';
+// import checkAuthHandler from '../middlewares/checkAuthHandler';
 import forumRouter from './forum';
 
 const router = Router();
@@ -11,7 +11,7 @@ const router = Router();
 router.use('/api/', authRouter);
 
 // Проверка авторизации
-router.use(checkAuthHandler);
+// router.use(checkAuthHandler);
 
 router.use('/api/game', gameRouter);
 
