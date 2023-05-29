@@ -12,9 +12,6 @@ export default (
   _: NextFunction
 ) => {
   const { statusCode = DEFAULT_ERROR_CODE, message } = err;
-  // if (res.headersSent) {
-  //   return next(err);
-  // }
 
   return res.status(statusCode).send({
     message:
