@@ -30,10 +30,6 @@ const ForumPostPage: FC = () => {
     postId: postId ? Number(postId) : 0,
   });
 
-  if (!postId) {
-    return null;
-  }
-
   return (
     <div className="forum forum-post">
       <Header title={data?.title ?? ''} />

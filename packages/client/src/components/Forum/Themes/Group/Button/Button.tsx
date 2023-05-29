@@ -8,12 +8,7 @@ type Props = {
 
 const GroupButton: FC<Props> = ({ text, onClick }) => {
   return (
-    <button
-      className="theme-group-button"
-      type="button"
-      onClick={() => {
-        onClick();
-      }}>
+    <button className="theme-group-button" type="button" onClick={onClick}>
       {text}
     </button>
   );

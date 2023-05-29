@@ -1,11 +1,11 @@
 import Header from '@/components/Header/Header';
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import './../Page/Page.css';
-import './EditPostPage.css';
 import ForumEditPostForm from '../EditForm/EditForm';
 import hocAuth from '@/hoc/hocAuth';
 import { SIGNIN_URL } from '@/utils/constants';
+import './../Page/Page.css';
+import './EditPostPage.css';
 
 const ForumEditPostPage: FC = () => {
   const { postId } = useParams();

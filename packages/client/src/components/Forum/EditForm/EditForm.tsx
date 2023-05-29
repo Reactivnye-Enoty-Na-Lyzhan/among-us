@@ -37,6 +37,18 @@ const ForumEditPostForm: FC = () => {
     }
   };
 
+  const onTitleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    {
+      clearFieldValidation('title');
+      validateField('title', e.currentTarget.value);
+      setTitle(e.currentTarget.value);
+    }
+  };
+
+  const onTitleInputBlur = () => {
+    validateField('title', title);
+  };
+
   return (
     <div>
       <label
@@ -48,14 +60,8 @@ const ForumEditPostForm: FC = () => {
           className="forum-input__input"
           value={title}
           maxLength={250}
-          onChange={e => {
-            clearFieldValidation('title');
-            validateField('title', e.currentTarget.value);
-            setTitle(e.currentTarget.value);
-          }}
-          onBlur={() => {
-            validateField('title', title);
-          }}
+          onChange={onTitleInputChange}
+          onBlur={onTitleInputBlur}
         />
         <div
           className="forum-input__validation"
