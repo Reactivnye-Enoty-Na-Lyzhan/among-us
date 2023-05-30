@@ -6,6 +6,7 @@ import type {
   IPlayer,
   IGameWithParams,
   PlayerRoleType,
+  IPlayerWithUser,
 } from './game.types';
 
 const initialState: IGameState = {
@@ -36,6 +37,9 @@ const initialState: IGameState = {
     winners: null,
   },
   startCooldown: 15,
+  meetings: {
+    initiator: null,
+  },
 };
 
 export const gameSlice = createSlice({
@@ -63,7 +67,7 @@ export const gameSlice = createSlice({
     removePlayerFromList: state => {
       state.playersAmount -= 1;
     },
-    setGamePlayers: (state, action: PayloadAction<IPlayer[]>) => {
+    setGamePlayers: (state, action: PayloadAction<IPlayerWithUser[]>) => {
       state.players = action.payload;
     },
     killPlayer: (state, action: PayloadAction<IPlayer['id']>) => {
@@ -108,6 +112,7 @@ export const gameActions = gameSlice.actions;
 export const selectOnline = (state: TypeRootState) => state.game.online;
 export const selectResults = (state: TypeRootState) => state.game.results;
 export const selectPlayer = (state: TypeRootState) => state.game.player;
+export const selectPlayers = (state: TypeRootState) => state.game.players;
 export const selectPlayersAmount = (state: TypeRootState) =>
   state.game.playersAmount;
 export const selectGame = (state: TypeRootState) => state.game.gameId;

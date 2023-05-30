@@ -52,9 +52,9 @@ const CharacterSelection: FC = () => {
     };
   }, [socket]);
 
-  // TODO: Добавить смену цвета
+  // Смена цвета в зависимости от выбора игрока
   const crewmanClass = classNames('character-selection__crewman', {
-    [`character-selection__crewman_suit_${userColor}`]: false, //selectedColor !== '',
+    [`character-selection__crewman_suit_${userColor}`]: true,
   });
 
   const handleSelectedColors = useCallback(

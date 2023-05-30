@@ -34,11 +34,46 @@
   margin: 71px 240px 0 0;
   width: 181px;
   height: 247px;
-  background-image: url(../../../../images/crewman/crewman-white.svg);
+  background-image: url('@/images/game/crew/crewman_white.svg');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  transform: scaleX(-1);
+}
+
+.character-selection__crewman_suit_white {
+  background-image: url('@/images/game/crew/crewman_white.svg');
+}
+
+.character-selection__crewman_suit_green {
+  background-image: url('@/images/game/crew/crewman_green.svg');
+}
+
+.character-selection__crewman_suit_aquamarine {
+  background-image: url('@/images/game/crew/crewman_aquamarine.svg');
+}
+
+.character-selection__crewman_suit_red {
+  background-image: url('@/images/game/crew/crewman_red.svg');
+}
+
+.character-selection__crewman_suit_brown {
+  background-image: url('@/images/game/crew/crewman_brown.svg');
+}
+
+.character-selection__crewman_suit_grey {
+  background-image: url('@/images/game/crew/crewman_grey.svg');
+}
+
+.character-selection__crewman_suit_yellow {
+  background-image: url('@/images/game/crew/crewman_yellow.svg');
+}
+
+.character-selection__crewman_suit_purple {
+  background-image: url('@/images/game/crew/crewman_purple.svg');
+}
+
+.character-selection__crewman_suit_blue {
+  background-image: url('@/images/game/crew/crewman_blue.svg');
 }
 
 .character-selection__colors-list {

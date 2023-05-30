@@ -1,5 +1,6 @@
 import { SuitColorsType } from '@/utils/gameParams';
 import { GameRole } from '../../../../server/types/socket/game/gameSocket.types';
+import { User } from '../auth/auth.types';
 
 export type FoundGameParamType = Pick<IGameStateParams, 'impostors'>;
 
@@ -111,6 +112,10 @@ export interface IGame {
   title: string;
 }
 
+export interface IPlayerWithUser extends IPlayer {
+  user: Pick<User, 'username' | 'nickname'>
+}
+
 export interface IPlayer {
   id: number | null;
   alive: boolean;
@@ -129,6 +134,10 @@ interface IResults {
   winners: PlayerRoleType | null;
 }
 
+export interface IMeeting {
+  initiator: IPlayer['id'];
+}
+
 export interface IGameState {
   online: boolean;
   gameId: GameIdType | null;
@@ -137,9 +146,10 @@ export interface IGameState {
   params: IGameStateParams;
   player: IPlayer;
   playersAmount: number;
-  players: IPlayer[] | [];
+  players: IPlayerWithUser[] | [];
   results: IResults;
   startCooldown: number;
+  meetings: IMeeting;
 }
 
 export interface IGameStateParams {
