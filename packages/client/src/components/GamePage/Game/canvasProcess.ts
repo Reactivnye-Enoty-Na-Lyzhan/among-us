@@ -14,7 +14,9 @@ export default function canvasProcess(
   canvas: HTMLCanvasElement,
   emergencyActionBtn: HTMLButtonElement,
   useActionBtn: HTMLButtonElement,
-  killActionBtn: HTMLButtonElement
+  killActionBtn: HTMLButtonElement,
+  players: any,
+  playerId: any,
 ) {
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   canvasSetup(canvas);
@@ -23,6 +25,9 @@ export default function canvasProcess(
     x: 0,
     y: 0,
   };
+
+  console.log(players);
+  console.log('id ', playerId );
 
   let gameFrame = 0;
 

@@ -2,7 +2,7 @@ import { FC, memo, useContext, useEffect, useRef } from 'react';
 import { useActions } from '@/hooks/useActions';
 import canvasProcess from './canvasProcess';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { selectGame, selectPlayer } from '@/store/game/game.slice';
+import { selectGame, selectPlayer, selectPlayers } from '@/store/game/game.slice';
 import { useUpdateScoreMutation } from '@/store/game/game.api';
 import { GameSocketContext } from '@/utils/socket/gameSocket';
 import killIcon from '@/images/game/kill.svg';
@@ -13,6 +13,7 @@ import './Game.css';
 
 const Game: FC = () => {
   const { id: playerId } = useTypedSelector(selectPlayer);
+  const players = useTypedSelector(selectPlayers);
   const gameId = useTypedSelector(selectGame);
 
   const [completeTask] = useUpdateScoreMutation();
@@ -31,13 +32,17 @@ const Game: FC = () => {
       canvasRef.current &&
       miniGameAction.current &&
       meetingAction.current &&
-      killAction.current
+      killAction.current &&
+      players.length &&
+      playerId
     ) {
       canvasProcess(
         canvasRef.current,
         meetingAction.current,
         miniGameAction.current,
-        killAction.current
+        killAction.current,
+        players,
+        playerId
       );
     }
   }, []);

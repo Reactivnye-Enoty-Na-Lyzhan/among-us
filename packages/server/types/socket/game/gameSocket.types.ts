@@ -92,16 +92,25 @@ export type SelectColor = (
 ) => void;
 
 interface IMoveParams {
-  id: string;
-  x: number;
-  y: number;
-}
+    id: string;
+    x: number;
+    y: number;
+  }
 
-export type Move = (params: IMoveParams) => void;
+
+interface IMoveServerParams extends IMoveParams {
+    gameId: GameId;
+  }
+  
+export type MoveServer = (params: IMoveParams) => void;
+  
+
+  
+  export type MoveClient = (params: IMoveServerParams) => void;
 
 // Broadcasting
 export interface IGameServerToClientEvents {
-  move: Move;
+  move: MoveServer;
   endMove: EndMove;
   selectedColors: SelectedColors;
   killPlayer: KillPlayer;
@@ -119,7 +128,7 @@ export interface IGameClienToServerEvents {
   findGame: FindGame;
   joinGame: JoinGame;
   leaveGame: LeaveGame;
-  move: Move;
+  move: MoveClient;
   endMove: EndMove;
   selectColor: SelectColor;
   getSelectedColors: GetSelectedColors;
