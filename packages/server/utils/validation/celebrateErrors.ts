@@ -15,5 +15,6 @@ export const celebrateErrors: Record<string, string> = {
   'any.required': '{#label} обязательно!',
   'any.only':
     '{#label} должен быть {if(#valids.length == 1, "", "одним из ")}{{#valids}}',
-  'any.invalid': '{{#label}} содержит неразрешённое значение. Проверьте все условия и повторите попытку снова',
+  'any.invalid':
+    '{{#label}} содержит неразрешённое значение. Проверьте все условия и повторите попытку снова',
 };

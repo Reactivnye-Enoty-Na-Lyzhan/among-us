@@ -12,7 +12,7 @@ const { AWS_BUCKET } = process.env;
 
 // Загрузка одичного изображения
 export const uploadSingleImage = async (
-  file: Express.Multer.File,
+  file: Express.Multer.File
 ): Promise<string | Error> => {
   try {
     const compressed = await sharp(file.buffer)
@@ -27,7 +27,7 @@ export const uploadSingleImage = async (
         Key: fileName,
         Body: compressed,
         ContentType: file.mimetype,
-      }),
+      })
     );
     return fileName;
   } catch (err: unknown) {

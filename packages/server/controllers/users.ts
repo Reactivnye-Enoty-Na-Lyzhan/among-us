@@ -27,7 +27,7 @@ interface IRequestUser {
 }
 
 interface ICreateUserBody {
-  username: string;
+  login: string;
   firstName: string;
   lastName: string;
   phone: string;
@@ -36,12 +36,12 @@ interface ICreateUserBody {
 }
 
 interface ILoginUserBody {
-  username: string;
+  login: string;
   password: string;
 }
 
 interface IRequest<T = unknown> extends Request {
-  user?: IRequestUser
+  user?: IRequestUser;
   body: T;
 }
 
@@ -57,12 +57,12 @@ export const createUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { username, firstName, lastName, phone, email, password } = req.body;
+  const { login, firstName, lastName, phone, email, password } = req.body;
 
   try {
     const passwordHash = await hash(password, 10);
     const user = await User.create({
-      username,
+      login,
       firstName,
       lastName,
       phone,
@@ -71,7 +71,7 @@ export const createUser = async (
     });
 
     res.send({
-      username: user.username,
+      login: user.login,
       firstName,
       lastName,
       phone,
@@ -87,8 +87,8 @@ export const createUser = async (
         case 'email':
           message = ErrorMessages.emailExist;
           break;
-        case 'username':
-          message = ErrorMessages.usernameExist;
+        case 'login':
+          message = ErrorMessages.loginExist;
           break;
         case 'phone':
           message = ErrorMessages.phoneExist;
@@ -111,10 +111,10 @@ export const loginUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { username, password } = req.body;
+  const { login, password } = req.body;
   try {
     // Проверяем, существует ли пользователь
-    const user = await User.findByCredentials(username, password);
+    const user = await User.findByCredentials(login, password);
     // Если существует - выставляем cookie
     if (user && user instanceof User) {
       const token = singToken({
@@ -129,7 +129,7 @@ export const loginUser = async (
           sameSite: NODE_ENV === 'production',
         })
         .send({
-          username: user.username,
+          login: user.login,
         });
     } else {
       // Пробрасываем ошибку дальше
@@ -142,7 +142,11 @@ export const loginUser = async (
 };
 
 // Выход пользователя из системы
-export const logoutUser = async (_req: Request, res: Response, next: NextFunction) => {
+export const logoutUser = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   // Удаляем cookie пользователя
   try {
     res
@@ -159,7 +163,11 @@ export const logoutUser = async (_req: Request, res: Response, next: NextFunctio
 };
 
 // Информация о текущем пользователе
-export const getCurrentUser = async (req: IRequest, res: Response, next: NextFunction) => {
+export const getCurrentUser = async (
+  req: IRequest,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
 
   try {
@@ -180,15 +188,13 @@ export const getCurrentUser = async (req: IRequest, res: Response, next: NextFun
 };
 
 // Обновление профиля пользователя
-export const updateProfile = async (req: IRequest<IUpdateProfileBody>, res: Response, next: NextFunction) => {
+export const updateProfile = async (
+  req: IRequest<IUpdateProfileBody>,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
-  const {
-    nickname,
-    email,
-    firstName,
-    lastName,
-    phone,
-  } = req.body;
+  const { nickname, email, firstName, lastName, phone } = req.body;
 
   try {
     if (!id) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
@@ -213,7 +219,6 @@ export const updateProfile = async (req: IRequest<IUpdateProfileBody>, res: Resp
     res.send({
       user,
     });
-
   } catch (err: any) {
     if (Number(err.parent.code) === 23505) {
       const existed: string = err.errors[0]?.path;
@@ -223,8 +228,8 @@ export const updateProfile = async (req: IRequest<IUpdateProfileBody>, res: Resp
         case 'email':
           message = ErrorMessages.emailExist;
           break;
-        case 'username':
-          message = ErrorMessages.usernameExist;
+        case 'login':
+          message = ErrorMessages.loginExist;
           break;
         case 'phone':
           message = ErrorMessages.phoneExist;
@@ -242,14 +247,19 @@ export const updateProfile = async (req: IRequest<IUpdateProfileBody>, res: Resp
 };
 
 // Изменение пароля пользователя
-export const changePassword = async (req: IRequest<IChangePasswordBody>, res: Response, next: NextFunction) => {
+export const changePassword = async (
+  req: IRequest<IChangePasswordBody>,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.user?.id;
   const { oldPassword, newPassword } = req.body;
 
   try {
     if (!id) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
 
-    if (oldPassword === newPassword) throw new AlreadyExistError(ErrorMessages.sameNewPassword);
+    if (oldPassword === newPassword)
+      throw new AlreadyExistError(ErrorMessages.sameNewPassword);
 
     // Проверяем, существует ли пользователь
     const user = await User.scope('withPassword').findOne({
@@ -261,7 +271,8 @@ export const changePassword = async (req: IRequest<IChangePasswordBody>, res: Re
     if (!user || !user.password) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
 
     // Если oldPassword не соответствует его нынешнему паролю
-    if (!await compare(oldPassword, user.password)) throw new AlreadyExistError(ErrorMessages.incorrectPassword);
+    if (!(await compare(oldPassword, user.password)))
+      throw new AlreadyExistError(ErrorMessages.incorrectPassword);
 
     // Изменяем пароль пользователю
     const password = await hash(newPassword, 10);
