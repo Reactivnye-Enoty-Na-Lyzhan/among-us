@@ -40,7 +40,7 @@ const LoginPage: FC = () => {
       return;
     }
     const success = await signIn({
-      username: values.login,
+      login: values.login,
       password: values.password,
     } as SignInRequestDTO);
     success && navigate('/game');

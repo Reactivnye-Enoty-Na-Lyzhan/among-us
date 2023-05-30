@@ -11,6 +11,5 @@ export function transformFormDataToDTO(
     email: formData.email,
     password: formData.password,
     phone: formData.phone,
-    username: formData.login,
   };
 }
