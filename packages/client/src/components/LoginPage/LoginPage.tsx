@@ -39,7 +39,10 @@ const LoginPage: FC = () => {
     if (sendSignInQueryStatus.isLoading) {
       return;
     }
-    const success = await signIn(values as SignInRequestDTO);
+    const success = await signIn({
+      login: values.login,
+      password: values.password,
+    } as SignInRequestDTO);
     success && navigate('/game');
   }
 

@@ -7,7 +7,7 @@ export function transformFormDataToDTO(
   return {
     firstName: formData.name,
     lastName: formData.secondName,
-    username: formData.login,
+    login: formData.login,
     email: formData.email,
     password: formData.password,
     phone: formData.phone,

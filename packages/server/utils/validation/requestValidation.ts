@@ -4,7 +4,7 @@ import type { StringSchema, Schema } from 'joi';
 
 const idFormat = Joi.number().required();
 
-const username = Joi.string().required().min(2).max(15);
+const login = Joi.string().required().min(2).max(15);
 const firstName = Joi.string().required().min(3).max(15);
 const lastName = Joi.string().required().min(3).max(15);
 const phone = Joi.string().required().min(10).max(12);
@@ -17,6 +17,7 @@ const limit = Joi.number().positive().default(12);
 const gameId = idFormat;
 const taskId = idFormat;
 const playerId = idFormat;
+const themeId = Joi.number().integer().min(1).max(3);
 const color = Joi.string()
   .required()
   .valid(
@@ -61,7 +62,7 @@ const validateBody = <T>(options: IBodyObject<T>) => {
 };
 
 export const createUserValidation = validateBody<string>({
-  username,
+  login,
   firstName,
   lastName,
   phone,
@@ -70,7 +71,7 @@ export const createUserValidation = validateBody<string>({
 });
 
 export const loginUserValidation = validateBody<string>({
-  username,
+  login,
   password,
 });
 
@@ -120,6 +121,10 @@ export const updateProfileValidation = validateBody<string>({
   firstName,
   lastName,
   phone,
+});
+
+export const addThemeValidation = validateBody<number>({
+  themeId,
 });
 
 export const getLeaderboardValidation = validateBody<number | string>({

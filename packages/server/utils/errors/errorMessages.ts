@@ -1,9 +1,9 @@
 export enum ErrorMessages {
   emailExist = 'Указанный email уже зарегистрирован',
-  usernameExist = 'Указанный login уже зарегистрирован',
+  loginExist = 'Указанный login уже зарегистрирован',
   phoneExist = 'Указанный номер телефона уже зарегистрирован',
   alreadyExist = 'Пользователь с указанными данными уже зарегистрирован',
-  wrongPasswordOrUsername = 'Некорректные имя пользователя или пароль',
+  wrongPasswordOrLogin = 'Некорректные имя пользователя или пароль',
   notAuthorized = 'Ошибка авторизации',
   gameNotExist = 'Ошибка! Игра с указанным ID не существует или завершена',
   playerNotExist = 'Ошибка! Игрок с указанным ID не существует',
@@ -15,4 +15,9 @@ export enum ErrorMessages {
   sameNewPassword = 'Ошибка! Старый и новый пароль совпадают',
   incorrectPassword = 'Вы указали некорректный текущий пароль',
   noImageProvided = 'Ошибка! Изображение не было передано при запросе, или передано некорректно!',
+  tokenError = 'Ошибка при получении токена авторизации OAuth. Попробуйте ещё раз!',
+  refreshTokenError = 'Ошибка при обновлении токена авторизации OAuth',
+  notFound = 'Упс. Ничего не найдено',
+  invalidPostId = 'Ошибка! Пост с указанным ID не существует',
+  invalidMessageId = 'Ошибка! Сообщение с указанным ID не существует',
 }

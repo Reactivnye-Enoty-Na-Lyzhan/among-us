@@ -1,7 +1,7 @@
 import { compare, hash } from 'bcrypt';
-import { sign } from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { User } from '../models/user';
+import { singToken } from '../utils/auth/signToken';
 import { AlreadyExistError } from '../utils/errors/commonErrors/AlreadyExistError';
 import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
 import { ErrorMessages } from '../utils/errors/errorMessages';
@@ -27,7 +27,7 @@ interface IRequestUser {
 }
 
 interface ICreateUserBody {
-  username: string;
+  login: string;
   firstName: string;
   lastName: string;
   phone: string;
@@ -36,7 +36,7 @@ interface ICreateUserBody {
 }
 
 interface ILoginUserBody {
-  username: string;
+  login: string;
   password: string;
 }
 
@@ -49,7 +49,7 @@ dotenv.config({
   path: '../../.env',
 });
 
-const { JWT_SECRET = 'secret', NODE_ENV } = process.env;
+const { NODE_ENV } = process.env;
 
 // Создание пользователя
 export const createUser = async (
@@ -57,12 +57,12 @@ export const createUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { username, firstName, lastName, phone, email, password } = req.body;
+  const { login, firstName, lastName, phone, email, password } = req.body;
 
   try {
     const passwordHash = await hash(password, 10);
     const user = await User.create({
-      username,
+      login,
       firstName,
       lastName,
       phone,
@@ -71,7 +71,7 @@ export const createUser = async (
     });
 
     res.send({
-      username: user.username,
+      login: user.login,
       firstName,
       lastName,
       phone,
@@ -87,8 +87,8 @@ export const createUser = async (
         case 'email':
           message = ErrorMessages.emailExist;
           break;
-        case 'username':
-          message = ErrorMessages.usernameExist;
+        case 'login':
+          message = ErrorMessages.loginExist;
           break;
         case 'phone':
           message = ErrorMessages.phoneExist;
@@ -111,19 +111,16 @@ export const loginUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { username, password } = req.body;
+  const { login, password } = req.body;
   try {
     // Проверяем, существует ли пользователь
-    const user = await User.findByCredentials(username, password);
+    const user = await User.findByCredentials(login, password);
     // Если существует - выставляем cookie
     if (user && user instanceof User) {
-      const token = sign(
-        {
-          id: user.id,
-        },
-        NODE_ENV === 'production' ? JWT_SECRET : 'secret',
-        { expiresIn: '7d' }
-      );
+      const token = singToken({
+        id: user.id,
+        yandexId: user.yandexId || null,
+      });
       res
         .cookie('jwt', token, {
           domain: CURRENT_HOST,
@@ -132,7 +129,7 @@ export const loginUser = async (
           sameSite: NODE_ENV === 'production',
         })
         .send({
-          username: user.username,
+          login: user.login,
         });
     } else {
       // Пробрасываем ошибку дальше
@@ -231,8 +228,8 @@ export const updateProfile = async (
         case 'email':
           message = ErrorMessages.emailExist;
           break;
-        case 'username':
-          message = ErrorMessages.usernameExist;
+        case 'login':
+          message = ErrorMessages.loginExist;
           break;
         case 'phone':
           message = ErrorMessages.phoneExist;
@@ -271,7 +268,7 @@ export const changePassword = async (
       },
     });
 
-    if (!user) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
+    if (!user || !user.password) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
 
     // Если oldPassword не соответствует его нынешнему паролю
     if (!(await compare(oldPassword, user.password)))

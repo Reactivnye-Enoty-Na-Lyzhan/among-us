@@ -3,10 +3,13 @@ import ErrorToast from './components/ErrorToast/ErrorToast';
 import Loader from './components/Loader/Loader';
 import './App.css';
 import { routes } from './routes';
+import useTheme from './hooks/useTheme';
 
 function App() {
+  const { themeClassName } = useTheme();
+
   return (
-    <div className="app app_theme_default">
+    <div className={`app ${themeClassName}`}>
       <ErrorToast />
       <Loader />
       <Routes>

@@ -3,7 +3,7 @@ export type User = {
   firstName: string;
   lastName: string;
   nickname: string;
-  username: string;
+  login: string;
   email: string;
   password: string;
   phone: string;
@@ -18,7 +18,7 @@ export type SignInRequestDTO = {
 export type SignUpRequestDTO = {
   firstName: string;
   lastName: string;
-  username: string;
+  login: string;
   email: string;
   password: string;
   phone: string;

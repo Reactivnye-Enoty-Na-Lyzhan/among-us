@@ -53,12 +53,20 @@
 }
 
 .theme-card-info__title {
+  display: inline-block;
+  width: 100%;
   font-size: 16px;
   font-weight: 500;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   margin-bottom: 5px;
+  color: var(--color-white);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .theme-card-info__author {

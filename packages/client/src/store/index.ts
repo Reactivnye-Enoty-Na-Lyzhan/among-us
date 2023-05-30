@@ -3,10 +3,12 @@ import { gameReducer } from './game/game.slice';
 import { leaderboardApi } from './leaderboard/leaderboard.api';
 import { authApi } from './auth/auth.slice';
 import { oauthApi } from './auth/oauth.slice';
+import { themeApi } from './ui/ui.api';
 import { uiReducer } from './ui/ui.slice';
 import { IGameState } from './game/game.types';
 import { IUiState } from './ui/ui.types';
 import { gameApi } from './game/game.api';
+import { forumApi } from './forum/forum.api';
 
 export const createStore = (preloadedState?: TypeRootState) => {
   return configureStore({
@@ -15,6 +17,8 @@ export const createStore = (preloadedState?: TypeRootState) => {
       [authApi.reducerPath]: authApi.reducer,
       [oauthApi.reducerPath]: oauthApi.reducer,
       [gameApi.reducerPath]: gameApi.reducer,
+      [forumApi.reducerPath]: forumApi.reducer,
+      [themeApi.reducerPath]: themeApi.reducer,
       game: gameReducer,
       ui: uiReducer,
     },
@@ -24,7 +28,9 @@ export const createStore = (preloadedState?: TypeRootState) => {
         leaderboardApi.middleware,
         authApi.middleware,
         oauthApi.middleware,
-        gameApi.middleware
+        gameApi.middleware,
+        themeApi.middleware,
+        forumApi.middleware
       ),
   });
 };

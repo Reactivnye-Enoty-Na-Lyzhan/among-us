@@ -1,11 +1,7 @@
 import { FC, memo, useContext, useEffect, useRef } from 'react';
 import { useActions } from '@/hooks/useActions';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
 import canvasProcess from './canvasProcess';
-import EmergencyMeeting from './EmergencyMeeting/EmergencyMeeting';
-import { GameSocketContext } from '@/utils/socket/gameSocket';
-import { selectGame, selectPlayer } from '@/store/game/game.slice';
-import { useUpdateScoreMutation } from '@/store/game/game.api';
+import './Game.css';
 import killIcon from '@/images/game/kill.svg';
 import startMeetingIcon from '@/images/game/start-meeting.svg';
 import startMiniGameIcon from '@/images/game/start-minigame.svg';
@@ -100,25 +96,21 @@ const Game: FC = () => {
   return (
     <div className="game">
       <div className="game__canvas-container">
-        <EmergencyMeeting />
         <canvas ref={canvasRef} id="main-canvas"></canvas>
 
-        <button
-          ref={miniGameAction}
-          className="game__action-btn"
-          onClick={() => handleCompleteTask()}>
-          <img src={startMiniGameIcon} />
+        <button className="game__action-btn" ref={miniGameAction}>
+          <img src={startMiniGameIcon}></img>
         </button>
 
         <button className="game__action-btn" ref={meetingAction}>
-          <img src={startMeetingIcon} />
+          <img src={startMeetingIcon}></img>
         </button>
 
         <button
           ref={killAction}
           className="game__action-btn"
-          onClick={() => handlePlayerKill()}>
-          <img src={killIcon} />
+          onClick={handleFinishGame}>
+          <img src={killIcon}></img>
         </button>
       </div>
     </div>
