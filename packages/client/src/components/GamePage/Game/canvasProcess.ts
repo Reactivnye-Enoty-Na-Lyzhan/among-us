@@ -242,8 +242,7 @@ export default function canvasProcess(
 
   
   function moveCrewman ({id, x, y}: {id: string, x: number, y: number}) {
-    crewmen.filter((obj)=>obj.id === id)[0].update(x, y);
-    console.log(id, x, y);
+    crewmen.find((obj)=>obj.id === id).update(x, y);
   };
   socket.on('move', moveCrewman);  
    
