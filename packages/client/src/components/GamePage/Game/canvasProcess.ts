@@ -69,7 +69,7 @@ export default function canvasProcess(
     id:string;
     name: string;
     impostor: boolean;
-    constructor(x: number, y: number, color: string, id: string, name: string, impostor: boolean) {
+    constructor(x: number, y: number, color: string, id: string, name: string, role: string) {
       this.id = id;
       this.x = x;
       this.y = y;
@@ -79,13 +79,13 @@ export default function canvasProcess(
       this.spriteWidth = PLAYER.spriteWidth;
       this.color = color;
       this.name = name;
-      this.impostor = impostor;
+      this.impostor = role !== 'civil';
     }
   }
 
   class CurrentPlayer extends Player implements ICurrentPlayer {
-    constructor(x: number, y: number, color: string, id: string, impostor: boolean, name: string) {
-      super(x, y, color, id, name, impostor);
+    constructor(x: number, y: number, color: string, id: string, role: string, name: string) {
+      super(x, y, color, id, name, role);
       this.spriteFrame = 0;
       this.right = true;
     }
@@ -137,7 +137,7 @@ export default function canvasProcess(
     PLAYER.startPositionY,
     currentPlayerInitial.color,
     currentPlayerInitial.id, 
-    currentPlayerInitial.impostor,
+    currentPlayerInitial.role,
     currentPlayerInitial.name
   );
 
@@ -178,8 +178,8 @@ export default function canvasProcess(
     renderX: number;
     renderY: number;
     radius: number;
-    constructor(id: string, name: string, impostor: boolean, color: string, x: number, y: number) {
-      super(x, y, color, id, name, impostor);
+    constructor(id: string, name: string, role: string, color: string, x: number, y: number) {
+      super(x, y, color, id, name, role);
       this.renderX = this.x + MAP_OFFSET.x;
       this.renderY = this.y + MAP_OFFSET.y;
       this.radius = PLAYER.collisionRadius;
@@ -261,7 +261,6 @@ export default function canvasProcess(
     gameFrame++;
     checkPlayersCollisions();
     window.requestAnimationFrame(gameLoop);
-
   }
   gameLoop();
   return moveCrewman;
