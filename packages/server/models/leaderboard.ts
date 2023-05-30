@@ -61,7 +61,7 @@ LeaderBoard.init(
         include: [
           {
             association: 'user',
-            attributes: ['username', 'nickname', 'avatar'],
+            attributes: ['login', 'nickname', 'avatar'],
           },
         ],
       },

@@ -23,7 +23,7 @@ const FoundGame: FC<Props> = props => {
       <img
         className="found-game__user-avatar"
         src={`${DEFAULT_RESOURCE_URL}/${game.creator.avatar}`}
-        alt={`Аватар игрока ${game.creator.username}.`}
+        alt={`Аватар игрока ${game.creator.login}.`}
       />
       <div className="found-game__game-info">
         <h2 className="found-game__title">{game.title}</h2>

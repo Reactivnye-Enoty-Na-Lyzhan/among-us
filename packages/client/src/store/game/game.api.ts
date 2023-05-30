@@ -22,7 +22,7 @@ import type {
 export const gameApi = createApi({
   reducerPath: 'game/api',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${API_BASE_URL}/game`,
+    baseUrl: `${API_BASE_URL}game`,
     credentials: 'include',
   }),
   refetchOnMountOrArgChange: true,

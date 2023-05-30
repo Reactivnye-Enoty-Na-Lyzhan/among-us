@@ -72,7 +72,7 @@ Game.init(
         include: {
           model: User,
           as: 'creator',
-          attributes: ['username', 'avatar'],
+          attributes: ['login', 'avatar'],
         },
         attributes: {
           exclude: ['creatorId'],

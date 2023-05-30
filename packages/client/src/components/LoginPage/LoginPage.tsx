@@ -18,7 +18,7 @@ const LoginPage: FC = () => {
   const { requestStatus, statusMessageClass, signIn, sendSignInQueryStatus } =
     useSignIn();
 
-  const { values, handleInputChange } = useForm({ username: '', password: '' });
+  const { values, handleInputChange } = useForm({ login: '', password: '' });
   const {
     validationData,
     isFormValid,
@@ -26,7 +26,7 @@ const LoginPage: FC = () => {
     validateField,
     clearFieldValidation,
   } = useValidation([
-    { field: 'username', validation: validation.login },
+    { field: 'login', validation: validation.login },
     { field: 'password', validation: validation.password },
   ]);
   const { handleOAuthSignIn, requestToken } = useOAuth();
@@ -59,12 +59,12 @@ const LoginPage: FC = () => {
         </div>
         <Form onSubmit={handleSubmit}>
           <Input
-            value={values.username}
+            value={values.login}
             handleInputChange={handleInputChange}
             clearFieldValidation={clearFieldValidation}
             validateField={validateField}
             type={'text'}
-            name={'username'}
+            name={'login'}
             placeholder={'Введите логин'}
             label={'Логин'}
             validation={validationData.login}

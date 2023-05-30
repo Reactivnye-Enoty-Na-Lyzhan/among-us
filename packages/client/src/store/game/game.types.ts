@@ -7,7 +7,7 @@ export type FoundGameParamType = Pick<IGameStateParams, 'impostors'>;
 export interface IFoundGame extends IGame {
   players: number;
   creator: {
-    username: string;
+    login: string;
     avatar: string;
   };
   param: FoundGameParamType;
@@ -113,7 +113,7 @@ export interface IGame {
 }
 
 export interface IPlayerWithUser extends IPlayer {
-  user?: Pick<User, 'username' | 'nickname'>
+  user?: Pick<User, 'login' | 'nickname'>
 }
 
 export interface IPlayer {

@@ -44,7 +44,7 @@ export const connectionHandlers = (
         include: {
           model: User,
           as: 'user',
-          attributes: ['nickname', 'username'],
+          attributes: ['nickname', 'login'],
         },
       });
 

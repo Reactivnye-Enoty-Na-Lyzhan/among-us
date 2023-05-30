@@ -7,7 +7,7 @@ import type { SuitColorsType } from '@/utils/gameParams';
 import type { IPlayer } from '@/store/game/game.types';
 import './CrewmanCard.css';
 
-type Props = Pick<User, 'username' | 'nickname'> & {
+type Props = Pick<User, 'login' | 'nickname'> & {
   initiator: boolean;
   color: keyof SuitColorsType;
   id: IPlayer['id'];
@@ -19,7 +19,7 @@ type Props = Pick<User, 'username' | 'nickname'> & {
 const CrewmanCard: FC<Props> = (props) => {
   const { id: currentPlayerId } = useTypedSelector(selectPlayer);
   const {
-    username,
+    login,
     nickname,
     initiator,
     color,
@@ -52,7 +52,7 @@ const CrewmanCard: FC<Props> = (props) => {
         <span className={avatarOverlayClassname}>&#10003;</span>
         <div className={avatarClassname} />
       </div>
-      <h3 className="crewman-card__crewman-name">{nickname ?? username}</h3>
+      <h3 className="crewman-card__crewman-name">{nickname ?? login}</h3>
       {!initiator && <span className="crewman-card__initiator-icon" />}
     </li>
   );
