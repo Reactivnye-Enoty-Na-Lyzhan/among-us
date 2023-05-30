@@ -1,0 +1,25 @@
+.emergency-meeting {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  height: 92%;
+  transform: translate(-50%, -50%);
+  background-color: #010318;
+  border-radius: 10px;
+}
+
+.emergency-meeting__tablet-screen {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 30px 30px 35px;
+  width: calc(100% - 60px);
+  height: calc(100% - (28px * 2));
+  background-color: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, .25);
+}

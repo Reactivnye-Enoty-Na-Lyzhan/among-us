@@ -2,6 +2,7 @@ import { FC, memo, useContext, useEffect, useRef } from 'react';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import canvasProcess from './canvasProcess';
+import EmergencyMeeting from './EmergencyMeeting/EmergencyMeeting';
 import { GameSocketContext } from '@/utils/socket/gameSocket';
 import { selectGame, selectPlayer } from '@/store/game/game.slice';
 import { useUpdateScoreMutation } from '@/store/game/game.api';
@@ -10,6 +11,7 @@ import startMeetingIcon from '@/images/game/start-meeting.svg';
 import startMiniGameIcon from '@/images/game/start-minigame.svg';
 import type { PlayerRoleType } from '@/store/game/game.types';
 import './Game.css';
+
 
 const Game: FC = () => {
   const { id: playerId } = useTypedSelector(selectPlayer);
@@ -98,6 +100,7 @@ const Game: FC = () => {
   return (
     <div className="game">
       <div className="game__canvas-container">
+        <EmergencyMeeting />
         <canvas ref={canvasRef} id="main-canvas"></canvas>
 
         <button
