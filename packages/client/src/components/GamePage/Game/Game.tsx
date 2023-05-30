@@ -34,7 +34,9 @@ const Game: FC = () => {
       meetingAction.current &&
       killAction.current &&
       players.length &&
-      playerId
+      playerId &&
+      socket && 
+      gameId 
     ) {
       canvasProcess(
         canvasRef.current,
@@ -42,7 +44,9 @@ const Game: FC = () => {
         miniGameAction.current,
         killAction.current,
         players,
-        playerId
+        playerId, 
+        socket, 
+        gameId
       );
     }
   }, []);
