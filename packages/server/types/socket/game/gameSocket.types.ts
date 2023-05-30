@@ -12,7 +12,7 @@ export type GameStatus = 'init' | 'preparing' | 'active' | 'finished';
 export type GameRole = 'impostor' | 'civil';
 
 export type SuitColorsType = {
-  [k in (typeof suitsColors)[number]]: boolean;
+  [k in typeof suitsColors[number]]: boolean;
 };
 
 export const suitsColors = [
