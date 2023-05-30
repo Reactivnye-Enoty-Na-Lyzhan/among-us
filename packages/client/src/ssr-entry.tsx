@@ -24,7 +24,7 @@ export const render: IRender = (url = '') => {
           <App />
         </GameSocketContext.Provider>
       </Provider>
-    </StaticRouter >
+    </StaticRouter>
   );
 
   return {

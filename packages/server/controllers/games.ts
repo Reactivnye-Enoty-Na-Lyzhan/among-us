@@ -65,7 +65,7 @@ interface IBodyKillPlayer {
   userId: string;
 }
 
-interface IUser {
+export interface IUser {
   id: number;
 }
 
@@ -298,8 +298,8 @@ export const takeQueue = async (
             {
               model: User,
               as: 'user',
-              // Из пользователя получаем только username и nickname (может быть null)
-              attributes: ['username', 'nickname'],
+              // Из пользователя получаем только login и nickname (может быть null)
+              attributes: ['login', 'nickname'],
             },
           ],
         },
@@ -435,8 +435,8 @@ export const getCurrentGame = async (
             {
               model: User,
               as: 'user',
-              // Из пользователя получаем только username и nickname (может быть null)
-              attributes: ['username', 'nickname'],
+              // Из пользователя получаем только login и nickname (может быть null)
+              attributes: ['login', 'nickname'],
             },
           ],
         },

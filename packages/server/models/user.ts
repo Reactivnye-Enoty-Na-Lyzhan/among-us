@@ -19,32 +19,35 @@ export class User extends Model<
   InferAttributes<User>,
   InferCreationAttributes<User>
 > {
-  declare username: string;
+  declare login: string;
   declare firstName: string;
   declare lastName: string;
   declare nickname: CreationOptional<string>;
-  declare phone: string;
+  declare phone: string | null;
   declare email: string;
-  declare password: string;
+  declare password: string | null;
   declare avatar: CreationOptional<string>;
   declare id: CreationOptional<number>;
+  declare yandexId: CreationOptional<number>;
+  declare accessToken: CreationOptional<string>;
+  declare refreshToken: CreationOptional<string>;
   declare addGame: BelongsToManyAddAssociationMixin<Game, number>;
 
   // Метод проверки данных пользователя
   static async findByCredentials(
-    username: string,
+    login: string,
     password: string
   ): Promise<User | unknown> {
     try {
       const user = await this.scope('withPassword').findOne({
         where: {
-          username,
+          login,
         },
       });
 
-      if (!user) {
+      if (!user || !user.password) {
         return Promise.reject(
-          new WrongDataError(ErrorMessages.wrongPasswordOrUsername)
+          new WrongDataError(ErrorMessages.wrongPasswordOrLogin)
         );
       }
 
@@ -52,7 +55,7 @@ export class User extends Model<
 
       if (!passwordMatched) {
         return Promise.reject(
-          new NotAuthorizedError(ErrorMessages.wrongPasswordOrUsername)
+          new NotAuthorizedError(ErrorMessages.wrongPasswordOrLogin)
         );
       }
 
@@ -65,7 +68,7 @@ export class User extends Model<
 
 User.init(
   {
-    username: {
+    login: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
@@ -82,9 +85,9 @@ User.init(
       type: DataTypes.STRING,
     },
     phone: {
-      allowNull: false,
       type: DataTypes.STRING,
       unique: true,
+      allowNull: true,
     },
     email: {
       type: DataTypes.STRING,
@@ -93,28 +96,45 @@ User.init(
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     avatar: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
+    yandexId: {
+      type: DataTypes.INTEGER,
+    },
+    accessToken: {
+      type: DataTypes.STRING,
+    },
+    refreshToken: {
+      type: DataTypes.STRING,
+    },
   },
   {
     defaultScope: {
       attributes: {
-        exclude: ['password'],
+        exclude: ['password', 'accessToken', 'refreshToken'],
       },
     },
     scopes: {
       withPassword: {
         attributes: {
           include: ['password'],
+        },
+      },
+      withRefreshToken: {
+        attributes: {
+          include: ['refreshToken'],
+        },
+      },
+      withTokens: {
+        attributes: {
+          include: ['accessToken', 'refreshToken'],
         },
       },
     },

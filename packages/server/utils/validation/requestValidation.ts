@@ -4,18 +4,20 @@ import type { StringSchema, Schema } from 'joi';
 
 const idFormat = Joi.number().required();
 
-const username = Joi.string().required().min(2).max(15);
+const login = Joi.string().required().min(2).max(15);
 const firstName = Joi.string().required().min(3).max(15);
 const lastName = Joi.string().required().min(3).max(15);
 const phone = Joi.string().required().min(10).max(12);
 const email = Joi.string().required().email();
 const password = Joi.string().required();
+const nickname = Joi.string().required();
 const title = Joi.string().required();
-const offset = Joi.number().default(0);
-const limit = Joi.number().default(9);
+const offset = Joi.number().positive().default(0);
+const limit = Joi.number().positive().default(9);
 const gameId = idFormat;
 const taskId = idFormat;
 const playerId = idFormat;
+const themeId = Joi.number().integer().min(1).max(3);
 const color = Joi.string()
   .required()
   .valid(
@@ -56,7 +58,7 @@ const validateBody = <T>(options: IBodyObject<T>) => {
 };
 
 export const createUserValidation = validateBody<string>({
-  username,
+  login,
   firstName,
   lastName,
   phone,
@@ -65,7 +67,7 @@ export const createUserValidation = validateBody<string>({
 });
 
 export const loginUserValidation = validateBody<string>({
-  username,
+  login,
   password,
 });
 
@@ -97,4 +99,21 @@ export const completeTaskValidation = validateBody<number>({
   gameId,
   taskId,
   playerId,
+});
+
+export const changePasswordValidation = validateBody<string>({
+  oldPassword: password,
+  newPassword: Joi.string().required().invalid(Joi.in('oldPassword')),
+});
+
+export const updateProfileValidation = validateBody<string>({
+  nickname,
+  email,
+  firstName,
+  lastName,
+  phone,
+});
+
+export const addThemeValidation = validateBody<number>({
+  themeId,
 });

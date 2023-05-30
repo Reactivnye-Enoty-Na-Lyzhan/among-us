@@ -10,7 +10,9 @@ import './FinalPreparing.css';
 
 // Экран выбора цвета скафандра (нужна игру уже найдена)
 const FinalPreparing: FC = () => {
-  const { color: userSuitColor, id: playerId } = useTypedSelector(state => state.game.player);
+  const { color: userSuitColor, id: playerId } = useTypedSelector(
+    state => state.game.player
+  );
 
   // Для мультиплеера. Блокирует возможность выбора цвета, если он уже выбран другим игроком
   const [usedColors, setUsedColors] = useState<SuitColorsType>({
@@ -33,7 +35,7 @@ const FinalPreparing: FC = () => {
 
   useEffect(() => {
     socket.on('selectedColors', setUsedColors);
-    socket.emit('joinGame', (newPlayerId) => {
+    socket.emit('joinGame', newPlayerId => {
       setPlayerId(newPlayerId);
     });
 
@@ -49,13 +51,15 @@ const FinalPreparing: FC = () => {
 
   // Предпосылки для мультиплеера
   // TODO: Устанавливаем выбранный цвет только по итогу ответа сервера
-  const handleColorPick = useCallback((color: keyof SuitColorsType) => {
-    socket.emit('colorSelect', color, userSuitColor, (newColor) => {
-      selectColor(newColor);
-      socket.emit('playerReady', playerId);
-    });
-
-  }, [userSuitColor, playerId]);
+  const handleColorPick = useCallback(
+    (color: keyof SuitColorsType) => {
+      socket.emit('colorSelect', color, userSuitColor, newColor => {
+        selectColor(newColor);
+        socket.emit('playerReady', playerId);
+      });
+    },
+    [userSuitColor, playerId]
+  );
 
   // Выход из игры
   // TODO: Выход из игры в режиме мультиплеера
