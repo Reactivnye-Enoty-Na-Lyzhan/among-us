@@ -46,7 +46,7 @@ export const getOAuthToken = async (req: IRequest<IGetTokenBody>, res: Response,
         yandexId: yandexUser.id,
       },
       defaults: {
-        username: yandexUser.login,
+        login: yandexUser.login,
         firstName: yandexUser.first_name,
         lastName: yandexUser.last_name,
         nickname: yandexUser.display_name,
@@ -73,7 +73,7 @@ export const getOAuthToken = async (req: IRequest<IGetTokenBody>, res: Response,
         sameSite: NODE_ENV === 'production',
       })
       .send({
-        username: user.username,
+        username: user.login,
       });
   } catch (err: unknown) {
     console.log(err);
