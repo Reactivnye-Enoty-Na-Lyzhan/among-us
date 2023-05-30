@@ -32,8 +32,8 @@ const Voting: FC = () => {
             key={player.id}
             color={player.color}
             initiator={initiator === currentPlayerId}
-            nickname={player.user.nickname}
-            username={player.user.username}
+            nickname={player.user?.nickname || 'default'}
+            username={player.user?.username || 'default'}
             id={player.id}
             isVotedFor={player.id === selectedPlayer}
             voted={currentPlayerId === player.id && selectedPlayer ? true : false}
