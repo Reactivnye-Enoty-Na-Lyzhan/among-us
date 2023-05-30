@@ -49,7 +49,7 @@ const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
           </Link>
           <div className="theme-card-info__author">
             Автор:
-            <span>{theme.author.username}</span>
+            <span>{theme.author.login}</span>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@ const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
               {new Date(theme.lastMessage[0].date).toLocaleString()}
             </div>
             <div className="theme-card-last-message__author">
-              {theme.lastMessage[0].author.username}
+              {theme.lastMessage[0].author.login}
             </div>
           </div>
           <div

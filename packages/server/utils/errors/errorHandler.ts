@@ -7,6 +7,7 @@ export const withErrorHandler = (handler: RequestHandler) => {
     try {
       await handler(req, res);
     } catch (err) {
+      console.log(err);
       next(err);
     }
   };

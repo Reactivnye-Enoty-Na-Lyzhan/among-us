@@ -73,7 +73,7 @@ export const getOAuthToken = async (req: IRequest<IGetTokenBody>, res: Response,
         sameSite: NODE_ENV === 'production',
       })
       .send({
-        username: user.login,
+        login: user.login,
       });
   } catch (err: unknown) {
     console.log(err);

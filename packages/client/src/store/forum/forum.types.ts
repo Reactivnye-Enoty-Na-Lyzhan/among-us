@@ -10,7 +10,7 @@ export type ForumPostType = {
 };
 
 export type ForumAuthorType = {
-  username: string;
+  login: string;
   avatar: string | null;
   firstName: string;
   lastName: string;

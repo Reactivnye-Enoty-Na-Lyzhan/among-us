@@ -54,7 +54,7 @@ export const getPosts = withErrorHandler(
         {
           model: User,
           as: 'author',
-          attributes: ['username', 'avatar', 'firstName', 'lastName'],
+          attributes: ['login', 'avatar', 'firstName', 'lastName'],
         },
         {
           model: Message,
@@ -78,7 +78,7 @@ export const getPostById = withErrorHandler(
         {
           model: User,
           as: 'author',
-          attributes: ['username', 'avatar', 'firstName', 'lastName'],
+          attributes: ['login', 'avatar', 'firstName', 'lastName'],
         },
       ],
     });

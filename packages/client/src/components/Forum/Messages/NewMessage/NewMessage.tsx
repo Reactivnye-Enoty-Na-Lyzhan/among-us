@@ -35,7 +35,7 @@ const ForumPostNewMessage: FC<Props> = ({
           <div className="forum-post-new-message__answer">
             Ответ на комментарий{' '}
             <a href={`#${messageParent.id}`}>
-              {messageParent?.author.username}
+              {messageParent?.author.login}
             </a>{' '}
             <button
               onClick={() => {

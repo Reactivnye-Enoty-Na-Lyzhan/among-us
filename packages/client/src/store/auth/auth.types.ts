@@ -12,7 +12,7 @@ export type User = {
 
 export type SignInRequestDTO = {
   password: string;
-  username: string;
+  login: string;
 };
 
 export type SignUpRequestDTO = {
@@ -22,7 +22,6 @@ export type SignUpRequestDTO = {
   email: string;
   password: string;
   phone: string;
-  username: string;
 };
 
 export type SignInSuccessfulResponse = 'OK';

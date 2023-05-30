@@ -41,7 +41,7 @@ const ForumMessage: FC<Props> = ({ postId, data, user, setMessageParent }) => {
           className={classNames('forum-post-message__author', {
             'forum-post-message__author_myself': data.authorId === user?.id,
           })}>
-          {data.author.username}
+          {data.author.login}
         </span>
         <span className="forum-post-message__date">
           {new Date(data.date).toLocaleString()}
