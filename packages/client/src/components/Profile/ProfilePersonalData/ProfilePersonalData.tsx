@@ -23,9 +23,9 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
   useEffect(() => {
     if (data) {
       setValues({
-        first_name: data.first_name,
-        second_name: data.second_name,
-        display_name: data.display_name,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        nickname: data.nickname,
         login: data.login,
         email: data.email,
         phone: data.phone,
@@ -44,9 +44,9 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
     validateField,
     clearFieldValidation,
   } = useValidation([
-    { field: 'first_name', validation: validation.name },
-    { field: 'second_name', validation: validation.name },
-    { field: 'display_name', validation: validation.name },
+    { field: 'firstName', validation: validation.name },
+    { field: 'lastName', validation: validation.name },
+    { field: 'nickname', validation: validation.name },
     { field: 'email', validation: validation.email },
     { field: 'phone', validation: validation.phone },
     { field: 'login', validation: validation.login },
@@ -62,37 +62,37 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
           }
         }}>
         <Input
-          value={values.first_name}
+          value={values.firstName}
           handleInputChange={handleInputChange}
           clearFieldValidation={clearFieldValidation}
           validateField={validateField}
           type={'text'}
-          name={'first_name'}
+          name={'firstName'}
           placeholder={'Ёж'}
           label={'Имя'}
-          validation={validationData.first_name}
+          validation={validationData.firstName}
         />
         <Input
-          value={values.second_name}
+          value={values.lastName}
           handleInputChange={handleInputChange}
           clearFieldValidation={clearFieldValidation}
           validateField={validateField}
           type={'text'}
-          name={'second_name'}
+          name={'lastName'}
           placeholder={'Космонавт'}
           label={'Фамилия'}
-          validation={validationData.second_name}
+          validation={validationData.lastName}
         />
         <Input
-          value={values.display_name}
+          value={values.nickname}
           handleInputChange={handleInputChange}
           clearFieldValidation={clearFieldValidation}
           validateField={validateField}
           type={'text'}
-          name={'display_name'}
+          name={'nickname'}
           placeholder={'ezhvcosmose'}
           label={'Никнейм'}
-          validation={validationData.display_name}
+          validation={validationData.nickname}
         />
         <Input
           value={values.email}

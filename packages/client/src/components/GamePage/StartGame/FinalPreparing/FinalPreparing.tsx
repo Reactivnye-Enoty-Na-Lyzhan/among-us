@@ -1,15 +1,18 @@
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import ColorButton from './ColorButton/ColorButton';
+import { GameSocketContext } from '@/utils/socket/gameSocket';
 import { SuitColorsType, suitsColors } from '../../../../utils/gameParams';
 import './FinalPreparing.css';
 
 // Экран выбора цвета скафандра (нужна игру уже найдена)
 const FinalPreparing: FC = () => {
-  const userSuitColor = useTypedSelector(state => state.game.player.color);
+  const { color: userSuitColor, id: playerId } = useTypedSelector(
+    state => state.game.player
+  );
 
   // Для мультиплеера. Блокирует возможность выбора цвета, если он уже выбран другим игроком
   const [usedColors, setUsedColors] = useState<SuitColorsType>({
@@ -26,12 +29,20 @@ const FinalPreparing: FC = () => {
 
   const navigate = useNavigate();
 
-  const { cancelGame, selectColor } = useActions();
+  const socket = useContext(GameSocketContext);
 
-  // Исключительно для демонстрации
+  const { cancelGame, setPlayerId, selectColor } = useActions();
+
   useEffect(() => {
-    setUsedColors(colors => ({ ...colors, grey: true }));
-  }, []);
+    socket.on('selectedColors', setUsedColors);
+    socket.emit('joinGame', newPlayerId => {
+      setPlayerId(newPlayerId);
+    });
+
+    return () => {
+      socket.off('selectedColors', setUsedColors);
+    };
+  }, [socket]);
 
   // TODO: Добавить смену цвета
   const crewmanClass = classNames('finalpreparing__crewman', {
@@ -40,9 +51,15 @@ const FinalPreparing: FC = () => {
 
   // Предпосылки для мультиплеера
   // TODO: Устанавливаем выбранный цвет только по итогу ответа сервера
-  const handleColorPick = useCallback((color: keyof SuitColorsType) => {
-    selectColor(color);
-  }, []);
+  const handleColorPick = useCallback(
+    (color: keyof SuitColorsType) => {
+      socket.emit('colorSelect', color, userSuitColor, newColor => {
+        selectColor(newColor);
+        socket.emit('playerReady', playerId);
+      });
+    },
+    [userSuitColor, playerId]
+  );
 
   // Выход из игры
   // TODO: Выход из игры в режиме мультиплеера

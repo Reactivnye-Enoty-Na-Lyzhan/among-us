@@ -1,14 +1,25 @@
-import { FC, memo, useEffect, useRef } from 'react';
+import { FC, memo, useContext, useEffect, useRef } from 'react';
 import { useActions } from '@/hooks/useActions';
 import canvasProcess from './canvasProcess';
 import './Game.css';
 import killIcon from '@/images/game/kill.svg';
 import startMeetingIcon from '@/images/game/start-meeting.svg';
 import startMiniGameIcon from '@/images/game/start-minigame.svg';
+import { GameSocketContext } from '@/utils/socket/gameSocket';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { selectPlayer } from '@/store/game/game.slice';
 
 const Game: FC = () => {
+  const { id: playerId } = useTypedSelector(selectPlayer);
   const { finishGame } = useActions();
+  const socket = useContext(GameSocketContext);
+
   const handleFinishGame = () => {
+    // player id должен быть игрока, которого шлёпнуть. Для примера - id нашего игрока
+    socket.emit('killPlayer', playerId, id => {
+      console.log(id);
+    });
+
     finishGame({
       result: 'win',
       score: 350,
@@ -35,6 +46,12 @@ const Game: FC = () => {
       );
     }
   }, []);
+
+  useEffect(() => {
+    socket.emit('getPlayers', players => {
+      console.log(players);
+    });
+  }, [socket]);
 
   return (
     <div className="game">
