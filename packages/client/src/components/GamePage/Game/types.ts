@@ -33,7 +33,6 @@ export interface IInteractionObject {
   x: number;
   y: number;
   radius: number;
-  btnElement: HTMLElement;
   draw: () => void;
 }
 

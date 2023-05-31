@@ -74,7 +74,7 @@ export default function canvasProcess(
     spriteWidth: number;
     color: string;
     id: number;
-    name: string;
+    name: any;
     impostor: boolean;
     alive: boolean;
     right: boolean;
@@ -84,7 +84,6 @@ export default function canvasProcess(
       y: number,
       color: string,
       id: number,
-      name: string,
       role: string,
     ) {
       this.id = id;
@@ -95,7 +94,6 @@ export default function canvasProcess(
       this.image = playerSprites[color];
       this.spriteWidth = PLAYER.spriteWidth;
       this.color = color;
-      this.name = name;
       this.impostor = role !== 'civil';
       this.alive = true;
       this.right = true;
@@ -113,9 +111,8 @@ export default function canvasProcess(
       color: string,
       id: number,
       role: string,
-      name: string,
     ) {
-      super(x, y, color, id, name, role);
+      super(x, y, color, id, role);
     }
 
     update(x: number, y: number) {
@@ -198,18 +195,22 @@ export default function canvasProcess(
     renderX: number;
     renderY: number;
     radius: number;
+    nickname: any;
     constructor(
       id: number,
-      name: string,
+      user: any,
       role: string,
       color: string,
       x: number,
       y: number,
     ) {
-      super(x, y, color, id, name, role);
+      super(x, y, color, id, role);
       this.renderX = this.x + MAP_OFFSET.x;
       this.renderY = this.y + MAP_OFFSET.y;
       this.radius = PLAYER.collisionRadius;
+      console.log('user: ', user);
+      this.nickname = user.nickname || user.login;
+
     }
     update(x: number, y: number) {
     if(!this.alive) {
@@ -279,7 +280,9 @@ export default function canvasProcess(
             this.height,
           );
     }
-
+    ctx.font = "bold 20px serif";
+    ctx.fillStyle = 'black';
+    ctx.fillText(this.nickname, this.renderX - this.width, this.renderY + this.height/2 + 15);
     }
   }
 
@@ -287,12 +290,10 @@ export default function canvasProcess(
     x: number;
     y: number;
     radius: number;
-    btnElement: HTMLButtonElement;
-    constructor(x: number, y: number, radius: number, btn: HTMLButtonElement) {
+    constructor(x: number, y: number, radius: number) {
       this.x = x;
       this.y = y;
       this.radius = radius;
-      this.btnElement = btn;
     }
     draw() {
       const renderX = this.x + MAP_OFFSET.x + VIEW_OFFSET.x;
@@ -303,17 +304,17 @@ export default function canvasProcess(
     }
   }
   class MeetingObject extends InteractionObject implements IMeetingObject {
-    constructor(x: number, y: number, radius: number, btn: HTMLButtonElement) {
-      super(x, y, radius, btn);
+    constructor(x: number, y: number, radius: number) {
+      super(x, y, radius);
     }
     checkCollision() {
         if (player.impostor) return;
       if (checkCollisions(this.x, this.y, this.radius)) {
-        if (this.btnElement.style.display !== 'block')
-          this.btnElement.style.display = 'block';
+        if (emergencyActionBtn.style.display !== 'block')
+          emergencyActionBtn.style.display = 'block';
       } else {
-        if (this.btnElement.style.display !== 'none')
-          this.btnElement.style.display = 'none';
+        if (emergencyActionBtn.style.display !== 'none')
+          emergencyActionBtn.style.display = 'none';
       }
     }
   }
@@ -324,10 +325,9 @@ export default function canvasProcess(
       x: number,
       y: number,
       radius: number,
-      btn: HTMLButtonElement,
       id: number
     ) {
-      super(x, y, radius, btn);
+      super(x, y, radius);
       this.id = id;
     }
     checkCollision() {
@@ -344,6 +344,7 @@ export default function canvasProcess(
     (player: any) => player.id === playerId
   );
   console.log('your role: ', currentPlayerInitial.role);
+  console.log(otherPlayersInitial);
 
   const background = new Background();
 
@@ -353,7 +354,6 @@ export default function canvasProcess(
     currentPlayerInitial.color,
     currentPlayerInitial.id,
     currentPlayerInitial.role,
-    currentPlayerInitial.name,
   );
 
   const crewmen: any[] = [];
@@ -361,7 +361,7 @@ export default function canvasProcess(
     crewmen.push(
       new Crewman(
         player.id,
-        player.name,
+        player.user,
         player.role,
         player.color,
         PLAYER.startPositionX,
@@ -372,11 +372,11 @@ export default function canvasProcess(
 
   const allPlayers = [...crewmen, player];
 
-  const table = new MeetingObject(2410, 545, 150, emergencyActionBtn);
+  const table = new MeetingObject(2410, 545, 150);
 
   const tasks: any[] = [];
   TASKS_DATA.forEach((task: any) => {
-    tasks.push(new TaskObject(task.x, task.y, 30, useActionBtn, task.id));
+    tasks.push(new TaskObject(task.x, task.y, 30, task.id));
   });
 
 
@@ -404,9 +404,9 @@ export default function canvasProcess(
     if (!forCivils && !player.impostor) return;
     let targetId: number | undefined = undefined;
     arr.forEach(obj => {
-      if (obj.checkCollision()) {
+      if (obj.checkCollision() && !(obj as Crewman).impostor) {
         targetId = obj.id;
-      }
+      } 
     });
     if (targetId) {
       if (btnEl.style.display !== 'block') btnEl.style.display = 'block';
@@ -431,7 +431,7 @@ export default function canvasProcess(
   }
   socket.on('onPlayerKill', handlePlayerKill);
 
-
+console.log(allPlayers);
   function gameLoop() {
     if (typeof window === 'undefined') {
       return;
@@ -455,7 +455,7 @@ export default function canvasProcess(
   let lastFrameTime = 0;  // the last frame time
 
 
-function update(time: any){
+  function update(time: any){
     if(time-lastFrameTime < FRAME_MIN_TIME){ //skip the frame if the call is too early
         requestAnimationFrame(update);
         return; // return as there is nothing to do
@@ -465,14 +465,6 @@ function update(time: any){
     // render the frame
     requestAnimationFrame(update); // get next farme
 }
-
-
-
 requestAnimationFrame(update); // start animation
-
-
-
-
-
   return {moveCrewman, handlePlayerKill};
 }
