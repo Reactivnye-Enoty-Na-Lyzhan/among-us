@@ -14,20 +14,12 @@ type Props = Pick<User, 'login' | 'nickname'> & {
   isVotedFor: boolean;
   voted: boolean;
   onVote: (targetId: IPlayer['id']) => void;
-}
+};
 
-const CrewmanCard: FC<Props> = (props) => {
+const CrewmanCard: FC<Props> = props => {
   const { id: currentPlayerId } = useTypedSelector(selectPlayer);
-  const {
-    login,
-    nickname,
-    initiator,
-    color,
-    id,
-    isVotedFor,
-    voted,
-    onVote,
-  } = props;
+  const { login, nickname, initiator, color, id, isVotedFor, voted, onVote } =
+    props;
 
   const cardClassname = classNames('crewman-card', {
     ['crewman-card_self']: currentPlayerId === id,

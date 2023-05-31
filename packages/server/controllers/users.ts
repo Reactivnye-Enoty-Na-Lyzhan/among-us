@@ -268,7 +268,8 @@ export const changePassword = async (
       },
     });
 
-    if (!user || !user.password) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
+    if (!user || !user.password)
+      throw new NotAuthorizedError(ErrorMessages.notAuthorized);
 
     // Если oldPassword не соответствует его нынешнему паролю
     if (!(await compare(oldPassword, user.password)))

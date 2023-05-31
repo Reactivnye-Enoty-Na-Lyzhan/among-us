@@ -50,7 +50,7 @@ export const connectionHandlers = (
 
       callback(players.length);
 
-      if (players.length >= MIN_PLAYERS ) {
+      if (players.length >= MIN_PLAYERS) {
         await game.update({
           status: 'active',
         });

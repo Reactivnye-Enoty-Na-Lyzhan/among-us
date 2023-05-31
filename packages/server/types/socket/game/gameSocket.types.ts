@@ -92,21 +92,18 @@ export type SelectColor = (
 ) => void;
 
 interface IMoveParams {
-    id: string;
-    x: number;
-    y: number;
-  }
-
+  id: string;
+  x: number;
+  y: number;
+}
 
 interface IMoveServerParams extends IMoveParams {
-    gameId: GameId;
-  }
-  
-export type MoveServer = (params: IMoveParams) => void;
-  
+  gameId: GameId;
+}
 
-  
-  export type MoveClient = (params: IMoveServerParams) => void;
+export type MoveServer = (params: IMoveParams) => void;
+
+export type MoveClient = (params: IMoveServerParams) => void;
 
 // Broadcasting
 export interface IGameServerToClientEvents {

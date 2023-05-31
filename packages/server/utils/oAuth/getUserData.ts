@@ -27,7 +27,7 @@ interface IOAuthUser {
 export const getUserData = async (token: string): Promise<IOAuthUser> => {
   const request = await fetch(OAUTH_GET_USER_URL, {
     headers: {
-      'Authorization': `OAuth ${token}`,
+      Authorization: `OAuth ${token}`,
     },
   });
 

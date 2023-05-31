@@ -6,7 +6,7 @@ export const sortPlayer = (
 ): IPlayerWithUser[] => {
   const sortedPlayers: IPlayerWithUser[] = [];
 
-  players.forEach((player) => {
+  players.forEach(player => {
     if (player.id === currentPlayer) {
       return sortedPlayers.unshift(player);
     }
