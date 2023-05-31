@@ -447,24 +447,28 @@ export default function canvasProcess(
     }
     gameFrame++;
     checkObjectArrayCollisions(crewmen, killActionBtn, false);
-    window.requestAnimationFrame(gameLoop);
   }
-  gameLoop();
 
 
-//   const FRAMES_PER_SECOND = 30;
-//   const FRAME_MIN_TIME = (1000/60) * (60 / FRAMES_PER_SECOND) - (1000/60) * 0.5;
-// var lastFrameTime = 0;  // the last frame time
-// function update(time){
-//     if(time-lastFrameTime < FRAME_MIN_TIME){ //skip the frame if the call is too early
-//         requestAnimationFrame(update);
-//         return; // return as there is nothing to do
-//     }
-//     lastFrameTime = time; // remember the time of the rendered frame
-//     // render the frame
-//     requestAnimationFrame(update); // get next farme
-// }
-// requestAnimationFrame(update); // start animation
+  const FRAMES_PER_SECOND = 60;
+  const FRAME_MIN_TIME = (1000/60) * (60 / FRAMES_PER_SECOND) - (1000/60) * 0.5;
+  let lastFrameTime = 0;  // the last frame time
+
+
+function update(time: any){
+    if(time-lastFrameTime < FRAME_MIN_TIME){ //skip the frame if the call is too early
+        requestAnimationFrame(update);
+        return; // return as there is nothing to do
+    }
+    lastFrameTime = time; // remember the time of the rendered frame
+    requestAnimationFrame(gameLoop);
+    // render the frame
+    requestAnimationFrame(update); // get next farme
+}
+
+
+
+requestAnimationFrame(update); // start animation
 
 
 
