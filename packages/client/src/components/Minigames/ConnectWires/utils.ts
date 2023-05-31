@@ -19,7 +19,7 @@ export const randomizeGame = () => {
   return result;
 };
 
-export const checkIsWin = (gameState: GameState) => {
+export const checkIsWin = (gameState: GameState, onWinCallback: () => void) => {
   let result = false;
   const row = gameState.wireStart;
   const col = 0;
@@ -29,7 +29,7 @@ export const checkIsWin = (gameState: GameState) => {
   if (tile) {
     result = checkTile(tileData, tile, 4, row, col, gameState);
     if (result) {
-      alert('You win!');
+      onWinCallback();
     }
   }
 

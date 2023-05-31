@@ -5,11 +5,21 @@ import { INITIAL_GAME_STATES, TILES } from './constants';
 import classNames from 'classnames';
 import { checkIsWin, randomizeGame } from './utils';
 
-const ConnectWires: FC = () => {
+type Props = {
+  onWinCallback: () => void;
+};
+
+const ConnectWires: FC<Props> = ({ onWinCallback }) => {
+  const [isWin, setIsWin] = useState(false);
   const [gameState, setGameState] = useState(INITIAL_GAME_STATES[0]);
 
   useEffect(() => {
     setGameState(randomizeGame());
+  }, []);
+
+  const onWin = useCallback(() => {
+    setIsWin(true);
+    setTimeout(onWinCallback, 2000);
   }, []);
 
   const handleTileClick = useCallback(
@@ -30,7 +40,7 @@ const ConnectWires: FC = () => {
         setGameState(newGameState);
       }
 
-      checkIsWin(newGameState);
+      checkIsWin(newGameState, onWin);
     },
     [gameState]
   );
@@ -83,6 +93,7 @@ const ConnectWires: FC = () => {
 
   return (
     <div className="connwires">
+      {isWin ? <div className="connwires__win">Готово!</div> : null}
       <div className="connwires-board">
         <div className="connwires-board__left">{getConnTips('start')}</div>
         <div className="connwires-grid">{getConnTiles()}</div>

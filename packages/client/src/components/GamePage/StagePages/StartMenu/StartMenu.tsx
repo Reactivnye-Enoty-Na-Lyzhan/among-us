@@ -1,11 +1,14 @@
-import { FC, memo } from 'react';
+import { FC, memo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useActions } from '@/hooks/useActions';
 import Navigation from '../Navigation/Navigation';
 import './StartMenu.css';
+import MinigameModal from '@/components/Minigames/Modal/Modal';
 
 // Меню игрового выбора
 const StartMenu: FC = () => {
+  const [modalVisible, setModalVisible] = useState(true);
+
   const { startFastGame } = useActions();
 
   const handleStart = () => {
@@ -14,6 +17,15 @@ const StartMenu: FC = () => {
 
   return (
     <div className="start-menu">
+      {modalVisible ? (
+        <MinigameModal
+          gameId="connwires"
+          onWinCallback={() => {
+            setModalVisible(false);
+            console.log('win');
+          }}
+        />
+      ) : null}
       <h1 className="start-menu__title">
         Давай, начинай уже, так хочется увидеть тебя в действии
       </h1>
