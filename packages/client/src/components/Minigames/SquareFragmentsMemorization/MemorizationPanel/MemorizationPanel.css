@@ -1,0 +1,13 @@
+.square-fragments-memorization-game__memorization-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+
+  width: var(--interactive-panel-size);
+  height: var(--interactive-panel-size);
+
+  background-color: black;
+  border-color: blue;
+  border-style: solid;
+  border-width: var(--interactive-panel-border-width);
+}

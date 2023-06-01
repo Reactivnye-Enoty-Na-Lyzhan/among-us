@@ -8,11 +8,11 @@
   background-color: #010318;
   border-radius: 3px;
   cursor: pointer;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .crewman-card:hover {
-  box-shadow: 0 0 10px rgba(1, 3, 24, .5);
+  box-shadow: 0 0 10px rgba(1, 3, 24, 0.5);
 }
 
 .crewman-card_self {
@@ -25,12 +25,18 @@
 }
 
 .crewman-card_voted-for {
-/*   box-shadow: 0 0 10px rgb(232, 18, 88); */
-background-color: #e81258;
+  /*   box-shadow: 0 0 10px rgb(232, 18, 88); */
+  background-color: #e81258;
 }
 
 .crewman-card_voted-for:hover {
   box-shadow: 0 0 10px rgb(232, 18, 88);
+}
+
+.crewman-card_dead {
+  user-select: none;
+  pointer-events: none;
+  opacity: .7;
 }
 
 .crewman-card__avatar-container {
@@ -54,8 +60,8 @@ background-color: #e81258;
   color: #24d108;
   line-height: 1;
   opacity: 0;
-  transition: .3s;
-  background-color: rgba(0, 0, 0, .7);
+  transition: 0.3s;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .crewman-card__avatar-overlay_voted {

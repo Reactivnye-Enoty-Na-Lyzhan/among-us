@@ -1,3 +1,4 @@
+import type { ChatMessage } from '../../../models/chat/chatMessage';
 import type { Namespace, Socket } from 'socket.io';
 
 export type GameParams = {
@@ -29,9 +30,9 @@ export const suitsColors = [
 
 export type GameId = number;
 
-export type AssembleMeeting = (gameId: GameId, initiatorId: string) => void;
+export type AssembleMeeting = (gameId: GameId, initiatorId: number) => void;
 
-export type EmergencyMeeting = (initiatorId: string) => void;
+export type OnEmergencyMeeting = (initiatorId: number) => void;
 
 export type GetPlayers = (
   gameId: GameId,
@@ -97,20 +98,43 @@ interface IMoveParams {
   y: number;
 }
 
+interface IMoveServerParams extends IMoveParams {
+  gameId: GameId;
+}
+
+export type MoveServer = (params: IMoveParams) => void;
+export type MessageType = Pick<ChatMessage, 'id' | 'text' | 'authorId'>;
+
 export type Move = (params: IMoveParams) => void;
+
+interface ISendMessageParams {
+  chatId: number;
+  gameId: number;
+  playerId: number;
+  message: string;
+}
+
+export type SendMessage = (params: ISendMessageParams) => void;
+
+export type OnGetMessage = (message: MessageType) => void;
+
+export type GetMessages = (chatId: number, callback: (messages: MessageType[]) => void) => void;
+
+export type MoveClient = (params: IMoveServerParams) => void;
 
 // Broadcasting
 export interface IGameServerToClientEvents {
-  move: Move;
+  move: MoveServer;
   endMove: EndMove;
   selectedColors: SelectedColors;
   killPlayer: KillPlayer;
   onGameReady: GameReady;
-  emergencyMeeting: EmergencyMeeting;
+  onEmergencyMeeting: OnEmergencyMeeting;
   onPlayerJoin: PlayerJoin;
   onLeaveGame: OnLeaveGame;
   onGameEnd: OnGameEnd;
   onPlayerKill: OnPlayerKill;
+  onGetMessage: OnGetMessage;
 }
 
 // Receiving Event
@@ -119,7 +143,7 @@ export interface IGameClienToServerEvents {
   findGame: FindGame;
   joinGame: JoinGame;
   leaveGame: LeaveGame;
-  move: Move;
+  move: MoveClient;
   endMove: EndMove;
   selectColor: SelectColor;
   getSelectedColors: GetSelectedColors;
@@ -130,6 +154,8 @@ export interface IGameClienToServerEvents {
   getPlayersAmount: GetPlayers;
   assembleMeeting: AssembleMeeting;
   setPlayerRating: SetPlayerRating;
+  sendMessage: SendMessage;
+  getMessages: GetMessages;
 }
 
 // Inter-server

@@ -22,6 +22,7 @@ import type {
   GameRole,
   SuitColorsType,
 } from '../types/socket/game/gameSocket.types';
+import { Chat } from '../models/chat/chat';
 
 interface IBodyCompleteTask {
   gameId: number;
@@ -126,6 +127,7 @@ export const createGame = async (
           userId: id,
         }),
         newGame.setTeams(teams),
+        newGame.createChat(),
       ]);
 
       // Получаем готовый результат для отправки клиенту
@@ -138,6 +140,10 @@ export const createGame = async (
             model: GameParam,
             as: 'param',
           },
+          {
+            model: Chat,
+            as: 'chat',
+          },
         ],
       });
 
@@ -146,6 +152,7 @@ export const createGame = async (
 
     res.send(result);
   } catch (err: unknown) {
+    console.log(err);
     next(err);
   }
 };
@@ -211,7 +218,7 @@ export const findGames = async (
     const foundGames = await Game.scope('withCreator').findAll({
       where: {
         title: {
-          [Op.iLike]: title,
+          [Op.iLike]: '%' + title + '%',
         },
         status: 'init',
       },
@@ -338,6 +345,11 @@ export const takeQueue = async (
         {
           model: GameColor,
           as: 'color',
+        },
+        {
+          model: Chat,
+          as: 'chat',
+          attributes: ['id'],
         },
       ],
     });

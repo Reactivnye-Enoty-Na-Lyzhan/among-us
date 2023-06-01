@@ -13,10 +13,11 @@ type Props = Pick<User, 'login' | 'nickname'> & {
   id: IPlayer['id'];
   isVotedFor: boolean;
   voted: boolean;
+  alive: boolean;
   onVote: (targetId: IPlayer['id']) => void;
-}
+};
 
-const CrewmanCard: FC<Props> = (props) => {
+const CrewmanCard: FC<Props> = props => {
   const { id: currentPlayerId } = useTypedSelector(selectPlayer);
   const {
     login,
@@ -26,12 +27,14 @@ const CrewmanCard: FC<Props> = (props) => {
     id,
     isVotedFor,
     voted,
+    alive,
     onVote,
   } = props;
 
   const cardClassname = classNames('crewman-card', {
     ['crewman-card_self']: currentPlayerId === id,
     ['crewman-card_voted-for']: isVotedFor,
+    ['crewman-card_dead']: !alive,
   });
 
   const avatarClassname = classNames('crewman-card__avatar', {
@@ -52,8 +55,8 @@ const CrewmanCard: FC<Props> = (props) => {
         <span className={avatarOverlayClassname}>&#10003;</span>
         <div className={avatarClassname} />
       </div>
-      <h3 className="crewman-card__crewman-name">{nickname ?? login}</h3>
-      {!initiator && <span className="crewman-card__initiator-icon" />}
+      <h3 className="crewman-card__crewman-name">{nickname === 'default' ? login : nickname}</h3>
+      {initiator && <span className="crewman-card__initiator-icon" />}
     </li>
   );
 };

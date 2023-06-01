@@ -5,6 +5,7 @@ export interface IPlayer {
   y: number;
   image: HTMLImageElement;
   spriteWidth: number;
+  id: number;
 }
 
 export interface ICurrentPlayer extends IPlayer {
@@ -32,6 +33,14 @@ export interface IInteractionObject {
   x: number;
   y: number;
   radius: number;
-  btnElement: HTMLElement;
+  draw: () => void;
+}
+
+export interface ITaskObject extends IInteractionObject {
+  id: number;
+  checkCollision: () => boolean;
+}
+
+export interface IMeetingObject extends IInteractionObject {
   checkCollision: () => void;
 }

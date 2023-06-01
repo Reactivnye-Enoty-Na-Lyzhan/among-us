@@ -22,7 +22,9 @@ export const getToken = async (code: string): Promise<IRequestToken> => {
     method: 'POST',
     headers: {
       'Content-type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${Buffer.from(`${OAUTH_CLIENT}:${OAUTH_SECRET}`).toString('base64')}`,
+      Authorization: `Basic ${Buffer.from(
+        `${OAUTH_CLIENT}:${OAUTH_SECRET}`
+      ).toString('base64')}`,
     },
     body: `grant_type=authorization_code&code=${code}`,
   });

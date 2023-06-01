@@ -7,6 +7,7 @@ import type {
   IGameWithParams,
   PlayerRoleType,
   IPlayerWithUser,
+  IStartMeeting,
 } from './game.types';
 
 const initialState: IGameState = {
@@ -36,9 +37,13 @@ const initialState: IGameState = {
   results: {
     winners: null,
   },
+  chatId: null,
   startCooldown: 15,
   meetings: {
     initiator: null,
+    isProccessing: false,
+    count: 0,
+    lastMeeting: null,
   },
 };
 
@@ -83,6 +88,8 @@ export const gameSlice = createSlice({
       state.playersAmount = 0;
       state.results = initialState.results;
       state.players = initialState.players;
+      state.chatId = initialState.chatId;
+      state.meetings = initialState.meetings;
     },
     cancelGame: state => {
       state.status = initialState.status;
@@ -90,6 +97,8 @@ export const gameSlice = createSlice({
       state.playersAmount = 0;
       state.results = initialState.results;
       state.players = initialState.players;
+      state.chatId = initialState.chatId;
+      state.meetings = initialState.meetings;
     },
     launchGame: state => {
       state.status = 'active';
@@ -98,10 +107,22 @@ export const gameSlice = createSlice({
       state.status = initialState.status;
     },
     setGame: (state, action: PayloadAction<IGameWithParams>) => {
-      const { id, title, param } = action.payload;
+      const { id, title, param, chat } = action.payload;
       state.gameId = id;
       state.title = title;
       state.params = param;
+      state.chatId = chat.id;
+    },
+    startMeeting: (state, action: PayloadAction<IStartMeeting>) => {
+      state.meetings.initiator = action.payload;
+      state.meetings.isProccessing = true;
+      console.log(state.meetings);
+    },
+    stopMeeting: state => {
+      state.meetings.isProccessing = initialState.meetings.isProccessing;
+      state.meetings.initiator = initialState.meetings.initiator;
+      state.meetings.count += 1;
+      state.meetings.lastMeeting = performance.now();
     },
   },
 });
@@ -116,3 +137,5 @@ export const selectPlayers = (state: TypeRootState) => state.game.players;
 export const selectPlayersAmount = (state: TypeRootState) =>
   state.game.playersAmount;
 export const selectGame = (state: TypeRootState) => state.game.gameId;
+export const selectChatId = (state: TypeRootState) => state.game.chatId;
+export const selectMeeting = (state: TypeRootState) => state.game.meetings;

@@ -5,7 +5,11 @@ import { getUserData } from '../utils/oAuth/getUserData';
 import { singToken } from '../utils/auth/signToken';
 import { WrongDataError } from '../utils/errors/commonErrors/WrongDataError';
 import { ErrorMessages } from '../utils/errors/errorMessages';
-import { CURRENT_HOST, DEFAULT_AVATAR, OAUTH_REDIRECT_URL } from '../utils/constants';
+import {
+  CURRENT_HOST,
+  DEFAULT_AVATAR,
+  OAUTH_REDIRECT_URL,
+} from '../utils/constants';
 import type { NextFunction, Request, Response } from 'express';
 
 interface IGetTokenBody {
@@ -13,7 +17,7 @@ interface IGetTokenBody {
 }
 
 interface IRequest<T = unknown> extends Request {
-  body: T,
+  body: T;
 }
 
 dotenv.config({
@@ -22,7 +26,11 @@ dotenv.config({
 
 const { NODE_ENV } = process.env;
 
-export const oAuthRedirect = async (_req: Request, res: Response, next: NextFunction) => {
+export const oAuthRedirect = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     res.redirect(301, OAUTH_REDIRECT_URL);
   } catch (err: unknown) {
@@ -30,7 +38,11 @@ export const oAuthRedirect = async (_req: Request, res: Response, next: NextFunc
   }
 };
 
-export const getOAuthToken = async (req: IRequest<IGetTokenBody>, res: Response, next: NextFunction) => {
+export const getOAuthToken = async (
+  req: IRequest<IGetTokenBody>,
+  res: Response,
+  next: NextFunction
+) => {
   const { code } = req.body;
 
   try {
