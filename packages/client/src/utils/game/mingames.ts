@@ -1,8 +1,13 @@
+import { FC } from 'react';
 import ConnectWires from '@/components/Minigames/ConnectWires/ConnectWires';
 
-export const MINIGAMES = [
-  {
-    id: 'connwires',
-    component: ConnectWires,
-  },
-];
+interface Props {
+  onWinCallback: () => void;
+};
+
+interface IMiniGamesHash {
+  [k: number]: () => FC<Props>,
+}
+export const MINIGAMES: IMiniGamesHash = {
+  1: () => ConnectWires,
+};

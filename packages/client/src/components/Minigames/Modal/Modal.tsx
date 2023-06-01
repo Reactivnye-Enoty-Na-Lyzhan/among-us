@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
+import { MINIGAMES } from '@/utils/game/mingames';
 import './Modal.css';
-import { MINIGAMES } from '@/utils/constants';
 
 type Props = {
-  gameId: string;
+  gameId: number;
   onWinCallback: () => void;
 };
 
@@ -11,13 +11,8 @@ const MinigameModal: FC<Props> = ({ gameId, onWinCallback }) => {
   const [game, setGame] = useState<React.ReactNode | undefined>(undefined);
 
   useEffect(() => {
-    const minigame = MINIGAMES.find(g => g.id === gameId);
-    if (minigame) {
-      const Game = minigame.component;
-      if (Game) {
-        setGame(<Game onWinCallback={onWinCallback} />);
-      }
-    }
+    const Game = MINIGAMES[gameId]();
+    setGame(<Game onWinCallback={onWinCallback} />);
   }, [gameId]);
 
   return (
