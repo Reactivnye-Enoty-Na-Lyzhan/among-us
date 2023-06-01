@@ -26,7 +26,8 @@ export default function canvasProcess(
   players: any,
   playerId: any,
   socket: any,
-  gameId: any
+  gameId: any,
+  meetingIsProccessing: any,
 ) {
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   canvasSetup(canvas);
@@ -116,6 +117,7 @@ export default function canvasProcess(
     }
 
     update(x: number, y: number) {
+      if (meetingIsProccessing.current) return;
         if(!this.alive) {
             return;
         }
@@ -308,7 +310,7 @@ export default function canvasProcess(
       super(x, y, radius);
     }
     checkCollision() {
-        if (player.impostor) return;
+        //if (player.impostor) return;
       if (checkCollisions(this.x, this.y, this.radius)) {
         if (emergencyActionBtn.style.display !== 'block')
           emergencyActionBtn.style.display = 'block';
@@ -420,7 +422,10 @@ export default function canvasProcess(
 
 
   function moveCrewman({ id, x, y }: { id: string; x: number; y: number }) {
-    crewmen.find(obj => obj.id === id).update(x, y);
+    const crewman = crewmen.find(obj => obj.id === id);
+    if (crewman) {
+      crewman.update(x, y);
+    }
   }
   socket.on('move', moveCrewman);
 

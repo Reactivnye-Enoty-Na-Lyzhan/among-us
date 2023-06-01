@@ -42,6 +42,9 @@ export interface ILeaveGameResponse {
 
 export interface IGameWithParams extends IGame {
   param: IGameStateParams;
+  chat: {
+    id: number;
+  };
 }
 
 export interface IFindGameResponse {
@@ -68,6 +71,9 @@ export interface IGameCreateRequest {
 
 export interface IGameCreateResponse extends IGame {
   param: IGameStateParams;
+  chat: {
+    id: number;
+  };
 }
 
 export type GameIdType = number;
@@ -128,6 +134,14 @@ export interface IPlayer {
   score: number;
 }
 
+export interface IMessage {
+  id: number;
+  text: string;
+  authorId: number;
+}
+
+export type IStartMeeting = IPlayer['id'];
+
 //////////////////////////////
 
 interface IResults {
@@ -135,7 +149,10 @@ interface IResults {
 }
 
 export interface IMeeting {
-  initiator: IPlayer['id'];
+  initiator: IPlayer['id'] | null;
+  isProccessing: boolean;
+  count: number;
+  lastMeeting: ReturnType<typeof performance.now> | null;
 }
 
 export interface IGameState {
@@ -148,6 +165,7 @@ export interface IGameState {
   playersAmount: number;
   players: IPlayerWithUser[] | [];
   results: IResults;
+  chatId: number | null;
   startCooldown: number;
   meetings: IMeeting;
 }

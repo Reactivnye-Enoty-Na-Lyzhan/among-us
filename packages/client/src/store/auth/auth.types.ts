@@ -37,7 +37,6 @@ export type APIErrorResponse = {
 
 export type TOAuthData = {
   code: string;
-  redirect_uri: string;
 };
 
 export type TServiceId = {

@@ -148,8 +148,6 @@ const SearchGame: FC = () => {
     navigate('..');
   }, []);
 
-  console.log('procdesss', isProcessing);
-
   return (
     <div className="search-game">
       <h1 className="search-game__title">Твои друзья уже здесь</h1>

@@ -1,3 +1,4 @@
+import type { ChatMessage } from '../../../models/chat/chatMessage';
 import type { Namespace, Socket } from 'socket.io';
 
 export type GameParams = {
@@ -29,9 +30,9 @@ export const suitsColors = [
 
 export type GameId = number;
 
-export type AssembleMeeting = (gameId: GameId, initiatorId: string) => void;
+export type AssembleMeeting = (gameId: GameId, initiatorId: number) => void;
 
-export type EmergencyMeeting = (initiatorId: string) => void;
+export type OnEmergencyMeeting = (initiatorId: number) => void;
 
 export type GetPlayers = (
   gameId: GameId,
@@ -102,6 +103,22 @@ interface IMoveServerParams extends IMoveParams {
 }
 
 export type MoveServer = (params: IMoveParams) => void;
+export type MessageType = Pick<ChatMessage, 'id' | 'text' | 'authorId'>;
+
+export type Move = (params: IMoveParams) => void;
+
+interface ISendMessageParams {
+  chatId: number;
+  gameId: number;
+  playerId: number;
+  message: string;
+}
+
+export type SendMessage = (params: ISendMessageParams) => void;
+
+export type OnGetMessage = (message: MessageType) => void;
+
+export type GetMessages = (chatId: number, callback: (messages: MessageType[]) => void) => void;
 
 export type MoveClient = (params: IMoveServerParams) => void;
 
@@ -112,11 +129,12 @@ export interface IGameServerToClientEvents {
   selectedColors: SelectedColors;
   killPlayer: KillPlayer;
   onGameReady: GameReady;
-  emergencyMeeting: EmergencyMeeting;
+  onEmergencyMeeting: OnEmergencyMeeting;
   onPlayerJoin: PlayerJoin;
   onLeaveGame: OnLeaveGame;
   onGameEnd: OnGameEnd;
   onPlayerKill: OnPlayerKill;
+  onGetMessage: OnGetMessage;
 }
 
 // Receiving Event
@@ -136,6 +154,8 @@ export interface IGameClienToServerEvents {
   getPlayersAmount: GetPlayers;
   assembleMeeting: AssembleMeeting;
   setPlayerRating: SetPlayerRating;
+  sendMessage: SendMessage;
+  getMessages: GetMessages;
 }
 
 // Inter-server

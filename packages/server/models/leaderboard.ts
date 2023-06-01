@@ -67,7 +67,7 @@ LeaderBoard.init(
       },
     },
     sequelize,
-    tableName: 'leaderBoard',
+    tableName: 'leaderboards',
     timestamps: false,
   }
 );

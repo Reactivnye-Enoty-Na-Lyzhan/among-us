@@ -1,12 +1,5 @@
-import { getRedirectUrl } from './getRedirectUrl';
+export const redirectToOAuthYandex = () => {
+  const url = new URL(`https://oauth.yandex.ru/authorize?response_type=code&client_id=$b41558ce234c40618e278734b8729380`);
 
-export const redirectToOAuthYandex = (serviceId: string) => {
-  const url = new URL('https://oauth.yandex.ru/authorize');
-  const params = new URLSearchParams({
-    response_type: 'code',
-    client_id: serviceId,
-    redirect_uri: getRedirectUrl(),
-  });
-
-  location.assign(`${url}?${params}`);
+  location.assign(url);
 };

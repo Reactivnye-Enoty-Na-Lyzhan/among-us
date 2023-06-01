@@ -1,15 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
-import { useLazyGetServiceIdQuery } from '../store/auth/oauth.slice';
-import { useYandexOAuthMutation } from '../store/auth/oauth.slice';
+import { redirectToOAuthYandex } from '@/utils/oauth/redirectToOAuthYandex';
+import { useGetTokenMutation } from '../store/auth/oauth.slice';
 import { useLazyGetUserQuery } from '../store/auth/auth.slice';
-import { getRedirectUrl } from '../utils/oauth/getRedirectUrl';
-import { redirectToOAuthYandex } from '../utils/oauth/redirectToOAuthYandex';
 
 const useOAuth = () => {
-  const [getServiceId] = useLazyGetServiceIdQuery();
-  const [yandexOAuth] = useYandexOAuthMutation();
+  const [getToken] = useGetTokenMutation();
   const [getUser] = useLazyGetUserQuery();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -24,28 +20,25 @@ const useOAuth = () => {
   }, [searchParams]);
 
   const handleOAuthSignIn = useCallback(async () => {
-    try {
-      const { data } = await getServiceId();
-      const serviceId = data?.service_id;
-      serviceId && redirectToOAuthYandex(serviceId);
-    } catch (error) {
-      console.log(`Oops, ${error} `);
-    }
-  }, [getServiceId]);
+    redirectToOAuthYandex();
+  }, []);
 
   const requestToken = useCallback(async () => {
     try {
-      const { isSuccess } = await yandexOAuth({
-        code,
-        redirect_uri: getRedirectUrl(),
-      }).unwrap();
-      if (!isSuccess) return;
-      const user = await getUser();
-      if (user) navigate('/game');
+      if (code) {
+        const token = await getToken({ code });
+        if ('error' in token) {
+          throw new Error('Ошибка! Код не подходит');
+        }
+        const user = await getUser();
+        if ('data' in user) {
+          navigate('/game');
+        }
+      }
     } catch (error) {
       console.log(`Oops, ${error} `);
     }
-  }, [code, yandexOAuth, navigate, getUser]);
+  }, [code]);
 
   return { handleOAuthSignIn, requestToken };
 };
