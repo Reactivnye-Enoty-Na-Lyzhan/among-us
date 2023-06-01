@@ -33,6 +33,12 @@
   box-shadow: 0 0 10px rgb(232, 18, 88);
 }
 
+.crewman-card_dead {
+  user-select: none;
+  pointer-events: none;
+  opacity: .7;
+}
+
 .crewman-card__avatar-container {
   display: flex;
   justify-content: center;

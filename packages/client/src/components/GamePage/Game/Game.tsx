@@ -1,9 +1,11 @@
 import { FC, memo, useContext, useEffect, useRef } from 'react';
 import { useActions } from '@/hooks/useActions';
 import canvasProcess from './canvasProcess';
+import EmergencyMeeting from './EmergencyMeeting/EmergencyMeeting';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import {
   selectGame,
+  selectMeeting,
   selectPlayer,
   selectPlayers,
 } from '@/store/game/game.slice';
@@ -19,10 +21,11 @@ const Game: FC = () => {
   const { id: playerId } = useTypedSelector(selectPlayer);
   const players = useTypedSelector(selectPlayers);
   const gameId = useTypedSelector(selectGame);
+  const meeting = useTypedSelector(selectMeeting);
 
   const [completeTask] = useUpdateScoreMutation();
 
-  const { killPlayer, finishGame } = useActions();
+  const { killPlayer, finishGame, startMeeting } = useActions();
 
   const socket = useContext(GameSocketContext);
 
@@ -63,13 +66,20 @@ const Game: FC = () => {
 
   useEffect(() => {
     socket.on('onPlayerKill', noticePlayerKill);
-    // socket.on('onGameEnd', handleFinishGame);
+    socket.on('onGameEnd', handleFinishGame);
+    socket.on('onEmergencyMeeting', handleStartMeeting);
 
     return () => {
       socket.off('onPlayerKill', noticePlayerKill);
-    //   socket.off('onGameEnd', handleFinishGame);
+      socket.off('onGameEnd', handleFinishGame);
+      socket.off('onEmergencyMeeting', handleStartMeeting);
     };
   }, [socket]);
+
+  // Обработчик начала встречи
+  const handleStartMeeting = (initiatorId: number) => {
+    startMeeting(initiatorId);
+  };
 
   // Обработчик уничтожения игрока
   const handlePlayerKill = (e: any) => {
@@ -124,7 +134,7 @@ const Game: FC = () => {
     <div className="game">
       <div className="game__canvas-container">
         <canvas ref={canvasRef} id="main-canvas"></canvas>
-
+        {meeting?.isProccessing && <EmergencyMeeting />}
         <button
           className="game__action-btn"
           ref={miniGameAction}
