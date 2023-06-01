@@ -1,0 +1,9 @@
+.square-fragments-memorization-game__memorization-fragment {
+  opacity: 0;
+  background-color: black;
+}
+
+.square-fragments-memorization-game__memorization-fragment_highlighted {
+  opacity: 1;
+  background-color: darkcyan;
+}
