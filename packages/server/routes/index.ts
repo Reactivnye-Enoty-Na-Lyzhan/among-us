@@ -5,8 +5,6 @@ import forumRouter from './forum';
 import gameRouter from './game';
 import userRouter from './users';
 import themeRouter from './themes';
-import checkAuthHandler from '../middlewares/checkAuthHandler';
-import forumRouter from './forum';
 import leaderBoard from './leaderboard';
 
 const router = Router();

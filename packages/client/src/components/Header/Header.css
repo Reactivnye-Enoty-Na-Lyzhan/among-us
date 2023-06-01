@@ -26,7 +26,7 @@
   width: 32px;
   height: 24px;
   background-color: var(--landing-font-primary);
-  mask-image: url(images/header/return-link__icon.svg);
+  mask-image: url(../../images/ui/return-link__icon.svg);
   mask-size: 32px 15px;
   mask-position: center;
   mask-repeat: no-repeat;

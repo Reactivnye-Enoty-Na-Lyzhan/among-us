@@ -7,7 +7,7 @@ const nameSpace = createNamespace('sequilize-cls');
 (Sequelize as any).__proto__.useCLS(nameSpace);
 
 dotenv.config({
-  path: path.join(__dirname, '../.env'),
+  path: path.resolve(__dirname, '../.env'),
 });
 
 const {
@@ -34,11 +34,7 @@ export const connectDataBase = async () => {
     await sequelize.authenticate();
     await sequelize.sync({ alter: true });
   } catch (err: unknown) {
-    console.error(
-      `Ошибка при подключении к Базе данных, ${JSON.stringify(
-        sequelizeOptions
-      )}`
-    );
+    console.error('Ошибка при подключении к Базе данных');
     console.log(err);
   }
 };
