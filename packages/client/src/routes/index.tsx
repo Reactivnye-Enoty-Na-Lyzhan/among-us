@@ -6,7 +6,6 @@ import SignUpPage from './../components/SignUpPage/SignUpPage';
 import ForumPage from './../components/Forum/Page/Page';
 import Profile from '@/components/Profile/Profile';
 import { Error404 } from '@/components/ErrorPage/ErrorPage';
-import { Game as SquareFragmentsMemorizationMiniGame } from '@/mini-game/SquareFragmentsMemorization/Game';
 
 export const routes = [
   {
@@ -36,10 +35,6 @@ export const routes = [
   {
     path: '/profile',
     element: <Profile />,
-  },
-  {
-    path: '/mini-game/square-fragments-memorization',
-    element: <SquareFragmentsMemorizationMiniGame />,
   },
   {
     path: '/*',
