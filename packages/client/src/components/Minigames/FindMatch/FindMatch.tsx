@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Card from './Card/Card';
 import { createBoard } from './utils';
 import { shuffleCards } from './utils';
 import { CardType } from './types';
 import './FindMatch.css';
 
-const FindMatch = () => {
+type Props = {
+  onWinCallback: () => void;
+};
+
+const FindMatch: FC<Props> = ({ onWinCallback }) => {
   const [cards, setCards] = useState<CardType[]>(shuffleCards(createBoard()));
-  const [gameWon, setGameWon] = useState(false);
   const [matchedPairs, setMatchedPairs] = useState(0);
   const [clickedCard, setClickedCard] = useState<undefined | CardType>(
     undefined
@@ -15,9 +18,9 @@ const FindMatch = () => {
 
   useEffect(() => {
     if (matchedPairs === cards.length / 2 - 1) {
-      setGameWon(true);
       setTimeout(() => {
         alert('You win!');
+        onWinCallback();
       }, 3000);
     }
   }, [matchedPairs]);

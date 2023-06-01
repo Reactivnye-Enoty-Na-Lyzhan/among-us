@@ -12,6 +12,7 @@ const MinigameModal: FC<Props> = ({ gameId, onWinCallback }) => {
 
   useEffect(() => {
     const Game = MINIGAMES[gameId]();
+    console.log({ Game });
     setGame(<Game onWinCallback={onWinCallback} />);
   }, [gameId]);
 
