@@ -24,7 +24,7 @@ export const CLIENT_PACKAGE_PATH = path.resolve(
 
 export const MAX_PLAYERS = 3;
 
-export const MIN_PLAYERS = 2;
+export const MIN_PLAYERS = 1;
 
 export const CIVIL_VICTORY_SCORE = 1200;
 

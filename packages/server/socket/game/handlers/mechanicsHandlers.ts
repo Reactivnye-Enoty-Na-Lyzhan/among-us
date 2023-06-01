@@ -14,7 +14,7 @@ export const mechanicsHandlers = (
   io: GameSocketNamespace
 ) => {
   const assembleMeeting: AssembleMeeting = (gameId, initiatorId) => {
-    socket.to(gameId.toString()).emit('onEmergencyMeeting', initiatorId);
+    io.to(gameId.toString()).emit('onEmergencyMeeting', initiatorId);
   };
 
   const completeTask: CompleteTask = async gameId => {

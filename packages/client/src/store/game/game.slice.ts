@@ -116,6 +116,7 @@ export const gameSlice = createSlice({
     startMeeting: (state, action: PayloadAction<IStartMeeting>) => {
       state.meetings.initiator = action.payload;
       state.meetings.isProccessing = true;
+      console.log(state.meetings);
     },
     stopMeeting: state => {
       state.meetings.isProccessing = initialState.meetings.isProccessing;

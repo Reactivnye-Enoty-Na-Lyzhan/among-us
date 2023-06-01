@@ -21,7 +21,7 @@ const Game: FC = () => {
   const { id: playerId } = useTypedSelector(selectPlayer);
   const players = useTypedSelector(selectPlayers);
   const gameId = useTypedSelector(selectGame);
-  const meeting = useTypedSelector(selectMeeting);
+  const { isProccessing: meetingIsProccessing } = useTypedSelector(selectMeeting);
 
   const [completeTask] = useUpdateScoreMutation();
 
@@ -33,6 +33,7 @@ const Game: FC = () => {
   const miniGameAction = useRef(null);
   const meetingAction = useRef(null);
   const killAction = useRef(null);
+  const isMeetup = useRef(false);
 
   useEffect(() => {
     let unsubRefs: any;
@@ -44,7 +45,7 @@ const Game: FC = () => {
       players.length &&
       playerId &&
       socket &&
-      gameId
+      gameId  
     ) {
       unsubRefs = canvasProcess(
         canvasRef.current,
@@ -54,15 +55,24 @@ const Game: FC = () => {
         players,
         playerId,
         socket,
-        gameId
+        gameId,
+        isMeetup,
       );
     }
     return () => {
-      const {moveCrewman, handlePlayerKill} = unsubRefs;
+      const { moveCrewman, handlePlayerKill } = unsubRefs;
       socket.off('move', moveCrewman);
       socket.off('onPlayerKill', handlePlayerKill);
     };
   }, []);
+
+  useEffect(() => {
+    if (meetingIsProccessing) {
+      isMeetup.current = true;
+    } else {
+      isMeetup.current = false;
+    }
+  }, [meetingIsProccessing]);
 
   useEffect(() => {
     socket.on('onPlayerKill', noticePlayerKill);
@@ -79,6 +89,7 @@ const Game: FC = () => {
   // Обработчик начала встречи
   const handleStartMeeting = (initiatorId: number) => {
     startMeeting(initiatorId);
+    isMeetup.current = true;
   };
 
   // Обработчик уничтожения игрока
@@ -128,13 +139,16 @@ const Game: FC = () => {
   };
 
   const handleMeetingStart = () => {
-    console.log(`user with id ${playerId} started emergency meeting!`);
+    if (gameId && playerId) {
+      socket.emit('assembleMeeting', gameId, playerId);
+    }
   };
+
   return (
     <div className="game">
       <div className="game__canvas-container">
         <canvas ref={canvasRef} id="main-canvas"></canvas>
-        {meeting?.isProccessing && <EmergencyMeeting />}
+        {meetingIsProccessing && <EmergencyMeeting />}
         <button
           className="game__action-btn"
           ref={miniGameAction}
@@ -142,7 +156,10 @@ const Game: FC = () => {
           <img src={startMiniGameIcon}></img>
         </button>
 
-        <button className="game__action-btn" ref={meetingAction} onClick={handleMeetingStart}>
+        <button
+          className="game__action-btn"
+          ref={meetingAction}
+          onClick={handleMeetingStart}>
           <img src={startMeetingIcon}></img>
         </button>
 

@@ -56,7 +56,7 @@ const CrewmanCard: FC<Props> = props => {
         <div className={avatarClassname} />
       </div>
       <h3 className="crewman-card__crewman-name">{nickname === 'default' ? login : nickname}</h3>
-      {!initiator && <span className="crewman-card__initiator-icon" />}
+      {initiator && <span className="crewman-card__initiator-icon" />}
     </li>
   );
 };

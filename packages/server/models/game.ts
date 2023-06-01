@@ -20,7 +20,7 @@ import { User } from './user';
 import { GameQueue } from './gameQueue';
 import { GameColor } from './gameColor';
 import { sequelize } from '../utils/connectDataBase';
-import type { GameStatus } from 'socket/game/gameSocket.types';
+import type { GameStatus } from '../types/socket/game/gameSocket.types';
 import { Chat } from './chat/chat';
 
 export class Game extends Model<

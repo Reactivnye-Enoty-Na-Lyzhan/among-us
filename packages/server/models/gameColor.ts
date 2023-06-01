@@ -8,7 +8,7 @@ import {
 } from 'sequelize';
 import { Game } from './game';
 import { sequelize } from '../utils/connectDataBase';
-import { SuitColorsType } from 'socket/game/gameSocket.types';
+import { SuitColorsType } from '../types/socket/game/gameSocket.types';
 
 export class GameColor extends Model<
   InferAttributes<GameColor>,

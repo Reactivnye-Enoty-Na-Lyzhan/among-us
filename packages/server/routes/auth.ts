@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { createUser, loginUser } from '../controllers/users';
 import {
   createUserValidation,
+  getOAuthTokenValidation,
   loginUserValidation,
 } from '../utils/validation/requestValidation';
 import { limitAuth } from '../utils/securityData/rateLimitSettings';
@@ -19,6 +20,6 @@ router.post('/signup', limitAuth, createUserValidation, createUser);
 router.get('/code', oAuthRedirect);
 
 // Авторизация через oAuth
-router.post('/token', getOAuthToken);
+router.post('/token', getOAuthTokenValidation, getOAuthToken);
 
 export default router;

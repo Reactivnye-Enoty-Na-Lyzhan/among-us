@@ -9,7 +9,7 @@ import './Voting.css';
 
 const Voting: FC = () => {
   const [selectedPlayer, setSelectedPlayer] = useState<IPlayer['id'] | null>(null);
-  const [counter, setCounter] = useState<number>(0);
+  const [counter, setCounter] = useState<number>(50);
 
   const { id: currentPlayerId } = useTypedSelector(selectPlayer);
   const players = useTypedSelector(selectPlayers);
@@ -27,7 +27,7 @@ const Voting: FC = () => {
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
 
-    if (counter && counter > 0) {
+    if (counter > 0) {
       timeout = setTimeout(() => {
         setCounter((timeLeft) => timeLeft - 1);
       }, 1000);

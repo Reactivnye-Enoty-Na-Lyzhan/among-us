@@ -9,7 +9,7 @@ export type GameParamsType = {
 export const gameNamePattern = /^[0-9a-zA-Zа-яА-ЯёЁ-]+$/i;
 
 // В идеале хранить в общем для server и client env
-export const MAX_PLAYERS = 9;
+export const MAX_PLAYERS = 3;
 
 export const gameParams: GameParamsType[] = [
   {
