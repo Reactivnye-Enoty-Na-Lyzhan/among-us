@@ -16,5 +16,6 @@ export const createBoard = (): CardType[] =>
     backImage: cardBack,
     frontImage: card,
     clickable: true,
-    matchingId: i < cards.length ? `card${i + cards.length}` : `card${i - cards.length}`
+    matchingId:
+      i < cards.length ? `card${i + cards.length}` : `card${i - cards.length}`,
   }));
