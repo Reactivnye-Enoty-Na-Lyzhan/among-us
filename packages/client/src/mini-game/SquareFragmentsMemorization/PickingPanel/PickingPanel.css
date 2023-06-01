@@ -1,0 +1,12 @@
+.square-fragments-memorization-game__picking-panel {
+  --grid-gap: var(--interactive-panel-border-width);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  row-gap: var(--grid-gap);
+  column-gap: var(--grid-gap);
+
+  width: var(--interactive-panel-size);
+  height: var(--interactive-panel-size);
+}

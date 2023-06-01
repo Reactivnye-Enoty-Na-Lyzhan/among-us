@@ -113,7 +113,7 @@ export interface IGame {
 }
 
 export interface IPlayerWithUser extends IPlayer {
-  user?: Pick<User, 'login' | 'nickname'>
+  user?: Pick<User, 'login' | 'nickname'>;
 }
 
 export interface IPlayer {

@@ -1,6 +1,6 @@
 import { Game } from '../../../models/game';
 import { User } from '../../../models/user';
-/* import { MIN_PLAYERS } from '../../../utils/constants'; */
+import { MIN_PLAYERS } from '../../../utils/constants';
 import { NotExistError } from '../../../utils/errors/commonErrors/NotExistError';
 import { ErrorMessages } from '../../../utils/errors/errorMessages';
 import type {
@@ -50,7 +50,7 @@ export const connectionHandlers = (
 
       callback(players.length);
 
-      if (players.length >= 3/* MIN_PLAYERS */) {
+      if (players.length >= MIN_PLAYERS) {
         await game.update({
           status: 'active',
         });

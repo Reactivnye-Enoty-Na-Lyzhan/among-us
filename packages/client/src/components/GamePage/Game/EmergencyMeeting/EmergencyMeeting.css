@@ -21,5 +21,5 @@
   height: calc(100% - (28px * 2));
   background-color: #fafafa;
   border-radius: 10px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, .25);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 }

@@ -15,9 +15,11 @@ export const refreshToken = async (token: string) => {
     method: 'POST',
     headers: {
       'Content-type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${Buffer.from(`${OAUTH_CLIENT}:${OAUTH_SECRET}`).toString('base64')}`,
+      Authorization: `Basic ${Buffer.from(
+        `${OAUTH_CLIENT}:${OAUTH_SECRET}`
+      ).toString('base64')}`,
     },
-    body: `grant_type=refresh_token&refresh_token=${token}`
+    body: `grant_type=refresh_token&refresh_token=${token}`,
   });
 
   if (request && request.ok) {
