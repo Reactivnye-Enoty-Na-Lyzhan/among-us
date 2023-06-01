@@ -1,14 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { gameReducer } from './game/game.slice';
+import { apiSliceBase } from './api/api.slice';
 import { authApi } from './auth/auth.slice';
 import { oauthApi } from './auth/oauth.slice';
-import { uiReducer } from './ui/ui.slice';
-import { apiSliceBase } from './api/api.slice';
-import { leaderboardReducer } from './leaderboard/leaderboard.slice';
-import { leaderboardListenerMiddleware } from './leaderboard/listenerMiddleware';
+import { forumApi } from './forum/forum.api';
+import { gameApi } from './game/game.api';
+import { gameReducer } from './game/game.slice';
 import { IGameState } from './game/game.types';
-import { IUiState } from './ui/ui.types';
+import { leaderboardReducer } from './leaderboard/leaderboard.slice';
 import { ILeaderboardState } from './leaderboard/leaderboard.types';
+import { leaderboardListenerMiddleware } from './leaderboard/listenerMiddleware';
+import { themeApi } from './ui/ui.api';
+import { uiReducer } from './ui/ui.slice';
+import { IUiState } from './ui/ui.types';
 
 export const createStore = (preloadedState?: PreloadedState) => {
   return configureStore({
@@ -16,6 +19,9 @@ export const createStore = (preloadedState?: PreloadedState) => {
       [apiSliceBase.reducerPath]: apiSliceBase.reducer,
       [authApi.reducerPath]: authApi.reducer,
       [oauthApi.reducerPath]: oauthApi.reducer,
+      [gameApi.reducerPath]: gameApi.reducer,
+      [forumApi.reducerPath]: forumApi.reducer,
+      [themeApi.reducerPath]: themeApi.reducer,
       game: gameReducer,
       ui: uiReducer,
       leaderboard: leaderboardReducer,
@@ -26,7 +32,10 @@ export const createStore = (preloadedState?: PreloadedState) => {
         apiSliceBase.middleware,
         authApi.middleware,
         oauthApi.middleware,
-        leaderboardListenerMiddleware.middleware
+        leaderboardListenerMiddleware.middleware,
+        gameApi.middleware,
+        themeApi.middleware,
+        forumApi.middleware
       ),
   });
 };

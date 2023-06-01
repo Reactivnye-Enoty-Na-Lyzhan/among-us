@@ -68,9 +68,9 @@
 
 
 `docker compose up` - запустит три сервиса
-1. nginx, раздающий клиентскую статику (client)
-2. node, ваш сервер (server)
-3. postgres, вашу базу данных (postgres)
+1. node, ваш сервер (server)
+2. postgres, вашу базу данных (postgres)
+3. PGAdmin
 
 Если вам понадобится только один сервис, просто уточните какой в команде
 `docker compose up {sevice_name}`, например `docker compose up server`

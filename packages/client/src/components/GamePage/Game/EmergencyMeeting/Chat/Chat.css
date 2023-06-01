@@ -1,0 +1,8 @@
+.meeting-chat {
+  display: flex;
+  width: 36%;
+  height: 100%;
+  background-color: #e2e2e2;
+  border-radius: 10px;
+  flex-shrink: 0;
+}

@@ -1,0 +1,38 @@
+.game-end__button-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 205px;
+  height: 51px;
+  color: var(--font-main-primary);
+  border: 0;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 120%;
+  background-color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  --screen-content-background: #010318;
+  --text-color: #fafafa;
+}
+
+.game-end__button-name:hover {
+  opacity: 0.8;
+}
+
+.game-end__button-name_green {
+  background-color: var(--button-main-secondary);
+}
+
+.game-end__button-name_violet {
+  background-color: var(--button-main-primary);
+}
+
+.game-end__button-name_pink {
+  background-color: var(--button-main-quaternary);
+}
+
+.game-end__button-name_spacing_below {
+  margin-bottom: 21px;
+}

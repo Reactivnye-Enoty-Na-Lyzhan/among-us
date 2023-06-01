@@ -4,8 +4,10 @@ import LeaderBoard from './../components/LeaderBoard/LeaderBoard';
 import LoginPage from './../components/LoginPage/LoginPage';
 import SignUpPage from './../components/SignUpPage/SignUpPage';
 import ForumPage from './../components/Forum/Page/Page';
+import ForumPostPage from '../components/Forum/PostPage/PostPage';
 import Profile from '@/components/Profile/Profile';
 import { Error404 } from '@/components/ErrorPage/ErrorPage';
+import ForumEditPostPage from '@/components/Forum/EditPostPage/EditPostPage';
 
 export const routes = [
   {
@@ -29,7 +31,19 @@ export const routes = [
     element: <LeaderBoard />,
   },
   {
-    path: '/forum/:param?',
+    path: '/forum/create',
+    element: <ForumEditPostPage />,
+  },
+  {
+    path: '/forum/edit/:postId',
+    element: <ForumEditPostPage />,
+  },
+  {
+    path: '/forum/:postId',
+    element: <ForumPostPage />,
+  },
+  {
+    path: '/forum',
     element: <ForumPage />,
   },
   {
