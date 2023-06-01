@@ -8,7 +8,6 @@ import ForumPostPage from '../components/Forum/PostPage/PostPage';
 import Profile from '@/components/Profile/Profile';
 import { Error404 } from '@/components/ErrorPage/ErrorPage';
 import ForumEditPostPage from '@/components/Forum/EditPostPage/EditPostPage';
-import FindMatch from './../components/Minigames/FindMatch/FindMatch';
 
 export const routes = [
   {
@@ -54,9 +53,5 @@ export const routes = [
   {
     path: '/*',
     element: <Error404 />,
-  },
-  {
-    path: '/findmatch',
-    element: <FindMatch />,
   },
 ];
