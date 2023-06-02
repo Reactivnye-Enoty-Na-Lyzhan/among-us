@@ -7,9 +7,13 @@ import { useGameContext } from './GameContext/useGameContext';
 import { GameStage } from './GameContext/types';
 import './Game.css';
 
+type Props = {
+  onWinCallback: () => void;
+};
+
 const GAME_MAX_LEVEL = 5;
 
-const Game: FC = () => {
+const Game: FC<Props> = ({ onWinCallback }) => {
   const gameStageContext = useGameContext();
   const { gameStatusRef, memorizationSequenceRef, expandMemorizationSequence } =
     gameStageContext;
@@ -20,6 +24,12 @@ const Game: FC = () => {
     !memorizationSequenceRef.current.length
   ) {
     expandMemorizationSequence();
+  }
+
+  if (gameStatus.level > GAME_MAX_LEVEL) {
+    setTimeout(() => {
+      onWinCallback();
+    }, 3000);
   }
 
   return (

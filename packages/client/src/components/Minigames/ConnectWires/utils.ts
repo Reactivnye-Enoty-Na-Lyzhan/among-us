@@ -8,8 +8,6 @@ function getRandomInt(max: number) {
 export const randomizeGame = () => {
   const result = INITIAL_GAME_STATES[getRandomInt(INITIAL_GAME_STATES.length)];
 
-  console.log('asdasdad');
-
   for (const tileRow of result.tiles) {
     for (const tile of tileRow) {
       tile.rotate = getRandomInt(4);
