@@ -1,11 +1,11 @@
-import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
-import { leaderboardActions } from './leaderboard.slice';
-import type { TypeRootState, AppDispatch } from '..';
 import type { TypedStartListening } from '@reduxjs/toolkit';
+import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
+import type { AppDispatch, TypeRootState } from '..';
 import {
   leaderboardAPISlice,
   matchPostRatingFulfilled,
-} from '../api/leaderboard/leaderboard.api.slice';
+} from '../api/leaderboard/api.slice';
+import { leaderboardActions } from './leaderboard.slice';
 
 const listenerMiddleware = createListenerMiddleware();
 export const startListening =
@@ -22,7 +22,7 @@ startListening({
     const sortingType = state.leaderboard.sortingType;
 
     const getRatingsArgs = {
-      cursor: 0,
+      offset: 0,
       limit: fetchedRatingsCount,
       ratingFieldName: sortingType,
     };
@@ -44,10 +44,9 @@ startListening({
 
     state = listenerApi.getState();
     const getRatingsRequestState = selectGetRatingsState(state);
-    const { isSuccess, data } = getRatingsRequestState;
+    const { isSuccess, data: fetchedRatingsList } = getRatingsRequestState;
 
     if (isSuccess) {
-      const fetchedRatingsList = data.map(ratingData => ratingData.data);
       listenerApi.dispatch(
         leaderboardActions.ratingsListSetAll(fetchedRatingsList)
       );

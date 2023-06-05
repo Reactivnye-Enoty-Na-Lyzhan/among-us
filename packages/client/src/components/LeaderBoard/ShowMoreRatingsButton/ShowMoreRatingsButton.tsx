@@ -20,7 +20,7 @@ const ShowMoreRatingsButton: FC = () => {
     );
 
     fetchRatingsNextBatch({
-      cursor: 0,
+      offset: 0,
       limit: firstFetchBatchSize,
       ratingsListUpdateMethod: EnumRatingSListUpdateMethod.REPLACE,
     });

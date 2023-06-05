@@ -1,17 +1,17 @@
-import { useLazyGetRatingsQuery } from '@/store/api/leaderboard/leaderboard.api.slice';
-import { selectSortingType } from '@/store/leaderboard/selectors';
-import { useSelector } from 'react-redux';
-import { GetRatingsRequestArgs } from '@/store/api/leaderboard/leaderboard.api.types';
-import { OmitKeys } from '@/utils/objects-handle/types/omitKeys';
-import { Optional } from '@/utils/objects-handle/types/optional';
 import {
   EnumRatingSListUpdateMethod,
   RATINGS_FETCH_BATCH_SIZE,
 } from '@-constants/leaderboard/ratings.constants';
+import { useLazyGetRatingsQuery } from '@/store/api/leaderboard/api.slice';
+import { GetRatingsRequestArgs } from '@/store/api/leaderboard/endpoints/getRatings/types';
+import { selectSortingType } from '@/store/leaderboard/selectors';
+import { OmitKeys } from '@/utils/objects-handle/types/omitKeys';
+import { Optional } from '@/utils/objects-handle/types/optional';
+import { useSelector } from 'react-redux';
 
 type FetchFunctionArgs = Optional<
-  OmitKeys<GetRatingsRequestArgs, 'ratingFieldName'>,
-  'cursor'
+  OmitKeys<GetRatingsRequestArgs, 'sortField'>,
+  'offset'
 >;
 
 const fetchFunctionDefaultArgs = {
@@ -24,14 +24,14 @@ export function useFetchRatingsNextBatch(currentFetchedRatingsCount: number) {
   const sortingType = useSelector(selectSortingType);
 
   const fetchRatingsNextBatch = (args?: FetchFunctionArgs) => {
-    const { limit, ratingsListUpdateMethod, cursor } = {
+    const { limit, ratingsListUpdateMethod, offset } = {
       ...fetchFunctionDefaultArgs,
       ...args,
     };
 
     const queryArgs = {
-      ratingFieldName: sortingType,
-      cursor: cursor ?? currentFetchedRatingsCount,
+      sortField: sortingType,
+      offset: offset ?? currentFetchedRatingsCount,
       limit,
       ratingsListUpdateMethod,
     };

@@ -2,15 +2,15 @@ import {
   useLazyGetUserQuery,
   useSignUpUserMutation,
 } from '@/store/auth/auth.slice';
-import { useCallback, useState } from 'react';
-import { SignUpFormData } from '../_types';
-import { transformFormDataToDTO } from '../_utils/transformFormDataToDTO';
+import { APIErrorResponse } from '@/store/auth/auth.types';
 import {
   isRTKQueryFetchError,
   isRTKQuerySuccessfulResponse,
 } from '@/utils/api/response-types';
-import { APIErrorResponse } from '@/store/auth/auth.types';
 import { getErrorMessage } from '@/utils/api/signup/error-messages/get-error-message';
+import { useCallback, useState } from 'react';
+import { SignUpFormData } from '../_types';
+import { transformFormDataToDTO } from '../_utils/transformFormDataToDTO';
 
 export function useOnSubmitQueries() {
   const [apiQueryStatusMessage, setAPIQueryStatusMessage] = useState<

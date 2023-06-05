@@ -4,13 +4,9 @@ export const RATINGS_ON_MOUNT_MAX_COUNT = 12;
 
 export enum EnumRatingTypes {
   GAMES = 'games',
+  WINS = 'wins',
+  LOSSES = 'losses',
   WINRATE = 'winrate',
-  MAX_SCORE = 'maxScore',
-}
-
-export enum EnumRatingEntityIdentifiers {
-  RATING_ID = 'ratingID',
-  USER_LOGIN = 'userLogin',
 }
 
 export enum EnumRatingSListUpdateMethod {

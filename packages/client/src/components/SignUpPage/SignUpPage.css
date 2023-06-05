@@ -44,8 +44,6 @@
 }
 
 .signup-page-main__api-status-message {
-  overflow: hidden;
-
   width: 300px;
   max-width: 300px;
   min-height: 25px;
@@ -53,7 +51,8 @@
 
   font-size: 14px;
   color: var(--form-font-secondary);
-  text-overflow: ellipsis;
+  overflow: scroll;
+  text-overflow: scroll;
   white-space: nowrap;
 }
 

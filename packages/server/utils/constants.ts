@@ -1,11 +1,13 @@
-import path from 'path';
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config({
   path: '../../../.env',
 });
 
 const { NODE_ENV, OAUTH_CLIENT } = process.env;
+
+export const DEFAULT_SUCCESSFUL_RESPONSE = 'OK';
 
 export const DEFAULT_ERROR_CODE = 500;
 export const DEFAULT_ERROR_MESSAGE =

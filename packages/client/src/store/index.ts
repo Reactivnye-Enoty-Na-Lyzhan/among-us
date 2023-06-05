@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { apiSliceBase } from './api/api.slice';
+import { apiSliceBase } from './api/api.slice-base';
 import { authApi } from './auth/auth.slice';
 import { oauthApi } from './auth/oauth.slice';
 import { forumApi } from './forum/forum.api';
@@ -50,22 +50,3 @@ export type TypeRootState = ReturnType<
   ReturnType<typeof createStore>['getState']
 >;
 export type AppDispatch = ReturnType<typeof createStore>['dispatch'];
-
-/*
-  ************* HOW TO USE: ****************
-
-  const { isLoading, isError, data } = useGetLeaderboardDataQuery({
-    limit: 10,
-    cursor: 0,
-  });
-
-  const { setGameTitle } = useActions();
-
-  const { game } = useTypedSelector(state => state);
-
-  console.log(game);
-
-  setGameTitle('asd');
-
-  console.log({ data });
-*/

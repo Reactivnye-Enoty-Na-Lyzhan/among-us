@@ -1,9 +1,9 @@
-import type { NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import type { NextFunction, Request, Response } from 'express';
+import { verify, type JwtPayload } from 'jsonwebtoken';
+import { User } from '../models/user';
 import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
 import { ErrorMessages } from '../utils/errors/errorMessages';
-import { type JwtPayload, verify } from 'jsonwebtoken';
-import { User } from '../models/user';
 
 interface IPayload extends JwtPayload {
   id: string;
@@ -59,7 +59,10 @@ export default async (
 
     next();
   } catch (err: unknown) {
-    console.log(err);
+    if (!(err instanceof NotAuthorizedError)) {
+      console.log(err);
+    }
+
     next(err);
   }
 };

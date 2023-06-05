@@ -1,10 +1,10 @@
+import hocAuth from '@/hoc/hocAuth';
 import { FC, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import hocAuth from '@/hoc/hocAuth';
 import RatingTable from './RatingTable/RatingTable';
+import ShowMoreRatingsButton from './ShowMoreRatingsButton/ShowMoreRatingsButton';
 import SortMenu from './SortingMenu/SortingMenu';
 import './LeaderBoard.css';
-import ShowMoreRatingsButton from './ShowMoreRatingsButton/ShowMoreRatingsButton';
 
 const LeaderBoard: FC = () => {
   const navigate = useNavigate();

@@ -1,42 +1,37 @@
-import { NextFunction, Request, Response } from 'express';
+import { PostRequestsHandler } from 'requests';
+import type { Attributes } from 'sequelize';
 import { LeaderBoard } from '../models/leaderboard';
-import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
-import { ErrorMessages } from '../utils/errors/errorMessages';
+import type { OmitKeys } from '../types/helpers';
+import { WithMiddlewareErrorHandling } from '../utils/errors/handlers/withMiddlewareErrorHandler';
 
-interface IGetLeaderboardBody {
+type GetLeaderboardRequestBody = {
   offset: number;
   limit: number;
   sortField: keyof LeaderBoard;
-}
+};
+type GetLeaderboardResponseBody = OmitKeys<
+  Attributes<LeaderBoard>,
+  'userId' | 'id'
+>[];
 
-interface IUser {
-  id: number;
-}
-
-interface IRequest<T = unknown> extends Request {
-  user?: IUser;
-  body: T;
-}
-
-// Получить таблицу рейтинга пользователей
-export const getLeaderboard = async (
-  req: IRequest<IGetLeaderboardBody>,
-  res: Response,
-  next: NextFunction
-) => {
-  const id = req.user?.id;
+const _getLeaderboard: PostRequestsHandler<
+  GetLeaderboardRequestBody,
+  GetLeaderboardResponseBody
+> = async (req, res) => {
   const { offset, limit, sortField } = req.body;
 
-  try {
-    if (!id) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
-    const leaderBoard = await LeaderBoard.scope('withUser').findAll({
-      offset,
-      limit,
-      order: [[sortField, 'DESC']],
-    });
+  const leaderBoard: GetLeaderboardResponseBody = await LeaderBoard.scope(
+    'withUser'
+  ).findAll({
+    offset,
+    limit,
+    order: [[sortField, 'DESC']],
+  });
+  console.log(
+    `GET LEADERBOARD: ${JSON.stringify(leaderBoard)}: ${typeof leaderBoard[0]}`
+  );
 
-    res.send(leaderBoard);
-  } catch (err: unknown) {
-    next(err);
-  }
+  res.send(leaderBoard);
 };
+
+export const getLeaderboard = WithMiddlewareErrorHandling(_getLeaderboard);

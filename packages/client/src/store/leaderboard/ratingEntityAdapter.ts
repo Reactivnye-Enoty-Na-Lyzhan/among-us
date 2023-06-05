@@ -1,7 +1,7 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
-import type { PlayerRatingEntity } from '../api/leaderboard/leaderboard.api.types';
+import { PlayerRatingRecord } from './leaderboard.types';
 
-const leaderboardRatingsAdapter = createEntityAdapter<PlayerRatingEntity>({
+const leaderboardRatingsAdapter = createEntityAdapter<PlayerRatingRecord>({
   selectId: ratingEntity => ratingEntity.userLogin,
 });
 

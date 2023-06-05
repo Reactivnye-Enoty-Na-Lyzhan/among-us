@@ -1,9 +1,11 @@
-import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { createNamespace } from 'cls-hooked';
 import dotenv from 'dotenv';
+import path from 'path';
+import { ConnectionError as SequelizeConnectionError } from 'sequelize';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 
 dotenv.config({
-  path: '../../.env',
+  path: path.resolve(__dirname, '../.env'),
 });
 
 const {
@@ -32,8 +34,15 @@ export const connectDataBase = async () => {
   try {
     await sequelize.authenticate();
     await sequelize.sync({ alter: true });
-  } catch (err: unknown) {
-    console.log(err);
-    console.error('Ошибка при подключении к Базе данных');
+  } catch (error: unknown) {
+    if (error instanceof SequelizeConnectionError)
+      console.error(
+        `Ошибка при подключении к Базе данных: ${JSON.stringify(
+          sequelizeOptions
+        )}`
+      );
+    else {
+      console.error(error);
+    }
   }
 };

@@ -43,7 +43,7 @@
   gap: 4px;
 }
 
-.leaderboard__login {
+.leaderboard__player-name {
   margin: 0;
 
   font-size: 14px;
@@ -61,13 +61,4 @@
 
 .leaderboard__accent {
   font-weight: 500;
-}
-
-.leaderboard__rank {
-  margin-right: 25px;
-
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.2;
-  color: var(--font-color);
 }

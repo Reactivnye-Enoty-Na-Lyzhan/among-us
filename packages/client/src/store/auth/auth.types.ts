@@ -31,8 +31,7 @@ export type SignUpSuccessfulResponse = {
 };
 
 export type APIErrorResponse = {
-  reason: string;
-  error?: string;
+  message: string;
 };
 
 export type TOAuthData = {

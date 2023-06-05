@@ -1,20 +1,16 @@
+import playerAvatarFallback from '@/images/leaderboard/player-avatar-fallback.png';
+import { PlayerRatingRecord } from '@/store/leaderboard/leaderboard.types';
+import classNames from 'classnames';
 import { FC, memo } from 'react';
 import './PlayerCard.css';
-import type { RatingEntityMetrics } from '@/store/api/leaderboard/leaderboard.api.types';
-import playerAvatarFallback from '@/images/leaderboard/player-avatar-fallback.png';
-import classNames from 'classnames';
 
-type Props = RatingEntityMetrics & {
-  ratingVersion: number;
-  login: string;
-  avatar?: string;
+type Props = PlayerRatingRecord & {
   owner: boolean;
 };
 
 // Компонент карточки пользователя в таблице рейтинга
 const PlayerCard: FC<Props> = props => {
-  const { games, winrate, maxScore, owner, login, ratingVersion, avatar } =
-    props;
+  const { games, winrate, owner, userLogin, userNickname, userAvatar } = props;
 
   return (
     <li
@@ -23,12 +19,14 @@ const PlayerCard: FC<Props> = props => {
       })}>
       <div className="leaderboard__player-container">
         <img
-          src={avatar ?? playerAvatarFallback}
+          src={userAvatar ?? playerAvatarFallback}
           alt={'Аватар игрока'}
           className="leaderboard__user-avatar"
         />
         <div className="leaderboard__player-info">
-          <h2 className="leaderboard__login">{`${login} (v${ratingVersion})`}</h2>
+          <h2 className="leaderboard__player-name">
+            {userNickname ?? userLogin}
+          </h2>
           <p className="leaderboard__player-achievement">
             <span className="leaderboard__accent">Победы: {winrate}%</span>
           </p>
@@ -37,7 +35,6 @@ const PlayerCard: FC<Props> = props => {
           </p>
         </div>
       </div>
-      <span className="leaderboard__rank">{maxScore}</span>
     </li>
   );
 };

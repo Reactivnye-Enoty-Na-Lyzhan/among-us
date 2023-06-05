@@ -1,11 +1,11 @@
 import { Request, Response, Router } from 'express';
-import authRouter from './auth';
-import gameRouter from './game';
-import userRouter from './users';
-import themeRouter from './themes';
 import checkAuthHandler from '../middlewares/checkAuthHandler';
+import authRouter from './auth';
 import forumRouter from './forum';
+import gameRouter from './game';
 import leaderBoard from './leaderboard';
+import themeRouter from './themes';
+import userRouter from './users';
 
 const router = Router();
 

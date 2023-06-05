@@ -1,16 +1,17 @@
+import { EnumRatingTypes } from '@-constants/leaderboard/ratings.constants';
+import { useActions } from '@/hooks/useActions';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { selectSortingType } from '@/store/leaderboard/selectors';
 import { FC, memo, useCallback, useMemo, useState } from 'react';
 import SortMenuVariant from './SortingVariant/SortingVariant';
 import type { OnSelectHandler } from './SortingVariant/types';
 import './SortingMenu.css';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { selectSortingType } from '@/store/leaderboard/selectors';
-import { useActions } from '@/hooks/useActions';
-import { EnumRatingTypes } from '@-constants/leaderboard/ratings.constants';
 
 const mapSortingTypeToDescription: Record<EnumRatingTypes, string> = {
   [EnumRatingTypes.WINRATE]: 'Высокий процент побед',
-  [EnumRatingTypes.GAMES]: 'Количество сыгранных игр',
-  [EnumRatingTypes.MAX_SCORE]: 'Лучший счёт',
+  [EnumRatingTypes.GAMES]: 'Общее количество игр',
+  [EnumRatingTypes.WINS]: 'Число побед',
+  [EnumRatingTypes.LOSSES]: 'Число поражений',
 };
 
 const SortMenu: FC = () => {
