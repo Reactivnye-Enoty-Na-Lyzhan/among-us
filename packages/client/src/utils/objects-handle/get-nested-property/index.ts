@@ -1,0 +1,1 @@
+export { getNestedPropertyByPath } from './getNestedPropertyByPath';

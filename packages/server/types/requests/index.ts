@@ -1,15 +1,18 @@
 import type { NextFunction, Request, Response } from 'express';
-import { SUCCESSFUL_RESPONSE } from '../../controllers/reactions-on-messages/constants';
+import type { EmptyRecord } from 'helpers';
+import { DEFAULT_SUCCESSFUL_RESPONSE } from '../../utils/constants';
 
-type EmptyRecord = { [key in never]: any };
 type ParamsRecord = Record<string, string>;
 type BodyRecord = Record<string, string | number> | BodyRecord[];
+type BodyType = string | BodyRecord;
+
+type DefaultSuccessfulResponse = typeof DEFAULT_SUCCESSFUL_RESPONSE;
 
 type RequestType<
   Params extends ParamsRecord = EmptyRecord,
-  RequestBody extends BodyRecord = EmptyRecord
+  RequestBody extends BodyType = EmptyRecord
 > = Request<Params, any, RequestBody>;
-type WithoutParamsRequest<RequestBody extends BodyRecord = EmptyRecord> =
+type WithoutParamsRequest<RequestBody extends BodyType = EmptyRecord> =
   RequestType<EmptyRecord, RequestBody>;
 type WithoutBodyRequest<Params extends ParamsRecord = EmptyRecord> =
   RequestType<Params>;
@@ -19,15 +22,18 @@ export type RequestsHandler<
   Res extends Response = Response
 > = (request: Req, response: Res, next: NextFunction) => Promise<void>;
 
-type PostResponseType = Response<
-  typeof SUCCESSFUL_RESPONSE | { reason: string }
+type PostResponseType<ResponseBody extends BodyType> = Response<ResponseBody>;
+export type PostRequestsHandler<
+  RequestBody extends BodyType,
+  ResponseBody extends BodyType = DefaultSuccessfulResponse
+> = RequestsHandler<
+  WithoutParamsRequest<RequestBody>,
+  PostResponseType<ResponseBody>
 >;
-export type PostRequestsHandler<RequestBody extends BodyRecord> =
-  RequestsHandler<WithoutParamsRequest<RequestBody>, PostResponseType>;
 
-type GetResponseType<ResponseBody extends BodyRecord = EmptyRecord> =
+type GetResponseType<ResponseBody extends BodyType = EmptyRecord> =
   Response<ResponseBody>;
 export type GetRequestsHandler<
-  ResponseBody extends BodyRecord = EmptyRecord,
+  ResponseBody extends BodyType = DefaultSuccessfulResponse,
   Params extends ParamsRecord = EmptyRecord
 > = RequestsHandler<WithoutBodyRequest<Params>, GetResponseType<ResponseBody>>;

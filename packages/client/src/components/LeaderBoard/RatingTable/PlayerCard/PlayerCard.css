@@ -1,34 +1,40 @@
 .leaderboard__player {
+  --font-color: var(--leaderboard-font-primary);
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  max-width: 315px;
+  justify-content: space-between;
+
   width: 100%;
+  max-width: 315px;
+
   background-color: var(--leaderboard-background-tertiary);
   border-radius: 7px;
-  --font-color: var(--leaderboard-font-primary);
 }
 
 .leaderboard__player_type_owner {
-  background-color: var(--leaderboard-background-secondary);
   --font-color: var(--leaderboard-font-secondary);
+
+  background-color: var(--leaderboard-background-secondary);
 }
 
 .leaderboard__player-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   gap: 15px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .leaderboard__user-avatar {
-  margin: 10px 0 10px 25px;
+  pointer-events: none;
+
   width: 65px;
   height: 65px;
+  margin: 10px 0 10px 25px;
+
   object-fit: cover;
   object-position: center;
   border-radius: 50%;
-  pointer-events: none;
 }
 
 .leaderboard__player-info {
@@ -37,29 +43,22 @@
   gap: 4px;
 }
 
-.leaderboard__nickname {
+.leaderboard__player-name {
   margin: 0;
+
   font-size: 14px;
   font-weight: 500;
-  color: var(--font-color);
   line-height: 1.2;
+  color: var(--font-color);
 }
 
-.leaderboard__player-achievment {
+.leaderboard__player-achievement {
   margin: 0;
   font-size: 12px;
-  color: var(--font-color);
   line-height: 1.2;
+  color: var(--font-color);
 }
 
 .leaderboard__accent {
   font-weight: 500;
-}
-
-.leaderboard__rank {
-  margin-right: 25px;
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--font-color);
-  line-height: 1.2;
 }

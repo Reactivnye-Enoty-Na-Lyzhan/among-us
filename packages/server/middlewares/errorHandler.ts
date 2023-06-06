@@ -9,9 +9,12 @@ export default (
   err: ResponseError,
   _req: Request,
   res: Response,
-  _: NextFunction
+  next: NextFunction
 ) => {
   const { statusCode = DEFAULT_ERROR_CODE, message } = err;
+  if (res.headersSent) {
+    return next(err);
+  }
 
   return res.status(statusCode).send({
     message:

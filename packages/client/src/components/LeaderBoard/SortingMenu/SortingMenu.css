@@ -1,0 +1,59 @@
+.leaderboard__sort-menu {
+  position: relative;
+  display: flex;
+}
+
+.leaderboard__sort-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leaderboard__menu-title {
+  line-height: 1.2;
+}
+
+.leaderboard__menu-icon {
+  width: 8px;
+  height: 5px;
+  margin-left: 5px;
+
+  background-color: var(--leaderboard-font-primary);
+
+  mask-image: url(images/ui/caret.svg);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+
+.leaderboard__menu-icon_opened {
+  transform: scaleY(-1);
+}
+
+.leaderboard__dropdown {
+  position: absolute;
+  top: 51px;
+  left: 0;
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  width: 217px;
+  margin: 0;
+  padding: 18px 0 18px 21px;
+
+  list-style: none;
+
+  visibility: hidden;
+  opacity: 0;
+  background-color: var(--leaderboard-dropdown-background);
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(var(--leaderboard-dropdown-overlay), 0.25);
+}
+
+.leaderboard__dropdown_opened {
+  visibility: visible;
+  opacity: 1;
+}

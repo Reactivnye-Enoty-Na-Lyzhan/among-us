@@ -18,40 +18,14 @@ const isServerError: ErrorClassifier = {
   errorMessage: ApiResponseMessages_RU[ApiErrors.INTERNAL_SERVER_ERROR],
 };
 
-const isBadFormatError: ErrorClassifier = {
-  predicateFunction: ({ response }) => {
-    return response.error === 'Bad format';
+const isBadRequestError: ErrorClassifier = {
+  predicateFunction: ({ status }) => {
+    return status === 400;
   },
-  errorMessage: ({ response }) =>
-    ApiResponseMessages_RU[response.reason as ApiErrors] ??
-    'Одно из полей неверно',
-};
-
-const isLoginAlreadyExistsError: ErrorClassifier = {
-  predicateFunction: ({ response }) => {
-    return response.reason === ApiErrors.LOGIN_ALREADY_EXISTS;
-  },
-  errorMessage: ApiResponseMessages_RU[ApiErrors.LOGIN_ALREADY_EXISTS],
-};
-
-const isUserAlreadyInSystem: ErrorClassifier = {
-  predicateFunction: ({ response }) => {
-    return response.reason === ApiErrors.USER_ALREADY_IN_SYSTEM;
-  },
-  errorMessage: ApiResponseMessages_RU[ApiErrors.USER_ALREADY_IN_SYSTEM],
-};
-
-const isInvalidCookie: ErrorClassifier = {
-  predicateFunction: ({ response }) => {
-    return response.reason === ApiErrors.INVALID_COOKIE;
-  },
-  errorMessage: ApiResponseMessages_RU[ApiErrors.INVALID_COOKIE],
+  errorMessage: ({ response }) => response.message,
 };
 
 export const errorClassifiers: ErrorClassifier[] = [
   isServerError,
-  isBadFormatError,
-  isLoginAlreadyExistsError,
-  isUserAlreadyInSystem,
-  isInvalidCookie,
+  isBadRequestError,
 ];

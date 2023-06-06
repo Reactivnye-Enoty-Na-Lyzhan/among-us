@@ -7,6 +7,8 @@ dotenv.config({
 
 const { NODE_ENV, OAUTH_CLIENT } = process.env;
 
+export const DEFAULT_SUCCESSFUL_RESPONSE = 'OK';
+
 export const DEFAULT_ERROR_CODE = 500;
 export const DEFAULT_ERROR_MESSAGE =
   'Что-то пошло не так на стороне сервера...';
