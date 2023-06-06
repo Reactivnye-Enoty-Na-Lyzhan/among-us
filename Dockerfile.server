@@ -1,27 +1,36 @@
-ARG NODE_VERSION=16
+ARG NODE_VERSION=18.16.0
 ARG SERVER_PORT=3001
 
-FROM node:$NODE_VERSION-buster as base
+FROM node:$NODE_VERSION-bullseye as base
 
 WORKDIR /app
 
 FROM base as builder
 
-COPY package.json yarn.lock
+COPY package.json yarn.lock lerna.json ./
 RUN yarn install --frozen-lockfile
 
-COPY . .
+COPY ./packages ./packages
 
-RUN yarn lerna bootstrap
-RUN rm -rf /app/packages/server/dist/ && yarn build --scope=server
+RUN yarn lerna bootstrap && \
+    rm -rf /app/packages/client/dist/ && \
+    rm -rf /app/packages/client/dist-ssr/ && \
+    rm -rf /app/packages/server/dist/ && \
+    yarn build
 
+FROM node:$NODE_VERSION-bullseye-slim as production
 
-FROM node:$NODE_VERSION-buster-slim as production
 WORKDIR /app
 
-COPY --from=builder /app/packages/server/dist/ /app/
-COPY --from=builder /app/packages/server/package.json /app/package.json
+COPY --from=builder /app/packages/client/dist/ /app/packages/client/dist
+COPY --from=builder /app/packages/client/dist-ssr/ /app/packages/client/dist-ssr
+COPY --from=builder /app/packages/client/src/ /app/packages/client/src
+COPY --from=builder /app/packages/server/dist/ /app/packages/server/dist
+COPY --from=builder /app/package.json /app/yarn.lock /app/lerna.json /app/
+COPY --from=builder /app/packages/client/package.json /app/packages/client/package.json
+COPY --from=builder /app/packages/server/package.json /app/packages/server/package.json
+
 RUN yarn install --production=true
 
 EXPOSE $SERVER_PORT
-CMD [ "node", "/app/index.js" ]
+CMD [ "node", "/app/packages/server/dist/server.js" ] 

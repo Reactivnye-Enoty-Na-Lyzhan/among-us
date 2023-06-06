@@ -1,0 +1,64 @@
+.leaderboard__player {
+  --font-color: var(--leaderboard-font-primary);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: 315px;
+
+  background-color: var(--leaderboard-background-tertiary);
+  border-radius: 7px;
+}
+
+.leaderboard__player_type_owner {
+  --font-color: var(--leaderboard-font-secondary);
+
+  background-color: var(--leaderboard-background-secondary);
+}
+
+.leaderboard__player-container {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leaderboard__user-avatar {
+  pointer-events: none;
+
+  width: 65px;
+  height: 65px;
+  margin: 10px 0 10px 25px;
+
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+.leaderboard__player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.leaderboard__player-name {
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--font-color);
+}
+
+.leaderboard__player-achievement {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--font-color);
+}
+
+.leaderboard__accent {
+  font-weight: 500;
+}

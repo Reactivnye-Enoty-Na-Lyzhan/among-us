@@ -1,0 +1,34 @@
+.leaderboard__rating-table {
+  scrollbar-color: var(--leaderboard-scroll-primary)
+    var(--leaderboard-scroll-secondary);
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+
+  overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  row-gap: 50px;
+  column-gap: 78px;
+
+  width: 88.75vw;
+  max-width: 1136px;
+  height: 355px;
+  margin: 50px 0;
+  padding: 0 25px 0 0;
+
+  list-style: none;
+}
+
+.leaderboard__rating-table::-webkit-scrollbar {
+  width: 10px;
+}
+
+.leaderboard__rating-table::-webkit-scrollbar-thumb {
+  background-color: var(--leaderboard-scroll-primary);
+  border: 3px solid var(--leaderboard-scroll-secondary);
+  border-radius: 5px;
+}
+.leaderboard__rating-table::-webkit-scrollbar-track {
+  margin: 5px 0;
+}

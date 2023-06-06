@@ -29,6 +29,10 @@ const memoizedGetErrorMessage = (() => {
   const cache: Record<string, string> = {};
 
   return function memoized({ status, response }: Args) {
+    console.log(
+      `SIGNUP ERROR - STATUS: ${status}, RESPONSE: ${JSON.stringify(response)}`
+    );
+
     const cacheKey = JSON.stringify([status, response]);
     const cachedResult = cache[cacheKey];
     if (cachedResult) {

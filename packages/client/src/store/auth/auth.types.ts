@@ -1,10 +1,11 @@
 export type User = {
   id: number;
-  first_name: string;
-  second_name: string;
-  display_name: string;
+  firstName: string;
+  lastName: string;
+  nickname: string;
   login: string;
   email: string;
+  password: string;
   phone: string;
   avatar: string;
 };
@@ -15,8 +16,8 @@ export type SignInRequestDTO = {
 };
 
 export type SignUpRequestDTO = {
-  first_name: string;
-  second_name: string;
+  firstName: string;
+  lastName: string;
   login: string;
   email: string;
   password: string;
@@ -30,6 +31,13 @@ export type SignUpSuccessfulResponse = {
 };
 
 export type APIErrorResponse = {
-  reason: string;
-  error?: string;
+  message: string;
+};
+
+export type TOAuthData = {
+  code: string;
+};
+
+export type TServiceId = {
+  service_id: string;
 };

@@ -1,0 +1,37 @@
+.meeting-voting {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.meeting-voting__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #010318;
+  line-height: 1.2;
+}
+
+.meeting-voting__crew {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin: 30px 0 auto 0;
+  padding: 0;
+  column-gap: 45px;
+  row-gap: 25px;
+  list-style: none;
+}
+
+.meeting-voting__time-left {
+  margin: 0;
+  font-size: 16px;
+  color: #010318;
+  line-height: 1.2;
+}
+
+.meeting-voting__accent {
+  font-weight: 700;
+}

@@ -4,8 +4,10 @@
   "type": "module",
   "scripts": {
     "add:client": "lerna add --scope=client",
-    "build": "tsc && yarn sw:build && vite build",
-    "build:dev": "yarn sw:build && cross-env BUILD_MODE=development vite build",
+    "build": "yarn run build:client && yarn run build:server",
+    "build:client": "tsc && yarn sw:build && vite build ",
+    "build:server": "tsc && vite build --outDir dist-ssr --ssr src/ssr-entry.tsx",
+    "build:dev": "yarn sw:build && cross-env BUILD_MODE=development vite build:client && vite build:server",
     "dev": "vite",
     "dev:with-sw": "run-p --print-label sw:dev dev",
     "sw:build": "tsc --noEmit --project src/service-worker/worker/tsconfig.sw.json && yarn sw:transpile",
@@ -25,7 +27,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
-    "react-router-dom": "^6.9.0"
+    "react-router-dom": "^6.9.0",
+    "socket.io-client": "4.6.1"
   },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",

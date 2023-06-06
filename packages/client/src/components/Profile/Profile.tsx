@@ -1,24 +1,29 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import ProfilePassword from './ProfilePassword/ProfilePassword';
 import ProfilePersonalData from './ProfilePersonalData/ProfilePersonalData';
 import ProfileHeader from './ProfileHeader/ProfileHeader';
 import ProfileAvatar from './ProfileAvatar/ProfileAvatar';
 import ProfileNavigation from './ProfileNavigation/ProfileNavigation';
+import ProfileThemeSlider from './ProfileThemeSlider/ProfileThemeSlider';
 import hocAuth from '@/hoc/hocAuth';
 import { SIGNIN_URL } from '@/utils/constants';
 import './Profile.css';
 
-type Props = {
-  choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар';
-  handleChoiceChange?: (
-    choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар'
-  ) => void;
-};
+const Profile: FC = () => {
+  const [choice, setChoice] = useState<
+    'Персональные данные' | 'Изменение пароля' | 'Аватар'
+  >('Персональные данные');
 
-const Profile: FC<Props> = ({ choice, handleChoiceChange }) => {
+  const handleChoiceChange = (
+    choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар'
+  ) => {
+    setChoice(choice);
+  };
+
   return (
     /* Измени потом. Profile-page добавил, чтобы сохранить заливку */
     <div className="profile-page">
+      <ProfileThemeSlider />
       <ProfileHeader choice={choice} />
       {choice === 'Персональные данные' && (
         <div className="profile__form profile__form_space_left">

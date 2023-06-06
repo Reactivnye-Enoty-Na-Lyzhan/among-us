@@ -31,7 +31,7 @@ export default defineConfig({
     port: Number(process.env.CLIENT_PORT) || 3000,
   },
   define: {
-    __SERVER_PORT__: process.env.SERVER_PORT,
+    __SERVER_PORT__: process.env.SERVER_PORT || 3001,
   },
   plugins: [react()],
   build: {
@@ -44,12 +44,20 @@ export default defineConfig({
       plugins: [rollupWatchExternalPlugin(['public/service-worker.js'])],
     },
   },
+  ssr: {
+    format: 'cjs',
+    target: 'node',
+  },
+  legacy: {
+    buildSsrCjsExternalHeuristics: true,
+  },
   css: {
     devSourcemap: true,
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src/'),
+      '@-constants': path.resolve(__dirname, 'src/utils/constants'),
       images: path.resolve(__dirname, 'src/images/'),
       fonts: path.resolve(__dirname, 'src/vendor/fonts/'),
     },
