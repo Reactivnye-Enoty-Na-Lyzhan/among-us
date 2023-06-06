@@ -23,7 +23,7 @@ module.exports = {
     'eol-last': ['error', 'always'],
     semi: ['error', 'always'],
   },
-  ignorePatterns: ['node_modules/', 'dist/'],
+  ignorePatterns: ['node_modules/', 'dist/', 'dist-ssr/', 'public/'],
   overrides: [
     {
       files: ['*.cjs'],
