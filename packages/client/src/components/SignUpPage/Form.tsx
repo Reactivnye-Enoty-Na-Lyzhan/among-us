@@ -4,11 +4,11 @@ import Input from '@/components/Form/Input/Input';
 import { useForm } from '@/components/Form/hooks';
 import { useValidation } from '@/hooks/useValidation';
 import { validation } from '@/utils/validation';
+import classNames from 'classnames';
 import { useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useOnSubmitQueries } from './hooks/useSignUp';
 import { SignUpFormData } from './_types';
-import classNames from 'classnames';
+import { useOnSubmitQueries } from './hooks/useSignUp';
 
 export default function SignUpForm() {
   const { values, handleInputChange } = useForm({

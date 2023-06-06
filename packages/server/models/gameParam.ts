@@ -40,6 +40,11 @@ GameParam.init(
     },
   },
   {
+    defaultScope: {
+      attributes: {
+        exclude: ['id', 'gameId'],
+      },
+    },
     sequelize,
     tableName: 'gameParams',
     timestamps: false,

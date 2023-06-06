@@ -11,7 +11,6 @@ import { ssrDevHandler } from './middlewares/ssrDevHandler';
 import { ssrProductionHandler } from './middlewares/ssrProductionHandler';
 import { connectDataBase } from './utils/connectDataBase';
 import { CLIENT_PACKAGE_PATH } from './utils/constants';
-import { helmetSettings } from './utils/securityData/helmetSettings';
 import { connectIO } from './socket';
 
 const { NODE_ENV } = process.env;
@@ -23,9 +22,6 @@ const createServer = async () => {
 
   // Http-server for express and sockets
   const server = createHttpServer(app);
-
-  // Helmet
-  app.use(helmetSettings);
 
   // DataBase
   await connectDataBase();

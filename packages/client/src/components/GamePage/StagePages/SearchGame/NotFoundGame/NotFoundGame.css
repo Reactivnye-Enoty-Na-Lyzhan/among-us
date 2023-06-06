@@ -1,0 +1,15 @@
+.not-found-game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 83.3vw;
+  max-width: 1250px;
+  height: 355px;
+}
+
+.not-found-game__message {
+  margin: 0;
+  font-size: 16px;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+}

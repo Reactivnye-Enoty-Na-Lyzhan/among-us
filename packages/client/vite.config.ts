@@ -1,8 +1,6 @@
 import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
 import path from 'path';
-import { InputOptions, OutputOptions, rollup } from 'rollup';
-import rollupPluginTypescript from 'rollup-plugin-typescript';
 import { defineConfig } from 'vite';
 dotenv.config();
 
@@ -19,24 +17,15 @@ if (IS_DEV) {
 }
 console.log(outputNamesOptions);
 
-const CompileTsServiceWorker = () => ({
-  name: 'compile-typescript-service-worker',
-  async writeBundle() {
-    const inputOptions: InputOptions = {
-      input: 'src/service-worker/worker/service-worker.ts',
-      plugins: [rollupPluginTypescript()],
-    };
-    const outputOptions: OutputOptions = {
-      file: `${OUT_DIR}/service-worker.js`,
-      format: 'es',
-    };
-    const bundle = await rollup(inputOptions);
-    await bundle.write(outputOptions);
-    await bundle.close();
+const rollupWatchExternalPlugin = (files: string[]) => ({
+  name: 'watch-external',
+  async buildStart() {
+    for (const file of files) {
+      this.addWatchFile(file);
+    }
   },
 });
 
-// https://vitejs.dev/config/
 export default defineConfig({
   server: {
     port: Number(process.env.CLIENT_PORT) || 3000,
@@ -44,7 +33,7 @@ export default defineConfig({
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT || 3001,
   },
-  plugins: [react(), CompileTsServiceWorker()],
+  plugins: [react()],
   build: {
     outDir: OUT_DIR,
     cssMinify: false,
@@ -52,6 +41,7 @@ export default defineConfig({
       output: {
         ...outputNamesOptions,
       },
+      plugins: [rollupWatchExternalPlugin(['public/service-worker.js'])],
     },
   },
   ssr: {
@@ -67,6 +57,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src/'),
+      '@-constants': path.resolve(__dirname, 'src/utils/constants'),
       images: path.resolve(__dirname, 'src/images/'),
       fonts: path.resolve(__dirname, 'src/vendor/fonts/'),
     },

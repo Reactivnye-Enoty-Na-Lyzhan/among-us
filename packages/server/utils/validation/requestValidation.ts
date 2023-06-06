@@ -12,8 +12,8 @@ const email = Joi.string().required().email();
 const password = Joi.string().required();
 const nickname = Joi.string().required();
 const title = Joi.string().required();
-const offset = Joi.number().positive().default(0);
-const limit = Joi.number().positive().default(9);
+const offset = Joi.number().positive().allow(0).default(0);
+const limit = Joi.number().positive().default(12);
 const gameId = idFormat;
 const taskId = idFormat;
 const playerId = idFormat;
@@ -31,6 +31,11 @@ const color = Joi.string()
     'brown',
     'grey'
   );
+const sortField = Joi.string()
+  .required()
+  .valid('winrate', 'games', 'wins', 'losses');
+
+const code = Joi.string().required();
 const params = Joi.object<IParams>().keys({
   discussion: Joi.number().required().min(30).max(90),
   impostors: Joi.number().required().min(1).max(4),
@@ -76,6 +81,11 @@ export const createGameValidation = validateBody<string | IParams>({
   params,
 });
 
+export const getAllGamesValidation = validateBody<number>({
+  offset,
+  limit,
+});
+
 export const findGamesValidation = validateBody<string | number>({
   title,
   offset,
@@ -116,4 +126,14 @@ export const updateProfileValidation = validateBody<string>({
 
 export const addThemeValidation = validateBody<number>({
   themeId,
+});
+
+export const getLeaderboardValidation = validateBody<number | string>({
+  sortField,
+  offset,
+  limit,
+});
+
+export const getOAuthTokenValidation = validateBody<string>({
+  code,
 });

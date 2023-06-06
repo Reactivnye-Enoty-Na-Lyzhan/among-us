@@ -1,0 +1,148 @@
+.character-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.character-selection_spacing_outer {
+  margin: 130px 0 55px;
+}
+
+.character-selection__title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+}
+
+.character-selection__container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas: 'crewman-left content crewman-right';
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.character-selection__crewman {
+  grid-area: crewman-left;
+  justify-self: flex-end;
+  align-self: center;
+  margin: 71px 240px 0 0;
+  width: 181px;
+  height: 247px;
+  background-image: url('@/images/game/crew/crewman_white.svg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.character-selection__crewman_suit_white {
+  background-image: url('@/images/game/crew/crewman_white.svg');
+}
+
+.character-selection__crewman_suit_green {
+  background-image: url('@/images/game/crew/crewman_green.svg');
+}
+
+.character-selection__crewman_suit_aquamarine {
+  background-image: url('@/images/game/crew/crewman_aquamarine.svg');
+}
+
+.character-selection__crewman_suit_red {
+  background-image: url('@/images/game/crew/crewman_red.svg');
+}
+
+.character-selection__crewman_suit_brown {
+  background-image: url('@/images/game/crew/crewman_brown.svg');
+}
+
+.character-selection__crewman_suit_grey {
+  background-image: url('@/images/game/crew/crewman_grey.svg');
+}
+
+.character-selection__crewman_suit_yellow {
+  background-image: url('@/images/game/crew/crewman_yellow.svg');
+}
+
+.character-selection__crewman_suit_purple {
+  background-image: url('@/images/game/crew/crewman_purple.svg');
+}
+
+.character-selection__crewman_suit_blue {
+  background-image: url('@/images/game/crew/crewman_blue.svg');
+}
+
+.character-selection__colors-list {
+  grid-area: content;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 70px;
+  width: 278px;
+  list-style: none;
+}
+
+.character-selection__list-item {
+  display: flex;
+}
+
+.character-selection__navigation {
+  grid-area: crewman-right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-self: flex-start;
+  margin-left: 125px;
+  padding: 0;
+  gap: 10px;
+  font-family: inherit;
+  background-color: var(--button-main-tertriary);
+  border: none;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.character-selection__navigation:hover {
+  opacity: 0.8;
+}
+
+.character-selection__button-title {
+  font-size: 16px;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.character-selection__button-icon {
+  display: inline-block;
+  width: 30px;
+  height: 13px;
+  background-image: url(../../../../images/ui/return-link__icon.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1);
+}
+
+.character-selection__leave-game {
+  padding: 0;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--button-font-secondary);
+  line-height: 1.2;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.character-selection__leave-game:hover {
+  opacity: 0.8;
+}

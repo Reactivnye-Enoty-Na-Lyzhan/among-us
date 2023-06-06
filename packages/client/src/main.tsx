@@ -22,13 +22,11 @@ const store = createStore(initialState);
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <GameSocketContext.Provider value={gameSocket}>
-          <App />
-        </GameSocketContext.Provider>
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <Provider store={store}>
+      <GameSocketContext.Provider value={gameSocket}>
+        <App />
+      </GameSocketContext.Provider>
+    </Provider>
+  </BrowserRouter>
 );

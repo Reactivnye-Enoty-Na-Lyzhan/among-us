@@ -14,6 +14,7 @@ import { WrongDataError } from '../utils/errors/commonErrors/WrongDataError';
 import { ErrorMessages } from '../utils/errors/errorMessages';
 import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
 import { sequelize } from '../utils/connectDataBase';
+import { LeaderBoard } from './leaderboard';
 
 export class User extends Model<
   InferAttributes<User>,
@@ -99,6 +100,8 @@ User.init(
     },
     avatar: {
       type: DataTypes.STRING,
+      defaultValue: '0c386102f8faef94b8c8',
+      allowNull: false,
     },
     id: {
       type: DataTypes.INTEGER,
@@ -154,6 +157,17 @@ User.hasMany(GameQueue, {
 });
 GameQueue.belongsTo(User, {
   as: 'userQueue',
+  targetKey: 'id',
+  foreignKey: 'userId',
+});
+
+User.hasOne(LeaderBoard, {
+  as: 'leaderboard',
+  sourceKey: 'id',
+  foreignKey: 'userId',
+});
+LeaderBoard.belongsTo(User, {
+  as: 'user',
   targetKey: 'id',
   foreignKey: 'userId',
 });

@@ -1,5 +1,9 @@
 import type { Request } from 'express';
-import { IUser } from '../../controllers/games';
+
+interface IUser {
+  id: number;
+}
+
 export interface IRequestPostMessage extends Request {
   user?: IUser;
   body: {

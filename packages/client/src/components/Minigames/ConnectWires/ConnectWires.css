@@ -1,0 +1,63 @@
+.connwires {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  padding: 20px;
+  background-color: var(--background-main-primary);
+  position: relative;
+}
+
+.connwires__win {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-main-primary);
+  z-index: 1;
+  color: var(--font-main-primary);
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.connwires-board {
+  display: flex;
+}
+
+.connwires-board__left,
+.connwires-board__right {
+  width: 40px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.connwires-grid {
+  width: 600px;
+  height: 600px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 5px;
+}
+
+.connwires-tip {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.connwires-tip__active::after {
+  display: block;
+  content: '';
+  height: 6px;
+  width: 100%;
+  margin: 3px;
+  background-color: rgb(228, 159, 63);
+}

@@ -1,10 +1,16 @@
-import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { createNamespace } from 'cls-hooked';
 import dotenv from 'dotenv';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
+import { IS_DEV } from './constants';
 
-dotenv.config({
-  path: '../../.env',
-});
+const nameSpace = createNamespace('sequilize-cls');
+(Sequelize as any).__proto__.useCLS(nameSpace);
+
+if (IS_DEV) {
+  dotenv.config({
+    path: '../../../.env',
+  });
+}
 
 const {
   POSTGRES_HOST,
@@ -23,9 +29,6 @@ const sequelizeOptions: SequelizeOptions = {
   dialect: 'postgres',
   logging: false,
 };
-
-const nameSpace = createNamespace('sequilize-cls');
-(Sequelize as any).__proto__.useCLS(nameSpace);
 export const sequelize = new Sequelize(sequelizeOptions);
 
 export const connectDataBase = async () => {
@@ -33,7 +36,7 @@ export const connectDataBase = async () => {
     await sequelize.authenticate();
     await sequelize.sync({ alter: true });
   } catch (err: unknown) {
-    console.log(err);
     console.error('Ошибка при подключении к Базе данных');
+    console.log(err);
   }
 };

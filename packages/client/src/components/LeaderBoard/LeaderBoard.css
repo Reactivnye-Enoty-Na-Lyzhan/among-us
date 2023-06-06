@@ -1,40 +1,70 @@
 .leaderboard {
+  position: relative;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
   height: 100vh;
+
   background-color: var(--leaderboard-background-primary);
-  position: relative;
+}
+
+.leaderboard__functional-button {
+  cursor: pointer;
+
+  width: 133px;
+  height: 33px;
+  padding: 0;
+
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--leaderboard-font-primary);
+
+  background-color: var(--leaderboard-background-tertiary);
+  border: none;
+  border-radius: 5px;
+
+  transition: 0.4s;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .leaderboard__return-link {
+  cursor: pointer;
+
   position: absolute;
+  top: 45px;
+  left: 30px;
+
   display: flex;
   align-items: center;
   align-self: flex-start;
-  top: 45px;
-  left: 30px;
-  cursor: pointer;
 }
 
 .leaderboard__return-icon {
-  margin-right: 10px;
   width: 32px;
   height: 15px;
+  margin-right: 10px;
+
   background-color: var(--leaderboard-font-primary);
-  mask-image: url(../../images/ui/return-link.svg);
-  mask-size: contain;
+
+  mask-image: url('@/images/ui/return-link__icon.svg');
   mask-position: center;
   mask-repeat: no-repeat;
+  mask-size: contain;
 }
 
 .leaderboard__title {
   margin: 0;
+
   font-size: 22px;
   font-weight: 500;
-  color: var(--leaderboard-font-primary);
   line-height: 1.2;
+  color: var(--leaderboard-font-primary);
 }
 
 .leaderboard__container {
@@ -42,142 +72,24 @@
   flex-direction: column;
 }
 
-.leaderboard__sort-menu {
-  display: flex;
-  position: relative;
-}
-
-.leaderboard__sort-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  width: 133px;
-  height: 33px;
-  background-color: var(--leaderboard-background-tertiary);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.4s;
-}
-
-.leaderboard__sort-button:hover {
-  opacity: 0.8;
-}
-
-.leaderboard__menu-title {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--leaderboard-font-primary);
-  line-height: 1.2;
-}
-
-.leaderboard__menu-icon {
-  margin-left: 5px;
-  width: 8px;
-  height: 5px;
-  background-color: var(--leaderboard-font-primary);
-  mask-image: url(../../images/ui/caret.svg);
-  mask-size: contain;
-  mask-position: center;
-  mask-repeat: no-repeat;
-}
-
-.leaderboard__menu-icon_opened {
-  transform: scaleY(-1);
-}
-
-.leaderboard__dropdown {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 51px;
-  left: 0;
-  margin: 0;
-  padding: 18px 0 18px 21px;
-  gap: 15px;
-  width: 217px;
-  background-color: var(--leaderboard-dropdown-background);
-  box-shadow: 0 4px 4px rgba(var(--leaderboard-dropdown-overlay), 0.25);
-  border-radius: 5px;
-  list-style: none;
-  overflow: hidden;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.leaderboard__dropdown_opened {
-  opacity: 1;
-  visibility: visible;
-}
-
-.leaderboard__dropdown-item {
-  display: flex;
-}
-
-.leaderboard__sort-variant {
-  padding: 0;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--leaderboard-dropdown-fontZ);
-  line-height: 1.2;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.leaderboard__sort-variant_active {
-  font-weight: 700;
-}
-
-.leaderboard__sort-variant:hover {
-  opacity: 0.8;
-}
-
-.leaderboard__rating-board {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 50px 0;
-  padding: 0 25px 0 0;
-  column-gap: 78px;
-  row-gap: 50px;
-  max-width: 1136px;
-  width: 88.75vw;
-  max-height: 355px;
-  list-style: none;
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: var(--leaderboard-scroll-primary)
-    var(--leaderboard-scroll-secondary);
-  scrollbar-gutter: stable;
-}
-
-.leaderboard__rating-board::-webkit-scrollbar {
-  width: 10px;
-}
-
-.leaderboard__rating-board::-webkit-scrollbar-thumb {
-  background-color: var(--leaderboard-scroll-primary);
-  border: 3px solid var(--leaderboard-scroll-secondary);
-  border-radius: 5px;
-}
-.leaderboard__rating-board::-webkit-scrollbar-track {
-  margin: 5px 0;
-}
-
 .leaderboard__show-more {
+  cursor: pointer;
+
   align-self: flex-end;
-  margin-right: 35px;
-  padding: 0;
+
   width: 138px;
   height: 34px;
+  margin-right: 35px;
+  padding: 0;
+
   font-size: 12px;
-  color: var(--leaderboard-font-primary);
   line-height: 1.2;
+  color: var(--leaderboard-font-primary);
+
   background-color: var(--leaderboard-background-tertiary);
   border: none;
   border-radius: 3px;
-  cursor: pointer;
+
   transition: 0.4s;
 }
 
@@ -186,7 +98,7 @@
 }
 
 .leaderboard__show-more:disabled {
-  user-select: none;
   pointer-events: none;
+  user-select: none;
   opacity: 0.8;
 }
