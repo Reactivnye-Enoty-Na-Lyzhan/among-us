@@ -25,3 +25,7 @@ dist-ssr
 
 # Vite Temporary Files
 vite.config.ts.timestamp*
+
+public/service-worker*.js
+*.tsbuildinfo
+configs/stylelint/
