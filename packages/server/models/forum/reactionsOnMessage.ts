@@ -1,5 +1,9 @@
-import { InferAttributes, InferCreationAttributes, Model } from 'sequelize';
-import { DataType } from 'sequelize-typescript';
+import {
+  Model,
+  DataTypes,
+  type InferAttributes,
+  type InferCreationAttributes,
+} from 'sequelize';
 import { User } from '../../models/user';
 import { sequelize } from '../../utils/connectDataBase';
 import { Message } from './message';
@@ -25,19 +29,19 @@ const isCorrectReactionsJSON = (reactionsJSON: Record<string, unknown>) => {
 ReactionsOnMessage.init(
   {
     message_id: {
-      type: DataType.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       validate: {
         inNotNegativeInteger,
       },
     },
     user_id: {
-      type: DataType.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       validate: { inNotNegativeInteger },
     },
     reactions: {
-      type: DataType.JSONB,
+      type: DataTypes.JSONB,
       defaultValue: {},
       validate: { isCorrectReactionsJSON },
     },

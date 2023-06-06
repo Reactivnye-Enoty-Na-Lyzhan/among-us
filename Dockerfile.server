@@ -32,7 +32,5 @@ COPY --from=builder /app/packages/server/package.json /app/packages/server/packa
 
 RUN yarn install --production=true
 
-COPY .env /app/packages/server/dist
-
 EXPOSE $SERVER_PORT
 CMD [ "node", "/app/packages/server/dist/server.js" ] 

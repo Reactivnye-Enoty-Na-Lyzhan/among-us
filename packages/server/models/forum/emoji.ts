@@ -1,10 +1,10 @@
 import {
-  CreationOptional,
-  InferAttributes,
-  InferCreationAttributes,
   Model,
+  DataTypes,
+  type CreationOptional,
+  type InferAttributes,
+  type InferCreationAttributes,
 } from 'sequelize';
-import { DataType } from 'sequelize-typescript';
 import { sequelize } from '../../utils/connectDataBase';
 
 export class Emoji extends Model<
@@ -19,16 +19,16 @@ export class Emoji extends Model<
 Emoji.init(
   {
     id: {
-      type: DataType.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     symbol: {
-      type: DataType.STRING(1),
+      type: DataTypes.STRING(1),
       allowNull: false,
     },
     name: {
-      type: DataType.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },
