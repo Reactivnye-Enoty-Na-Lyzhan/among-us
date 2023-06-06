@@ -6,7 +6,7 @@ import { AlreadyExistError } from '../utils/errors/commonErrors/AlreadyExistErro
 import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
 import { ErrorMessages } from '../utils/errors/errorMessages';
 import { ResponseMessages } from '../utils/ResponseMessages';
-import { CURRENT_HOST } from '../utils/constants';
+import { CURRENT_HOST, IS_DEV } from '../utils/constants';
 import type { NextFunction, Request, Response } from 'express';
 
 interface IUpdateProfileBody {
@@ -45,9 +45,11 @@ interface IRequest<T = unknown> extends Request {
   body: T;
 }
 
-dotenv.config({
-  path: '../../.env',
-});
+if (IS_DEV) {
+  dotenv.config({
+    path: '../../.env',
+  });
+}
 
 const { NODE_ENV } = process.env;
 

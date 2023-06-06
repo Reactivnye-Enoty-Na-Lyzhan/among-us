@@ -3,10 +3,13 @@ import { randomBytes } from 'crypto';
 import dotenv from 'dotenv';
 import sharp from 'sharp';
 import { s3 } from '../../utils/s3/s3Client';
+import { IS_DEV } from '../../utils/constants';
 
-dotenv.config({
-  path: '../../../../.env',
-});
+if (IS_DEV) {
+  dotenv.config({
+    path: '../../../../.env',
+  });
+}
 
 const { AWS_BUCKET } = process.env;
 

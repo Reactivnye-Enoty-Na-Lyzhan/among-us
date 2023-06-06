@@ -2,11 +2,13 @@ import fetch from 'cross-fetch';
 import dotenv from 'dotenv';
 import { WrongDataError } from '../../utils/errors/commonErrors/WrongDataError';
 import { ErrorMessages } from '../../utils/errors/errorMessages';
-import { OUATH_TOKEN_URL } from '../../utils/constants';
+import { IS_DEV, OUATH_TOKEN_URL } from '../../utils/constants';
 
-dotenv.config({
-  path: '../../../.env',
-});
+if (IS_DEV) {
+  dotenv.config({
+    path: '../../../.env',
+  });
+}
 
 const { OAUTH_CLIENT, OAUTH_SECRET } = process.env;
 

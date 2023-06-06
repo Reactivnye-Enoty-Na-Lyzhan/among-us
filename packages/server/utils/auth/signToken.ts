@@ -1,14 +1,17 @@
 import { sign } from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { IS_DEV } from '../../utils/constants';
 
 interface IPayload {
   id: number;
   yandexId: number | null;
 }
 
-dotenv.config({
-  path: '../../../../.env',
-});
+if (IS_DEV) {
+  dotenv.config({
+    path: '../../../../.env',
+  });
+}
 
 const { JWT_SECRET = 'secret', NODE_ENV } = process.env;
 

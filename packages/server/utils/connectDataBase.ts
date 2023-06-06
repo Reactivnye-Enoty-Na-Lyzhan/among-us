@@ -1,14 +1,16 @@
 import { createNamespace } from 'cls-hooked';
 import dotenv from 'dotenv';
-import path from 'path';
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
+import { IS_DEV } from './constants';
 
 const nameSpace = createNamespace('sequilize-cls');
 (Sequelize as any).__proto__.useCLS(nameSpace);
 
-dotenv.config({
-  path: path.resolve(__dirname, '../.env'),
-});
+if (IS_DEV) {
+  dotenv.config({
+    path: '../../../.env',
+  });
+}
 
 const {
   POSTGRES_HOST,

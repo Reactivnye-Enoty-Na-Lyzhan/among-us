@@ -27,9 +27,6 @@ const _getLeaderboard: PostRequestsHandler<
     limit,
     order: [[sortField, 'DESC']],
   });
-  console.log(
-    `GET LEADERBOARD: ${JSON.stringify(leaderBoard)}: ${typeof leaderBoard[0]}`
-  );
 
   res.send(leaderBoard);
 };

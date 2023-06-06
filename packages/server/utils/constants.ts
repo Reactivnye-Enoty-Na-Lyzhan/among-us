@@ -1,9 +1,11 @@
 import dotenv from 'dotenv';
 import path from 'path';
 
-dotenv.config({
-  path: '../../../.env',
-});
+if (!process.env.NODE_ENV) {
+  dotenv.config({
+    path: '../../../.env',
+  });
+}
 
 const { NODE_ENV, OAUTH_CLIENT } = process.env;
 
@@ -19,10 +21,11 @@ export const NOT_FOUNT_CODE = 404;
 export const NOT_FOUNT_MESSAGE =
   'Страница или документ не найден. Попробуйте ещё раз';
 
+export const IS_DEV = NODE_ENV === 'development';
+
 export const CLIENT_PACKAGE_PATH = path.resolve(
   __dirname,
-  `${
-    process.env.NODE_ENV === 'development' ? '../../client' : '../../../client'
+  `${IS_DEV ? '../../client' : '../../../client'
   }`
 );
 
@@ -33,7 +36,7 @@ export const MIN_PLAYERS = 1;
 export const CIVIL_VICTORY_SCORE = 1200;
 
 export const CURRENT_HOST =
-  NODE_ENV === 'production' ? 'localhost' : 'localhost';
+  IS_DEV ? 'localhost' : 'localhost';
 
 export const MAX_UPLOAD_IMAGE_SIZE = 0.5 * Math.pow(1024, 2);
 

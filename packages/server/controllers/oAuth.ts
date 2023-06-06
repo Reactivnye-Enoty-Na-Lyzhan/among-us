@@ -8,6 +8,7 @@ import { ErrorMessages } from '../utils/errors/errorMessages';
 import {
   CURRENT_HOST,
   DEFAULT_AVATAR,
+  IS_DEV,
   OAUTH_REDIRECT_URL,
 } from '../utils/constants';
 import type { NextFunction, Request, Response } from 'express';
@@ -20,9 +21,11 @@ interface IRequest<T = unknown> extends Request {
   body: T;
 }
 
-dotenv.config({
-  path: '../../../.env',
-});
+if (IS_DEV) {
+  dotenv.config({
+    path: '../../../.env',
+  });
+}
 
 const { NODE_ENV } = process.env;
 
