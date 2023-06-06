@@ -1,7 +1,5 @@
 .square-fragments-memorization-game__progressbar {
-  --indicator-size: calc(
-    0.07 * var(--puzzle-panel-size)
-  );
+  --indicator-size: calc(0.07 * var(--puzzle-panel-size));
 
   display: flex;
   align-items: center;

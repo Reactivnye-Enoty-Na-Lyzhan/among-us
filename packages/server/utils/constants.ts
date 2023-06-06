@@ -25,8 +25,7 @@ export const IS_DEV = NODE_ENV === 'development';
 
 export const CLIENT_PACKAGE_PATH = path.resolve(
   __dirname,
-  `${IS_DEV ? '../../client' : '../../../client'
-  }`
+  `${IS_DEV ? '../../client' : '../../../client'}`
 );
 
 export const MAX_PLAYERS = 3;
@@ -35,8 +34,7 @@ export const MIN_PLAYERS = 1;
 
 export const CIVIL_VICTORY_SCORE = 1200;
 
-export const CURRENT_HOST =
-  IS_DEV ? 'localhost' : 'localhost';
+export const CURRENT_HOST = IS_DEV ? 'localhost' : 'localhost';
 
 export const MAX_UPLOAD_IMAGE_SIZE = 0.5 * Math.pow(1024, 2);
 

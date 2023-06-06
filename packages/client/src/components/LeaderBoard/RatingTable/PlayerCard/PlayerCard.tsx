@@ -1,4 +1,3 @@
-
 import { FC, memo } from 'react';
 import classNames from 'classnames';
 import { DEFAULT_RESOURCE_URL } from '@/utils/constants';

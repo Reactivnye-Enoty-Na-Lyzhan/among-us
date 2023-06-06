@@ -13,29 +13,32 @@ import { sequelize } from '../../utils/connectDataBase';
 
 export class ChatMessage extends Model<
   InferAttributes<ChatMessage>,
-  InferCreationAttributes<ChatMessage
-  >> {
+  InferCreationAttributes<ChatMessage>
+> {
   declare id: CreationOptional<number>;
   declare text: string;
   declare chatId: ForeignKey<Chat['id']>;
   declare authorId: ForeignKey<User['id']>;
 }
 
-ChatMessage.init({
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+ChatMessage.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    text: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
   },
-  text: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-}, {
-  sequelize,
-  tableName: 'chatMessages',
-  timestamps: false,
-});
+  {
+    sequelize,
+    tableName: 'chatMessages',
+    timestamps: false,
+  }
+);
 
 Player.hasMany(ChatMessage, {
   as: 'messages',
@@ -47,4 +50,3 @@ ChatMessage.belongsTo(Player, {
   targetKey: 'id',
   foreignKey: 'authorId',
 });
-

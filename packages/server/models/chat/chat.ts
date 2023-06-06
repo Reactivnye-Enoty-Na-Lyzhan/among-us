@@ -12,7 +12,6 @@ import { Game } from '../../models/game';
 import { ChatMessage } from './chatMessage';
 import { sequelize } from '../../utils/connectDataBase';
 
-
 export class Chat extends Model<
   InferAttributes<Chat>,
   InferCreationAttributes<Chat>
@@ -23,17 +22,28 @@ export class Chat extends Model<
   declare createMessage: HasManyCreateAssociationMixin<ChatMessage>;
 }
 
-Chat.init({
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+Chat.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
   },
-}, {
-  sequelize,
-  tableName: 'chats',
-  timestamps: false,
-});
+  {
+    sequelize,
+    tableName: 'chats',
+    timestamps: false,
+  }
+);
 
-Chat.hasMany(ChatMessage, { as: 'messages', sourceKey: 'id', foreignKey: 'chatId' });
-ChatMessage.belongsTo(Chat, { as: 'chat', targetKey: 'id', foreignKey: 'chatId' });
+Chat.hasMany(ChatMessage, {
+  as: 'messages',
+  sourceKey: 'id',
+  foreignKey: 'chatId',
+});
+ChatMessage.belongsTo(Chat, {
+  as: 'chat',
+  targetKey: 'id',
+  foreignKey: 'chatId',
+});

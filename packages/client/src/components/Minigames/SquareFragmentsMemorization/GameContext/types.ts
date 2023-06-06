@@ -1,6 +1,6 @@
 export const enum GameStage {
-  MEMORIZATION = "memorization",
-  REPRODUCTION = "reproduction",
+  MEMORIZATION = 'memorization',
+  REPRODUCTION = 'reproduction',
 }
 
 export type GameStatus = {
@@ -13,9 +13,7 @@ type Callback = () => void;
 export type GameContext = {
   gameStatusRef: React.MutableRefObject<GameStatus>;
 
-  memorizationSequenceRef: React.MutableRefObject<
-    number[]
-  >;
+  memorizationSequenceRef: React.MutableRefObject<number[]>;
   expandMemorizationSequence: Callback;
 
   switchStageType: Callback;

@@ -11,7 +11,7 @@
   scrollbar-width: thin;
   scrollbar-color: #010318 #e2e2e2;
   scrollbar-gutter: stable;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 .chat-messages::-webkit-scrollbar {

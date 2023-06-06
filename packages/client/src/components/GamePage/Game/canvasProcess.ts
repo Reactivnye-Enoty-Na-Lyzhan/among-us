@@ -27,7 +27,7 @@ export default function canvasProcess(
   playerId: any,
   socket: any,
   gameId: any,
-  meetingIsProccessing: any,
+  meetingIsProccessing: any
 ) {
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   canvasSetup(canvas);
@@ -36,10 +36,6 @@ export default function canvasProcess(
 
   //add nicknames or logins on the bottom
   //by god, framerate cut
-
-
-
-
 
   const VIEW_OFFSET = {
     x: 0,
@@ -80,13 +76,7 @@ export default function canvasProcess(
     alive: boolean;
     right: boolean;
     spriteFrame: number;
-    constructor(
-      x: number,
-      y: number,
-      color: string,
-      id: number,
-      role: string,
-    ) {
+    constructor(x: number, y: number, color: string, id: number, role: string) {
       this.id = id;
       this.x = x;
       this.y = y;
@@ -101,26 +91,20 @@ export default function canvasProcess(
       this.spriteFrame = 0;
     }
     die() {
-        this.alive = false;
+      this.alive = false;
     }
   }
 
   class CurrentPlayer extends Player implements ICurrentPlayer {
-    constructor(
-      x: number,
-      y: number,
-      color: string,
-      id: number,
-      role: string,
-    ) {
+    constructor(x: number, y: number, color: string, id: number, role: string) {
       super(x, y, color, id, role);
     }
 
     update(x: number, y: number) {
       if (meetingIsProccessing.current) return;
-        if(!this.alive) {
-            return;
-        }
+      if (!this.alive) {
+        return;
+      }
       socket.emit('move', { id: playerId, x: x, y: y, gameId: gameId });
       this.x += x * SPEED;
       this.y += y * SPEED;
@@ -145,52 +129,59 @@ export default function canvasProcess(
       checkObjectArrayCollisions(tasks, useActionBtn, true);
     }
     draw() {
-        if (!this.alive) {
-            ctx.drawImage(
-                deadTextures[this.color],
-                canvas.width/2 - this.width / 2,
-                canvas.height/2 - this.height / 2,
-                PLAYER.deadWidth,
-                PLAYER.deadHeight
-              );
-            return;
-        } 
-        if (this.right) {
-            ctx.drawImage(
-                this.image,
-                this.spriteFrame * this.spriteWidth,
-                0,
-                this.spriteWidth,
-                50,
-                canvas.width / 2 - this.width / 2,
-                canvas.height / 2 - this.height / 2,
-                this.width,
-                this.height
-              );
-        } else {
-            flipSpriteHorizontally(
-                this.image,
-                canvas.width / 2 - this.width / 2,
-                canvas.height / 2 - this.height / 2,
-                this.spriteFrame * this.spriteWidth,
-                0,
-                this.spriteWidth,
-                50,
-                this.width,
-                this.height,
-              );
-        }
-
+      if (!this.alive) {
+        ctx.drawImage(
+          deadTextures[this.color],
+          canvas.width / 2 - this.width / 2,
+          canvas.height / 2 - this.height / 2,
+          PLAYER.deadWidth,
+          PLAYER.deadHeight
+        );
+        return;
+      }
+      if (this.right) {
+        ctx.drawImage(
+          this.image,
+          this.spriteFrame * this.spriteWidth,
+          0,
+          this.spriteWidth,
+          50,
+          canvas.width / 2 - this.width / 2,
+          canvas.height / 2 - this.height / 2,
+          this.width,
+          this.height
+        );
+      } else {
+        flipSpriteHorizontally(
+          this.image,
+          canvas.width / 2 - this.width / 2,
+          canvas.height / 2 - this.height / 2,
+          this.spriteFrame * this.spriteWidth,
+          0,
+          this.spriteWidth,
+          50,
+          this.width,
+          this.height
+        );
+      }
     }
   }
 
-  function flipSpriteHorizontally(img: any,x: any,y: any,spriteX: any,spriteY: any,spriteW: any,spriteH: any, imgW: any, imgH:any) {
-    ctx.translate(x+spriteW,y);
-    ctx.scale(-1,1);
-    ctx.drawImage(img,
-                  spriteX,spriteY,spriteW,spriteH,0,0,imgW,imgH,
-                 );
-    ctx.setTransform(1,0,0,1,0,0);
+  function flipSpriteHorizontally(
+    img: any,
+    x: any,
+    y: any,
+    spriteX: any,
+    spriteY: any,
+    spriteW: any,
+    spriteH: any,
+    imgW: any,
+    imgH: any
+  ) {
+    ctx.translate(x + spriteW, y);
+    ctx.scale(-1, 1);
+    ctx.drawImage(img, spriteX, spriteY, spriteW, spriteH, 0, 0, imgW, imgH);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 
   class Crewman extends Player implements ICrewman {
@@ -204,7 +195,7 @@ export default function canvasProcess(
       role: string,
       color: string,
       x: number,
-      y: number,
+      y: number
     ) {
       super(x, y, color, id, role);
       this.renderX = this.x + MAP_OFFSET.x;
@@ -212,13 +203,12 @@ export default function canvasProcess(
       this.radius = PLAYER.collisionRadius;
       console.log('user: ', user);
       this.nickname = user.nickname || user.login;
-
     }
     update(x: number, y: number) {
-    if(!this.alive) {
+      if (!this.alive) {
         return;
-    }
-    if (this.right && x < 0) {
+      }
+      if (this.right && x < 0) {
         this.right = false;
       } else if (!this.right && x > 0) {
         this.right = true;
@@ -236,8 +226,8 @@ export default function canvasProcess(
       this.y += y * SPEED;
     }
     checkCollision() {
-      if(!this.alive) {
-          return false;
+      if (!this.alive) {
+        return false;
       }
       return checkCollisions(this.x, this.y, this.radius);
     }
@@ -247,44 +237,48 @@ export default function canvasProcess(
       this.draw();
     }
     draw() {
-        if (!this.alive) {
-            ctx.drawImage(
-                deadTextures[this.color],
-                this.renderX - this.width / 2,
-                this.renderY - this.height / 2,
-                PLAYER.deadWidth,
-                PLAYER.deadHeight
-              );
-            return;
-        } 
+      if (!this.alive) {
+        ctx.drawImage(
+          deadTextures[this.color],
+          this.renderX - this.width / 2,
+          this.renderY - this.height / 2,
+          PLAYER.deadWidth,
+          PLAYER.deadHeight
+        );
+        return;
+      }
       if (this.right) {
         ctx.drawImage(
-            this.image,
-            this.spriteFrame * this.spriteWidth,
-            0,
-            this.spriteWidth,
-            this.height,
-            this.renderX - this.width / 2,
-            this.renderY - this.height / 2,
-            this.width,
-            this.height
-          );
-    } else {
+          this.image,
+          this.spriteFrame * this.spriteWidth,
+          0,
+          this.spriteWidth,
+          this.height,
+          this.renderX - this.width / 2,
+          this.renderY - this.height / 2,
+          this.width,
+          this.height
+        );
+      } else {
         flipSpriteHorizontally(
-            this.image,
-            this.renderX - this.width / 2,
-            this.renderY - this.height / 2,
-            this.spriteFrame * this.spriteWidth,
-            0,
-            this.spriteWidth,
-            50,
-            this.width,
-            this.height,
-          );
-    }
-    ctx.font = "bold 20px serif";
-    ctx.fillStyle = 'black';
-    ctx.fillText(this.nickname, this.renderX - this.width, this.renderY + this.height/2 + 15);
+          this.image,
+          this.renderX - this.width / 2,
+          this.renderY - this.height / 2,
+          this.spriteFrame * this.spriteWidth,
+          0,
+          this.spriteWidth,
+          50,
+          this.width,
+          this.height
+        );
+      }
+      ctx.font = 'bold 20px serif';
+      ctx.fillStyle = 'black';
+      ctx.fillText(
+        this.nickname,
+        this.renderX - this.width,
+        this.renderY + this.height / 2 + 15
+      );
     }
   }
 
@@ -310,7 +304,7 @@ export default function canvasProcess(
       super(x, y, radius);
     }
     checkCollision() {
-        //if (player.impostor) return;
+      //if (player.impostor) return;
       if (checkCollisions(this.x, this.y, this.radius)) {
         if (emergencyActionBtn.style.display !== 'block')
           emergencyActionBtn.style.display = 'block';
@@ -323,12 +317,7 @@ export default function canvasProcess(
 
   class TaskObject extends InteractionObject implements ITaskObject {
     id: number;
-    constructor(
-      x: number,
-      y: number,
-      radius: number,
-      id: number
-    ) {
+    constructor(x: number, y: number, radius: number, id: number) {
       super(x, y, radius);
       this.id = id;
     }
@@ -355,7 +344,7 @@ export default function canvasProcess(
     PLAYER.startPositionY,
     currentPlayerInitial.color,
     currentPlayerInitial.id,
-    currentPlayerInitial.role,
+    currentPlayerInitial.role
   );
 
   const crewmen: any[] = [];
@@ -367,7 +356,7 @@ export default function canvasProcess(
         player.role,
         player.color,
         PLAYER.startPositionX,
-        PLAYER.startPositionY,
+        PLAYER.startPositionY
       )
     );
   });
@@ -381,7 +370,6 @@ export default function canvasProcess(
     tasks.push(new TaskObject(task.x, task.y, 30, task.id));
   });
 
-
   // общая функция проверки коллизии для чего угодно с нашим игроком
   const checkCollisions = (x: number, y: number, radius: number) => {
     const ddx = x - player.x;
@@ -393,7 +381,6 @@ export default function canvasProcess(
       return true;
     }
   };
-
 
   const checkObjectArrayCollisions = (
     arr: Crewman[] | TaskObject[],
@@ -408,7 +395,7 @@ export default function canvasProcess(
     arr.forEach(obj => {
       if (obj.checkCollision() && !(obj as Crewman).impostor) {
         targetId = obj.id;
-      } 
+      }
     });
     if (targetId) {
       if (btnEl.style.display !== 'block') btnEl.style.display = 'block';
@@ -419,7 +406,6 @@ export default function canvasProcess(
       if (btnEl.style.display !== 'none') btnEl.style.display = 'none';
     }
   };
-
 
   function moveCrewman({ id, x, y }: { id: string; x: number; y: number }) {
     const crewman = crewmen.find(obj => obj.id === id);
@@ -436,7 +422,7 @@ export default function canvasProcess(
   }
   socket.on('onPlayerKill', handlePlayerKill);
 
-console.log(allPlayers);
+  console.log(allPlayers);
   function gameLoop() {
     if (typeof window === 'undefined') {
       return;
@@ -448,28 +434,28 @@ console.log(allPlayers);
     tasks.forEach(task => task.draw());
     player.draw();
     if (player.alive) {
-        movePlayer(player, background);
+      movePlayer(player, background);
     }
     gameFrame++;
     checkObjectArrayCollisions(crewmen, killActionBtn, false);
   }
 
-
   const FRAMES_PER_SECOND = 60;
-  const FRAME_MIN_TIME = (1000/60) * (60 / FRAMES_PER_SECOND) - (1000/60) * 0.5;
-  let lastFrameTime = 0;  // the last frame time
+  const FRAME_MIN_TIME =
+    (1000 / 60) * (60 / FRAMES_PER_SECOND) - (1000 / 60) * 0.5;
+  let lastFrameTime = 0; // the last frame time
 
-
-  function update(time: any){
-    if(time-lastFrameTime < FRAME_MIN_TIME){ //skip the frame if the call is too early
-        requestAnimationFrame(update);
-        return; // return as there is nothing to do
+  function update(time: any) {
+    if (time - lastFrameTime < FRAME_MIN_TIME) {
+      //skip the frame if the call is too early
+      requestAnimationFrame(update);
+      return; // return as there is nothing to do
     }
     lastFrameTime = time; // remember the time of the rendered frame
     requestAnimationFrame(gameLoop);
     // render the frame
     requestAnimationFrame(update); // get next farme
-}
-requestAnimationFrame(update); // start animation
-  return {moveCrewman, handlePlayerKill};
+  }
+  requestAnimationFrame(update); // start animation
+  return { moveCrewman, handlePlayerKill };
 }

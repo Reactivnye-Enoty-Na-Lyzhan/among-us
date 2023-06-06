@@ -1,11 +1,4 @@
-import {
-  FC,
-  memo,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { FC, memo, useCallback, useContext, useEffect, useState } from 'react';
 import Message from './Message/Message';
 import { GameSocketContext } from '@/utils/socket/gameSocket';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
@@ -40,23 +33,23 @@ const Messages: FC = () => {
 
   // Получаем автора сообщения из игроков
   const getAuthor = (playerId: number) => {
-    return players.find((player) => player.id === playerId);
+    return players.find(player => player.id === playerId);
   };
 
   // Обработчик получения сообщения
   const handleGetMessage = useCallback((message: IMessage) => {
-    setMessages((messagesList) => [...messagesList, message]);
+    setMessages(messagesList => [...messagesList, message]);
   }, []);
 
   return (
     <ul className="chat-messages">
-      {messages.map((message) =>
+      {messages.map(message => (
         <Message
           key={message.id}
           text={message.text}
           author={getAuthor(message.authorId) ?? players[0]}
         />
-      )}
+      ))}
     </ul>
   );
 };

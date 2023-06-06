@@ -57,15 +57,15 @@
   border-radius: 0 3px 3px 0;
   cursor: pointer;
   flex-shrink: 0;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .chat-control__send-message:hover {
-  opacity: .95;
+  opacity: 0.95;
 }
 
 .chat-control__send-message:disabled {
-  opacity: .8;
+  opacity: 0.8;
   pointer-events: none;
   user-select: none;
 }

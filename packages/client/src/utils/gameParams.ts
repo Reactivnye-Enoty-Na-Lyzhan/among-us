@@ -51,7 +51,7 @@ const inputsList = [
 ] as const;
 
 export type InputsParamsType = {
-  [k in typeof inputsList[number]]: string;
+  [k in (typeof inputsList)[number]]: string;
 };
 
 export const inputDefaultValues: InputsParamsType = {
@@ -63,7 +63,7 @@ export const inputDefaultValues: InputsParamsType = {
 };
 
 export type DefaultValidityStateType = {
-  [k in typeof inputsList[number]]: boolean;
+  [k in (typeof inputsList)[number]]: boolean;
 };
 
 export const defaultValidityState: DefaultValidityStateType = {
@@ -75,7 +75,7 @@ export const defaultValidityState: DefaultValidityStateType = {
 };
 
 export type SuitColorsType = {
-  [k in typeof suitsColors[number]]: boolean;
+  [k in (typeof suitsColors)[number]]: boolean;
 };
 
 export const suitsColors = [

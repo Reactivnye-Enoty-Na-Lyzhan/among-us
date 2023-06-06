@@ -1,9 +1,6 @@
-import { useMemo, useRef, useState } from "react";
-import {
-  GameStage,
-  type GameStatus,
-} from "./types";
-import { useMemorizationSequence } from "./useMemorizationSequence";
+import { useMemo, useRef, useState } from 'react';
+import { GameStage, type GameStatus } from './types';
+import { useMemorizationSequence } from './useMemorizationSequence';
 
 const initGameStatus = {
   stage: GameStage.MEMORIZATION,
@@ -11,28 +8,24 @@ const initGameStatus = {
 };
 
 export function useGameContext() {
-  const [gameStatus, setGameStatus] =
-    useState<GameStatus>({ ...initGameStatus });
+  const [gameStatus, setGameStatus] = useState<GameStatus>({
+    ...initGameStatus,
+  });
   const gameStatusRef = useRef(gameStatus);
   gameStatusRef.current = gameStatus;
 
-  const {
-    memorizationSequenceRef,
-    expandMemorizationSequence,
-  } = useMemorizationSequence();
+  const { memorizationSequenceRef, expandMemorizationSequence } =
+    useMemorizationSequence();
 
   return useMemo(() => {
     const switchStageType = () => {
-      setGameStatus((currentStatus) => {
+      setGameStatus(currentStatus => {
         const nextStage =
-          currentStatus.stage ===
-          GameStage.MEMORIZATION
+          currentStatus.stage === GameStage.MEMORIZATION
             ? GameStage.REPRODUCTION
             : GameStage.MEMORIZATION;
 
-        console.log(
-          `SWITCH STAGE: ${currentStatus.stage} -> ${nextStage}`
-        );
+        console.log(`SWITCH STAGE: ${currentStatus.stage} -> ${nextStage}`);
 
         return {
           ...currentStatus,
@@ -43,7 +36,7 @@ export function useGameContext() {
 
     const increaseStageLevel = () => {
       expandMemorizationSequence();
-      setGameStatus((currentStatus) => ({
+      setGameStatus(currentStatus => ({
         ...currentStatus,
         level: currentStatus.level + 1,
       }));

@@ -1,4 +1,4 @@
-import type { PickingPanelContext } from "../types";
+import type { PickingPanelContext } from '../types';
 
 export const enum PickStatus {
   SUCCESS,
@@ -13,5 +13,5 @@ export type ComponentProps = {
 
 export type NodeProps = Pick<
   React.HTMLAttributes<HTMLButtonElement>,
-  "className" | "onClick"
+  'className' | 'onClick'
 >;

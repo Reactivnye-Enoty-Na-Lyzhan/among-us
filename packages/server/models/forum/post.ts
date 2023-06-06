@@ -4,7 +4,7 @@ import {
   type CreationOptional,
   type ForeignKey,
   type InferAttributes,
-  type InferCreationAttributes
+  type InferCreationAttributes,
 } from 'sequelize';
 import { sequelize } from '../../utils/connectDataBase';
 import { User } from '../user';

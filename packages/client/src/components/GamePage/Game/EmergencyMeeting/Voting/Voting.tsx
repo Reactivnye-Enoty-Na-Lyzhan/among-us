@@ -2,13 +2,19 @@ import { FC, memo, useCallback, useEffect, useState } from 'react';
 import CrewmanCard from './CrewmanCard/CrewmanCard';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from '@/hooks/useActions';
-import { selectMeeting, selectPlayer, selectPlayers } from '@/store/game/game.slice';
+import {
+  selectMeeting,
+  selectPlayer,
+  selectPlayers,
+} from '@/store/game/game.slice';
 import { sortPlayer } from '@/utils/game/sortPlayers';
 import type { IPlayer } from '@/store/game/game.types';
 import './Voting.css';
 
 const Voting: FC = () => {
-  const [selectedPlayer, setSelectedPlayer] = useState<IPlayer['id'] | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<IPlayer['id'] | null>(
+    null
+  );
   const [counter, setCounter] = useState<number>(50);
 
   const { id: currentPlayerId } = useTypedSelector(selectPlayer);
@@ -29,7 +35,7 @@ const Voting: FC = () => {
 
     if (counter > 0) {
       timeout = setTimeout(() => {
-        setCounter((timeLeft) => timeLeft - 1);
+        setCounter(timeLeft => timeLeft - 1);
       }, 1000);
     } else {
       stopMeeting();
@@ -44,7 +50,9 @@ const Voting: FC = () => {
   const handleVoteForPlayer = useCallback((targetId: IPlayer['id']) => {
     if (!targetId) return;
 
-    setSelectedPlayer((currentTarget) => currentTarget === targetId ? null : targetId);
+    setSelectedPlayer(currentTarget =>
+      currentTarget === targetId ? null : targetId
+    );
   }, []);
 
   return (
@@ -60,7 +68,9 @@ const Voting: FC = () => {
             login={player.user?.login || 'default'}
             id={player.id}
             isVotedFor={player.id === selectedPlayer}
-            voted={currentPlayerId === player.id && selectedPlayer ? true : false}
+            voted={
+              currentPlayerId === player.id && selectedPlayer ? true : false
+            }
             alive={player.alive}
             onVote={handleVoteForPlayer}
           />

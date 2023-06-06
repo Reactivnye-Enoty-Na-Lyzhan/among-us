@@ -130,12 +130,9 @@ Game.hasOne(Chat, {
   as: 'chat',
   sourceKey: 'id',
   foreignKey: 'gameId',
-
 });
 Chat.belongsTo(Game, {
   as: 'game',
   targetKey: 'id',
   foreignKey: 'gameId',
-
 });
-

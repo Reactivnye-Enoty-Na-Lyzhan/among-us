@@ -60,11 +60,6 @@ let yellow: HTMLImageElement;
 
 let playerSprites: any;
 
-
-
-
-
-
 if (typeof window !== 'undefined') {
   playerSpriteRight = new Image();
   playerSpriteRight.src = playerSpriteWhiteRight;
@@ -95,16 +90,16 @@ if (typeof window !== 'undefined') {
   deadYellow.src = deadYellowSrc;
 
   deadTextures = {
-    'aquamarine': deadAquamarine,
-    'blue': deadBlue,
-    'brown': deadBrown,
-    'green': deadGreen,
-    'grey': deadGrey,
-    'purple': deadPurple,
-    'red': deadRed,
-    'white': deadWhite,
-    'yellow': deadYellow,
-};
+    aquamarine: deadAquamarine,
+    blue: deadBlue,
+    brown: deadBrown,
+    green: deadGreen,
+    grey: deadGrey,
+    purple: deadPurple,
+    red: deadRed,
+    white: deadWhite,
+    yellow: deadYellow,
+  };
 
   aquamarine = new Image();
   aquamarine.src = aquamarineSrc;
@@ -126,19 +121,17 @@ if (typeof window !== 'undefined') {
   yellow.src = yellowSrc;
 
   playerSprites = {
-    'aquamarine': aquamarine,
-    'blue': blue,
-    'brown': brown,
-    'green': green,
-    'grey': grey,
-    'purple': purple,
-    'red': red,
-    'white': white,
-    'yellow': yellow,
+    aquamarine: aquamarine,
+    blue: blue,
+    brown: brown,
+    green: green,
+    grey: grey,
+    purple: purple,
+    red: red,
+    white: white,
+    yellow: yellow,
   };
 }
-
-
 
 const PLAYER = {
   height: 50,
@@ -173,5 +166,5 @@ export {
   CANVAS,
   TASKS_DATA,
   deadTextures,
-  playerSprites
+  playerSprites,
 };

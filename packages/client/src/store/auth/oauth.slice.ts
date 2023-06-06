@@ -14,9 +14,9 @@ export const oauthApi = createApi({
     credentials: 'include',
   }),
   endpoints: build => ({
-    getCode: build.query<{message: string}, void>({
+    getCode: build.query<{ message: string }, void>({
       query: () => 'code',
-    }), 
+    }),
     getToken: build.mutation<YandexOAuthResponse, TOAuthData>({
       query: oauthData => ({
         url: `token`,

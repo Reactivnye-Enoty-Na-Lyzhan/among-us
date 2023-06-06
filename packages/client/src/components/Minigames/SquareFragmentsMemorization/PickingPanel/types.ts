@@ -1,4 +1,4 @@
-import type { ProgressbarIndicatorStatus } from "../ProgressBar/ProgressBar";
+import type { ProgressbarIndicatorStatus } from '../ProgressBar/ProgressBar';
 type Callback = () => void;
 
 export type PickingPanelContext = {
@@ -17,7 +17,5 @@ export type PickingPanelContext = {
   resetPickedSequence: Callback;
   resetPickButton: Record<number, Callback>;
   resetProgressbar: Callback;
-  expandProgressbar: (
-    indicatorStatus: ProgressbarIndicatorStatus
-  ) => void;
+  expandProgressbar: (indicatorStatus: ProgressbarIndicatorStatus) => void;
 };

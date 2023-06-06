@@ -15,7 +15,6 @@ if (IS_DEV) {
     assetFileNames: 'assets/[name].[ext]',
   };
 }
-console.log(outputNamesOptions);
 
 const rollupWatchExternalPlugin = (files: string[]) => ({
   name: 'watch-external',

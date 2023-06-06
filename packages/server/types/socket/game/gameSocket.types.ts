@@ -118,7 +118,10 @@ export type SendMessage = (params: ISendMessageParams) => void;
 
 export type OnGetMessage = (message: MessageType) => void;
 
-export type GetMessages = (chatId: number, callback: (messages: MessageType[]) => void) => void;
+export type GetMessages = (
+  chatId: number,
+  callback: (messages: MessageType[]) => void
+) => void;
 
 export type MoveClient = (params: IMoveServerParams) => void;
 

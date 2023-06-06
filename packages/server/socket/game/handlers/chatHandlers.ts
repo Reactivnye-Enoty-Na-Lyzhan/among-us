@@ -10,7 +10,12 @@ import type {
 } from '../../../types/socket/game/gameSocket.types';
 
 export const chatHalders = (socket: GameSocket, io: GameSocketNamespace) => {
-  const sendMessage: SendMessage = async ({ chatId, gameId, playerId, message }) => {
+  const sendMessage: SendMessage = async ({
+    chatId,
+    gameId,
+    playerId,
+    message,
+  }) => {
     try {
       if (!chatId) throw new NotExistError(ErrorMessages.chatNotFound);
 
@@ -38,7 +43,6 @@ export const chatHalders = (socket: GameSocket, io: GameSocketNamespace) => {
       if (!messages) throw new NotExistError(ErrorMessages.chatNotFound);
 
       callback(messages);
-
     } catch (err: unknown) {
       console.log(err);
     }

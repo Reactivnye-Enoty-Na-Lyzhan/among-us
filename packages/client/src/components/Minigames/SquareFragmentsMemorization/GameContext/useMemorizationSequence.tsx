@@ -1,18 +1,13 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef } from 'react';
 
 export function useMemorizationSequence() {
-  const memorizationSequenceRef = useRef<
-    number[]
-  >([]);
+  const memorizationSequenceRef = useRef<number[]>([]);
 
   return useMemo(() => {
     const expandMemorizationSequence = () => {
-      const memorizationSequence =
-        memorizationSequenceRef.current;
+      const memorizationSequence = memorizationSequenceRef.current;
 
-      expandSequenceWithRandomFragment(
-        memorizationSequence
-      );
+      expandSequenceWithRandomFragment(memorizationSequence);
     };
 
     return {
@@ -22,15 +17,11 @@ export function useMemorizationSequence() {
   }, []);
 }
 
-const vacantFragmentsSet = new Set([
-  ...Array(9).keys(),
-]);
+const vacantFragmentsSet = new Set([...Array(9).keys()]);
 
 function getNextRandomFragment() {
   const randomFragment = [...vacantFragmentsSet][
-    Math.floor(
-      Math.random() * vacantFragmentsSet.size
-    )
+    Math.floor(Math.random() * vacantFragmentsSet.size)
   ];
 
   vacantFragmentsSet.delete(randomFragment);
@@ -38,15 +29,9 @@ function getNextRandomFragment() {
   return randomFragment;
 }
 
-function expandSequenceWithRandomFragment(
-  memorizationSequence: number[]
-) {
+function expandSequenceWithRandomFragment(memorizationSequence: number[]) {
   const nextFragment = getNextRandomFragment();
   memorizationSequence.push(nextFragment);
 
-  console.log(
-    `NEXT SEQUENCE: ${JSON.stringify(
-      memorizationSequence
-    )}`
-  );
+  console.log(`NEXT SEQUENCE: ${JSON.stringify(memorizationSequence)}`);
 }

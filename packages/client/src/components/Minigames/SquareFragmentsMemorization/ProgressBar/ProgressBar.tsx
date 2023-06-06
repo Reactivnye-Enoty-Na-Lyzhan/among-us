@@ -1,6 +1,6 @@
-import classNames from "classnames";
-import { type FC, memo } from "react";
-import "./ProgressBar.css";
+import classNames from 'classnames';
+import { type FC, memo } from 'react';
+import './ProgressBar.css';
 
 export const enum ProgressbarIndicatorStatus {
   SUCCESS,
@@ -12,37 +12,31 @@ const mapProgressbarIndicatorStatusToClassName: Record<
   string
 > = {
   [ProgressbarIndicatorStatus.SUCCESS]:
-    "square-fragments-memorization-game__progressbar-indicator_success",
+    'square-fragments-memorization-game__progressbar-indicator_success',
   [ProgressbarIndicatorStatus.ERROR]:
-    "square-fragments-memorization-game__progressbar-indicator_error",
+    'square-fragments-memorization-game__progressbar-indicator_error',
   [ProgressbarIndicatorStatus.NEUTRAL]:
-    "square-fragments-memorization-game__progressbar-indicator_neutral",
+    'square-fragments-memorization-game__progressbar-indicator_neutral',
 };
 
 type Props = {
   indicatorsStatuses?: ProgressbarIndicatorStatus[];
 };
 
-const ProgressBar: FC<Props> = ({
-  indicatorsStatuses = [],
-}) => {
+const ProgressBar: FC<Props> = ({ indicatorsStatuses = [] }) => {
   const progressbarIndicators = Array.from({
     length: 5,
   }).map((_, index) => {
     const indicatorStatus =
-      indicatorsStatuses[index] ??
-      ProgressbarIndicatorStatus.NEUTRAL;
+      indicatorsStatuses[index] ?? ProgressbarIndicatorStatus.NEUTRAL;
 
     return (
       <div
         className={classNames(
-          "square-fragments-memorization-game__progressbar-indicator",
-          mapProgressbarIndicatorStatusToClassName[
-            indicatorStatus
-          ]
+          'square-fragments-memorization-game__progressbar-indicator',
+          mapProgressbarIndicatorStatusToClassName[indicatorStatus]
         )}
-        key={index}
-      ></div>
+        key={index}></div>
     );
   });
 
