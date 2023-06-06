@@ -1,5 +1,5 @@
-import path from 'path';
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config({
   path: '../../../.env',
@@ -10,6 +10,8 @@ const { NODE_ENV, OAUTH_CLIENT } = process.env;
 export const DEFAULT_ERROR_CODE = 500;
 export const DEFAULT_ERROR_MESSAGE =
   'Что-то пошло не так на стороне сервера...';
+
+export const BAD_REQUEST_CODE = 400;
 
 export const NOT_FOUNT_CODE = 404;
 export const NOT_FOUNT_MESSAGE =
