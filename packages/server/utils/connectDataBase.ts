@@ -1,8 +1,10 @@
 import { createNamespace } from 'cls-hooked';
 import dotenv from 'dotenv';
 import path from 'path';
-import { ConnectionError as SequelizeConnectionError } from 'sequelize';
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
+
+const nameSpace = createNamespace('sequilize-cls');
+(Sequelize as any).__proto__.useCLS(nameSpace);
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env'),
@@ -25,24 +27,14 @@ const sequelizeOptions: SequelizeOptions = {
   dialect: 'postgres',
   logging: false,
 };
-
-const nameSpace = createNamespace('sequilize-cls');
-(Sequelize as any).__proto__.useCLS(nameSpace);
 export const sequelize = new Sequelize(sequelizeOptions);
 
 export const connectDataBase = async () => {
   try {
     await sequelize.authenticate();
     await sequelize.sync({ alter: true });
-  } catch (error: unknown) {
-    if (error instanceof SequelizeConnectionError)
-      console.error(
-        `Ошибка при подключении к Базе данных: ${JSON.stringify(
-          sequelizeOptions
-        )}`
-      );
-    else {
-      console.error(error);
-    }
+  } catch (err: unknown) {
+    console.error('Ошибка при подключении к Базе данных');
+    console.log(err);
   }
 };

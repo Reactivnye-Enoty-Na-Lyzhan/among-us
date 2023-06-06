@@ -1,5 +1,11 @@
-import { Model, DataTypes, CreationOptional, ForeignKey } from 'sequelize';
-import type { InferAttributes, InferCreationAttributes } from 'sequelize';
+import {
+  Model,
+  DataTypes,
+  type CreationOptional,
+  type ForeignKey,
+  type InferAttributes,
+  type InferCreationAttributes
+} from 'sequelize';
 import { sequelize } from '../../utils/connectDataBase';
 import { User } from '../user';
 

@@ -1,15 +1,20 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { DEFAULT_ERROR_CODE, DEFAULT_ERROR_MESSAGE } from '../utils/constants';
 
 interface ResponseError extends Error {
   statusCode?: number;
 }
 
-export default (err: ResponseError, _req: Request, res: Response) => {
+export default (
+  err: ResponseError,
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { statusCode = DEFAULT_ERROR_CODE, message } = err;
-  console.log(
-    `ERROR HANDLER MIDDLEWARE: ${JSON.stringify({ statusCode, message })}`
-  );
+  if (res.headersSent) {
+    return next(err);
+  }
 
   return res.status(statusCode).send({
     message:
