@@ -52,7 +52,7 @@
 
   background-color: var(--leaderboard-font-primary);
 
-  mask-image: url(../../images/ui/return-link.svg);
+  mask-image: url('@/images/ui/return-link__icon.svg');
   mask-position: center;
   mask-repeat: no-repeat;
   mask-size: contain;

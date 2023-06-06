@@ -5,12 +5,9 @@ node_modules/
 dist
 tmp
 *.log
-*.txt
 
 packages/client/public/service-worker*
 packages/client/public/*.tsbuildinfo
 packages/client/configs/stylelint
 
 package-lock.json
-dockerfile.server.dev
-

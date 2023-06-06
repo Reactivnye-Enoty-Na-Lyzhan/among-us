@@ -1,7 +1,8 @@
-import playerAvatarFallback from '@/images/leaderboard/player-avatar-fallback.png';
-import { PlayerRatingRecord } from '@/store/leaderboard/leaderboard.types';
-import classNames from 'classnames';
+
 import { FC, memo } from 'react';
+import classNames from 'classnames';
+import { DEFAULT_RESOURCE_URL } from '@/utils/constants';
+import type { PlayerRatingRecord } from '@/store/leaderboard/leaderboard.types';
 import './PlayerCard.css';
 
 type Props = PlayerRatingRecord & {
@@ -19,7 +20,7 @@ const PlayerCard: FC<Props> = props => {
       })}>
       <div className="leaderboard__player-container">
         <img
-          src={userAvatar ?? playerAvatarFallback}
+          src={`${DEFAULT_RESOURCE_URL}/${userAvatar}`}
           alt={'Аватар игрока'}
           className="leaderboard__user-avatar"
         />
