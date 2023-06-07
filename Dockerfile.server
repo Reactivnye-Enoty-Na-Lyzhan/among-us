@@ -7,7 +7,7 @@ WORKDIR /app
 
 FROM base as builder
 
-COPY package.json yarn.lock lerna.json ./
+COPY package.json yarn.lock lerna.json .env ./
 RUN yarn install --frozen-lockfile
 
 COPY ./packages ./packages

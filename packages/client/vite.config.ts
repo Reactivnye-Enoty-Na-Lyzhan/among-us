@@ -2,7 +2,9 @@ import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
 import path from 'path';
 import { defineConfig } from 'vite';
-dotenv.config();
+dotenv.config({
+  path: '../../.env',
+});
 
 const IS_DEV = process.env.BUILD_MODE === 'development';
 const OUT_DIR = 'dist';
