@@ -1,6 +1,8 @@
+import { SOCKET_ORIGIN } from './constants';
+
 export const socketOptions = {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: SOCKET_ORIGIN,
   },
   connectTimeout: 30000,
   pingTimeout: 25000,

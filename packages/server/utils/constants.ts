@@ -7,7 +7,13 @@ if (!process.env.NODE_ENV) {
   });
 }
 
-const { NODE_ENV, OAUTH_CLIENT } = process.env;
+const {
+  NODE_ENV,
+  OAUTH_CLIENT,
+  APP_HOST = 'localhost',
+  VITE_SOCKET_HOST,
+  VITE_SOCKET_PORT,
+} = process.env;
 
 export const DEFAULT_SUCCESSFUL_RESPONSE = 'OK';
 
@@ -34,7 +40,7 @@ export const MIN_PLAYERS = 1;
 
 export const CIVIL_VICTORY_SCORE = 1200;
 
-export const CURRENT_HOST = IS_DEV ? 'localhost' : 'localhost';
+export const CURRENT_HOST = APP_HOST;
 
 export const MAX_UPLOAD_IMAGE_SIZE = 0.5 * Math.pow(1024, 2);
 
@@ -47,3 +53,5 @@ export const OUATH_TOKEN_URL = `${OAUTH_BASE_URL}/token`;
 export const OAUTH_GET_USER_URL = 'https://login.yandex.ru/info';
 
 export const DEFAULT_AVATAR = '31c7b7866eaf98009c0e';
+
+export const SOCKET_ORIGIN = `${VITE_SOCKET_HOST}:${VITE_SOCKET_PORT}`;
