@@ -1,12 +1,16 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { redirectToOAuthYandex } from '@/utils/oauth/redirectToOAuthYandex';
-import { useGetTokenMutation } from '../store/auth/oauth.slice';
+import {
+  useGetTokenMutation,
+  useLazyGetCodeQuery,
+} from '../store/auth/oauth.slice';
 import { useLazyGetUserQuery } from '../store/auth/auth.slice';
 
 const useOAuth = () => {
+  const [getCode] = useLazyGetCodeQuery();
   const [getToken] = useGetTokenMutation();
   const [getUser] = useLazyGetUserQuery();
+
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -20,7 +24,7 @@ const useOAuth = () => {
   }, [searchParams]);
 
   const handleOAuthSignIn = useCallback(async () => {
-    redirectToOAuthYandex();
+    getCode();
   }, []);
 
   const requestToken = useCallback(async () => {

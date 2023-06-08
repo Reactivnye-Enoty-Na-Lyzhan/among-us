@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TOAuthData } from './auth.types';
+import { redirectByUrl } from '@/utils/oauth/redirectByUrl';
 import { API_BASE_URL } from '../../utils/constants';
 
 const API_URL = `${API_BASE_URL}`;
@@ -15,7 +16,15 @@ export const oauthApi = createApi({
   }),
   endpoints: build => ({
     getCode: build.query<{ message: string }, void>({
-      query: () => 'code',
+      query: () => ({
+        url: 'code',
+        redirect: 'manual',
+      }),
+      transformErrorResponse: (_data, meta) => {
+        if (meta?.response?.url) {
+          redirectByUrl(meta.response.url);
+        }
+      },
     }),
     getToken: build.mutation<YandexOAuthResponse, TOAuthData>({
       query: oauthData => ({
