@@ -2,7 +2,7 @@ import { SuitColorsType } from '@/utils/gameParams';
 import { GameRole } from '../../../../server/types/socket/game/gameSocket.types';
 import { User } from '../auth/auth.types';
 
-export type FoundGameParamType = Pick<IGameStateParams, 'impostors'>;
+export type FoundGameParamType = Pick<IGameStateParams, 'players' | 'meetings'>;
 
 export interface IFoundGame extends IGame {
   players: number;
@@ -66,7 +66,7 @@ export interface IJoinGameRequest {
 
 export interface IGameCreateRequest {
   title: string;
-  params: IGameStateParams;
+  params: Omit<IGameStateParams, 'impostors'>;
 }
 
 export interface IGameCreateResponse extends IGame {
@@ -142,6 +142,19 @@ export interface IMessage {
 
 export type IStartMeeting = IPlayer['id'];
 
+export type IStopMeeting = IPlayer['id'];
+
+export interface IGameError {
+  title: string;
+  text: string;
+  isActive: boolean;
+}
+
+export interface IMeetingResult {
+  role: PlayerRoleType;
+  color: keyof SuitColorsType;
+}
+
 //////////////////////////////
 
 interface IResults {
@@ -168,9 +181,11 @@ export interface IGameState {
   chatId: number | null;
   startCooldown: number;
   meetings: IMeeting;
+  error: IGameError;
 }
 
 export interface IGameStateParams {
+  players: number;
   impostors: number;
   meetings: number;
   discussion: number;

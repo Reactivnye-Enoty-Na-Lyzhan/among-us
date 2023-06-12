@@ -2,6 +2,9 @@ import { FC, memo, useContext, useEffect, useRef, useState } from 'react';
 import { useActions } from '@/hooks/useActions';
 import canvasProcess from './canvasProcess';
 import EmergencyMeeting from './EmergencyMeeting/EmergencyMeeting';
+import MinigameModal from '@/components/Minigames/Modal/Modal';
+import Notification from './UI/Notification/Notification';
+import MeetingScreen from './UI/MeetingScreen/MeetingScreen';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import {
   selectGame,
@@ -14,22 +17,32 @@ import { GameSocketContext } from '@/utils/socket/gameSocket';
 import killIcon from '@/images/game/kill.svg';
 import startMeetingIcon from '@/images/game/start-meeting.svg';
 import startMiniGameIcon from '@/images/game/start-minigame.svg';
-import type { PlayerRoleType } from '@/store/game/game.types';
+import { MeetingMessages } from '@/utils/game/MeetingMessages';
+import type { IMeetingResult, PlayerRoleType } from '@/store/game/game.types';
 import './Game.css';
-import MinigameModal from '@/components/Minigames/Modal/Modal';
 
 const Game: FC = () => {
+  const [meetingResult, setMeetingResult] = useState<IMeetingResult | null>(null);
   const { id: playerId } = useTypedSelector(selectPlayer);
   const players = useTypedSelector(selectPlayers);
   const gameId = useTypedSelector(selectGame);
-  const { isProccessing: meetingIsProccessing } =
-    useTypedSelector(selectMeeting);
+  const {
+    isProccessing: meetingIsProccessing,
+  } = useTypedSelector(selectMeeting);
+  const isGameErrorActive = useTypedSelector(state => state.game.error.isActive);
 
   const [minigameId, setMinigameId] = useState<number | undefined>(undefined);
 
   const [completeTask] = useUpdateScoreMutation();
 
-  const { killPlayer, finishGame, startMeeting } = useActions();
+  const {
+    killPlayer,
+    finishGame,
+    startMeeting,
+    stopMeeting,
+    setGameError,
+    clearGameError,
+  } = useActions();
 
   const socket = useContext(GameSocketContext);
 
@@ -37,7 +50,7 @@ const Game: FC = () => {
   const miniGameAction = useRef(null);
   const meetingAction = useRef(null);
   const killAction = useRef(null);
-  const isMeetup = useRef(false);
+  const isBlocked = useRef(false);
 
   useEffect(() => {
     let unsubRefs: any;
@@ -60,7 +73,7 @@ const Game: FC = () => {
         playerId,
         socket,
         gameId,
-        isMeetup
+        isBlocked
       );
     }
     return () => {
@@ -72,9 +85,9 @@ const Game: FC = () => {
 
   useEffect(() => {
     if (meetingIsProccessing) {
-      isMeetup.current = true;
+      isBlocked.current = true;
     } else {
-      isMeetup.current = false;
+      isBlocked.current = false;
     }
   }, [meetingIsProccessing]);
 
@@ -82,24 +95,77 @@ const Game: FC = () => {
     socket.on('onPlayerKill', noticePlayerKill);
     socket.on('onGameEnd', handleFinishGame);
     socket.on('onEmergencyMeeting', handleStartMeeting);
+    socket.on('onUnavaliableMeeting', informAboutMeeting);
+    socket.on('onFinishMeeting', handleFinishMeeting);
 
     return () => {
       socket.off('onPlayerKill', noticePlayerKill);
       socket.off('onGameEnd', handleFinishGame);
       socket.off('onEmergencyMeeting', handleStartMeeting);
+      socket.off('onUnavaliableMeeting', informAboutMeeting);
+      socket.off('onFinishMeeting', handleFinishMeeting);
     };
   }, [socket]);
 
   // Обработчик начала встречи
   const handleStartMeeting = (initiatorId: number) => {
     startMeeting(initiatorId);
-    isMeetup.current = true;
+    isBlocked.current = true;
+  };
+
+  // Обработчик завершения встречи
+  const handleFinishMeeting = (playerId?: number) => {
+    stopMeeting();
+    // Если игрок не выбран, выводи сообщение о статусе собрания
+    if (!playerId) {
+      setGameError({
+        title: 'Итог голосования',
+        text: MeetingMessages.missedMeeting,
+      });
+
+      // Очищаем ошибку
+      setTimeout(() => {
+        clearGameError();
+      }, 5000);
+      return;
+    }
+
+    // Получаем игрока, за которого проголосовали
+    const votedPlayer = players.find((player) => player.id === playerId);
+
+    if (!votedPlayer) return;
+
+    // Устанавливаем результат голосования
+    setMeetingResult({
+      role: votedPlayer.role,
+      color: votedPlayer.color,
+    });
+
+    // Скрываем экран с результатами голосования по прошествии времени
+    setTimeout(() => {
+      setMeetingResult(null);
+      if (gameId) {
+        // 4=й аргумент означает информирует об "унитчтожении персонажа" по итогу голосования
+        socket.emit('killPlayer', gameId, playerId, true);
+      }
+    }, 15000);
+  };
+
+  // Информирование о неудачной инициализации собрания
+  const informAboutMeeting = (reason: string) => {
+    setGameError({
+      title: 'Ошибка собрания',
+      text: reason,
+    });
+
+    setTimeout(() => {
+      clearGameError();
+    }, 3500);
   };
 
   // Обработчик уничтожения игрока
   const handlePlayerKill = (e: any) => {
     const targetId = Number(e.currentTarget.dataset.targetId);
-    console.log('kill player with ', targetId);
 
     if (!gameId) return;
 
@@ -129,6 +195,8 @@ const Game: FC = () => {
   };
 
   const handleMeetingStart = () => {
+    if (meetingIsProccessing) return;
+
     if (gameId && playerId) {
       socket.emit('assembleMeeting', gameId, playerId);
     }
@@ -160,7 +228,9 @@ const Game: FC = () => {
       ) : null}
       <div className="game__canvas-container">
         <canvas ref={canvasRef} id="main-canvas"></canvas>
+        {meetingResult && <MeetingScreen color={meetingResult.color} role={meetingResult.role} />}
         {meetingIsProccessing && <EmergencyMeeting />}
+        {isGameErrorActive && <Notification />}
         <button
           className="game__action-btn"
           ref={miniGameAction}

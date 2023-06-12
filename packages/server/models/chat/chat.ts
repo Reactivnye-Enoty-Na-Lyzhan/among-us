@@ -8,7 +8,7 @@ import {
   type HasManyGetAssociationsMixin,
   type HasManyCreateAssociationMixin,
 } from 'sequelize';
-import { Game } from '../../models/game';
+import { Game } from '../game/game';
 import { ChatMessage } from './chatMessage';
 import { sequelize } from '../../utils/connectDataBase';
 

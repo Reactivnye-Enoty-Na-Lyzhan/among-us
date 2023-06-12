@@ -53,7 +53,7 @@
 }
 
 .chat-message__author_color_grey {
-  color: #00a3ff;
+  color: #2b2b2b;
 }
 
 .chat-message__author_color_purple {
@@ -61,5 +61,5 @@
 }
 
 .chat-message__author_color_blue {
-  color: #2b2b2b;
+  color: #00a3ff;
 }

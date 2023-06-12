@@ -8,6 +8,7 @@ import type {
   PlayerRoleType,
   IPlayerWithUser,
   IStartMeeting,
+  IGameError,
 } from './game.types';
 
 const initialState: IGameState = {
@@ -16,6 +17,7 @@ const initialState: IGameState = {
   title: '',
   status: 'init',
   params: {
+    players: 3,
     impostors: 2,
     meetings: 5,
     discussion: 50,
@@ -44,6 +46,11 @@ const initialState: IGameState = {
     isProccessing: false,
     count: 0,
     lastMeeting: null,
+  },
+  error: {
+    title: '',
+    text: '',
+    isActive: false,
   },
 };
 
@@ -116,13 +123,23 @@ export const gameSlice = createSlice({
     startMeeting: (state, action: PayloadAction<IStartMeeting>) => {
       state.meetings.initiator = action.payload;
       state.meetings.isProccessing = true;
-      console.log(state.meetings);
     },
     stopMeeting: state => {
       state.meetings.isProccessing = initialState.meetings.isProccessing;
       state.meetings.initiator = initialState.meetings.initiator;
       state.meetings.count += 1;
       state.meetings.lastMeeting = performance.now();
+    },
+    setGameError: (state, action: PayloadAction<Omit<IGameError, 'isActive'>>) => {
+      const { title, text } = action.payload;
+      state.error.title = title;
+      state.error.text = text;
+      state.error.isActive = true;
+    },
+    clearGameError: state => {
+      state.error.isActive = false;
+      state.error.title = initialState.error.title;
+      state.error.text = initialState.error.text;
     },
   },
 });
@@ -139,3 +156,8 @@ export const selectPlayersAmount = (state: TypeRootState) =>
 export const selectGame = (state: TypeRootState) => state.game.gameId;
 export const selectChatId = (state: TypeRootState) => state.game.chatId;
 export const selectMeeting = (state: TypeRootState) => state.game.meetings;
+export const selectParams = (state: TypeRootState) => state.game.params;
+export const selectGameError = (state: TypeRootState) => ({
+  title: state.game.error.title,
+  text: state.game.error.text,
+});

@@ -3,6 +3,7 @@ import type { Namespace, Socket } from 'socket.io';
 
 export type GameParams = {
   discussion: number;
+  players: number;
   impostors: number;
   interval: number;
   meetings: number;
@@ -60,7 +61,7 @@ export type GameReady = (players: IPlayer[]) => void;
 
 export type CompleteTask = (gameId: GameId) => void;
 
-export type KillPlayer = (gameId: GameId, targetId: number) => void;
+export type KillPlayer = (gameId: GameId, targetId: number, fromMeeting?: boolean) => void;
 
 export type EndMove = (id: string) => void;
 
@@ -78,7 +79,7 @@ export type OnLeaveGame = () => void;
 
 export type OnGameEnd = (role: PlayerRoleType) => void;
 
-export type OnPlayerKill = (playerId: number) => void;
+export type OnPlayerKill = (playerId: number, fromMeeting?: boolean) => void;
 
 export type SetPlayerRating = (
   playerId: number,
@@ -123,7 +124,27 @@ export type GetMessages = (
   callback: (messages: MessageType[]) => void
 ) => void;
 
+export type OnUnavaliableMeeting = (reason: string) => void;
+
+export type FinishMeeting = (gameId: GameId) => void;
+
+export type OnFinishMeeting = (playerId?: number) => void;
+
+export type OnLastSecondsMeeting = () => void;
+
 export type MoveClient = (params: IMoveServerParams) => void;
+
+export type MeetingResults = {
+  [k: number]: number;
+}
+
+export type MeetingVotedList = number[];
+
+export type VoteForPlayer = (gameId: GameId, playerId: number, oldTargetId: number | null, newTargetId: number, callback: (votedList: number[]) => void) => void;
+
+export type RemoveVote = (gameId: GameId, playerId: number, targetPlayerId: number, callback: (votedList: number[]) => void) => void;
+
+export type OnVote = (votedList: number[]) => void;
 
 // Broadcasting
 export interface IGameServerToClientEvents {
@@ -133,11 +154,15 @@ export interface IGameServerToClientEvents {
   killPlayer: KillPlayer;
   onGameReady: GameReady;
   onEmergencyMeeting: OnEmergencyMeeting;
+  onFinishMeeting: OnFinishMeeting;
   onPlayerJoin: PlayerJoin;
   onLeaveGame: OnLeaveGame;
   onGameEnd: OnGameEnd;
   onPlayerKill: OnPlayerKill;
   onGetMessage: OnGetMessage;
+  onUnavaliableMeeting: OnUnavaliableMeeting;
+  onLastSecondsMeeting: OnLastSecondsMeeting;
+  onVote: OnVote;
 }
 
 // Receiving Event
@@ -156,9 +181,12 @@ export interface IGameClienToServerEvents {
   playerReady: SetPlayerReady;
   getPlayersAmount: GetPlayers;
   assembleMeeting: AssembleMeeting;
+  finishMeeting: FinishMeeting;
   setPlayerRating: SetPlayerRating;
   sendMessage: SendMessage;
   getMessages: GetMessages;
+  voteForPlayer: VoteForPlayer;
+  removeVote: RemoveVote;
 }
 
 // Inter-server

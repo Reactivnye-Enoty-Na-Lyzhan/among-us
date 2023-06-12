@@ -6,14 +6,14 @@ import type {
   GameSocketNamespace,
   KillPlayer,
 } from '../../../types/socket/game/gameSocket.types';
-import { Game } from '../../../models/game';
+import { Game } from '../../../models/game/game';
 import { WrongDataError } from '../../../utils/errors/commonErrors/WrongDataError';
 
 export const playerInteractionHandlers = (
   socket: GameSocket,
   io: GameSocketNamespace
 ) => {
-  const killPlayer: KillPlayer = async (gameId, targetId) => {
+  const killPlayer: KillPlayer = async (gameId, targetId, fromMeeting) => {
     try {
       const game = await Game.findOne({
         where: {
@@ -42,10 +42,9 @@ export const playerInteractionHandlers = (
         player => player.role === 'civil' && player.alive
       );
 
-      io.to(gameId.toString()).emit('onPlayerKill', targetId);
+      io.to(gameId.toString()).emit('onPlayerKill', targetId, fromMeeting);
 
       if (impostorsAlive.length >= civilsAlive.length) {
-        console.log('asdasdasd');
         io.to(gameId.toString()).emit('onGameEnd', 'impostor');
       }
     } catch (err: unknown) {

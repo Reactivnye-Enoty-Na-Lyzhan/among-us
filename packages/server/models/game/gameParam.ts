@@ -4,12 +4,13 @@ import {
   type InferAttributes,
   type InferCreationAttributes,
 } from 'sequelize';
-import { sequelize } from '../utils/connectDataBase';
+import { sequelize } from '../../utils/connectDataBase';
 
 export class GameParam extends Model<
   InferAttributes<GameParam>,
   InferCreationAttributes<GameParam>
 > {
+  declare players: number;
   declare impostors: number;
   declare meetings: number;
   declare discussion: number;
@@ -18,6 +19,11 @@ export class GameParam extends Model<
 
 GameParam.init(
   {
+    players: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 3,
+    },
     impostors: {
       type: DataTypes.INTEGER,
       allowNull: false,

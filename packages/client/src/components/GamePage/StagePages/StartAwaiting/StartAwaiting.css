@@ -78,6 +78,43 @@
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  transform: scaleX(-1);
+}
+
+.start-awaiting__crewman_suit_white {
+  background-image: url('@/images/game/crew/crewman_white.svg');
+}
+
+.start-awaiting__crewman_suit_green {
+  background-image: url('@/images/game/crew/crewman_green.svg');
+}
+
+.start-awaiting__crewman_suit_aquamarine {
+  background-image: url('@/images/game/crew/crewman_aquamarine.svg');
+}
+
+.start-awaiting__crewman_suit_red {
+  background-image: url('@/images/game/crew/crewman_red.svg');
+}
+
+.start-awaiting__crewman_suit_brown {
+  background-image: url('@/images/game/crew/crewman_brown.svg');
+}
+
+.start-awaiting__crewman_suit_grey {
+  background-image: url('@/images/game/crew/crewman_grey.svg');
+}
+
+.start-awaiting__crewman_suit_yellow {
+  background-image: url('@/images/game/crew/crewman_yellow.svg');
+}
+
+.start-awaiting__crewman_suit_purple {
+  background-image: url('@/images/game/crew/crewman_purple.svg');
+}
+
+.start-awaiting__crewman_suit_blue {
+  background-image: url('@/images/game/crew/crewman_blue.svg');
 }
 
 .start-awaiting__leave-game {

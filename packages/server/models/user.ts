@@ -7,9 +7,9 @@ import {
   type BelongsToManyAddAssociationMixin,
 } from 'sequelize';
 import { compare } from 'bcrypt';
-import { Player } from './player';
-import { Game } from './game';
-import { GameQueue } from './gameQueue';
+import { Player } from './game/player';
+import { Game } from './game/game';
+import { GameQueue } from './game/gameQueue';
 import { WrongDataError } from '../utils/errors/commonErrors/WrongDataError';
 import { ErrorMessages } from '../utils/errors/errorMessages';
 import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
