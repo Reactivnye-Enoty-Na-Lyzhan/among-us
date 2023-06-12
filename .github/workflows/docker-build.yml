@@ -1,4 +1,4 @@
-name: ci
+name: Deploy to Cloud.Yandex
 
 on:
   workflow_dispatch:
