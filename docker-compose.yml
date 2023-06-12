@@ -12,8 +12,6 @@ services:
     depends_on:
       server:
         condition: service_started
-    volumes:
-      - ./nginx/config/ssl:/etc/nginx/ssl:ro
     networks:
       - basic
 
