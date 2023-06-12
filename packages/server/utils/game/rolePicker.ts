@@ -20,7 +20,8 @@ export const roleDistributor = async (
   if (playersCount === 0) {
     return getRandom();
   }
-  const { impostors: maxImpostors, players: gamePlayers } = await game.getParam();
+  const { impostors: maxImpostors, players: gamePlayers } =
+    await game.getParam();
 
   const civilsLeft = gamePlayers - maxImpostors;
   const civils = players.filter(player => player.role === 'civil').length;

@@ -11,24 +11,26 @@ interface IRoleText {
 
 type TextComponents = {
   [k in PlayerRoleType]: IRoleText;
-}
+};
 
 interface IProps {
   role: PlayerRoleType;
   color: keyof SuitColorsType;
 }
 
-const Meeting: FC<IProps> = (props) => {
+const Meeting: FC<IProps> = props => {
   const { role, color } = props;
 
   const textComponents: TextComponents = {
     civil: {
       heading: 'Как же жаль...',
-      description: 'Вы выбросили в открытый космос своего товарища... А предатель по-прежнему среди вас!',
+      description:
+        'Вы выбросили в открытый космос своего товарища... А предатель по-прежнему среди вас!',
     },
     impostor: {
       heading: 'А вы хороши!',
-      description: 'Предатель будет очень-очень долго лететь в холодном-холодном космосе!',
+      description:
+        'Предатель будет очень-очень долго лететь в холодном-холодном космосе!',
     },
   };
 
@@ -40,8 +42,12 @@ const Meeting: FC<IProps> = (props) => {
     <div className="meeting-informer">
       <div className="meeting-informer__stars" />
       <span className={crewmanClass} />
-      <h3 className="meeting-informer__title">{textComponents[role].heading}</h3>
-      <p className="meeting-informer__description">{textComponents[role].description}</p>
+      <h3 className="meeting-informer__title">
+        {textComponents[role].heading}
+      </h3>
+      <p className="meeting-informer__description">
+        {textComponents[role].description}
+      </p>
     </div>
   );
 };

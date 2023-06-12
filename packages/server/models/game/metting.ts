@@ -8,7 +8,10 @@ import {
 } from 'sequelize';
 import { Game } from './game';
 import { sequelize } from '../../utils/connectDataBase';
-import type { MeetingResults, MeetingVotedList } from 'socket/game/gameSocket.types';
+import type {
+  MeetingResults,
+  MeetingVotedList,
+} from '../../types/socket/game/gameSocket.types';
 
 export class Meeting extends Model<
   InferAttributes<Meeting>,
@@ -23,38 +26,41 @@ export class Meeting extends Model<
   declare gameId: ForeignKey<Game['id']>;
 }
 
-Meeting.init({
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+Meeting.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    lastMeeting: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    meetingCount: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    isProccessing: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    votedList: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      defaultValue: [],
+    },
+    results: {
+      type: DataTypes.JSONB,
+      allowNull: false,
+      defaultValue: {},
+    },
   },
-  lastMeeting: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW,
-  },
-  meetingCount: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-  },
-  isProccessing: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
-  votedList: {
-    type: DataTypes.ARRAY(DataTypes.INTEGER),
-    defaultValue: [],
-  },
-  results: {
-    type: DataTypes.JSONB,
-    allowNull: false,
-    defaultValue: {},
-  },
-}, {
-  sequelize,
-  tableName: 'meetings',
-  timestamps: false,
-});
+  {
+    sequelize,
+    tableName: 'meetings',
+    timestamps: false,
+  }
+);

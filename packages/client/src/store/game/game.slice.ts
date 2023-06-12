@@ -130,7 +130,10 @@ export const gameSlice = createSlice({
       state.meetings.count += 1;
       state.meetings.lastMeeting = performance.now();
     },
-    setGameError: (state, action: PayloadAction<Omit<IGameError, 'isActive'>>) => {
+    setGameError: (
+      state,
+      action: PayloadAction<Omit<IGameError, 'isActive'>>
+    ) => {
       const { title, text } = action.payload;
       state.error.title = title;
       state.error.text = text;

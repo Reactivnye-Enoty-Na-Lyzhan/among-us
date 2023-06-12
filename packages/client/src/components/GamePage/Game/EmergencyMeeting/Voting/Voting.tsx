@@ -62,33 +62,48 @@ const Voting: FC = () => {
     };
   }, [counter]);
 
-
   // Обработчик входящего статуса проголосовавших
   const handleVoteStatus = (votedList: IPlayer['id'][]) => {
     setVotedList(votedList);
   };
 
   // Обработчик голосования
-  const handleVoteForPlayer = useCallback((targetId: IPlayer['id']) => {
-    if (!targetId) return;
+  const handleVoteForPlayer = useCallback(
+    (targetId: IPlayer['id']) => {
+      if (!targetId) return;
 
-    setSelectedPlayer(currentTarget =>
-      currentTarget === targetId ? null : targetId
-    );
+      setSelectedPlayer(currentTarget =>
+        currentTarget === targetId ? null : targetId
+      );
 
-    if (gameId && currentPlayerId) {
-      if (targetId === selectedPlayer) {
-        socket.emit('removeVote', gameId, currentPlayerId, targetId, (votedList) => {
-          setVotedList(votedList);
-        });
-        return;
+      if (gameId && currentPlayerId) {
+        if (targetId === selectedPlayer) {
+          socket.emit(
+            'removeVote',
+            gameId,
+            currentPlayerId,
+            targetId,
+            votedList => {
+              setVotedList(votedList);
+            }
+          );
+          return;
+        }
+
+        socket.emit(
+          'voteForPlayer',
+          gameId,
+          currentPlayerId,
+          selectedPlayer,
+          targetId,
+          votedList => {
+            setVotedList(votedList);
+          }
+        );
       }
-
-      socket.emit('voteForPlayer', gameId, currentPlayerId, selectedPlayer, targetId, (votedList) => {
-        setVotedList(votedList);
-      });
-    }
-  }, [selectedPlayer]);
+    },
+    [selectedPlayer]
+  );
 
   // Обработчик завершения встречи
   const handleFinishMeeting = () => {

@@ -61,7 +61,11 @@ export type GameReady = (players: IPlayer[]) => void;
 
 export type CompleteTask = (gameId: GameId) => void;
 
-export type KillPlayer = (gameId: GameId, targetId: number, fromMeeting?: boolean) => void;
+export type KillPlayer = (
+  gameId: GameId,
+  targetId: number,
+  fromMeeting?: boolean
+) => void;
 
 export type EndMove = (id: string) => void;
 
@@ -136,13 +140,24 @@ export type MoveClient = (params: IMoveServerParams) => void;
 
 export type MeetingResults = {
   [k: number]: number;
-}
+};
 
 export type MeetingVotedList = number[];
 
-export type VoteForPlayer = (gameId: GameId, playerId: number, oldTargetId: number | null, newTargetId: number, callback: (votedList: number[]) => void) => void;
+export type VoteForPlayer = (
+  gameId: GameId,
+  playerId: number,
+  oldTargetId: number | null,
+  newTargetId: number,
+  callback: (votedList: number[]) => void
+) => void;
 
-export type RemoveVote = (gameId: GameId, playerId: number, targetPlayerId: number, callback: (votedList: number[]) => void) => void;
+export type RemoveVote = (
+  gameId: GameId,
+  playerId: number,
+  targetPlayerId: number,
+  callback: (votedList: number[]) => void
+) => void;
 
 export type OnVote = (votedList: number[]) => void;
 

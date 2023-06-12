@@ -2,7 +2,8 @@
   from {
     transform: rotate(0);
     left: calc(-181px);
-  } to {
+  }
+  to {
     transform: rotate(360deg);
     left: calc(181px + 100%);
   }
@@ -12,7 +13,8 @@
   from {
     width: 0;
     border-right: 1px solid #fafafa;
-  } to {
+  }
+  to {
     width: 100%;
     border-right: 0;
   }
@@ -22,7 +24,6 @@
   50% {
     border-color: transparent;
   }
-  
 }
 .meeting-informer {
   position: absolute;

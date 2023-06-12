@@ -22,14 +22,17 @@ import type { IMeetingResult, PlayerRoleType } from '@/store/game/game.types';
 import './Game.css';
 
 const Game: FC = () => {
-  const [meetingResult, setMeetingResult] = useState<IMeetingResult | null>(null);
+  const [meetingResult, setMeetingResult] = useState<IMeetingResult | null>(
+    null
+  );
   const { id: playerId } = useTypedSelector(selectPlayer);
   const players = useTypedSelector(selectPlayers);
   const gameId = useTypedSelector(selectGame);
-  const {
-    isProccessing: meetingIsProccessing,
-  } = useTypedSelector(selectMeeting);
-  const isGameErrorActive = useTypedSelector(state => state.game.error.isActive);
+  const { isProccessing: meetingIsProccessing } =
+    useTypedSelector(selectMeeting);
+  const isGameErrorActive = useTypedSelector(
+    state => state.game.error.isActive
+  );
 
   const [minigameId, setMinigameId] = useState<number | undefined>(undefined);
 
@@ -131,7 +134,7 @@ const Game: FC = () => {
     }
 
     // Получаем игрока, за которого проголосовали
-    const votedPlayer = players.find((player) => player.id === playerId);
+    const votedPlayer = players.find(player => player.id === playerId);
 
     if (!votedPlayer) return;
 
@@ -228,7 +231,12 @@ const Game: FC = () => {
       ) : null}
       <div className="game__canvas-container">
         <canvas ref={canvasRef} id="main-canvas"></canvas>
-        {meetingResult && <MeetingScreen color={meetingResult.color} role={meetingResult.role} />}
+        {meetingResult && (
+          <MeetingScreen
+            color={meetingResult.color}
+            role={meetingResult.role}
+          />
+        )}
         {meetingIsProccessing && <EmergencyMeeting />}
         {isGameErrorActive && <Notification />}
         <button

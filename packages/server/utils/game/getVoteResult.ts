@@ -1,4 +1,4 @@
-import { MeetingResults } from "socket/game/gameSocket.types";
+import { MeetingResults } from 'socket/game/gameSocket.types';
 
 export const getVoteResult = (votedList: MeetingResults): number | null => {
   const resultsArray = Object.keys(votedList);
@@ -8,7 +8,8 @@ export const getVoteResult = (votedList: MeetingResults): number | null => {
     const votedPlayers = resultsArray.sort((a, b) => {
       return votedList[Number(b)] - votedList[Number(a)];
     });
-    const hasAdavantage = votedList[Number(votedPlayers[0])] > votedList[Number(votedPlayers[1])];
+    const hasAdavantage =
+      votedList[Number(votedPlayers[0])] > votedList[Number(votedPlayers[1])];
 
     if (hasAdavantage) {
       return Number(resultsArray[0]);

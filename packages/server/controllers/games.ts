@@ -306,7 +306,8 @@ export const takeQueue = async (
 
     const gameParam = await foundGame?.getParam();
 
-    if (!foundGame || !gameParam) throw new NotExistError(ErrorMessages.gameNotExist);
+    if (!foundGame || !gameParam)
+      throw new NotExistError(ErrorMessages.gameNotExist);
 
     // Если нет места для подключения, сообщаем об этом пользователю
     if ((await foundGame.countGameQueues()) >= gameParam.players) {
@@ -388,10 +389,10 @@ export const joinGame = async (
       },
     });
 
-
     const gameParam = await foundGame?.getParam();
 
-    if (!foundGame || !gameParam) throw new NotExistError(ErrorMessages.gameNotExist);
+    if (!foundGame || !gameParam)
+      throw new NotExistError(ErrorMessages.gameNotExist);
 
     // Проверяем, подключён ли уже пользователь как игрок
     const players = await foundGame.getPlayers({

@@ -34,7 +34,8 @@ export const mechanicsHandlers = (
       const meeting = await game.getMeeting();
       const param = await game.getParam();
 
-      const meetingUnfreezeTime = meeting.lastMeeting.getTime() + (param.interval * 1000);
+      const meetingUnfreezeTime =
+        meeting.lastMeeting.getTime() + param.interval * 1000;
 
       if (meeting.isProccessing) {
         socket.emit('onUnavaliableMeeting', MeetingMessages.proccessing);
@@ -83,7 +84,7 @@ export const mechanicsHandlers = (
 
       if (!meeting) throw new NotExistError(ErrorMessages.meetingNotFound);
 
-      const result = getVoteResult(meeting.results);;
+      const result = getVoteResult(meeting.results);
 
       if (result) {
         io.to(gameId.toString()).emit('onFinishMeeting', result);
@@ -98,14 +99,19 @@ export const mechanicsHandlers = (
         lastMeeting: new Date(),
         meetingCount: meeting.meetingCount + 1,
       });
-
     } catch (err: unknown) {
       console.log(err);
     }
   };
 
   // Добавление голоса //  По результатм, если нет переввеса, сообщение, что собрание не состоялось
-  const voteForPlayer: VoteForPlayer = async (gameId, playerId, oldTargetId, newTargetId, callback) => {
+  const voteForPlayer: VoteForPlayer = async (
+    gameId,
+    playerId,
+    oldTargetId,
+    newTargetId,
+    callback
+  ) => {
     try {
       const meeting = await Meeting.findOne({
         where: {
@@ -146,7 +152,12 @@ export const mechanicsHandlers = (
   };
 
   // Снятие голоса
-  const removeVote: RemoveVote = async (gameId, playerId, targetPlayerId, callback) => {
+  const removeVote: RemoveVote = async (
+    gameId,
+    playerId,
+    targetPlayerId,
+    callback
+  ) => {
     try {
       const meeting = await Meeting.findOne({
         where: {
@@ -158,7 +169,7 @@ export const mechanicsHandlers = (
 
       // Убираем проголосовавшего из массива проголосовавших
       const votedList = meeting.votedList;
-      const filteredVotedList = votedList.filter((player) => player !== playerId);
+      const filteredVotedList = votedList.filter(player => player !== playerId);
 
       meeting.votedList = filteredVotedList;
 

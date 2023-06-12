@@ -1,7 +1,9 @@
 @keyframes flyIn {
   from {
     top: -50px;
-  } to {}
+  }
+  to {
+  }
 }
 
 .game-notification {
@@ -16,13 +18,13 @@
   background-color: #e8125f;
   transform: translateX(-50%);
   border-radius: 7px;
-  box-shadow: 0 0 10px rgba(232, 18, 95, .75);
+  box-shadow: 0 0 10px rgba(232, 18, 95, 0.75);
   pointer-events: none;
   user-select: none;
   opacity: 0;
   visibility: hidden;
-  animation: flyIn .4s ease-in-out alternate;
-  transition: .5s;
+  animation: flyIn 0.4s ease-in-out alternate;
+  transition: 0.5s;
 }
 
 .game-notification_shown {
