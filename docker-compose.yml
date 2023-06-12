@@ -3,7 +3,7 @@ version: '3.9'
 services:
   server:
     container_name: server
-    image: server
+    image: cr.yandex/${CR_REGISTRY}/${CR_REPOSITORY}:${IMAGE_TAG}
     build:
       context: .
       dockerfile: Dockerfile.server

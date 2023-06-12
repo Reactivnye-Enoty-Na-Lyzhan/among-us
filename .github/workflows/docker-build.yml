@@ -33,6 +33,9 @@ jobs:
           AWS_BUCKET: bucket
           OAUTH_CLIENT: test
           OAUTH_SECRET: asd
+          CR_REGISTRY: crp37rtt3cl5rdvoiork
+          CR_REPOSITORY: server
+          IMAGE_TAG: ${{ github.sha }}
 
         run: |
           docker-compose build server
