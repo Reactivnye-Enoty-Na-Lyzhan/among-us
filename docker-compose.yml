@@ -1,42 +1,19 @@
 version: '3.9'
 
 services:
-  nginx:
-    container_name: nginx
-    image: nginx
-    ports:
-      - '80:80'
-      - '443:443'
-    restart: always
-
   server:
     container_name: server
-    image: cr.yandex/crp37rtt3cl5rdvoiork/server:0.5.6
+    image: server
     build:
       context: .
       dockerfile: Dockerfile.server
       args:
-        SERVER_PORT: 3001
+        SERVER_PORT: ${SERVER_PORT}
     restart: always
     ports:
-      - '3001:3001'
+      - '${SERVER_PORT}:${SERVER_PORT}'
     environment:
-      SERVER_PORT: 3001
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: enotty
-      POSTGRES_PASSWORD: En0;TyHALyzhA/X\
-      POSTGRES_DB: amongus
-      OAUTH_CLIENT: b41558ce234c40618e278734b8729380
-      OAUTH_SECRET: 489c735985384f6bbc2a5cd4d36759f1
-      JWT_SECRET: b41558ce234c40618e278734b8729380
-      AWS_BUCKET: amongus
-      AWS_ACCESS_KEY_ID: YCAJE3KKblVzmM-nn05LCFhgO
-      AWS_SECRET_ACCESS_KEY: YCOEprTkYkNYitQ_KFiRZpULhDFeuAkSgB2Td7gq
-      APP_HOST: 158.160.71.59
-      VITE_SOCKET_HOST: 158.160.71.59
-      VITE_SOCKET_PORT: 3001
-      NODE_ENV: production
+      SERVER_PORT: ${SERVER_PORT}
     networks:
       - basic
     depends_on:
@@ -48,17 +25,17 @@ services:
     image: postgres:15.2-alpine
     restart: always
     ports:
-      - '5432:5432'
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
     environment:
-      POSTGRES_PASSWORD: En0;TyHALyzhA/X\
-      POSTGRES_USER: enotty
-      POSTGRES_DB: amongus
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
       - basic
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready']
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -69,9 +46,9 @@ services:
     image: dpage/pgadmin4:7.1
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: enot@enoty.team
-      PGADMIN_DEFAULT_PASSWORD: enOty5%
-      PGADMIN_LISTEN_PORT: 80
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_LISTEN_PORT: ${PGADMIN_PORT}
     ports:
       - '8080:80'
     volumes:
