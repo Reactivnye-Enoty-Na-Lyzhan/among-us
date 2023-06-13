@@ -42,9 +42,9 @@ jobs:
           docker-compose push
       
       - name: Update VM
-        uses: nikita-volkov/yc-cli.github-action@v1.0.0
+        uses: nikita-volkov/yc-cli.github-action@v1.0.1
           with:
             key: ${{ secrets.SA_DEPLOYER_PRIVATE_KEY }}
-            args: yc compute instance update-container epddoun7tktto3e1d436 \
+            args: compute instance update-container epddoun7tktto3e1d436 \
                   --container-name=crp37rtt3cl5rdvoiork/server \
                   --container-image=cr.yandex/crp37rtt3cl5rdvoiork/${{ github.sha }} 
