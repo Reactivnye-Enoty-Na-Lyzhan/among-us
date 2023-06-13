@@ -45,4 +45,4 @@ jobs:
         uses: nikita-volkov/yc-cli.github-action@v1.0.1
         with:
           key: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-          args: compute instance update-container epddoun7tktto3e1d436 --container-image=cr.yandex/crp37rtt3cl5rdvoiork/${{ github.sha }}
+          args: compute instance update-container epddoun7tktto3e1d436 --container-name=server --container-image=cr.yandex/crp37rtt3cl5rdvoiork/${{ github.sha }}
