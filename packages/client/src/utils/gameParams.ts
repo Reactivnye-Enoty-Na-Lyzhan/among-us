@@ -8,16 +8,13 @@ export type GameParamsType = {
 
 export const gameNamePattern = /^[0-9a-zA-Zа-яА-ЯёЁ-]+$/i;
 
-// В идеале хранить в общем для server и client env
-export const MAX_PLAYERS = 3;
-
 export const gameParams: GameParamsType[] = [
   {
-    title: 'Предателей',
-    name: 'impostor',
-    min: 1,
-    max: 4,
-    rangeUnit: 'предателей',
+    title: 'Игроков',
+    name: 'players',
+    min: 3,
+    max: 9,
+    rangeUnit: 'игроков',
   },
   {
     title: 'Экстренных собраний',
@@ -43,7 +40,7 @@ export const gameParams: GameParamsType[] = [
 ];
 
 const inputsList = [
-  'impostor',
+  'players',
   'meeting',
   'discussion',
   'interval',
@@ -55,7 +52,7 @@ export type InputsParamsType = {
 };
 
 export const inputDefaultValues: InputsParamsType = {
-  impostor: '2',
+  players: '3',
   meeting: '5',
   discussion: '50',
   interval: '30',
@@ -67,7 +64,7 @@ export type DefaultValidityStateType = {
 };
 
 export const defaultValidityState: DefaultValidityStateType = {
-  impostor: true,
+  players: true,
   meeting: true,
   discussion: true,
   interval: true,

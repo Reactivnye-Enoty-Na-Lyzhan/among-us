@@ -38,14 +38,14 @@ const sortField = Joi.string()
 const code = Joi.string().required();
 const params = Joi.object<IParams>().keys({
   discussion: Joi.number().required().min(30).max(90),
-  impostors: Joi.number().required().min(1).max(4),
+  players: Joi.number().required().min(3).max(9),
   interval: Joi.number().required().min(10).max(60),
   meetings: Joi.number().required().min(2).max(10),
 });
 
 interface IParams {
   discussion: StringSchema<number>;
-  impostors: StringSchema<number>;
+  players: StringSchema<number>;
   interval: StringSchema<number>;
   meetings: StringSchema<number>;
 }

@@ -34,10 +34,6 @@ export const CLIENT_PACKAGE_PATH = path.resolve(
   `${IS_DEV ? '../../client' : '../../../client'}`
 );
 
-export const MAX_PLAYERS = 3;
-
-export const MIN_PLAYERS = 1;
-
 export const CIVIL_VICTORY_SCORE = 1200;
 
 export const CURRENT_HOST = APP_HOST;

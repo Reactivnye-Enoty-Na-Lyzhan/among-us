@@ -27,7 +27,7 @@ export default function canvasProcess(
   playerId: any,
   socket: any,
   gameId: any,
-  meetingIsProccessing: any
+  isBlocked: any
 ) {
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   canvasSetup(canvas);
@@ -101,7 +101,7 @@ export default function canvasProcess(
     }
 
     update(x: number, y: number) {
-      if (meetingIsProccessing.current) return;
+      if (isBlocked.current) return;
       if (!this.alive) {
         return;
       }
@@ -420,7 +420,7 @@ export default function canvasProcess(
     allPlayers.find(obj => obj.id === id).die();
     console.log(crewmen);
   }
-  socket.on('onPlayerKill', handlePlayerKill);
+  socket.on('onPlayerKill', handlePlayerKill); // 3=й параметр fromMeeting
 
   console.log(allPlayers);
   function gameLoop() {

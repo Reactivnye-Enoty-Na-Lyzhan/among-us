@@ -1,7 +1,7 @@
 import { sequelize } from '../../../utils/connectDataBase';
-import { GameColor } from '../../../models/gameColor';
+import { GameColor } from '../../../models/game/gameColor';
 import { LeaderBoard } from '../../../models/leaderboard';
-import { Player } from '../../../models/player';
+import { Player } from '../../../models/game/player';
 import { NotExistError } from '../../../utils/errors/commonErrors/NotExistError';
 import { ErrorMessages } from '../../../utils/errors/errorMessages';
 import { getWinrate } from '../../../utils/game/getWinrate';

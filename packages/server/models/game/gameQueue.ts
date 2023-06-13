@@ -7,8 +7,8 @@ import {
   type InferCreationAttributes,
 } from 'sequelize';
 import { Game } from './game';
-import { User } from './user';
-import { sequelize } from '../utils/connectDataBase';
+import { User } from '../user';
+import { sequelize } from '../../utils/connectDataBase';
 
 export class GameQueue extends Model<
   InferAttributes<GameQueue>,

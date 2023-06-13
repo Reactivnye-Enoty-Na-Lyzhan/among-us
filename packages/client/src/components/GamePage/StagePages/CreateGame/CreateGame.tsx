@@ -27,7 +27,7 @@ const CreateGame: FC = () => {
     const game = await createServerGame({
       title: values.title,
       params: {
-        impostors: Number(values.impostor),
+        players: Number(values.players),
         discussion: Number(values.discussion),
         meetings: Number(values.meeting),
         interval: Number(values.interval),

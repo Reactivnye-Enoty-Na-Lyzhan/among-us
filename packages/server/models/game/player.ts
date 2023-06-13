@@ -8,13 +8,13 @@ import {
   type InferCreationAttributes,
 } from 'sequelize';
 
-import { User } from './user';
+import { User } from '../user';
 import { Game } from './game';
-import { sequelize } from '../utils/connectDataBase';
+import { sequelize } from '../../utils/connectDataBase';
 import type {
   GameRole,
   SuitColorsType,
-} from '../types/socket/game/gameSocket.types';
+} from '../../types/socket/game/gameSocket.types';
 
 interface IPlayerPosition {
   x: number;
