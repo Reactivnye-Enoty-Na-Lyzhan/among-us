@@ -41,8 +41,8 @@ jobs:
           docker-compose build server
           docker-compose push
 
-      - name: Update VM
-        uses: nikita-volkov/yc-cli.github-action@v1.0.1
+      - name: 'Generate docker-compose file for Yandex Cloud'
+        uses: franzbischoff/replace_envs@v1
         env:
           CLIENT_PORT: 3000
           SERVER_PORT: 3001
@@ -64,5 +64,10 @@ jobs:
           CR_REPOSITORY: server
           IMAGE_TAG: ${{ github.sha }}
         with:
+          from_file: 'docker-compose.yml'
+          to_file: 'docker-compose-yc.yml'
+      - name: Update VM
+        uses: nikita-volkov/yc-cli.github-action@v1.0.1
+        with:
           key: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-          args: compute instance update-container epddoun7tktto3e1d436 --docker-compose-file=./docker-compose.yml
+          args: compute instance update-container epddoun7tktto3e1d436 --docker-compose-file=./docker-compose-yc.yml
