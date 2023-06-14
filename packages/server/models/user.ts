@@ -140,6 +140,11 @@ User.init(
           include: ['accessToken', 'refreshToken'],
         },
       },
+      getUser: {
+        attributes: {
+          exclude: ['password', 'accessToken', 'refreshToken', 'id'],
+        },
+      },
     },
     sequelize,
     tableName: 'users',

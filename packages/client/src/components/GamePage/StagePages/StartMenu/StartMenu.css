@@ -91,3 +91,33 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+@media screen and (max-width: 1200px) {
+  .start-menu__title {
+    margin: 30px 0;
+    text-align: center ;
+  }
+
+  .start-menu__container {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .start-menu__controls {
+    min-width: auto;
+  }
+
+  .start-menu__fast-start {
+    font-size: 40px;
+  }
+
+  .start-menu__crewman {
+    display: none;
+  }
+}
+
+@media screen and (max-height: 550px) {
+  .start-menu__title {
+    margin: 20px 0;
+  }
+}

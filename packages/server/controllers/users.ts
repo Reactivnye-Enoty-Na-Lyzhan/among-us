@@ -128,7 +128,8 @@ export const loginUser = async (
           domain: CURRENT_HOST,
           maxAge: 604800000,
           httpOnly: true,
-          sameSite: NODE_ENV === 'production',
+          sameSite: NODE_ENV === 'production' ? 'strict' : false,
+          secure: NODE_ENV === 'production',
         })
         .send({
           login: user.login,
@@ -156,7 +157,8 @@ export const logoutUser = async (
         domain: CURRENT_HOST,
         maxAge: 604800000,
         httpOnly: true,
-        sameSite: NODE_ENV === 'production',
+        sameSite: NODE_ENV === 'production' ? 'strict' : false,
+
       })
       .send({ message: ResponseMessages.logout });
   } catch (err: unknown) {
@@ -175,7 +177,7 @@ export const getCurrentUser = async (
   try {
     if (!id) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
 
-    const user = await User.findOne({
+    const user = await User.scope('getUser').findOne({
       where: {
         id,
       },
@@ -219,7 +221,11 @@ export const updateProfile = async (
     });
 
     res.send({
-      user,
+      nickname: user.nickname,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phone: user.phone,
     });
   } catch (err: any) {
     if (Number(err.parent.code) === 23505) {

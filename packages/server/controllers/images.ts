@@ -59,7 +59,6 @@ export const uploadImage = async (
 
     res.send({
       result,
-      user,
     });
   } catch (err: unknown) {
     console.log(err);

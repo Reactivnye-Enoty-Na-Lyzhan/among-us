@@ -4,170 +4,145 @@
   align-items: center;
   background-color: var(--background-main-primary);
   width: 100%;
-  min-height: 100vh;
-  height: 100%;
-  overflow: hidden;
+  height: 100vh;
 }
 
-.profile {
-  display: flex;
-  flex-direction: column;
-  color: var(--font-main-primary);
-}
-
-.profile_position_left-corner {
-  align-self: flex-start;
-}
-
-.profile__information_space_around {
-  padding: 25px 0 75px 30px;
-}
-
-.profile__form {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  max-width: 1280px;
-  width: 100%;
-}
-
-.profile__form_direction_center {
-  display: flex;
-  justify-content: center;
-}
-
-.profile__form_space_left {
-  margin-left: 72px;
+.profile-page__header {
   margin-bottom: 115px;
-}
-
-.profile__form_space_top {
-  margin-top: 111px;
-}
-
-.profile__information {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: calc(100% - (35px * 2));
+  max-width: 80vw;
 }
 
-.profile__information_space_right {
-  margin-right: 10px;
-}
-
-.profile__information_space_left {
-  padding-left: 10px;
-  border-left: 2px solid var(--font-main-primary);
-}
-
-.profile__information_space_m {
-  margin-left: 32px;
-}
-
-.profile__link-back {
-  width: 32px;
-  height: 15px;
-  background-color: var(--font-main-primary);
-  mask-image: url(../../images/profile/return-link__icon.svg);
-  mask-repeat: no-repeat;
-  mask-size: cover;
-  position: relative;
-  transition: all 0.2s ease;
-}
-
-.profile__link-back:hover {
-  opacity: 0.8;
-}
-
-.profile__paragraph {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 22px;
-  line-height: 120%;
-  color: var(--font-main-primary);
-}
-
-.profile__personal-info {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 120%;
-  color: var(--font-main-primary);
-}
-
-.profile__navigation {
+.profile-page__container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  padding-left: 45px;
+  height: 100%;
+  width: 100%;
+  max-width: 80vw;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-background-primary) var(--scrollbar-background-secondary);
 }
 
-.profile__navigation_space_right {
-  margin-right: 102px;
+.profile-page__container::-webkit-scrollbar {
+  width: 10px;
 }
 
-.profile__navigation-links {
-  display: flex;
-  flex-direction: row;
+.profile-page__container::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-background-primary);
+  border: 3px solid var(--scrollbar-color-secondary);
+  border-radius: 5px;
+}
+
+.profile-page__container_page_avatar {
   justify-content: center;
-  font-family: Inter;
-  font-size: 0.9rem;
-  font-weight: 400;
-  line-height: 1rem;
-  color: var(--font-main-primary);
 }
 
-.profile__navigation-link {
-  font-family: Inter;
+.profile-page__crewman {
+  align-self: center;
+  width: 300px;
+  height: 380px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.profile-page__crewman_page_data {
+  background-image: url(@/images/profile/amongus-profile.svg);
+}
+
+.profile-page__crewman_page_password {
+  background-image: url(@/images/profile/amongus-password.svg);
+}
+
+.profile-page__footer {
+  display: flex;
+  align-items: center;
+  margin: 50px 0;
+  gap: 35px;
+  width: 100%;
+  max-width: 900px;
+  height: 75px;
+  background-color: var(--background-main-secondary);
+  border-radius: 7px;
+  flex-shrink: 0;
+}
+
+.profile-page__logout-button {
+  padding: 0;
+  width: 190px;
+  height: 50px;
+  font-family: inherit;
   font-size: 14px;
-  font-weight: 400;
-  line-height: 1rem;
-  text-decoration: none;
-  color: var(--font-main-primary);
+  font-weight: 500;
+  color: var(--button-font-quaternary);
+  line-height: 1;
+  background-color: var(--button-main-quaternary);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: .4s;
 }
 
-.profile__navigation-link:hover {
-  opacity: 0.8;
+.profile-page__logout-button:hover {
+  opacity: .9;
 }
 
-.profile__navigation-links_left {
-  text-align: left;
-  border-right: 1px solid var(--font-main-primary);
-  padding-right: 20px;
+.profile-page__footer-helper {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--font-main-quaternary);
+  line-height: 1.2;
 }
 
-.profile__navigation-links_right {
-  text-align: right;
-  border-left: 1px solid var(--font-main-primary);
-  padding-left: 20px;
+@media screen and (max-width: 1200px) {
+  .profile-page {
+    min-height: 100vh;
+    height: 100%;
+  }
+
+  .profile-page__container {
+    justify-content: center;
+    padding-left: 0;
+    max-width: 95vw;
+  }
+
+  .profile-page__crewman {
+    width: 150px;
+    margin-left: 100px;
+  }
+
+  .profile-page__header {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+    width: 100%;
+    max-width: 95vw;
+    row-gap: 25px;
+  }
+
+  .profile-page__footer {
+    max-width: 95vw;
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding: 15px 0;
+    gap: 15px;
+    height: auto;
+  }
 }
 
-.profile__navigation_space_top {
-  margin-top: 30px;
+@media screen and (max-width: 720px) {
+  .profile-page__crewman {
+    display: none;
+  }
 }
 
-.profile__navigation-data {
-  width: 297px;
-  height: 378px;
-  background-image: url(../../images/profile/amongus-profile.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.profile__navigation-password {
-  width: 297px;
-  height: 425px;
-  background-image: url(../../images/profile/amongus-password.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.profile__navigation-avatar {
-  width: 330px;
-  height: 481px;
-  /* margin-left: 170px; */
-  margin-top: -65px;
-  background-image: url(../../images/profile/amongus-avatar.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
+@media screen and (max-height: 1050px) {
+  .profile-page__header {
+    margin-bottom: 55px;
+  }
 }

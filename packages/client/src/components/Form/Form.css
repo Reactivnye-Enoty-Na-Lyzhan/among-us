@@ -1,6 +1,7 @@
 .form {
   width: 100%;
   max-width: 300px;
+  position: relative;
 }
 
 .form__form-input {

@@ -43,3 +43,29 @@
 .startgame-navigation__link_highlighted {
   color: var(--font-main-secondary);
 }
+
+@media screen and (max-width: 1200px) {
+  .startgame-navigation__links {
+    flex-wrap: wrap;
+  }
+
+  .startgame-navigation__links-item {
+    justify-content: center;
+    padding-right: 0;
+    width: 100%;
+    border-right: none;
+  }
+
+  .startgame-navigation__link {
+    width: 75px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--font-main-primary);
+  }
+}
+
+@media screen and (max-height: 550px) {
+  .startgame-navigation_spacing_outer {
+    margin-top: 25px;
+    margin-bottom: 15px;
+  }
+}

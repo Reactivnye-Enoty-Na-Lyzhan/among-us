@@ -12,6 +12,7 @@ import { leaderboardListenerMiddleware } from './leaderboard/listenerMiddleware'
 import { themeApi } from './ui/ui.api';
 import { uiReducer } from './ui/ui.slice';
 import { IUiState } from './ui/ui.types';
+import { profileApi } from './profile/profile.slice';
 
 export const createStore = (preloadedState?: PreloadedState) => {
   return configureStore({
@@ -22,6 +23,7 @@ export const createStore = (preloadedState?: PreloadedState) => {
       [gameApi.reducerPath]: gameApi.reducer,
       [forumApi.reducerPath]: forumApi.reducer,
       [themeApi.reducerPath]: themeApi.reducer,
+      [profileApi.reducerPath]: profileApi.reducer,
       game: gameReducer,
       ui: uiReducer,
       leaderboard: leaderboardReducer,
@@ -35,7 +37,8 @@ export const createStore = (preloadedState?: PreloadedState) => {
         leaderboardListenerMiddleware.middleware,
         gameApi.middleware,
         themeApi.middleware,
-        forumApi.middleware
+        forumApi.middleware,
+        profileApi.middleware,
       ),
   });
 };

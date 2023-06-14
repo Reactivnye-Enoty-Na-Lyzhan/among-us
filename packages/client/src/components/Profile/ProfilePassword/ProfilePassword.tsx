@@ -1,18 +1,19 @@
+import { FC, useCallback, useEffect, useState } from 'react';
 import Form from '../../Form/Form';
 import Input from '../../Form/Input/Input';
 import { useForm } from '../../Form/hooks';
 import { validation } from '../../../utils/validation';
 import Button from '../../Form/Button/Button';
 import { useValidation } from '../../../hooks/useValidation';
+import { useChangePasswordMutation } from '@/store/profile/profile.slice';
+import { useActions } from '@/hooks/useActions';
 import './ProfilePassword.css';
 
-type Props = {
-  choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар';
-};
+const ProfileForm: FC = () => {
+  const [isPasswordChanged, setIsPasswordChanged] = useState<boolean>(false);
+  const { values, handleInputChange, setValues } = useForm({});
+  const [changePassword] = useChangePasswordMutation();
 
-const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
-  choice;
-  const { values, handleInputChange } = useForm({});
   const {
     validationData,
     isFormValid,
@@ -25,18 +26,65 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
     { field: 'repeatPassword', validation: validation.password },
   ]);
 
+  const { setApiError } = useActions();
+
+  useEffect(() => {
+    if (!isPasswordChanged) return;
+
+    const timeout = setTimeout(() => {
+      setIsPasswordChanged(false);
+    }, 3500);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [isPasswordChanged]);
+
+  const handleFormSubmit = useCallback(async () => {
+    try {
+      if (!validateForm(values)) return;
+
+      if (!values.oldPassword || !values.newPassword) return;
+
+      const changePasswordRequest = await changePassword({
+        oldPassword: values.oldPassword,
+        newPassword: values.newPassword,
+      });
+
+      console.log(changePasswordRequest);
+
+      if ('error' in changePasswordRequest) {
+        setApiError({
+          code: 400,
+          message: 'Что-то пошло не так при изменении пароля!',
+        });
+        return;
+      }
+
+      setValues({
+        oldPassword: '',
+        newPassword: '',
+        repeatPassword: '',
+      });
+
+      setIsPasswordChanged(true);
+    } catch (err: unknown) {
+      console.log(err);
+    }
+
+  }, [values]);
+
   return (
-    /* Временно изменил класс с form на profile-form. У тебя ниже идёт снова class Form*/
-    <div className="profile-form">
-      <h1 className="profile-form__title profile-form__title_space_bottom">
+    <div className="profile-password">
+      <h3 className="profile-password__title">
         Смена пароля члена экипажа
-      </h1>
+      </h3>
       <Form
-        onSubmit={() => {
-          if (validateForm(values)) {
-            console.log('SUBMIT', { values });
-          }
-        }}>
+        onSubmit={handleFormSubmit}>
+        {isPasswordChanged &&
+          <span className="profile-password__informer">
+            Пароль успешно изменён
+          </span>}
         <Input
           value={values.oldPassword}
           handleInputChange={handleInputChange}
@@ -44,7 +92,7 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
           validateField={validateField}
           type={'password'}
           name={'oldPassword'}
-          placeholder={''}
+          placeholder={'********'}
           label={'Старый пароль'}
           validation={validationData.password}
         />
@@ -55,7 +103,7 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
           validateField={validateField}
           type={'password'}
           name={'newPassword'}
-          placeholder={''}
+          placeholder={'********'}
           label={'Новый пароль'}
           validation={validationData.password}
         />
@@ -66,7 +114,7 @@ const ProfileForm: React.FunctionComponent<Props> = ({ choice }) => {
           validateField={validateField}
           type={'password'}
           name={'repeatPassword'}
-          placeholder={''}
+          placeholder={'********'}
           label={'Повторите новый пароль'}
           validation={validationData.password}
         />

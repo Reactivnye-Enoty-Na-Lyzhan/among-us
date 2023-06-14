@@ -4,6 +4,7 @@ import { verify, type JwtPayload } from 'jsonwebtoken';
 import { User } from '../models/user';
 import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
 import { ErrorMessages } from '../utils/errors/errorMessages';
+import { IS_DEV } from '../utils/constants';
 
 interface IPayload extends JwtPayload {
   id: string;
@@ -18,9 +19,11 @@ interface IRequest<T> extends Request {
   cookies: T;
 }
 
-dotenv.config({
-  path: '../../.env',
-});
+if (IS_DEV) {
+  dotenv.config({
+    path: '../../.env',
+  });
+}
 
 const { JWT_SECRET = 'secret', NODE_ENV } = process.env;
 

@@ -8,6 +8,7 @@ export type User = {
   password: string;
   phone: string;
   avatar: string;
+  yandexId: number | null;
 };
 
 export type SignInRequestDTO = {
@@ -41,3 +42,8 @@ export type TOAuthData = {
 export type TServiceId = {
   service_id: string;
 };
+
+export type PasswordChange = {
+  oldPassword: string;
+  newPassword: string;
+}
