@@ -28,7 +28,7 @@ const createServer = async () => {
   if (!isDev) {
     app.use(helmetSettings);
   }
- 
+
   // DataBase
   await connectDataBase();
 

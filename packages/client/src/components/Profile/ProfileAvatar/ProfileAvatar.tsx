@@ -13,7 +13,9 @@ const ProfileAvatar: FC = () => {
     getUser();
   }, []);
 
-  const defaultAvatar = result.data ? `${DEFAULT_RESOURCE_URL}/${result.data.avatar}` : placeholder;
+  const defaultAvatar = result.data
+    ? `${DEFAULT_RESOURCE_URL}/${result.data.avatar}`
+    : placeholder;
 
   const handleUploadAvatar = async (evt: ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault();
@@ -30,7 +32,11 @@ const ProfileAvatar: FC = () => {
   return (
     <div className="profile-avatar">
       <label className="profile-avatar__upload-area">
-        <img src={defaultAvatar} alt="Аватар пользователя." className="profile-avatar__avatar" />
+        <img
+          src={defaultAvatar}
+          alt="Аватар пользователя."
+          className="profile-avatar__avatar"
+        />
         <input
           className="profile-avatar__input"
           type="file"

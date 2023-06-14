@@ -66,12 +66,11 @@ const ProfileForm: FC = () => {
     try {
       if (!validateForm(values)) return;
 
-      const hasChanged = Object.keys(values)
-        .some((key) => {
-          if (results.data) {
-            return values[key] !== results.data[key as keyof User];
-          }
-        });
+      const hasChanged = Object.keys(values).some(key => {
+        if (results.data) {
+          return values[key] !== results.data[key as keyof User];
+        }
+      });
 
       if (!hasChanged) return;
 
@@ -99,18 +98,17 @@ const ProfileForm: FC = () => {
     } catch (err: unknown) {
       console.log(err);
     }
-
   }, [values]);
 
   return (
     <div className="profile-personal">
       <h3 className="profile-personal__title">Карточка члена экипажа</h3>
-      <Form
-        onSubmit={handleFormSubmit}>
-        {isDataChanged &&
+      <Form onSubmit={handleFormSubmit}>
+        {isDataChanged && (
           <span className="profile-password__informer">
             Данные успешно обновлены!
-          </span>}
+          </span>
+        )}
         <Input
           value={values.firstName}
           handleInputChange={handleInputChange}

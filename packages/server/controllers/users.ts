@@ -158,7 +158,6 @@ export const logoutUser = async (
         maxAge: 604800000,
         httpOnly: true,
         sameSite: NODE_ENV === 'production' ? 'strict' : false,
-
       })
       .send({ message: ResponseMessages.logout });
   } catch (err: unknown) {

@@ -25,7 +25,8 @@
   max-width: 80vw;
   overflow-y: scroll;
   scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-background-primary) var(--scrollbar-background-secondary);
+  scrollbar-color: var(--scrollbar-background-primary)
+    var(--scrollbar-background-secondary);
 }
 
 .profile-page__container::-webkit-scrollbar {
@@ -85,11 +86,11 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 .profile-page__logout-button:hover {
-  opacity: .9;
+  opacity: 0.9;
 }
 
 .profile-page__footer-helper {

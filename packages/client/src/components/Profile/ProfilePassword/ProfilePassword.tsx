@@ -71,20 +71,17 @@ const ProfileForm: FC = () => {
     } catch (err: unknown) {
       console.log(err);
     }
-
   }, [values]);
 
   return (
     <div className="profile-password">
-      <h3 className="profile-password__title">
-        Смена пароля члена экипажа
-      </h3>
-      <Form
-        onSubmit={handleFormSubmit}>
-        {isPasswordChanged &&
+      <h3 className="profile-password__title">Смена пароля члена экипажа</h3>
+      <Form onSubmit={handleFormSubmit}>
+        {isPasswordChanged && (
           <span className="profile-password__informer">
             Пароль успешно изменён
-          </span>}
+          </span>
+        )}
         <Input
           value={values.oldPassword}
           handleInputChange={handleInputChange}

@@ -15,14 +15,14 @@ export const profileApi = createApi({
   tagTypes: ['User'],
   endpoints: build => ({
     updateUser: build.mutation<User, Partial<User>>({
-      query: (data) => ({
+      query: data => ({
         url: '/profile',
         method: 'PATCH',
         body: data,
       }),
     }),
     changePassword: build.mutation<void, PasswordChange>({
-      query: (data) => ({
+      query: data => ({
         url: '/password',
         method: 'PATCH',
         body: data,
@@ -39,4 +39,8 @@ export const profileApi = createApi({
   }),
 });
 
-export const { useUpdateUserMutation, useChangePasswordMutation, useChangeAvatarMutation } = profileApi;
+export const {
+  useUpdateUserMutation,
+  useChangePasswordMutation,
+  useChangeAvatarMutation,
+} = profileApi;

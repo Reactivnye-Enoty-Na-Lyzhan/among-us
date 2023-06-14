@@ -3,12 +3,12 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  transition: .4s;
+  transition: 0.4s;
   text-decoration: none;
 }
 
 .profile-link:hover {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 .profile-link_spaces_outer {
@@ -43,10 +43,7 @@
 }
 
 .profile__link-back {
-
-
   position: relative;
-
 }
 
 .profile__link-back:hover {
@@ -61,7 +58,6 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-
 }
 
 .profile__information_space_left {

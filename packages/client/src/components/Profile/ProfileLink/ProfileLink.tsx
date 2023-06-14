@@ -25,7 +25,10 @@ const ProfileLink: FC<Props> = ({ choice }) => {
   }, []);
 
   return (
-    <Link className="profile-link profile-link_spaces_outer" to="/" onClick={goBack}>
+    <Link
+      className="profile-link profile-link_spaces_outer"
+      to="/"
+      onClick={goBack}>
       <span className="profile-link__icon" />
       <h1 className="profile-link__title">Редактирование профиля</h1>
       <h2 className="profile-link__subtitle">{headings[choice]}</h2>

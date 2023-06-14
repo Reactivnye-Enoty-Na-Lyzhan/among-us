@@ -9,44 +9,54 @@ interface Props {
   handleChoiceChange: (choice: ProfileChoice) => void;
 }
 
-const ProfileNavigation: FC<Props> = ({
-  choice,
-  handleChoiceChange,
-}) => {
+const ProfileNavigation: FC<Props> = ({ choice, handleChoiceChange }) => {
+  const { data: userData } = useGetUserQuery();
 
-  const {data: userData} = useGetUserQuery();
-
-  const handleLinkClick: MouseEventHandler<HTMLAnchorElement> = useCallback((evt) => {
-    evt.preventDefault();
-    const pathname = evt.currentTarget.pathname.substring(1) as ProfileChoice;
-    handleChoiceChange(pathname);
-  }, []);
+  const handleLinkClick: MouseEventHandler<HTMLAnchorElement> = useCallback(
+    evt => {
+      evt.preventDefault();
+      const pathname = evt.currentTarget.pathname.substring(1) as ProfileChoice;
+      handleChoiceChange(pathname);
+    },
+    []
+  );
 
   return (
     <nav className="profile-navigation">
       <ul className="profile-navigation__links">
-        {choice !== 'data' &&
+        {choice !== 'data' && (
           <li className="profile-navigation__link-item">
-            <Link to='/data' className={"profile-navigation__link"} onClick={handleLinkClick}>
+            <Link
+              to="/data"
+              className={'profile-navigation__link'}
+              onClick={handleLinkClick}>
               Изменить данные
             </Link>
-          </li>}
-        {choice !== 'password' && !userData?.yandexId &&
+          </li>
+        )}
+        {choice !== 'password' && !userData?.yandexId && (
           <li className="profile-navigation__link-item">
-            <Link to='/password' className="profile-navigation__link" onClick={handleLinkClick}>
+            <Link
+              to="/password"
+              className="profile-navigation__link"
+              onClick={handleLinkClick}>
               Изменить пароль
             </Link>
-          </li>}
-        {choice !== 'avatar' &&
+          </li>
+        )}
+        {choice !== 'avatar' && (
           <li className="profile-navigation__link-item">
-            <Link to='/avatar' className="profile-navigation__link" onClick={handleLinkClick}>
+            <Link
+              to="/avatar"
+              className="profile-navigation__link"
+              onClick={handleLinkClick}>
               Изменить аватар
             </Link>
-          </li>}
+          </li>
+        )}
       </ul>
     </nav>
   );
-
 };
 
 export default memo(ProfileNavigation);

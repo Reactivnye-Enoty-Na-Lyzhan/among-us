@@ -46,4 +46,4 @@ export type TServiceId = {
 export type PasswordChange = {
   oldPassword: string;
   newPassword: string;
-}
+};

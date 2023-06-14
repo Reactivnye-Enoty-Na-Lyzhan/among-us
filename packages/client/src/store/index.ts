@@ -38,7 +38,7 @@ export const createStore = (preloadedState?: PreloadedState) => {
         gameApi.middleware,
         themeApi.middleware,
         forumApi.middleware,
-        profileApi.middleware,
+        profileApi.middleware
       ),
   });
 };
