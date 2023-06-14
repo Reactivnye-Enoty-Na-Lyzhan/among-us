@@ -1,0 +1,19 @@
+name Yandex CLI Executer
+description: Теперь можно использовать YC прямо в GH Action
+author: 'Реактивные Еноты на лыжах'
+inputs:
+  key:
+    description: Ключ сервисного аккаунта
+    required: true
+  args:
+    description: Аргументы для комманды 'yc'
+    required: true
+outputs:
+  output:
+    description: Результат выполнения команды
+runs: 
+  using: docker
+  image: docker://ghcr.io/reactivnye-enoty-na-lyzhan/yc-cli:latest
+  env:
+    key: ${{ inputs.key }}
+    args: ${{ inputs.args }}

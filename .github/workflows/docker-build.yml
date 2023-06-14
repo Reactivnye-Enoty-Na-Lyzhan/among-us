@@ -68,7 +68,7 @@ jobs:
           from_file: 'docker-compose.yml'
           to_file: 'docker-compose-yc.yml'
       - name: Update VM
-        uses: nikita-volkov/yc-cli.github-action@v1.0.1
+        uses: actions/yandex-cli
         with:
           key: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           args: compute instance update-container epddoun7tktto3e1d436 --docker-compose-file=./docker-compose-yc.yml
