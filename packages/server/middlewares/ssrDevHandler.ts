@@ -32,7 +32,7 @@ export const ssrDevHandler = async (
       .replace(`<!--ssr-outlet-->`, renderedHtml)
       .replace('<!--store-data-->', initStateSerialized)
       .replace(/<script/g, scriptWithNonce);
-    res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
+    res.status(200).set({ 'Content-Type': 'text/html', 'Content-Security-Policy': `script-src 'self' 'nonce-${nonce}'` }).end(html);
   } catch (e) {
     vite.ssrFixStacktrace(e as Error);
     next(e);
