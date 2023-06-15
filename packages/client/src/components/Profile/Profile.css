@@ -100,6 +100,16 @@
   line-height: 1.2;
 }
 
+@media screen and (min-width: 1921px) {
+  .profile-page__header {
+    max-width: 60vw;
+  }
+
+  .profile-page__container {
+    max-width: 60vw;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .profile-page {
     min-height: 100vh;
