@@ -12,6 +12,9 @@ services:
     depends_on:
       server:
         condition: service_started
+    volumes:
+      - ${LETSENCRYPT_ACME_DATA_PATH:-./nginx/certbot/acme-data/}:/data/letsencrypt:ro
+      - ${SSL_CERTS_LOCAL_PATH:-./nginx/config/ssl}:/etc/nginx/ssl
     networks:
       - basic
 
