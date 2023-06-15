@@ -25,20 +25,11 @@ export const ssrDevHandler = async (
     );
     const { renderedHtml, initialState } = await render(url);
     const initStateSerialized = JSON.stringify(initialState);
-    const nonce = res.locals?.cspNonce || '';
-    const scriptWithNonce = `<script nonce="${nonce}"`;
 
     const html = template
       .replace(`<!--ssr-outlet-->`, renderedHtml)
-      .replace('<!--store-data-->', initStateSerialized)
-      .replace(/<script/g, scriptWithNonce);
-    res
-      .status(200)
-      .set({
-        'Content-Type': 'text/html',
-        'Content-Security-Policy': `script-src 'self' 'nonce-${nonce}'`,
-      })
-      .end(html);
+      .replace('<!--store-data-->', initStateSerialized);
+    res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
   } catch (e) {
     vite.ssrFixStacktrace(e as Error);
     next(e);
