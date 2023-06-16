@@ -3,6 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  background-color: var(--background-main-primary);
 }
 
 .howtoplay__title {
@@ -44,4 +46,28 @@
 
 .howtoplay__go-back:hover {
   opacity: 0.8;
+}
+
+@media screen and (max-width: 1200px) {
+  .howtoplay__title {
+    margin-top: 35px;
+    font-size: 40px;
+    font-weight: 700;
+  }
+
+  .howtoplay__helper-text {
+    width: 100%;
+    max-width: 90vw;
+    font-size: 16px;
+  }
+
+  .howtoplay__go-back {
+    margin-bottom: 45px;
+    padding: 15px 10px;
+    max-width: 90vw;
+    color: var(--button-font-primary);
+    text-align: center;
+    background-color: var(--button-main-primary);
+    border-radius: 3px;
+  }
 }

@@ -1,97 +1,62 @@
+import { FC, MouseEventHandler, memo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import type { ProfileChoice } from '@/types/profile';
 import './ProfileNavigation.css';
-import '../Profile.css';
-
-type ProfileChoice = 'Персональные данные' | 'Изменение пароля' | 'Аватар';
+import { useGetUserQuery } from '@/store/auth/auth.slice';
 
 interface Props {
   choice: ProfileChoice;
-  handleChoiceChange?: (choice: ProfileChoice) => void;
+  handleChoiceChange: (choice: ProfileChoice) => void;
 }
 
-export default function ProfileNavigation({
-  choice,
-  handleChoiceChange,
-}: Props) {
-  type Config = {
-    image: (choice: string) => string;
-  };
+const ProfileNavigation: FC<Props> = ({ choice, handleChoiceChange }) => {
+  const { data: userData } = useGetUserQuery();
 
-  const config: Record<string, Config> = {
-    'Персональные данные': {
-      image: () => 'profile__navigation-data',
+  const handleLinkClick: MouseEventHandler<HTMLAnchorElement> = useCallback(
+    evt => {
+      evt.preventDefault();
+      const pathname = evt.currentTarget.pathname.substring(1) as ProfileChoice;
+      handleChoiceChange(pathname);
     },
-    'Изменение пароля': {
-      image: () => 'profile__navigation-password',
-    },
-    Аватар: {
-      image: () => 'profile__navigation-avatar',
-    },
-  };
+    []
+  );
 
   return (
-    <div className="profile__navigation_space_right">
-      <div className={`profile__avatar ${config[choice].image(choice)}`}></div>
-      <div className="profile__navigation-links profile__navigation_space_top">
-        {choice === 'Персональные данные' ? (
-          <>
+    <nav className="profile-navigation">
+      <ul className="profile-navigation__links">
+        {choice !== 'data' && (
+          <li className="profile-navigation__link-item">
             <Link
-              className="profile__navigation-links_left profile__navigation-link"
-              to="/profile"
-              onClick={() =>
-                handleChoiceChange && handleChoiceChange('Аватар')
-              }>
-              Изменить аватар
-            </Link>
-            <Link
-              className="profile__navigation-links_right profile__navigation-link"
-              to="/profile"
-              onClick={() =>
-                handleChoiceChange && handleChoiceChange('Изменение пароля')
-              }>
-              Изменить пароль
-            </Link>
-          </>
-        ) : choice === 'Изменение пароля' ? (
-          <>
-            <Link
-              className="profile__navigation-links_left profile__navigation-link"
-              to="/profile"
-              onClick={() =>
-                handleChoiceChange && handleChoiceChange('Аватар')
-              }>
-              Изменить аватар
-            </Link>
-            <Link
-              className="profile__navigation-links_right profile__navigation-link"
-              to="/profile"
-              onClick={() =>
-                handleChoiceChange && handleChoiceChange('Персональные данные')
-              }>
+              to="/data"
+              className={'profile-navigation__link'}
+              onClick={handleLinkClick}>
               Изменить данные
             </Link>
-          </>
-        ) : (
-          <div>
-            <Link
-              className="profile__navigation-links_left profile__navigation-link"
-              to="/profile"
-              onClick={() =>
-                handleChoiceChange && handleChoiceChange('Персональные данные')
-              }>
-              Изменить данные
-            </Link>
-            <Link
-              className="profile__navigation-links_right profile__navigation-link"
-              to="/profile"
-              onClick={() =>
-                handleChoiceChange && handleChoiceChange('Изменение пароля')
-              }>
-              Изменить пароль
-            </Link>
-          </div>
+          </li>
         )}
-      </div>
-    </div>
+        {choice !== 'password' && !userData?.yandexId && (
+          <li className="profile-navigation__link-item">
+            <Link
+              to="/password"
+              className="profile-navigation__link"
+              onClick={handleLinkClick}>
+              Изменить пароль
+            </Link>
+          </li>
+        )}
+        {choice !== 'avatar' && (
+          <li className="profile-navigation__link-item">
+            <Link
+              to="/avatar"
+              className="profile-navigation__link"
+              onClick={handleLinkClick}>
+              Изменить аватар
+            </Link>
+          </li>
+        )}
+      </ul>
+    </nav>
   );
-}
+};
+
+export default memo(ProfileNavigation);

@@ -1,18 +1,49 @@
-#avatar__button {
-  position: absolute;
-  width: 225px;
-  height: 190px;
-  background: #9b9b9b;
-  background-image: url(../../../images/profile/man.png);
+.profile-avatar {
+  align-self: center;
+  width: 305px;
+  height: 432px;
+  background-image: url(@/images/profile/amongus-avatar.svg);
   background-position: center;
+  background-size: contain;
   background-repeat: no-repeat;
-  background-size: 80px;
-  border-radius: 50%;
-  z-index: 2;
-  text-indent: -9999px;
-  cursor: pointer;
+  position: relative;
 }
 
-.avatar__button_space_right {
-  margin-right: 180px;
+.profile-avatar__upload-area {
+  position: absolute;
+  top: 48px;
+  left: 15px;
+  display: flex;
+  width: 206px;
+  height: 206px;
+  background-color: #9b9b9b;
+  border: 5px solid #e0d700;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.profile-avatar__avatar {
+  object-fit: cover;
+  object-position: center;
+}
+
+.profile-avatar__input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  z-index: -1;
+}
+
+@media screen and (max-width: 1200px) {
+  .profile-avatar {
+    width: 205px;
+    height: 332px;
+  }
+
+  .profile-avatar__upload-area {
+    left: 10px;
+    width: 140px;
+    height: 140px;
+  }
 }

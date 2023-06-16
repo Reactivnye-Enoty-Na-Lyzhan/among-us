@@ -6,8 +6,8 @@ interface AuthState {
 }
 
 const useAuth = (): AuthState => {
-  const { data, isLoading } = useGetUserQuery();
-  const isAuthenticated = data !== null && data !== undefined;
+  const { isLoading, isSuccess } = useGetUserQuery();
+  const isAuthenticated = isSuccess;
 
   return { isAuthenticated, isLoading };
 };
