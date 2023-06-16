@@ -2,9 +2,8 @@ version: '3.9'
 
 services:
   nginx:
-    build:
-      context: ./nginx
     container_name: nginx
+    image: cr.yandex/crp37rtt3cl5rdvoiork/nginx:${NGINX_TAG}
     ports:
       - 80:80
       - 443:443
@@ -17,15 +16,13 @@ services:
 
   server:
     container_name: server
-    image: server
+    image: cr.yandex/${CR_REGISTRY}/${CR_REPOSITORY}:${IMAGE_TAG}
     build:
       context: .
       dockerfile: Dockerfile.server
       args:
         SERVER_PORT: ${SERVER_PORT}
     restart: always
-    ports:
-      - '${SERVER_PORT}:${SERVER_PORT}'
     environment:
       SERVER_PORT: ${SERVER_PORT}
       POSTGRES_HOST: ${POSTGRES_HOST}
@@ -64,7 +61,7 @@ services:
     networks:
       - basic
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      test: ['CMD-SHELL', 'pg_isready']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -75,9 +72,9 @@ services:
     image: dpage/pgadmin4:7.1
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
-      PGADMIN_LISTEN_PORT: ${PGADMIN_PORT}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: ${PGADMIN_LISTEN_PORT}
     ports:
       - '8080:80'
     volumes:
