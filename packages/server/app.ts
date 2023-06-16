@@ -13,6 +13,7 @@ import { connectDataBase } from './utils/connectDataBase';
 import { CLIENT_PACKAGE_PATH } from './utils/constants';
 import { connectIO } from './socket';
 import { helmetSettings } from './utils/securityData/helmetSettings';
+import { nonce } from './utils/securityData/nonceSettings';
 
 const { NODE_ENV } = process.env;
 
@@ -23,6 +24,12 @@ const createServer = async () => {
 
   // Http-server for express and sockets
   const server = createHttpServer(app);
+
+  //Nonce-Token
+  app.use((_req, res, next) => {
+    res.locals.cspNonce = nonce();
+    next();
+  });
 
   // CSP
   if (!isDev) {
