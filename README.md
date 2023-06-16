@@ -1,3 +1,13 @@
+# Enoty Among Us
+
+### Как посмотреть?
+Проект размещён в сервисе [`Яндекс.Облако Compute Cloud`](https://cloud.yandex.ru/services/compute). 
+Используется ВМ с образом Conatiner Optimized Image (Yandex Container Solution).
+
+В качестве хранилища для Docker-образов используется [`Yandex Container Registry`](https://cloud.yandex.ru/services/container-registry)
+
+Проект доступен по адресу: [`http://158.160.71.59:3001`](http://158.160.71.59:3001)
+
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`
@@ -68,9 +78,9 @@
 
 
 `docker compose up` - запустит три сервиса
-1. nginx, раздающий клиентскую статику (client)
-2. node, ваш сервер (server)
-3. postgres, вашу базу данных (postgres)
+1. node, ваш сервер (server)
+2. postgres, вашу базу данных (postgres)
+3. PGAdmin
 
 Если вам понадобится только один сервис, просто уточните какой в команде
 `docker compose up {sevice_name}`, например `docker compose up server`

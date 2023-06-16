@@ -1,0 +1,12 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "isolatedModules": false,
+    "lib": ["ESNext", "WebWorker"],
+    "noEmit": false,
+    "sourceMap": false
+  },
+  "include": ["."],
+  "exclude": []
+}

@@ -1,0 +1,149 @@
+.start-awaiting {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  width: 87.9vw;
+  height: 100%;
+}
+
+.start-awaiting__timer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.start-awaiting__title {
+  margin: 29.86vh 0 0;
+  font-size: 48px;
+  font-weight: 500;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+}
+
+.start-awaiting__time-left {
+  font-size: 36px;
+  color: var(--font-main-secondary);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.start-awaiting__degree {
+  font-size: 24px;
+  color: var(--font-main-secondary);
+  line-height: 1.2;
+  vertical-align: super;
+}
+
+.start-awaiting__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.start-awaiting__settings-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  gap: 15px;
+  list-style: none;
+}
+
+.start-awaiting__list-item {
+  display: flex;
+}
+
+.start-awaiting__param-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--font-main-secondary);
+  line-height: 1.2;
+}
+
+.start-awaiting__param-value {
+  margin-left: 5px;
+  font-size: 16px;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+}
+
+.start-awaiting__crewman {
+  width: 181px;
+  height: 247px;
+  background-image: url(../../../../images/crewman/crewman-white.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1);
+}
+
+.start-awaiting__crewman_suit_white {
+  background-image: url('@/images/game/crew/crewman_white.svg');
+}
+
+.start-awaiting__crewman_suit_green {
+  background-image: url('@/images/game/crew/crewman_green.svg');
+}
+
+.start-awaiting__crewman_suit_aquamarine {
+  background-image: url('@/images/game/crew/crewman_aquamarine.svg');
+}
+
+.start-awaiting__crewman_suit_red {
+  background-image: url('@/images/game/crew/crewman_red.svg');
+}
+
+.start-awaiting__crewman_suit_brown {
+  background-image: url('@/images/game/crew/crewman_brown.svg');
+}
+
+.start-awaiting__crewman_suit_grey {
+  background-image: url('@/images/game/crew/crewman_grey.svg');
+}
+
+.start-awaiting__crewman_suit_yellow {
+  background-image: url('@/images/game/crew/crewman_yellow.svg');
+}
+
+.start-awaiting__crewman_suit_purple {
+  background-image: url('@/images/game/crew/crewman_purple.svg');
+}
+
+.start-awaiting__crewman_suit_blue {
+  background-image: url('@/images/game/crew/crewman_blue.svg');
+}
+
+.start-awaiting__leave-game {
+  margin-bottom: 55px;
+  padding: 0;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--font-main-secondary);
+  line-height: 1.2;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.start-awaiting__leave-game:hover {
+  opacity: 0.8;
+}
+
+@media screen and (min-width: 1700px) {
+  .start-awaiting__title {
+    font-size: 72px;
+  }
+
+  .start-awaiting__time-left {
+    font-size: 48px;
+  }
+
+  .start-awaiting__degree {
+    font-size: 32px;
+  }
+}

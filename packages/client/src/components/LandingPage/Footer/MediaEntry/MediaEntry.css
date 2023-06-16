@@ -1,0 +1,14 @@
+.landing-media-entry__link {
+  color: inherit;
+  text-decoration: underline 0.1em;
+  transition: var(--link-on-hover-transition-duration);
+}
+
+.landing-media-entry__link:hover {
+  color: var(--link-hovered-color);
+  opacity: 0.8;
+}
+
+.landing-media-entry__link-header {
+  font-size: 1.2em;
+}

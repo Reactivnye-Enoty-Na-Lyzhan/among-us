@@ -1,0 +1,22 @@
+.profile-personal {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.profile-personal__title {
+  margin: 0 0 55px;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+}
+
+.profile-personal__informer {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  font-size: 12px;
+  color: var(--font-additional-tertiary);
+  line-height: 1.2;
+}

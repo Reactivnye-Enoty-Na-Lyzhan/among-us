@@ -1,0 +1,55 @@
+.found-game {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  max-width: 275px;
+  width: calc((100% - 150px) / 4);
+  height: 85px;
+  background-color: var(--table-background-primary);
+  border-radius: 7px;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.5s;
+}
+
+.found-game:hover {
+  background-color: rgba(var(--table-background-overlay), 0.8);
+}
+
+.found-game__user-avatar {
+  margin-left: 25px;
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.found-game__game-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.found-game__title {
+  margin: 0;
+  max-width: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.found-game__game-params {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--font-main-primary);
+  line-height: 1.2;
+}
+
+.found-game__accent {
+  font-weight: 500;
+}

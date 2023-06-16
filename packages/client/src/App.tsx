@@ -1,18 +1,24 @@
-import { useEffect } from 'react'
-import './App.css'
+import { Route, Routes } from 'react-router-dom';
+import ErrorToast from './components/ErrorToast/ErrorToast';
+import Loader from './components/Loader/Loader';
+import './App.css';
+import { routes } from './routes';
+import useTheme from './hooks/useTheme';
 
 function App() {
-  useEffect(() => {
-    const fetchServerData = async () => {
-      const url = `http://localhost:${__SERVER_PORT__}`
-      const response = await fetch(url)
-      const data = await response.json()
-      console.log(data)
-    }
+  const { themeClassName } = useTheme();
 
-    fetchServerData()
-  }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+  return (
+    <div className={`app ${themeClassName}`}>
+      <ErrorToast />
+      <Loader />
+      <Routes>
+        {routes.map(route => (
+          <Route key={route.path} {...route} />
+        ))}
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;

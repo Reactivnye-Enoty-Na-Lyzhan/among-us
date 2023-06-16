@@ -1,0 +1,20 @@
+@import '@/vendor/fonts/Iconfont/fonts.css';
+
+.landing-page {
+  --game-title-primary-color: var(--font-main-primary);
+  --game-ttile-secondary-color: var(--font-main-secondary);
+
+  --join-link-color: var(--font-main-secondary);
+  --link-hovered-color: var(--font-main-secondary);
+  --link-on-hover-transition-duration: 0.4s;
+
+  --font-size-normal: calc(11px + 16 * ((100vw - 320px) / 1600));
+  --font-color-default: var(--font-main-primary);
+
+  --background-color: var(--background-main-primary);
+
+  width: 100vw;
+  height: 100vh;
+  font-size: var(--font-size-normal);
+  color: var(--font-color-default);
+}

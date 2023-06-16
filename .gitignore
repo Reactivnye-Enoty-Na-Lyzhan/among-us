@@ -4,3 +4,8 @@ node_modules/
 .vscode
 dist
 tmp
+*.log
+
+package-lock.json
+
+*.pem

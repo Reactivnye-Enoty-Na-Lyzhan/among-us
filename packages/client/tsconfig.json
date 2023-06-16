@@ -14,8 +14,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@-constants/*": ["./src/utils/constants/*"]
+    }
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "exclude": ["src/service-worker/worker/*"],
+  "references": [
+    { "path": "./tsconfig.node.json" },
+    { "path": "./src/service-worker/worker/tsconfig.sw.json" }
+  ]
 }

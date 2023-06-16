@@ -1,0 +1,1 @@
+export type OnSelectHandler = () => void;

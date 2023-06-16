@@ -1,0 +1,71 @@
+.chat-control {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.chat-control__title {
+  margin-top: 17px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #010318;
+  line-height: 1.2;
+}
+
+.chat-control__control {
+  display: flex;
+  margin-top: 10px;
+}
+
+.chat-control__message-area {
+  padding: 19px 15px;
+  width: 100%;
+  height: 54px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #010318;
+  line-height: 1.2;
+  background: #fafafa;
+  border: none;
+  border-radius: 3px 0 0 3px;
+  resize: none;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  scrollbar-gutter: stable;
+}
+
+.chat-control__message-area:focus {
+  outline: 1px solid #010318;
+  outline-offset: -1px;
+}
+
+.chat-control__message-area::-webkit-scrollbar {
+  width: 0;
+}
+
+.chat-control__send-message {
+  margin-right: 20px;
+  padding: 0;
+  width: 60px;
+  height: 54px;
+  background-image: url('@/images/game/meeting/sendmessage__arrow.svg');
+  background-size: 25px auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #010318;
+  border: none;
+  border-radius: 0 3px 3px 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: 0.3s;
+}
+
+.chat-control__send-message:hover {
+  opacity: 0.95;
+}
+
+.chat-control__send-message:disabled {
+  opacity: 0.8;
+  pointer-events: none;
+  user-select: none;
+}

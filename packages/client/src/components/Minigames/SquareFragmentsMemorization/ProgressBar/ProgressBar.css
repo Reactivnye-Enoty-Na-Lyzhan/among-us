@@ -1,0 +1,28 @@
+.square-fragments-memorization-game__progressbar {
+  --indicator-size: calc(0.07 * var(--puzzle-panel-size));
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 90%;
+  height: 12%;
+}
+
+.square-fragments-memorization-game__progressbar-indicator {
+  width: var(--indicator-size);
+  height: var(--indicator-size);
+  border-radius: 50%;
+}
+
+.square-fragments-memorization-game__progressbar-indicator_success {
+  background-color: green;
+}
+
+.square-fragments-memorization-game__progressbar-indicator_error {
+  background-color: red;
+}
+
+.square-fragments-memorization-game__progressbar-indicator_neutral {
+  background-color: grey;
+}
