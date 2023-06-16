@@ -84,8 +84,8 @@ const Game: FC = () => {
       socket.off('move', moveCrewman);
       socket.off('onPlayerKill', handlePlayerKill);
     };
-  }, []);
-
+  }, [players.length]);
+  
   useEffect(() => {
     if (meetingIsProccessing) {
       isBlocked.current = true;
