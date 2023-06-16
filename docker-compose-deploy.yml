@@ -9,8 +9,9 @@ services:
       - 443:443
     restart: always
     volumes:
-      - ${LETSENCRYPT_ACME_DATA_PATH:-./nginx/certbot/acme-data/}:/data/letsencrypt:ro
-      - ${SSL_CERTS_LOCAL_PATH:-./nginx/config/ssl}:/etc/nginx/ssl
+      - /home/enoty/certbot/ssl/live/enoty.ya-praktikum.tech/fullchain.pem:/etc/nginx/ssl/fullchain.pem
+      - /home/enoty/certbot/ssl/live/enoty.ya-praktikum.tech/privkey.pem:/etc/nginx/ssl/privkey.pem
+      - /home/enoty/certbot/acme-data:/data/letsencrypt
     networks:
       - basic
 
