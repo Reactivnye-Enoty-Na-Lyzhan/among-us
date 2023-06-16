@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - 'deploy'
-  workflow_dispatch:
 
 jobs:
   docker:
