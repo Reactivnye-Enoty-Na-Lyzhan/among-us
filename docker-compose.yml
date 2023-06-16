@@ -2,12 +2,16 @@ version: '3.9'
 
 services:
   nginx:
+    build:
+      context: ./nginx
     container_name: nginx
-    image: cr.yandex/crp37rtt3cl5rdvoiork/nginx:0.1.1
     ports:
-      - '80:80'
-      - '443:443'
+      - 80:80
+      - 443:443
     restart: always
+    volumes:
+      - ${LETSENCRYPT_ACME_DATA_PATH:-./nginx/certbot/acme-data/}:/data/letsencrypt:ro
+      - ${SSL_CERTS_LOCAL_PATH:-./nginx/config/ssl}:/etc/nginx/ssl
     networks:
       - basic
 
@@ -20,8 +24,6 @@ services:
       args:
         SERVER_PORT: ${SERVER_PORT}
     restart: always
-    ports:
-      - '${SERVER_PORT}:${SERVER_PORT}'
     environment:
       SERVER_PORT: ${SERVER_PORT}
       POSTGRES_HOST: ${POSTGRES_HOST}

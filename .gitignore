@@ -7,3 +7,5 @@ tmp
 *.log
 
 package-lock.json
+
+*.pem
