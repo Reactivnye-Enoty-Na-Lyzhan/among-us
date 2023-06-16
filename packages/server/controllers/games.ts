@@ -1,11 +1,12 @@
 import { Op, literal } from 'sequelize';
-import { Player } from '../models/player';
-import { Game } from '../models/game';
+import { Player } from '../models/game/player';
+import { Game } from '../models/game/game';
 import { User } from '../models/user';
-import { Team } from '../models/team';
-import { GameParam } from '../models/gameParam';
-import { GameQueue } from '../models/gameQueue';
-import { GameColor } from '../models/gameColor';
+import { Team } from '../models/game/team';
+import { GameParam } from '../models/game/gameParam';
+import { GameQueue } from '../models/game/gameQueue';
+import { GameColor } from '../models/game/gameColor';
+import { Chat } from '../models/chat/chat';
 import { sequelize } from '../utils/connectDataBase';
 import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
 import { ErrorMessages } from '../utils/errors/errorMessages';
@@ -15,14 +16,13 @@ import { NotInQueueError } from '../utils/errors/gameErrors/NotInQueueError';
 import { AlreadyExistError } from '../utils/errors/commonErrors/AlreadyExistError';
 import { roleDistributor } from '../utils/game/rolePicker';
 import { getScore } from '../utils/game/getScore';
-import { MAX_PLAYERS } from '../utils/constants';
+import { getImpostorsCount } from '../utils/game/getImpostorsCount';
 import type { NextFunction, Request, Response } from 'express';
 import type {
   GameParams,
   GameRole,
   SuitColorsType,
 } from '../types/socket/game/gameSocket.types';
-import { Chat } from '../models/chat/chat';
 
 interface IBodyCompleteTask {
   gameId: number;
@@ -53,7 +53,7 @@ interface IBodyFindGame {
 
 interface IBodyCreateGame {
   title: string;
-  params: GameParams;
+  params: Omit<GameParams, 'impostors'>;
 }
 
 interface IBodyLeaveGame {
@@ -109,7 +109,13 @@ export const createGame = async (
       ]);
 
       await Promise.all([
-        newGame.createParam(params),
+        newGame.createParam({
+          discussion: params.discussion,
+          players: params.players,
+          impostors: getImpostorsCount(params.players),
+          interval: params.interval,
+          meetings: params.meetings,
+        }),
         newGame.createColor({
           colors: {
             white: false,
@@ -128,6 +134,7 @@ export const createGame = async (
         }),
         newGame.setTeams(teams),
         newGame.createChat(),
+        newGame.createMeeting(),
       ]);
 
       // Получаем готовый результат для отправки клиенту
@@ -190,7 +197,7 @@ export const getGames = async (
         {
           model: GameParam,
           as: 'param',
-          attributes: ['impostors'],
+          attributes: ['players', 'meetings'],
         },
       ],
     });
@@ -238,7 +245,7 @@ export const findGames = async (
         {
           model: GameParam,
           as: 'param',
-          attributes: ['impostors'],
+          attributes: ['players', 'meetings'],
         },
       ],
     });
@@ -297,10 +304,13 @@ export const takeQueue = async (
       },
     });
 
-    if (!foundGame) throw new NotExistError(ErrorMessages.gameNotExist);
+    const gameParam = await foundGame?.getParam();
+
+    if (!foundGame || !gameParam)
+      throw new NotExistError(ErrorMessages.gameNotExist);
 
     // Если нет места для подключения, сообщаем об этом пользователю
-    if ((await foundGame.countGameQueues()) >= MAX_PLAYERS) {
+    if ((await foundGame.countGameQueues()) >= gameParam.players) {
       throw new ReachLimitsError(ErrorMessages.playerLimits);
     }
 
@@ -379,7 +389,10 @@ export const joinGame = async (
       },
     });
 
-    if (!foundGame) throw new NotExistError(ErrorMessages.gameNotExist);
+    const gameParam = await foundGame?.getParam();
+
+    if (!foundGame || !gameParam)
+      throw new NotExistError(ErrorMessages.gameNotExist);
 
     // Проверяем, подключён ли уже пользователь как игрок
     const players = await foundGame.getPlayers({
@@ -404,7 +417,7 @@ export const joinGame = async (
     }
 
     // Если имеются свободные места
-    if ((await foundGame.countPlayers()) >= MAX_PLAYERS) {
+    if ((await foundGame.countPlayers()) >= gameParam.players) {
       throw new ReachLimitsError(ErrorMessages.playerLimits);
     }
 

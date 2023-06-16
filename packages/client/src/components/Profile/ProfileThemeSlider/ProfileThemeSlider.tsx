@@ -1,7 +1,8 @@
-import './ProfileThemeSlider.css';
+import { FC, memo } from 'react';
 import useTheme from '@/hooks/useTheme';
+import './ProfileThemeSlider.css';
 
-const ProfileThemeSlider: React.FunctionComponent = () => {
+const ProfileThemeSlider: FC = () => {
   const { setThemeFromClient, themeId } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -10,18 +11,16 @@ const ProfileThemeSlider: React.FunctionComponent = () => {
   };
 
   return (
-    <div className="theme-slider">
-      <label className="theme-slider__body" htmlFor="checkbox">
-        <input
-          className="theme-slider__checkbox"
-          type="checkbox"
-          id="checkbox"
-          checked={themeId === 2}
-          onChange={handleThemeChange}
-        />
-        <div className="theme-slider__switch"></div>
-      </label>
-    </div>
+    <label className="theme-slider" htmlFor="checkbox">
+      <input
+        className="theme-slider__checkbox"
+        type="checkbox"
+        id="checkbox"
+        checked={themeId === 2}
+        onChange={handleThemeChange}
+      />
+      <div className="theme-slider__switch"></div>
+    </label>
   );
 };
-export default ProfileThemeSlider;
+export default memo(ProfileThemeSlider);

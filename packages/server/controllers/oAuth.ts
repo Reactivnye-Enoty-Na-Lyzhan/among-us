@@ -85,7 +85,8 @@ export const getOAuthToken = async (
         domain: CURRENT_HOST,
         maxAge: 604800000,
         httpOnly: true,
-        sameSite: NODE_ENV === 'production',
+        sameSite: NODE_ENV === 'production' ? 'strict' : false,
+        secure: NODE_ENV === 'production',
       })
       .send({
         login: user.login,

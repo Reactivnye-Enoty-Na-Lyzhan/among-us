@@ -8,7 +8,7 @@ import {
 } from 'sequelize';
 import { Chat } from './chat';
 import { User } from '../user';
-import { Player } from '../../models/player';
+import { Player } from '../game/player';
 import { sequelize } from '../../utils/connectDataBase';
 
 export class ChatMessage extends Model<

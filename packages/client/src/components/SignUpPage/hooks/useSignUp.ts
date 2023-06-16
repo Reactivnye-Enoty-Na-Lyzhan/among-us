@@ -21,7 +21,6 @@ export function useOnSubmitQueries() {
 
   const signUpWrapper = useCallback(async (formData: SignUpFormData) => {
     const signUpDTO = transformFormDataToDTO(formData);
-    console.log(`FORM DATA: ${JSON.stringify(formData)}`);
     try {
       const response = await sendSignUpQuery(signUpDTO);
       if (isRTKQuerySuccessfulResponse(response)) {

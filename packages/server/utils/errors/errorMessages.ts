@@ -21,4 +21,5 @@ export enum ErrorMessages {
   invalidPostId = 'Ошибка! Пост с указанным ID не существует',
   invalidMessageId = 'Ошибка! Сообщение с указанным ID не существует',
   chatNotFound = 'Ошибка! Чат не найден',
+  meetingNotFound = 'Ошибка при завершении собрания! Собрание не найдено!',
 }

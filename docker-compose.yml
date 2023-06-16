@@ -17,7 +17,7 @@ services:
 
   server:
     container_name: server
-    image: server
+    image: cr.yandex/${CR_REGISTRY}/${CR_REPOSITORY}:${IMAGE_TAG}
     build:
       context: .
       dockerfile: Dockerfile.server
@@ -37,8 +37,8 @@ services:
       AWS_BUCKET: ${AWS_BUCKET}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      APP_HOST: ${APP_HOST}
-      VITE_SOCKET_HOST: ${VITE_SOCKET_HOST}
+      APP_HOST: enoty.ya-praktikum.tech
+      VITE_SOCKET_HOST: enoty.ya-praktikum.tech
       VITE_SOCKET_PORT: ${VITE_SOCKET_PORT}
       NODE_ENV: production
     networks:
@@ -62,7 +62,7 @@ services:
     networks:
       - basic
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      test: ['CMD-SHELL', 'pg_isready']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -73,9 +73,9 @@ services:
     image: dpage/pgadmin4:7.1
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
-      PGADMIN_LISTEN_PORT: ${PGADMIN_PORT}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: ${PGADMIN_LISTEN_PORT}
     ports:
       - '8080:80'
     volumes:

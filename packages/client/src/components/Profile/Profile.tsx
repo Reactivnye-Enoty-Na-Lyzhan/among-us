@@ -1,61 +1,78 @@
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames';
 import ProfilePassword from './ProfilePassword/ProfilePassword';
 import ProfilePersonalData from './ProfilePersonalData/ProfilePersonalData';
-import ProfileHeader from './ProfileHeader/ProfileHeader';
+import ProfileLink from './ProfileLink/ProfileLink';
 import ProfileAvatar from './ProfileAvatar/ProfileAvatar';
 import ProfileNavigation from './ProfileNavigation/ProfileNavigation';
 import ProfileThemeSlider from './ProfileThemeSlider/ProfileThemeSlider';
 import hocAuth from '@/hoc/hocAuth';
+import { useLogoutMutation } from '@/store/auth/auth.slice';
 import { SIGNIN_URL } from '@/utils/constants';
+import type { IProfileConditionTable, ProfileChoice } from '@/types/profile';
 import './Profile.css';
 
 const Profile: FC = () => {
-  const [choice, setChoice] = useState<
-    'Персональные данные' | 'Изменение пароля' | 'Аватар'
-  >('Персональные данные');
+  const [choice, setChoice] = useState<ProfileChoice>('data');
 
-  const handleChoiceChange = (
-    choice: 'Персональные данные' | 'Изменение пароля' | 'Аватар'
-  ) => {
+  const [logout, { isSuccess: isSuccessfullyLogout }] = useLogoutMutation();
+
+  const navigate = useNavigate();
+
+  const mainContainerClassname = classNames('profile-page__container', {
+    'profile-page__container_page_avatar': choice === 'avatar',
+  });
+
+  const crewmanClassname = classNames('profile-page__crewman', {
+    [`profile-page__crewman_page_${choice}`]: choice !== 'avatar',
+  });
+
+  const hashReturner: IProfileConditionTable = {
+    password: () => <ProfilePassword />,
+    data: () => <ProfilePersonalData />,
+    avatar: () => <ProfileAvatar />,
+  };
+
+  const currentPage = useCallback(() => {
+    return hashReturner[choice]();
+  }, [choice]);
+
+  const handleChangePage = useCallback((choice: ProfileChoice) => {
     setChoice(choice);
+  }, []);
+
+  const handleLogout = async () => {
+    await logout();
+
+    if (isSuccessfullyLogout) {
+      navigate(SIGNIN_URL);
+    }
   };
 
   return (
-    /* Измени потом. Profile-page добавил, чтобы сохранить заливку */
     <div className="profile-page">
-      <ProfileThemeSlider />
-      <ProfileHeader choice={choice} />
-      {choice === 'Персональные данные' && (
-        <div className="profile__form profile__form_space_left">
-          <ProfilePersonalData choice={choice} />
-          <div className="profile__navigation_space_right">
-            <ProfileNavigation
-              choice={choice}
-              handleChoiceChange={handleChoiceChange}
-            />
-          </div>
-        </div>
-      )}
-      {choice === 'Изменение пароля' && (
-        <div className="profile__form profile__form_space_left">
-          <ProfilePassword choice={choice} />
-          <div className="profile__navigation profile__navigation_space_right">
-            <ProfileNavigation
-              choice={choice}
-              handleChoiceChange={handleChoiceChange}
-            />
-          </div>
-        </div>
-      )}
-      {choice === 'Аватар' && (
-        <div className="profile__form_space_top profile__form_direction_center">
-          <ProfileAvatar />
-          <ProfileNavigation
-            choice={choice}
-            handleChoiceChange={handleChoiceChange}
-          />
-        </div>
-      )}
+      <header className="profile-page__header">
+        <ProfileLink choice={choice} />
+        <ProfileThemeSlider />
+      </header>
+      <main className={mainContainerClassname}>
+        {currentPage()}
+        {choice !== 'avatar' && <span className={crewmanClassname} />}
+      </main>
+      <footer className="profile-page__footer">
+        <ProfileNavigation
+          choice={choice}
+          handleChoiceChange={handleChangePage}
+        />
+        <span className="profile-page__footer-helper">или</span>
+        <button
+          className="profile-page__logout-button"
+          onClick={handleLogout}
+          type="button">
+          Выйти из системы
+        </button>
+      </footer>
     </div>
   );
 };

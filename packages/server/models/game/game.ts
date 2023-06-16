@@ -16,12 +16,13 @@ import {
 import { GameParam } from './gameParam';
 import { Player } from './player';
 import { Team } from './team';
-import { User } from './user';
+import { User } from '../user';
 import { GameQueue } from './gameQueue';
 import { GameColor } from './gameColor';
-import { sequelize } from '../utils/connectDataBase';
-import type { GameStatus } from '../types/socket/game/gameSocket.types';
-import { Chat } from './chat/chat';
+import { Chat } from '../chat/chat';
+import { Meeting } from './metting';
+import { sequelize } from '../../utils/connectDataBase';
+import type { GameStatus } from '../../types/socket/game/gameSocket.types';
 
 export class Game extends Model<
   InferAttributes<Game>,
@@ -45,6 +46,8 @@ export class Game extends Model<
   declare createColor: HasOneCreateAssociationMixin<GameColor>;
   declare getParam: HasOneGetAssociationMixin<GameParam>;
   declare createChat: HasOneCreateAssociationMixin<Chat>;
+  declare createMeeting: HasOneCreateAssociationMixin<Meeting>;
+  declare getMeeting: HasOneGetAssociationMixin<Meeting>;
 }
 
 Game.init(
@@ -75,6 +78,15 @@ Game.init(
           model: User,
           as: 'creator',
           attributes: ['login', 'avatar'],
+        },
+        attributes: {
+          exclude: ['creatorId'],
+        },
+      },
+      withMeeting: {
+        include: {
+          model: Meeting,
+          as: 'meeting',
         },
         attributes: {
           exclude: ['creatorId'],
@@ -132,6 +144,18 @@ Game.hasOne(Chat, {
   foreignKey: 'gameId',
 });
 Chat.belongsTo(Game, {
+  as: 'game',
+  targetKey: 'id',
+  foreignKey: 'gameId',
+});
+
+Game.hasOne(Meeting, {
+  as: 'meeting',
+  sourceKey: 'id',
+  foreignKey: 'gameId',
+});
+
+Meeting.belongsTo(Game, {
   as: 'game',
   targetKey: 'id',
   foreignKey: 'gameId',

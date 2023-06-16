@@ -28,6 +28,7 @@
   --button-font-primary: #fafafa;
   --button-font-secondary: #910cbf;
   --button-font-tertiary: #e8125f;
+  --button-font-quaternary: #fafafa;
   --table-background-primary: #910cbf;
   --table-background-overlay: 145, 12, 191;
   --table-background-secondary: #e0d700;
@@ -64,6 +65,10 @@
   --error-popup-font-secondary: #010318;
   --landing-button-primary: #910cbf;
   --landing-font-primary: #fafafa;
+  --scrollbar-background-primary: #fafafa;
+  --scrollbar-background-secondary: #010318;
+  --scrollbar-color-secondary: #010318;
+  --scrollbar-width: 5px;
 }
 .app_theme_light {
   --background-main-primary: #dbddf4;
@@ -85,6 +90,7 @@
   --button-font-primary: #000d76;
   --button-font-secondary: #000;
   --button-font-tertiary: #e8125f;
+  --button-font-quaternary: #fafafa;
   --table-background-primary: #fff8c2;
   --table-background-overlay: 145, 12, 191;
   --table-background-secondary: #e0d700;
@@ -120,4 +126,8 @@
   --error-popup-font-secondary: #fff;
   --landing-button-primary: #910cbf;
   --landing-font-primary: #fafafa;
+  --scrollbar-background-primary: #010318;
+  --scrollbar-background-secondary: #010318;
+  --scrollbar-color-secondary: #010318;
+  --scrollbar-width: 5px;
 }

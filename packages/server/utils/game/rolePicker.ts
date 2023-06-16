@@ -1,6 +1,5 @@
 import { GameRole } from 'socket/game/gameSocket.types';
-import { Game } from '../../models/game';
-import { MAX_PLAYERS } from '../../utils/constants';
+import { Game } from '../../models/game/game';
 
 function getRandom(): GameRole {
   return Math.random() < 0.5 ? 'civil' : 'impostor';
@@ -21,9 +20,10 @@ export const roleDistributor = async (
   if (playersCount === 0) {
     return getRandom();
   }
-  const { impostors: maxImpostors } = await game.getParam();
+  const { impostors: maxImpostors, players: gamePlayers } =
+    await game.getParam();
 
-  const civilsLeft = MAX_PLAYERS - maxImpostors;
+  const civilsLeft = gamePlayers - maxImpostors;
   const civils = players.filter(player => player.role === 'civil').length;
   const impostors = playersCount - civils;
 

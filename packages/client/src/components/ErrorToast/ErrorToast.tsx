@@ -1,24 +1,35 @@
 import { useState, useEffect } from 'react';
-import './ErrorToast.css';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { selectApiError } from '@/store/ui/ui.slice';
+import { useActions } from '@/hooks/useActions';
 import getErrorMessage from './getErrorMessage';
+import type { IApiError } from '@/store/ui/ui.types';
+import './ErrorToast.css';
 
 function ErrorToast() {
-  //TBD: move errorCode to global storage and update from controllers/api calls
-  const [APIErrorCode, setAPIErrorCode] = useState<string | null>(null);
-  const [errorObj, setErrorObj] = useState<Record<string, string> | null>(null);
+  const [errorObj, setErrorObj] = useState<IApiError | null>(null);
+  const { code, message } = useTypedSelector(selectApiError);
+  const { clearApiError } = useActions();
 
   useEffect(() => {
-    if (!APIErrorCode) {
-      setErrorObj(null);
-    } else {
-      setErrorObj(getErrorMessage(APIErrorCode));
+    if (code) {
+      if (message) {
+        setErrorObj({
+          code,
+          message,
+        });
+
+        return;
+      }
+
+      setErrorObj(getErrorMessage(code));
     }
-  }, [APIErrorCode]);
+  }, [code]);
 
   useEffect(() => {
     if (errorObj) {
       const timeout = setTimeout(() => {
-        setAPIErrorCode(null);
+        clearApiError();
       }, 5000);
 
       return () => {
@@ -29,7 +40,7 @@ function ErrorToast() {
 
   return (
     <>
-      {errorObj && (
+      {code && errorObj && (
         <div className="error-toast error-toast_position_upper-right">
           <h1 className="error-toast__code">{errorObj.code}</h1>
           <div className="error-toast__info">

@@ -16,27 +16,27 @@ export const authApi = createApi({
   }),
   tagTypes: ['User'],
   endpoints: build => ({
-    getUser: build.query<User, void>({
+    getUser: build.query<User, void | string>({
       query: () => '/user',
       providesTags: ['User'],
     }),
     signUpUser: build.mutation<SignUpSuccessfulResponse, SignUpRequestDTO>({
       query: data => ({ url: '/signup', method: 'POST', body: data }),
-      invalidatesTags: ['User'],
     }),
     signInUser: build.mutation<SignInSuccessfulResponse, SignInRequestDTO>({
       query: data => ({
         url: '/signin',
         method: 'POST',
         body: data,
-        responseHandler: response => {
-          const isJson = response.headers
-            .get('Content-Type')
-            ?.includes('application/json');
-          return isJson ? response.json() : response.text();
-        },
-        invalidatesTags: ['User'],
       }),
+      invalidatesTags: ['User'],
+    }),
+    logout: build.mutation<void, void>({
+      query: () => ({
+        url: '/user/logout',
+        method: 'POST',
+      }),
+      invalidatesTags: ['User'],
     }),
   }),
 });
@@ -46,4 +46,5 @@ export const {
   useLazyGetUserQuery,
   useSignUpUserMutation,
   useSignInUserMutation,
+  useLogoutMutation,
 } = authApi;

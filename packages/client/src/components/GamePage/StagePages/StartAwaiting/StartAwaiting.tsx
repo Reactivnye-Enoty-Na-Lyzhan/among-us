@@ -1,4 +1,5 @@
 import { FC, memo, useContext, useEffect } from 'react';
+import classNames from 'classnames';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from '@/hooks/useActions';
 import {
@@ -8,7 +9,6 @@ import {
 } from '@/store/game/game.slice';
 import { useLeaveGameMutation } from '@/store/game/game.api';
 import { getPluralSeconds } from '@/utils/helpers/getPlural';
-import { MAX_PLAYERS } from '@/utils/gameParams';
 import { GameSocketContext } from '@/utils/socket/gameSocket';
 import type { IPlayer } from '@/store/game/game.types';
 import './StartAwaiting.css';
@@ -55,7 +55,7 @@ const AwaitStart: FC = () => {
 
   // Обратный отсчёт
   useEffect(() => {
-    if (playersAmount === MAX_PLAYERS) {
+    if (playersAmount === params.players) {
       setTimeout(() => {
         launchGame();
       }, 3000);
@@ -63,7 +63,11 @@ const AwaitStart: FC = () => {
   }, [playersAmount]);
 
   const heading =
-    playersAmount !== MAX_PLAYERS ? 'Ожидаем игроков' : 'Запускаем!';
+    playersAmount !== params.players ? 'Ожидаем игроков' : 'Запускаем!';
+
+  const crewmanClassname = classNames('start-awaiting__crewman', {
+    [`start-awaiting__crewman_suit_${color}`]: true,
+  });
 
   // Обработчик готовности игры
   const handleGameReady = (players: IPlayer[]) => {
@@ -89,7 +93,7 @@ const AwaitStart: FC = () => {
       <div className="start-awaiting__timer">
         <h1 className="start-awaiting__title">{heading}</h1>
         <span className="start-awaiting__time-left">
-          {`${playersAmount} / ${MAX_PLAYERS}`}
+          {`${playersAmount} / ${params.players}`}
         </span>
       </div>
       <div className="start-awaiting__content">
@@ -115,7 +119,7 @@ const AwaitStart: FC = () => {
             </span>
           </li>
         </ul>
-        <div className="start-awaiting__crewman"></div>
+        <div className={crewmanClassname}></div>
       </div>
       <button
         className="start-awaiting__leave-game"

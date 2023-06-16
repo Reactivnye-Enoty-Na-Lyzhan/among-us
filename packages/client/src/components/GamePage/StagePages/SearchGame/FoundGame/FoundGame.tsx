@@ -1,6 +1,5 @@
 import { FC, memo } from 'react';
 import { IFoundGame } from '@/store/game/game.types';
-import { MAX_PLAYERS } from '@/utils/gameParams';
 import { DEFAULT_RESOURCE_URL } from '@/utils/constants';
 import './FoundGame.css';
 
@@ -28,12 +27,12 @@ const FoundGame: FC<Props> = props => {
       <div className="found-game__game-info">
         <h2 className="found-game__title">{game.title}</h2>
         <p className="found-game__game-params">
-          <span className="found-game__accent">Предателей: </span>
-          {game.param.impostors}
+          <span className="found-game__accent">Собраний: </span>
+          {game.param.meetings}
         </p>
         <p className="found-game__game-params">
           <span className="found-game__accent">Игроков: </span>
-          {game.players} / {MAX_PLAYERS}
+          {game.players} / {game.param.players}
         </p>
       </div>
     </li>
