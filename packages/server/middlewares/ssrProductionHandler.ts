@@ -3,9 +3,15 @@ import fs from 'fs';
 import path from 'path';
 import { CLIENT_PACKAGE_PATH } from '../utils/constants';
 
+interface IResponse extends Response {
+  locals: {
+    cspNonce?: string;
+  };
+}
+
 export const ssrProductionHandler = async (
   req: Request,
-  res: Response,
+  res: IResponse,
   next: NextFunction
 ) => {
   const url = req.originalUrl;

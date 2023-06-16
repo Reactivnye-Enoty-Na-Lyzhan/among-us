@@ -1,3 +1,3 @@
-import * as crypto from 'crypto';
+import { randomBytes } from 'crypto';
 
-export const nonce = () => crypto.randomBytes(16).toString('base64');
+export const nonce = () => randomBytes(16).toString('base64');
