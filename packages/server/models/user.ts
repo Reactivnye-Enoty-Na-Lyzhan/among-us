@@ -10,11 +10,12 @@ import { compare } from 'bcrypt';
 import { Player } from './game/player';
 import { Game } from './game/game';
 import { GameQueue } from './game/gameQueue';
+import { LeaderBoard } from './leaderboard';
 import { WrongDataError } from '../utils/errors/commonErrors/WrongDataError';
 import { ErrorMessages } from '../utils/errors/errorMessages';
 import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
+import { DEFAULT_AVATAR } from '../utils/constants';
 import { sequelize } from '../utils/connectDataBase';
-import { LeaderBoard } from './leaderboard';
 
 export class User extends Model<
   InferAttributes<User>,
@@ -100,7 +101,7 @@ User.init(
     },
     avatar: {
       type: DataTypes.STRING,
-      defaultValue: '0c386102f8faef94b8c8',
+      defaultValue: DEFAULT_AVATAR,
       allowNull: false,
     },
     id: {

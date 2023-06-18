@@ -8,6 +8,7 @@ import {
   useGetPostsDataQuery,
   useUpdatePostMutation,
 } from '@/store/forum/forum.api';
+import { DEFAULT_RESOURCE_URL } from '@/utils/constants';
 
 type Props = {
   theme: ForumPostType;
@@ -90,7 +91,7 @@ const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
             style={
               theme.lastMessage[0].author.avatar
                 ? {
-                    backgroundImage: `url(${theme.lastMessage[0].author.avatar})`,
+                    backgroundImage: `url(${DEFAULT_RESOURCE_URL}/${theme.lastMessage[0].author.avatar})`,
                   }
                 : undefined
             }></div>

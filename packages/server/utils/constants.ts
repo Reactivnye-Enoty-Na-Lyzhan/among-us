@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 import path from 'path';
 
-if (!process.env.NODE_ENV) {
+if (process.env.NODE_ENV) {
   dotenv.config({
-    path: '../../../.env',
+    path: '../../.env',
   });
 }
 
@@ -48,6 +48,6 @@ export const OUATH_TOKEN_URL = `${OAUTH_BASE_URL}/token`;
 
 export const OAUTH_GET_USER_URL = 'https://login.yandex.ru/info';
 
-export const DEFAULT_AVATAR = '31c7b7866eaf98009c0e';
+export const DEFAULT_AVATAR = '3e0fab5f5c5b0024358f';
 
-export const SOCKET_ORIGIN = `${VITE_SOCKET_HOST}:${VITE_SOCKET_PORT}`;
+export const SOCKET_ORIGIN = IS_DEV ? `${VITE_SOCKET_HOST}:${VITE_SOCKET_PORT}` : VITE_SOCKET_HOST;

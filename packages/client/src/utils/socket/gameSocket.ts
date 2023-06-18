@@ -9,6 +9,8 @@ export const gameSocket: Socket<
   IGameServerToClientEvents,
   IGameClienToServerEvents
 > = io('/game', {
+  path: '/gamesocket/',
   autoConnect: false,
+  transports: ['websocket'],
 });
 export const GameSocketContext = createContext(gameSocket);
