@@ -1,4 +1,4 @@
-import { RTKQueryError, RTKQueryFetchError } from '@/types';
+import { RTKQueryError, RTKQueryFetchError } from '@/types/rtk-query';
 
 export function isRTKQuerySuccessfulResponse<R>(
   response: R | { error: RTKQueryError }

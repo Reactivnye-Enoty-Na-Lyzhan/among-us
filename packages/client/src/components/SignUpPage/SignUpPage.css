@@ -6,6 +6,7 @@
 }
 
 .signup-page {
+  --background-color: var(--background-main-primary);
   --font-size-normal: 14px;
 
   display: flex;
@@ -21,7 +22,7 @@
   font-size: var(--font-size-normal);
   color: var(--font-main-primary);
 
-  background-color: var(--background-main-primary);
+  background-color: var(--background-color);
 }
 
 .signup-page-header {
@@ -51,9 +52,24 @@
 
   font-size: 14px;
   color: var(--form-font-secondary);
-  overflow: scroll;
-  text-overflow: scroll;
+  overflow-x: auto;
   white-space: nowrap;
+
+  scrollbar-color: var(--form-font-secondary) var(--background-color);
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+
+  &::-webkit-scrollbar {
+    height: clamp(2px, 0.2vh, 5px);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--form-font-secondary);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--background-color);
+  }
 }
 
 .signup-page-main__api-status-message_success {

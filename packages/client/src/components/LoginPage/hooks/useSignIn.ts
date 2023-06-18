@@ -1,11 +1,13 @@
-import { useState } from 'react';
 import { useSignInUserMutation } from '@/store/auth/auth.slice';
+import { APIErrorResponse, SignInRequestDTO } from '@/store/auth/auth.types';
+import { createErrorMessageGetter } from '@/utils/api/errors/createErrorMessageGetter';
 import {
   isRTKQueryFetchError,
   isRTKQuerySuccessfulResponse,
-} from '@/utils/api/response-types';
-import { APIErrorResponse, SignInRequestDTO } from '@/store/auth/auth.types';
-import { getErrorMessage } from '@/utils/api/signup/error-messages/get-error-message';
+} from '@/utils/api/responseTypes';
+import { useState } from 'react';
+
+const getErrorMessage = createErrorMessageGetter({ apiName: 'signin' });
 
 export function useSignIn() {
   const [sendSignInQuery, sendSignInQueryStatus] = useSignInUserMutation();

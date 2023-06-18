@@ -3,14 +3,16 @@ import {
   useSignUpUserMutation,
 } from '@/store/auth/auth.slice';
 import { APIErrorResponse } from '@/store/auth/auth.types';
+import { createErrorMessageGetter } from '@/utils/api/errors/createErrorMessageGetter';
 import {
   isRTKQueryFetchError,
   isRTKQuerySuccessfulResponse,
-} from '@/utils/api/response-types';
-import { getErrorMessage } from '@/utils/api/signup/error-messages/get-error-message';
+} from '@/utils/api/responseTypes';
 import { useCallback, useState } from 'react';
 import { SignUpFormData } from '../_types';
 import { transformFormDataToDTO } from '../_utils/transformFormDataToDTO';
+
+const getErrorMessage = createErrorMessageGetter({ apiName: ' signup' });
 
 export function useOnSubmitQueries() {
   const [apiQueryStatusMessage, setAPIQueryStatusMessage] = useState<

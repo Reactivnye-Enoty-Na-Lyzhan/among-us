@@ -32,7 +32,7 @@
   }
 
   &:nth-child(2) {
-    stroke: var(--game-ttile-secondary-color);
+    stroke: var(--game-title-secondary-color);
     stroke-dasharray: 0.5em 2em;
     stroke-width: 1px;
     animation: landing-title-animation 60s infinite linear;

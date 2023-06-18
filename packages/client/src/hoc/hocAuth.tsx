@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import useAuth from '../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 type Options = {
   onUnauthenticatedRedirection: null | string;
@@ -24,7 +24,7 @@ function hocAuth<Props extends Record<string, unknown>>(
     if (isAuthenticated) {
       const redirection = options.onAuthenticatedRedirection;
       if (redirection) {
-        return <Navigate to={redirection} />;
+        return <Navigate to={redirection} replace={true} />;
       }
 
       return <Component {...props} />;
@@ -32,7 +32,7 @@ function hocAuth<Props extends Record<string, unknown>>(
       const redirection = options.onUnauthenticatedRedirection;
 
       if (redirection) {
-        return <Navigate to={redirection} />;
+        return <Navigate to={redirection} replace={true} />;
       }
 
       return <Component {...props} />;
