@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { DEFAULT_ERROR_CODE, DEFAULT_ERROR_MESSAGE } from '../utils/constants';
 
 interface ResponseError extends Error {
