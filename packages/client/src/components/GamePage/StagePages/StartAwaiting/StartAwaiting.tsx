@@ -73,8 +73,8 @@ const AwaitStart: FC = () => {
   const handleGameReady = (players: IPlayer[]) => {
     console.log('handleGameReady: players are', players);
     setGamePlayers(players);
-    setTimeout(()=> {
-        launchGame();
+    setTimeout(() => {
+      launchGame();
     }, 2000);
   };
 
