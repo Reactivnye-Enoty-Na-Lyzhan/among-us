@@ -6,7 +6,7 @@
     "add:client": "lerna add --scope=client",
     "build": "yarn run build:client && yarn run build:server",
     "build:client": "tsc && vite build && yarn sw:build",
-    "build:server": "tsc && vite build --outDir dist-ssr --ssr src/ssr-entry.tsx",
+    "build:server": "tsc && cross-env BUILD_MODE=ssr vite build --outDir dist-ssr --ssr src/ssr-entry.tsx",
     "build:dev": "yarn sw:build && cross-env BUILD_MODE=development vite build:client && vite build:server",
     "dev": "vite",
     "dev:with-sw": "run-p --print-label sw:dev dev",

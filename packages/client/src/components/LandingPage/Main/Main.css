@@ -16,13 +16,13 @@
 }
 
 .landing-game-description__text {
-  --scrollbar-width: clamp(4px, 0.3vw, 12px);
+  --scrollbar-width: clamp(2px, 0.2vw, 5px);
 
   overflow-y: auto;
 
   max-height: 60vh;
   margin-bottom: 1vh;
-  padding-right: min(1.5vw, calc(2 * var(--scrollbar-width)));
+  padding-right: clamp(1vw, calc(2 * var(--scrollbar-width)), 1.5vw);
 
   text-align: justify;
 
