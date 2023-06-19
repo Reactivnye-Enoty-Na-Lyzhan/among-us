@@ -1,19 +1,20 @@
+import { compare } from 'bcrypt';
 import {
-  Model,
   DataTypes,
+  Model,
+  type BelongsToManyAddAssociationMixin,
+  type CreationOptional,
   type InferAttributes,
   type InferCreationAttributes,
-  type CreationOptional,
-  type BelongsToManyAddAssociationMixin,
 } from 'sequelize';
-import { compare } from 'bcrypt';
-import { Player } from './game/player';
-import { Game } from './game/game';
-import { GameQueue } from './game/gameQueue';
+import { sequelize } from '../utils/connectDataBase';
+import { DEFAULT_AVATAR } from '../utils/constants';
+import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
 import { WrongDataError } from '../utils/errors/commonErrors/WrongDataError';
 import { ErrorMessages } from '../utils/errors/errorMessages';
-import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
-import { sequelize } from '../utils/connectDataBase';
+import { Game } from './game/game';
+import { GameQueue } from './game/gameQueue';
+import { Player } from './game/player';
 import { LeaderBoard } from './leaderboard';
 
 export class User extends Model<
@@ -100,7 +101,7 @@ User.init(
     },
     avatar: {
       type: DataTypes.STRING,
-      defaultValue: '0c386102f8faef94b8c8',
+      defaultValue: DEFAULT_AVATAR,
       allowNull: false,
     },
     id: {

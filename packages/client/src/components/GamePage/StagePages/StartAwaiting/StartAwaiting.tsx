@@ -71,8 +71,11 @@ const AwaitStart: FC = () => {
 
   // Обработчик готовности игры
   const handleGameReady = (players: IPlayer[]) => {
+    console.log('handleGameReady: players are', players);
     setGamePlayers(players);
-    launchGame();
+    setTimeout(() => {
+      launchGame();
+    }, 2000);
   };
 
   // Выход из игры

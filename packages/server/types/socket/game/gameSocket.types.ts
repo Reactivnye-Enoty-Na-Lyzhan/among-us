@@ -1,5 +1,5 @@
-import type { ChatMessage } from '../../../models/chat/chatMessage';
 import type { Namespace, Socket } from 'socket.io';
+import type { ChatMessage } from '../../../models/chat/chatMessage';
 
 export type GameParams = {
   discussion: number;
@@ -181,7 +181,7 @@ export interface IGameServerToClientEvents {
 }
 
 // Receiving Event
-export interface IGameClienToServerEvents {
+export interface IGameClientToServerEvents {
   createGame: CreateGame;
   findGame: FindGame;
   joinGame: JoinGame;
@@ -230,13 +230,13 @@ export interface IGameSocketData {
 }
 
 export type GameSocketNamespace = Namespace<
-  IGameClienToServerEvents,
+  IGameClientToServerEvents,
   IGameServerToClientEvents,
   IGameInterServerEvents,
   IGameSocketData
 >;
 export type GameSocket = Socket<
-  IGameClienToServerEvents,
+  IGameClientToServerEvents,
   IGameServerToClientEvents,
   IGameInterServerEvents,
   IGameSocketData
