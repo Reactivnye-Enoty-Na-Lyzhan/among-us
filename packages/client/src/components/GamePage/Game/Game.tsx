@@ -5,21 +5,21 @@ import EmergencyMeeting from './EmergencyMeeting/EmergencyMeeting';
 import MinigameModal from '@/components/Minigames/Modal/Modal';
 import Notification from './UI/Notification/Notification';
 import MeetingScreen from './UI/MeetingScreen/MeetingScreen';
+import TaskInterface from './UI/TaskInterface/TaskInterface';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import {
   selectGame,
+  selectTask,
   selectMeeting,
   selectPlayer,
   selectPlayers,
 } from '@/store/game/game.slice';
 import { useUpdateScoreMutation } from '@/store/game/game.api';
 import { GameSocketContext } from '@/utils/socket/gameSocket';
-import killIcon from '@/images/game/kill.svg';
-import startMeetingIcon from '@/images/game/start-meeting.svg';
-import startMiniGameIcon from '@/images/game/start-minigame.svg';
 import { MeetingMessages } from '@/utils/game/MeetingMessages';
 import type { IMeetingResult, PlayerRoleType } from '@/store/game/game.types';
 import './Game.css';
+import { getNextTask } from '@/utils/game/getNextTask';
 
 const Game: FC = () => {
   const [meetingResult, setMeetingResult] = useState<IMeetingResult | null>(
@@ -33,6 +33,7 @@ const Game: FC = () => {
   const isGameErrorActive = useTypedSelector(
     state => state.game.error.isActive
   );
+  const { targetTask, lastTask } = useTypedSelector(selectTask);
 
   const [minigameId, setMinigameId] = useState<number | undefined>(undefined);
 
@@ -45,6 +46,8 @@ const Game: FC = () => {
     stopMeeting,
     setGameError,
     clearGameError,
+    cancelGame,
+    setTargetTask,
   } = useActions();
 
   const socket = useContext(GameSocketContext);
@@ -57,6 +60,10 @@ const Game: FC = () => {
 
   useEffect(() => {
     let unsubRefs: any;
+    console.log('players from game.tsx', players, players.length);
+
+    if (!players.length) return;
+
     if (
       canvasRef.current &&
       miniGameAction.current &&
@@ -184,8 +191,11 @@ const Game: FC = () => {
   // Обработчик выполнения задачи
   const handleCompleteTask = async (e: any) => {
     const taskId = Number(e.currentTarget.dataset.targetId);
-    console.log('start task with id: ', taskId);
+
+    if (taskId !== targetTask) return;
+
     setMinigameId(taskId);
+    isBlocked.current = true;
   };
 
   // Обработчик завершения игры
@@ -218,10 +228,27 @@ const Game: FC = () => {
       if ('error' in completedTask) return;
 
       socket.emit('completeTask', gameId);
+      isBlocked.current = false;
       setMinigameId(undefined);
+
+      const nextTask = getNextTask(minigameId, lastTask);
+      console.log('NEXT TASK', nextTask, minigameId, lastTask);
+
+      if (nextTask) {
+        setTargetTask(nextTask);
+      }
     } catch (err: unknown) {
       console.error(err);
     }
+  };
+
+  // Обработчик выхода из игры
+  const handleExitGame = () => {
+    if (gameId && playerId) {
+      socket.emit('killPlayer', gameId, playerId, true);
+    }
+
+    cancelGame();
   };
 
   return (
@@ -231,6 +258,7 @@ const Game: FC = () => {
       ) : null}
       <div className="game__canvas-container">
         <canvas ref={canvasRef} id="main-canvas"></canvas>
+        <TaskInterface />
         {meetingResult && (
           <MeetingScreen
             color={meetingResult.color}
@@ -240,25 +268,24 @@ const Game: FC = () => {
         {meetingIsProccessing && <EmergencyMeeting />}
         {isGameErrorActive && <Notification />}
         <button
-          className="game__action-btn"
+          className="game__action-btn game__action-btn_action_minigame"
           ref={miniGameAction}
-          onClick={handleCompleteTask}>
-          <img src={startMiniGameIcon}></img>
-        </button>
+          onClick={handleCompleteTask}
+        />
 
         <button
-          className="game__action-btn"
+          className="game__action-btn game__action-btn_action_meeting"
           ref={meetingAction}
-          onClick={handleMeetingStart}>
-          <img src={startMeetingIcon}></img>
-        </button>
+          onClick={handleMeetingStart}
+        />
 
         <button
           ref={killAction}
-          className="game__action-btn"
-          onClick={handlePlayerKill}>
-          <img src={killIcon}></img>
-        </button>
+          className="game__action-btn game__action-btn_action_kill"
+          onClick={handlePlayerKill}
+        />
+
+        <button className="game__exit-game-btn" onClick={handleExitGame} />
       </div>
     </div>
   );

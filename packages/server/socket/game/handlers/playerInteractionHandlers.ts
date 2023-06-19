@@ -8,6 +8,7 @@ import type {
 } from '../../../types/socket/game/gameSocket.types';
 import { Game } from '../../../models/game/game';
 import { WrongDataError } from '../../../utils/errors/commonErrors/WrongDataError';
+import { getWinState } from '../../../utils/game/getWinState';
 
 export const playerInteractionHandlers = (
   socket: GameSocket,
@@ -35,17 +36,16 @@ export const playerInteractionHandlers = (
         alive: false,
       });
 
-      const impostorsAlive = players.filter(
-        player => player.role === 'impostor' && player.alive
-      );
-      const civilsAlive = players.filter(
-        player => player.role === 'civil' && player.alive
-      );
-
       io.to(gameId.toString()).emit('onPlayerKill', targetId, fromMeeting);
 
-      if (impostorsAlive.length >= civilsAlive.length) {
-        io.to(gameId.toString()).emit('onGameEnd', 'impostor');
+      const winner = getWinState(players);
+
+      if (winner) {
+        io.to(gameId.toString()).emit('onGameEnd', winner);
+
+        await game.update({
+          status: 'finished',
+        });
       }
     } catch (err: unknown) {
       console.log(err);

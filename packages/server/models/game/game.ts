@@ -44,6 +44,7 @@ export class Game extends Model<
   declare getGameQueues: HasManyGetAssociationsMixin<GameQueue>;
   declare removeGameQueue: HasManyRemoveAssociationMixin<GameQueue, number>;
   declare createColor: HasOneCreateAssociationMixin<GameColor>;
+  declare getColor: HasOneGetAssociationMixin<GameColor>;
   declare getParam: HasOneGetAssociationMixin<GameParam>;
   declare createChat: HasOneCreateAssociationMixin<Chat>;
   declare createMeeting: HasOneCreateAssociationMixin<Meeting>;

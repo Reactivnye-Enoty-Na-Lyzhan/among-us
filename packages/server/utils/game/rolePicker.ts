@@ -2,7 +2,7 @@ import { GameRole } from 'socket/game/gameSocket.types';
 import { Game } from '../../models/game/game';
 
 function getRandom(): GameRole {
-  return Math.random() < 0.5 ? 'civil' : 'impostor';
+  return Math.random() <= 0.5 ? 'civil' : 'impostor';
 }
 
 export const roleDistributor = async (
@@ -20,6 +20,7 @@ export const roleDistributor = async (
   if (playersCount === 0) {
     return getRandom();
   }
+
   const { impostors: maxImpostors, players: gamePlayers } =
     await game.getParam();
 

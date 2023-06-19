@@ -55,7 +55,7 @@ export type UnselectColor = (
   color: keyof SuitColorsType
 ) => void;
 
-export type SetPlayerReady = (playerId: string) => void;
+export type SetSocketPlayer = (gameId: GameId, playerId: number) => void;
 
 export type GameReady = (players: IPlayer[]) => void;
 
@@ -161,6 +161,22 @@ export type RemoveVote = (
 
 export type OnVote = (votedList: number[]) => void;
 
+type PlayerCoordinates = {
+  x: number;
+  y: number;
+};
+
+export type ReturnToGame = (
+  gameId: GameId,
+  playerId: number,
+  callback: (coordinates: PlayerCoordinates) => void
+) => void;
+
+export type OnSyncPlayerPosition = (
+  playerId: number,
+  callback: (coordinates: PlayerCoordinates) => void
+) => void;
+
 // Broadcasting
 export interface IGameServerToClientEvents {
   move: MoveServer;
@@ -178,6 +194,7 @@ export interface IGameServerToClientEvents {
   onUnavaliableMeeting: OnUnavaliableMeeting;
   onLastSecondsMeeting: OnLastSecondsMeeting;
   onVote: OnVote;
+  onSyncPlayerPosition: OnSyncPlayerPosition;
 }
 
 // Receiving Event
@@ -193,7 +210,7 @@ export interface IGameClienToServerEvents {
   unselectColor: UnselectColor;
   killPlayer: KillPlayer;
   completeTask: CompleteTask;
-  playerReady: SetPlayerReady;
+  setSocketPlayer: SetSocketPlayer;
   getPlayersAmount: GetPlayers;
   assembleMeeting: AssembleMeeting;
   finishMeeting: FinishMeeting;
@@ -202,6 +219,7 @@ export interface IGameClienToServerEvents {
   getMessages: GetMessages;
   voteForPlayer: VoteForPlayer;
   removeVote: RemoveVote;
+  returnToGame: ReturnToGame;
 }
 
 // Inter-server

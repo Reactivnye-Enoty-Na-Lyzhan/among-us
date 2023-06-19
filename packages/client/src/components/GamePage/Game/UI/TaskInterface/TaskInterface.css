@@ -1,0 +1,25 @@
+.task-interface {
+  position: absolute;
+  top: 30px;
+  left: 25px;
+  padding: 15px 20px;
+  width: 490px;
+  min-height: 105px;
+  background-color: rgba(43, 43, 43, 0.8);
+  border-radius: 3px;
+}
+
+.task-interface__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #24d108;
+  line-height: 1.2;
+}
+
+.task-interface__task {
+  margin: 5px 0 0;
+  font-size: 16px;
+  color: #fafafa;
+  line-height: 1.4;
+}
