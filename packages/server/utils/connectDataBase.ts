@@ -8,7 +8,7 @@ const nameSpace = createNamespace('sequilize-cls');
 
 if (IS_DEV) {
   dotenv.config({
-    path: '../../.env.dev',
+    path: '../../.env',
   });
 }
 

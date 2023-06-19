@@ -5,7 +5,7 @@ import {
   RequestHandlerArgs,
 } from './_service-worker.types';
 import { CacheHandler } from './cache-handler';
-import { getURL } from './helpers';
+import { getURL, isStaticFileRequest } from './helpers';
 
 export class CachedRequestsHandler {
   private readonly _cacheName: string;
@@ -124,8 +124,11 @@ export class CachedRequestsHandler {
     (requestHandler: RequestHandler): RequestHandler =>
     async (handlerArgs: RequestHandlerArgs) => {
       const response = await requestHandler(handlerArgs);
+      const { request } = handlerArgs;
 
-      if (response && response.status === 200) {
+      const shouldCache =
+        isStaticFileRequest(request) && response?.status === 200;
+      if (shouldCache) {
         await this._cacheHandler.putInCache({
           request: handlerArgs.request,
           response: response.clone(),

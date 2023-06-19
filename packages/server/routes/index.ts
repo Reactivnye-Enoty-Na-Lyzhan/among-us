@@ -3,7 +3,7 @@ import checkAuthHandler from '../middlewares/checkAuthHandler';
 import authRouter from './auth';
 import forumRouter from './forum';
 import gameRouter from './game';
-import leaderBoard from './leaderboard';
+import leaderboardRouter from './leaderboard';
 import themeRouter from './themes';
 import userRouter from './users';
 
@@ -24,7 +24,7 @@ router.use('/api/theme', themeRouter);
 // Форум
 router.use('/api/forum', forumRouter);
 
-router.use('/api/leaderboard', leaderBoard);
+router.use('/api/leaderboard', leaderboardRouter);
 
 // Страница не найдена
 router.use('/api/*', (_req: Request, res: Response) => {
