@@ -18,7 +18,7 @@ type Props = Pick<User, 'login' | 'nickname'> & {
 };
 
 const CrewmanCard: FC<Props> = props => {
-  const { id: currentPlayerId } = useTypedSelector(selectPlayer);
+  const { id: currentPlayerId, alive: currentPlayerIsAlive } = useTypedSelector(selectPlayer);
   const {
     login,
     nickname,
@@ -35,6 +35,7 @@ const CrewmanCard: FC<Props> = props => {
     ['crewman-card_self']: currentPlayerId === id,
     ['crewman-card_voted-for']: isVotedFor,
     ['crewman-card_dead']: !alive,
+    ['crewman-card_inactive']: !currentPlayerIsAlive,
   });
 
   const avatarClassname = classNames('crewman-card__avatar', {
@@ -46,6 +47,8 @@ const CrewmanCard: FC<Props> = props => {
   });
 
   const handleVote = () => {
+    if (!currentPlayerIsAlive) return;
+
     onVote(id);
   };
 

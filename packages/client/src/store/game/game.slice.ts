@@ -93,6 +93,11 @@ export const gameSlice = createSlice({
       if (!player) return;
 
       player.alive = false;
+
+      if (player.id === state.player.id) {
+        state.player.alive = false;
+        console.log('killed current player');
+      }
     },
     finishGame: (state, action: PayloadAction<PlayerRoleType>) => {
       state.status = 'finished';

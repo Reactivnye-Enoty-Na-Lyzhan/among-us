@@ -4,6 +4,11 @@
   flex-shrink: 0;
 }
 
+.chat-control_disabled {
+  user-select: none;
+  pointer-events: none;
+}
+
 .chat-control__title {
   margin-top: 17px;
   font-size: 14px;
