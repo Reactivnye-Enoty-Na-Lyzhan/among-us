@@ -1,7 +1,7 @@
-import { FC, memo, useEffect, useState } from 'react';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { selectIsLoading } from '@/store/ui/ui.slice';
-import './Loader.css';
+import { memo, useEffect, useState, type FC } from 'react';
+import { LoaderScreen } from './LoaderScreen/LoaderScreen';
 
 const Loader: FC = () => {
   const [isDisplayed, setIsDisplayed] = useState<boolean>(false);
@@ -17,21 +17,7 @@ const Loader: FC = () => {
     }
   }, [isLoading]);
 
-  return (
-    <>
-      {isDisplayed && (
-        <div className="loader">
-          <div className="loader__stars"></div>
-          <div className="loader__stars loader__stars_position_middle"></div>
-          <div className="loader__rocket-container">
-            <div className="loader__flame"></div>
-            <div className="loader__rocket"></div>
-          </div>
-          <p className="loader__title">Доставляем удовольствие. Ожидайте</p>
-        </div>
-      )}
-    </>
-  );
+  return isDisplayed ? <LoaderScreen /> : <></>;
 };
 
 export default memo(Loader);

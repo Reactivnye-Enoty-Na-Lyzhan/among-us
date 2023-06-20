@@ -104,4 +104,7 @@ const LoginPage: FC = () => {
 export default hocAuth(LoginPage, {
   onUnauthenticatedRedirection: null,
   onAuthenticatedRedirection: '/game',
+  loaderOptions: {
+    isNeeded: false,
+  },
 });

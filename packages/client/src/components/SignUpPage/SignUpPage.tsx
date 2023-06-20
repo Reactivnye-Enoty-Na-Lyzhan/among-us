@@ -31,4 +31,7 @@ const SignUpPage: React.FC = () => {
 export default hocAuth(SignUpPage, {
   onUnauthenticatedRedirection: null,
   onAuthenticatedRedirection: '/game',
+  loaderOptions: {
+    isNeeded: false,
+  },
 });
