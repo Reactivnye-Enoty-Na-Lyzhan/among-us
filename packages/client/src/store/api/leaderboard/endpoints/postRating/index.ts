@@ -1,5 +1,5 @@
 import { API_PATH } from '@-constants/leaderboard/api.constants';
-import { jsonOtherwiseTextHandler } from '@/utils/api/response-handlers';
+import { jsonOtherwiseTextHandler } from '@/utils/api/responseHandlers';
 import type { EndpointDefinitions, ExtendedAPISlice } from '../../api.types';
 import type {
   PostRatingRequestArgs,

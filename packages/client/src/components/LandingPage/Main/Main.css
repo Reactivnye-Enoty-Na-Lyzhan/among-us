@@ -3,9 +3,6 @@
 }
 
 .landing-game-description {
-  scrollbar-color: var(--link-color-blue) var(--background-color);
-  scrollbar-width: thin;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,28 +16,32 @@
 }
 
 .landing-game-description__text {
-  --scrollbar-width: clamp(3px, 0.5vw, 15px);
+  --scrollbar-width: clamp(2px, 0.2vw, 5px);
 
   overflow-y: auto;
 
   max-height: 60vh;
   margin-bottom: 1vh;
-  padding-right: min(1.5vw, calc(2 * var(--scrollbar-width)));
+  padding-right: clamp(1vw, calc(2 * var(--scrollbar-width)), 1.5vw);
 
   text-align: justify;
 
   background-color: var(--background-color);
+
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+  scrollbar-width: auto;
+
   &::-webkit-scrollbar {
     width: var(--scrollbar-width);
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--link-color-blue);
+    background-color: var(--scrollbar-thumb-color);
     border-radius: var(--scrollbar-width);
   }
 
   &::-webkit-scrollbar-track {
-    background: var(--background-color);
+    background: var(--scrollbar-track-color);
   }
 }
 

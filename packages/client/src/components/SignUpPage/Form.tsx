@@ -7,8 +7,8 @@ import { validation } from '@/utils/validation';
 import classNames from 'classnames';
 import { useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SignUpFormData } from './_types';
 import { useOnSubmitQueries } from './hooks/useSignUp';
+import { SignUpFormData } from './types';
 
 export default function SignUpForm() {
   const { values, handleInputChange } = useForm({

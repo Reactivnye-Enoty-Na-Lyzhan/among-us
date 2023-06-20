@@ -7,6 +7,7 @@ dotenv.config({
 });
 
 const IS_DEV = process.env.BUILD_MODE === 'development';
+const IS_SSR_BUILD = process.env.BUILD_MODE === 'ssr';
 const OUT_DIR = 'dist';
 
 let outputNamesOptions;
@@ -37,6 +38,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: OUT_DIR,
+    copyPublicDir: !IS_SSR_BUILD,
     cssMinify: false,
     rollupOptions: {
       output: {

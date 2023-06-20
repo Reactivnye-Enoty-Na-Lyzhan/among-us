@@ -7,6 +7,8 @@ interface IResponse extends ServerResponse {
   };
 }
 
+const offlineHTMLInlineStyleHash =
+  'sha256-Df1vGdZfbkwT7QhOsCXy4mL+xh+jcvas3UsMdZe2R8U=';
 export const helmetSettings = helmet({
   contentSecurityPolicy: {
     directives: {
@@ -15,7 +17,7 @@ export const helmetSettings = helmet({
         "'self'",
         (_req, res: IResponse) => `'nonce-${res.locals?.cspNonce}'`,
       ],
-      styleSrc: ["'self'"],
+      styleSrc: ["'self'", `'${offlineHTMLInlineStyleHash}'`],
       imgSrc: ["'self'", 'https://storage.yandexcloud.net'],
       connectSrc: ["'self'"],
     },

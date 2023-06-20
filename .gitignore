@@ -9,3 +9,5 @@ tmp
 package-lock.json
 
 *.pem
+.env.dev
+dockerfile.server.dev

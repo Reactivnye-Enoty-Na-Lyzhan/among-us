@@ -1,17 +1,17 @@
-import express, { NextFunction, Request, Response } from 'express';
-import { createServer as createHttpServer } from 'http';
-import cors from 'cors';
-import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import { routes } from './routes/index';
+import cors from 'cors';
+import express, { NextFunction, Request, Response } from 'express';
+import { createServer as createHttpServer } from 'http';
+import path from 'path';
 import celebrateErrorHandler from './middlewares/celebrateErrorHandler';
 import errorHandler from './middlewares/errorHandler';
 import { ssrDevHandler } from './middlewares/ssrDevHandler';
 import { ssrProductionHandler } from './middlewares/ssrProductionHandler';
+import { routes } from './routes/index';
+import { connectIO } from './socket';
 import { connectDataBase } from './utils/connectDataBase';
 import { CLIENT_PACKAGE_PATH } from './utils/constants';
-import { connectIO } from './socket';
 import { helmetSettings } from './utils/securityData/helmetSettings';
 import { nonce } from './utils/securityData/nonceSettings';
 
@@ -64,6 +64,21 @@ const createServer = async () => {
       '/assets',
       express.static(path.join(CLIENT_PACKAGE_PATH, './dist/assets'))
     );
+
+  // Service Worker
+  const swPath = path.resolve(CLIENT_PACKAGE_PATH, 'dist/service-worker.js');
+  app.get('/service-worker.js', (_, res: Response) => {
+    res.sendFile(swPath);
+  });
+
+  // Offline HTML
+  const offlineHTMLPath = path.resolve(
+    CLIENT_PACKAGE_PATH,
+    'dist/offline.html'
+  );
+  app.get('/offline.html', (_, res: Response) => {
+    res.sendFile(offlineHTMLPath);
+  });
 
   // SSR Handler
   app.use('*', (req: Request, res: Response, next: NextFunction) => {
