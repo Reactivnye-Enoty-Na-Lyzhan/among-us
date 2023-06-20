@@ -3,8 +3,9 @@ import { User } from '../models/user';
 import { NotAuthorizedError } from '../utils/errors/commonErrors/NotAuthorizedError';
 import { WrongDataError } from '../utils/errors/commonErrors/WrongDataError';
 import { ErrorMessages } from '../utils/errors/errorMessages';
-import type { NextFunction, Request, Response } from 'express';
 import { deleteExistingImage } from '../utils/s3/deleteExistingImage';
+import { DEFAULT_AVATAR } from '../utils/constants';
+import type { NextFunction, Request, Response } from 'express';
 
 interface IUser {
   id: number;
@@ -53,7 +54,7 @@ export const uploadImage = async (
     });
 
     // Если у пользователя уже была загружена аватарка - удаляем её из хранилища
-    if (currentAvatar) {
+    if (currentAvatar && currentAvatar !== DEFAULT_AVATAR) {
       await deleteExistingImage(currentAvatar);
     }
 

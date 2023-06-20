@@ -96,6 +96,12 @@ const CharacterSelection: FC = () => {
 
     if ('error' in playerData) return;
 
+    const playerId = playerData.data.player.id;
+
+    if (playerId) {
+      socket.emit('setSocketPlayer', gameId, playerId);
+    }
+
     setCurrentPlayer(playerData.data.player);
     setGameStatus('startAwaiting');
   };

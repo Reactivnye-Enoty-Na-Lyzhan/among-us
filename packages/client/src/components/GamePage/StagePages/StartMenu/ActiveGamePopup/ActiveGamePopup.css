@@ -1,0 +1,97 @@
+.active-game-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(43, 43, 43, 0.9);
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.4s;
+  z-index: 3;
+}
+
+.active-game-popup_opened {
+  visibility: visible;
+  opacity: 1;
+}
+
+.active-game-popup__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+  width: 85vw;
+  height: 85vh;
+  border-radius: 30px;
+}
+
+.active-game-popup__crewman {
+  width: 181px;
+  height: 247px;
+  background-image: url(@/images/profile/amongus-avatar.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.active-game-popup__title {
+  margin: 35px 0 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #010318;
+  line-height: 1.2;
+}
+
+.active-game-popup__subtitle {
+  margin: 10px 0 0;
+  font-size: 18px;
+  color: #010318;
+  line-height: 1.2;
+}
+
+.active-game-popup__button-container {
+  display: flex;
+  margin-top: 25px;
+  gap: 15px;
+}
+
+.active-game-popup__action-btn {
+  padding: 0;
+  width: 155px;
+  height: 50px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fafafa;
+  line-height: 1.2;
+  background-color: #e8125f;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.active-game-popup__action-btn:hover {
+  opacity: 0.8;
+}
+
+.active-game-popup__action-btn_target_exit {
+  background-color: #010318;
+}
+
+.active-game-popup__action-btn_target_exit:hover {
+  opacity: 1;
+  background-color: #050e72;
+}
+
+@media screen and (min-width: 530px) {
+  .active-game-popup__container {
+    width: 85vw;
+    height: 85vh;
+  }
+}

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '@/utils/constants';
 import type {
-  ICurentGame,
+  ICurrentGameResponse,
   IFindGameRequest,
   IFindGameResponse,
   IGameCreateRequest,
@@ -31,9 +31,9 @@ export const gameApi = createApi({
     findHotGame: build.query<IHotGame, unknown>({
       query: () => '/hot',
     }),
-    getCurrentGame: build.query<ICurentGame, void>({
+    getCurrentGame: build.query<ICurrentGameResponse, void>({
       query: () => '/current',
-      providesTags: ['CurrentGame'],
+      keepUnusedDataFor: 0,
     }),
     getGames: build.mutation<IGetGamesResponse, IGetGamesRequest>({
       query: data => ({

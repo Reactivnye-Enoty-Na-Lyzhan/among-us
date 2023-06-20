@@ -48,7 +48,7 @@ export const OUATH_TOKEN_URL = `${OAUTH_BASE_URL}/token`;
 
 export const OAUTH_GET_USER_URL = 'https://login.yandex.ru/info';
 
-export const DEFAULT_AVATAR = '3e0fab5f5c5b0024358f';
+export const DEFAULT_AVATAR = 'ff6cc9d7483387a44a98';
 
 export const SOCKET_ORIGIN = IS_DEV
   ? `${VITE_SOCKET_HOST}:${VITE_SOCKET_PORT}`

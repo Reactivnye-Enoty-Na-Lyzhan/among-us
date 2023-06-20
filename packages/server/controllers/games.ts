@@ -259,7 +259,8 @@ export const findGames = async (
 };
 
 // Быстрый поиск игры
-// На данный момент просто ищет игру, созданную раньше
+// На данный момент просто ищет игру, созданную недавно
+// Можно сделать, чтобы поиск шёл по играм, у которых не хватает игроков, но они есть
 export const findHotGame = async (
   req: IRequest,
   res: Response,
@@ -274,7 +275,7 @@ export const findHotGame = async (
       where: {
         status: 'init',
       },
-      order: [['id', 'ASC']],
+      order: [['id', 'DESC']],
       attributes: ['id'],
     });
 
@@ -321,15 +322,12 @@ export const takeQueue = async (
       },
     });
 
-    if (queues.length > 0) {
-      throw new AlreadyExistError(ErrorMessages.alreadyInQueue);
+    if (!queues.length) {
+      // Подключаем пользователя
+      await foundGame.createGameQueue({
+        userId: id,
+      });
     }
-
-    // Подключаем пользователя
-    await foundGame.createGameQueue({
-      userId: id,
-    });
-
     // Получение игры с параметрами для передачи пользователю
     const game = await Game.findOne({
       where: {
@@ -456,13 +454,14 @@ export const getCurrentGame = async (
     const player = await Player.findOne({
       where: {
         userId: id,
+        alive: true,
       },
       include: [
         {
           model: Game,
           as: 'game',
           where: {
-            [Op.or]: [{ status: 'active' }, { status: 'init' }],
+            status: 'active',
           },
         },
       ],
@@ -496,17 +495,14 @@ export const getCurrentGame = async (
           as: 'param',
         },
         {
-          model: GameColor,
-          as: 'color',
-        },
-        {
-          model: Team,
-          as: 'teams',
+          model: Chat,
+          as: 'chat',
+          attributes: ['id'],
         },
       ],
     });
 
-    res.send({ game });
+    res.send({ game, currentPlayerId: player.id });
   } catch (err: unknown) {
     next(err);
   }

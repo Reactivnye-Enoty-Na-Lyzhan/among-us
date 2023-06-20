@@ -9,6 +9,8 @@ import type {
   IPlayerWithUser,
   IStartMeeting,
   IGameError,
+  LastTask,
+  TargetTask,
 } from './game.types';
 
 const initialState: IGameState = {
@@ -51,6 +53,10 @@ const initialState: IGameState = {
     title: '',
     text: '',
     isActive: false,
+  },
+  task: {
+    targetTask: 1,
+    lastTask: null,
   },
 };
 
@@ -144,6 +150,12 @@ export const gameSlice = createSlice({
       state.error.title = initialState.error.title;
       state.error.text = initialState.error.text;
     },
+    setLastTask: (state, action: PayloadAction<LastTask>) => {
+      state.task.lastTask = action.payload;
+    },
+    setTargetTask: (state, action: PayloadAction<TargetTask>) => {
+      state.task.targetTask = action.payload;
+    },
   },
 });
 
@@ -164,3 +176,4 @@ export const selectGameError = (state: TypeRootState) => ({
   title: state.game.error.title,
   text: state.game.error.text,
 });
+export const selectTask = (state: TypeRootState) => state.game.task;

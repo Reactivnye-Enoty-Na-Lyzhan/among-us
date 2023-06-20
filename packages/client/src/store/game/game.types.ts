@@ -1,5 +1,4 @@
 import { SuitColorsType } from '@/utils/gameParams';
-import { GameRole } from '../../../../server/types/socket/game/gameSocket.types';
 import { User } from '../auth/auth.types';
 
 export type FoundGameParamType = Pick<IGameStateParams, 'players' | 'meetings'>;
@@ -95,21 +94,13 @@ export interface ITakeQueueRequest {
   gameId: GameIdType;
 }
 
-export interface ICurentGame extends IGame {
-  players: {
-    id: number;
-  }[];
-  param: {
-    id: number;
-  };
-  color: {
-    id: number;
-  };
-  teams: {
-    title: string;
-    role: GameRole;
-    score: number;
-  }[];
+export interface ICurrentGame extends IGameWithParams {
+  players: IPlayer[];
+}
+
+export interface ICurrentGameResponse {
+  game: ICurrentGame;
+  currentPlayerId: number;
 }
 
 export interface IGame {
@@ -155,6 +146,10 @@ export interface IMeetingResult {
   color: keyof SuitColorsType;
 }
 
+export type TargetTask = number;
+
+export type LastTask = number;
+
 //////////////////////////////
 
 interface IResults {
@@ -182,6 +177,10 @@ export interface IGameState {
   startCooldown: number;
   meetings: IMeeting;
   error: IGameError;
+  task: {
+    targetTask: number;
+    lastTask: number | null;
+  };
 }
 
 export interface IGameStateParams {

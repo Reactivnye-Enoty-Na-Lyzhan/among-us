@@ -199,6 +199,17 @@ export const mechanicsHandlers = (
 
       if (civilTeam.score >= CIVIL_VICTORY_SCORE) {
         io.to(gameId.toString()).emit('onGameEnd', 'civil');
+        const game = await Game.findOne({
+          where: {
+            id: gameId,
+          },
+        });
+
+        if (!game) throw new NotExistError(ErrorMessages.gameNotExist);
+
+        await game.update({
+          status: 'finished',
+        });
       }
     } catch (err: unknown) {
       console.log(err);

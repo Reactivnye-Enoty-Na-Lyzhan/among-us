@@ -31,10 +31,6 @@ export const connectGameSocket = (io: baseSocketServer) => {
 
     // Чат
     chatHalders(socket, gameSocket);
-
-    socket.on('disconnect', () => {
-      console.log('соединение разорвано');
-    });
   };
 
   gameSocket.on('connection', onConnect);

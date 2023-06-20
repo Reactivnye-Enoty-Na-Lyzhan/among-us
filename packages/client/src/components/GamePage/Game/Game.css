@@ -57,10 +57,42 @@
   position: absolute;
   bottom: 20px;
   right: 50px;
-  width: fit-content;
-  height: fit-content;
+  padding: 0;
+  width: 150px;
+  height: 97px;
   background: transparent;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
   border: none;
   cursor: pointer;
   display: none;
+}
+
+.game__action-btn_action_meeting {
+  background-image: url(@/images/game/start-meeting.svg);
+}
+
+.game__action-btn_action_kill {
+  background-image: url(@/images/game/kill.svg);
+}
+
+.game__action-btn_action_minigame {
+  background-image: url(@/images/game/start-minigame.svg);
+}
+
+.game__exit-game-btn {
+  position: absolute;
+  top: 30px;
+  right: 45px;
+  padding: 0;
+  width: 47px;
+  height: 33px;
+  background: transparent;
+  background-image: url(@/images/game/exit-game.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
 }
