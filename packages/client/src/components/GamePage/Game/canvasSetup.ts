@@ -7,4 +7,8 @@ export const canvasSetup = (canvas: HTMLCanvasElement) => {
   const adaptHeight = canvas.height / dpi;
   canvas.style.width = `${adaptWidth}px`;
   canvas.style.height = `${adaptHeight}px`;
+  if (dpi >= 2) {
+    canvas.style.minWidth = '60vw';
+    canvas.style.minHeight = `${canvas.height/(canvas.width/(window.innerWidth * 0.6))}px`;
+  }
 };

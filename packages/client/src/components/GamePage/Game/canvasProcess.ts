@@ -74,6 +74,7 @@ export default function canvasProcess(
     name: any;
     impostor: boolean;
     alive: boolean;
+    votedOut: boolean;
     right: boolean;
     spriteFrame: number;
     constructor(x: number, y: number, color: string, id: number, role: string) {
@@ -87,6 +88,7 @@ export default function canvasProcess(
       this.color = color;
       this.impostor = role !== 'civil';
       this.alive = true;
+      this.votedOut = false;
       this.right = true;
       this.spriteFrame = 0;
     }
@@ -101,11 +103,7 @@ export default function canvasProcess(
     }
 
     update(x: number, y: number) {
-      if (isBlocked.current) return;
-      if (!this.alive) {
-        return;
-      }
-      socket.emit('move', { id: playerId, x: x, y: y, gameId: gameId });
+      if (isBlocked.current) return;    
       this.x += x * SPEED;
       this.y += y * SPEED;
       background.update(x, y);
@@ -118,6 +116,10 @@ export default function canvasProcess(
         this.right = true;
       }
 
+      if (!this.alive) return;
+
+      socket.emit('move', { id: playerId, x: x, y: y, gameId: gameId });
+
       if (gameFrame % 5 === 0) {
         if (this.spriteFrame === 3) {
           this.spriteFrame = 0;
@@ -129,16 +131,8 @@ export default function canvasProcess(
       checkObjectArrayCollisions(tasks, useActionBtn, true);
     }
     draw() {
-      if (!this.alive) {
-        ctx.drawImage(
-          deadTextures[this.color],
-          canvas.width / 2 - this.width / 2,
-          canvas.height / 2 - this.height / 2,
-          PLAYER.deadWidth,
-          PLAYER.deadHeight
-        );
-        return;
-      }
+    if(!this.alive) ctx.globalAlpha = 0.5;
+
       if (this.right) {
         ctx.drawImage(
           this.image,
@@ -164,6 +158,8 @@ export default function canvasProcess(
           this.height
         );
       }
+      
+      ctx.globalAlpha = 1;
     }
   }
 
@@ -237,6 +233,7 @@ export default function canvasProcess(
       this.draw();
     }
     draw() {
+      if (this.votedOut) return;
       if (!this.alive) {
         ctx.drawImage(
           deadTextures[this.color],
@@ -388,7 +385,7 @@ export default function canvasProcess(
     forCivils: boolean
   ) => {
     // проверяем коллизии и показываем кнопку взаимодеействия,
-    // для предателя - убийства игроков, для мирных - выполнение заданияж
+    // для предателя - убийства игроков, для мирных - выполнение заданий
     if (forCivils && player.impostor) return;
     if (!forCivils && !player.impostor) return;
     let targetId: number | undefined = undefined;
@@ -415,14 +412,13 @@ export default function canvasProcess(
   }
   socket.on('move', moveCrewman);
 
-  function handlePlayerKill(id: number) {
-    console.log('he dead', id);
-    allPlayers.find(obj => obj.id === id).die();
-    console.log(crewmen);
+  function handlePlayerKill(id: number, byVoting: boolean) {
+    const target = allPlayers.find(obj => obj.id === id);
+    target.alive = false;
+    if (byVoting) target.votedOut = true;
   }
-  socket.on('onPlayerKill', handlePlayerKill); // 3=й параметр fromMeeting
+  socket.on('onPlayerKill', handlePlayerKill); // 2=й параметр fromMeeting
 
-  console.log(allPlayers);
   function gameLoop() {
     if (typeof window === 'undefined') {
       return;
@@ -433,11 +429,11 @@ export default function canvasProcess(
     crewmen.forEach(crewman => crewman.render());
     tasks.forEach(task => task.draw());
     player.draw();
-    if (player.alive) {
-      movePlayer(player, background);
-    }
+    movePlayer(player, background);
     gameFrame++;
-    checkObjectArrayCollisions(crewmen, killActionBtn, false);
+    if (player.alive) {
+        checkObjectArrayCollisions(crewmen, killActionBtn, false);
+    }
   }
 
   const FRAMES_PER_SECOND = 60;
@@ -457,5 +453,7 @@ export default function canvasProcess(
     requestAnimationFrame(update); // get next farme
   }
   requestAnimationFrame(update); // start animation
+
+
   return { moveCrewman, handlePlayerKill };
 }

@@ -6,6 +6,7 @@ export interface IPlayer {
   image: HTMLImageElement;
   spriteWidth: number;
   id: number;
+  alive: boolean;
 }
 
 export interface ICurrentPlayer extends IPlayer {
