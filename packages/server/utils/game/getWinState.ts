@@ -13,7 +13,7 @@ export const getWinState = (
     player => player.role === 'civil' && player.alive
   );
 
-  if (impostorsAlive >= civilsAlive) return 'impostor';
+  if (impostorsAlive.length >= civilsAlive.length) return 'impostor';
 
   if (!impostorsAlive.length) return 'civil';
 

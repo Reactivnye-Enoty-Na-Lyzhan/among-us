@@ -111,6 +111,11 @@ export const connectionHandlers = (
         game.status === 'init' || game.status === 'preparing';
 
       if (!isPreparingGame) {
+
+        await player.update({
+          alive: false,
+        });
+        
         io.to(gameId.toString()).emit('onPlayerKill', Number(playerId), true);
 
         const players = await game.getPlayers();

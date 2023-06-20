@@ -14,16 +14,21 @@ import {
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { GameSocketContext } from '@/utils/socket/gameSocket';
 import './Controls.css';
+import classNames from 'classnames';
 
 type IHandleTextareaChange = (evt: ChangeEvent<HTMLTextAreaElement>) => void;
 
 const Controls: FC = () => {
   const [message, setMessage] = useState<string>('');
 
-  const { id: playerId } = useTypedSelector(selectPlayer);
+  const { id: playerId, alive: currentPlayerIsAlive } = useTypedSelector(selectPlayer);
   const gameId = useTypedSelector(selectGame);
   const chatId = useTypedSelector(selectChatId);
   const socket = useContext(GameSocketContext);
+
+  const chatControlClassname = classNames('chat-control', {
+    'chat-control_disabled': !currentPlayerIsAlive,
+  });
 
   const handleTextareaChange: IHandleTextareaChange = evt => {
     const { value } = evt.target;
@@ -42,7 +47,7 @@ const Controls: FC = () => {
   };
 
   return (
-    <form className="chat-control" noValidate onSubmit={handleFormSubmit}>
+    <form className={chatControlClassname} noValidate onSubmit={handleFormSubmit}>
       <label htmlFor="message-area" className="chat-control__title">
         Отправить сообщение
       </label>
