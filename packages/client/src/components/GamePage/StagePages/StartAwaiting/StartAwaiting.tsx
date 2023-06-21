@@ -5,6 +5,7 @@ import { useActions } from '@/hooks/useActions';
 import {
   selectGame,
   selectPlayer,
+  selectPlayers,
   selectPlayersAmount,
 } from '@/store/game/game.slice';
 import { useLeaveGameMutation } from '@/store/game/game.api';
@@ -21,6 +22,7 @@ const AwaitStart: FC = () => {
   // Состояние
   const gameId = useTypedSelector(selectGame);
   const playersAmount = useTypedSelector(selectPlayersAmount);
+  const players = useTypedSelector(selectPlayers);
 
   // Запросы
   const [leaveGame] = useLeaveGameMutation();
@@ -41,9 +43,13 @@ const AwaitStart: FC = () => {
     socket.on('onGameReady', handleGameReady);
 
     if (gameId) {
+      // Получаем количество присоединившихся игроков
       socket.emit('getPlayersAmount', gameId, playersAmount => {
         setPlayersAmount(playersAmount);
       });
+
+      // Сообщаем о своей готовности
+      socket.emit('setPlayerReady', gameId);
     }
 
     return () => {
@@ -53,17 +59,14 @@ const AwaitStart: FC = () => {
     };
   }, [socket]);
 
-  // Обратный отсчёт
   useEffect(() => {
-    if (playersAmount === params.players) {
-      setTimeout(() => {
-        launchGame();
-      }, 3000);
+    if (players && players.length >= params.players) {
+      launchGame();
     }
-  }, [playersAmount]);
+  }, [players]);
 
   const heading =
-    playersAmount !== params.players ? 'Ожидаем игроков' : 'Запускаем!';
+    playersAmount !== params.players ? 'Ожидаем игроков' : 'Готовы к запуску!';
 
   const crewmanClassname = classNames('start-awaiting__crewman', {
     [`start-awaiting__crewman_suit_${color}`]: true,
@@ -71,11 +74,9 @@ const AwaitStart: FC = () => {
 
   // Обработчик готовности игры
   const handleGameReady = (players: IPlayer[]) => {
-    console.log('handleGameReady: players are', players);
+    console.log('Игроки из Awaiting', players);
     setGamePlayers(players);
-    setTimeout(() => {
-      launchGame();
-    }, 2000);
+
   };
 
   // Выход из игры

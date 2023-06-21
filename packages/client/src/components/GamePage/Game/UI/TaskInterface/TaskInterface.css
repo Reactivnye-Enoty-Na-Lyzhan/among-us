@@ -7,6 +7,12 @@
   min-height: 105px;
   background-color: rgba(43, 43, 43, 0.8);
   border-radius: 3px;
+  transition: 0.4;
+}
+
+.task-interface_hidden {
+  visibility: hidden;
+  opacity: 0;
 }
 
 .task-interface__title {

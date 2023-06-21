@@ -1,5 +1,7 @@
 .game-end {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .game-end_spacing_below {
@@ -9,7 +11,7 @@
 .game-end__title {
   color: var(--font-main-primary);
   font-weight: 700;
-  font-size: 5rem;
+  font-size: 4rem;
   line-height: 120%;
 }
 
@@ -32,20 +34,10 @@
 }
 
 .game-end__image {
+  align-self: flex-end;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  position: absolute;
-}
-
-.game-end__image_left {
-  left: 50px;
-  bottom: 100px;
-}
-
-.game-end__image_right {
-  right: 50px;
-  bottom: 100px;
 }
 
 .game-end__image_impostor_yellow {

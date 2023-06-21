@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { WithPickingPanelContextArgs } from './types';
 import { GameContext } from '../../GameContext/context';
 
@@ -16,7 +16,7 @@ export function usePickedSequenceResetting({
     useState(false);
   const gameContext = useContext(GameContext);
 
-  useEffect(() => {
+  useMemo(() => {
     const resetPickedSequence = () => {
       pickingPanelContext.blockPicking();
       setIsPickedSequenceResetting(true);

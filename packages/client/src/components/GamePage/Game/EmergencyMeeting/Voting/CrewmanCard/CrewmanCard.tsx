@@ -18,7 +18,8 @@ type Props = Pick<User, 'login' | 'nickname'> & {
 };
 
 const CrewmanCard: FC<Props> = props => {
-  const { id: currentPlayerId, alive: currentPlayerIsAlive } = useTypedSelector(selectPlayer);
+  const { id: currentPlayerId, alive: currentPlayerIsAlive } =
+    useTypedSelector(selectPlayer);
   const {
     login,
     nickname,

@@ -74,6 +74,7 @@
 }
 
 .game__action-btn_action_kill {
+  bottom: 130px;
   background-image: url(@/images/game/kill.svg);
 }
 

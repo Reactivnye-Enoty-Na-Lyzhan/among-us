@@ -56,25 +56,25 @@ if (typeof window !== 'undefined') {
 export const movePlayer = (player: ICurrentPlayer, background: IBackground) => {
   if (
     keys.w.pressed &&
-    isWithinBoundaries(background.x, background.y + SPEED)
+    (!player.alive || isWithinBoundaries(background.x, background.y + SPEED))
   ) {
     player.update(0, -1);
   }
   if (
     keys.d.pressed &&
-    isWithinBoundaries(background.x - SPEED, background.y)
+    (!player.alive || isWithinBoundaries(background.x - SPEED, background.y))
   ) {
     player.update(1, 0);
   }
   if (
     keys.s.pressed &&
-    isWithinBoundaries(background.x, background.y - SPEED)
+    (!player.alive || isWithinBoundaries(background.x, background.y - SPEED))
   ) {
     player.update(0, 1);
   }
   if (
     keys.a.pressed &&
-    isWithinBoundaries(background.x + SPEED, background.y)
+    (!player.alive || isWithinBoundaries(background.x + SPEED, background.y))
   ) {
     player.update(-1, 0);
   }

@@ -13,6 +13,7 @@ import type {
   LeaveGame,
   GameSocketNamespace,
   ReturnToGame,
+  SetPlayerReady,
 } from '../../../types/socket/game/gameSocket.types';
 
 export const connectionHandlers = (
@@ -46,6 +47,24 @@ export const connectionHandlers = (
 
       if (!game) throw new NotExistError(ErrorMessages.gameNotExist);
 
+      const playersAmount = await game.countPlayers();
+
+      callback(playersAmount);
+    } catch (err: unknown) {
+      console.log(err);
+    }
+  };
+
+  const setPlayerReady: SetPlayerReady = async gameId => {
+    try {
+      const game = await Game.findOne({
+        where: {
+          id: gameId,
+        },
+      });
+
+      if (!game) throw new NotExistError(ErrorMessages.gameNotExist);
+
       const players = await game.getPlayers({
         include: {
           model: User,
@@ -54,11 +73,9 @@ export const connectionHandlers = (
         },
       });
 
-      const { players: gamePlayers } = await game.getParam();
+      const { players: gameParamPlayers } = await game.getParam();
 
-      callback(players.length);
-
-      if (players.length === gamePlayers) {
+      if (players.length === gameParamPlayers) {
         await game.update({
           status: 'active',
         });
@@ -111,11 +128,10 @@ export const connectionHandlers = (
         game.status === 'init' || game.status === 'preparing';
 
       if (!isPreparingGame) {
-
         await player.update({
           alive: false,
         });
-        
+
         io.to(gameId.toString()).emit('onPlayerKill', Number(playerId), true);
 
         const players = await game.getPlayers();
@@ -163,6 +179,7 @@ export const connectionHandlers = (
   socket.on('leaveGame', leaveGame);
   socket.on('setSocketPlayer', setSocketPlayer);
   socket.on('getPlayersAmount', getPlayers);
+  socket.on('setPlayerReady', setPlayerReady);
   socket.on('returnToGame', returnToGame);
   socket.on('disconnect', handleDisconnect);
 };
