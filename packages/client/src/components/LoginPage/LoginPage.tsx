@@ -10,8 +10,8 @@ import Form from '../Form/Form';
 import Input from '../Form/Input/Input';
 import OAuthButton from '../Form/OAuthButton/OAuthButton';
 import { useForm } from '../Form/hooks';
-import './LoginPage.css';
 import { useSignIn } from './hooks/useSignIn';
+import './LoginPage.css';
 
 const LoginPage: FC = () => {
   const { requestStatus, statusMessageClass, signIn, sendSignInQueryStatus } =
