@@ -1,16 +1,16 @@
-import hocAuth from '@/hoc/hocAuth';
-import { useLogoutMutation } from '@/store/auth/auth.slice';
-import type { IProfileConditionTable, ProfileChoice } from '@/types/profile';
-import { SIGNIN_URL } from '@/utils/constants';
-import classNames from 'classnames';
 import { FC, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ProfileAvatar from './ProfileAvatar/ProfileAvatar';
-import ProfileLink from './ProfileLink/ProfileLink';
-import ProfileNavigation from './ProfileNavigation/ProfileNavigation';
+import classNames from 'classnames';
 import ProfilePassword from './ProfilePassword/ProfilePassword';
 import ProfilePersonalData from './ProfilePersonalData/ProfilePersonalData';
+import ProfileLink from './ProfileLink/ProfileLink';
+import ProfileAvatar from './ProfileAvatar/ProfileAvatar';
+import ProfileNavigation from './ProfileNavigation/ProfileNavigation';
 import ProfileThemeSlider from './ProfileThemeSlider/ProfileThemeSlider';
+import hocAuth from '@/hoc/hocAuth';
+import { useLogoutMutation } from '@/store/auth/auth.slice';
+import { SIGNIN_URL } from '@/utils/constants';
+import type { IProfileConditionTable, ProfileChoice } from '@/types/profile';
 import './Profile.css';
 
 const Profile: FC = () => {
@@ -77,4 +77,7 @@ const Profile: FC = () => {
   );
 };
 
-export default hocAuth(Profile);
+export default hocAuth(Profile, {
+  onAuthenticatedRedirection: null,
+  onUnauthenticatedRedirection: SIGNIN_URL,
+});
