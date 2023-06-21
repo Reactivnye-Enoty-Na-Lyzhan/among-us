@@ -5,6 +5,7 @@ import { useActions } from '@/hooks/useActions';
 import {
   selectGame,
   selectPlayer,
+  selectPlayers,
   selectPlayersAmount,
 } from '@/store/game/game.slice';
 import { useLeaveGameMutation } from '@/store/game/game.api';
@@ -21,6 +22,7 @@ const AwaitStart: FC = () => {
   // Состояние
   const gameId = useTypedSelector(selectGame);
   const playersAmount = useTypedSelector(selectPlayersAmount);
+  const players = useTypedSelector(selectPlayers);
 
   // Запросы
   const [leaveGame] = useLeaveGameMutation();
@@ -57,6 +59,12 @@ const AwaitStart: FC = () => {
     };
   }, [socket]);
 
+  useEffect(() => {
+    if (players && players.length >= params.players) {
+      launchGame();
+    }
+  }, [players]);
+
   const heading =
     playersAmount !== params.players ? 'Ожидаем игроков' : 'Готовы к запуску!';
 
@@ -66,8 +74,9 @@ const AwaitStart: FC = () => {
 
   // Обработчик готовности игры
   const handleGameReady = (players: IPlayer[]) => {
+    console.log('Игроки из Awaiting', players);
     setGamePlayers(players);
-    launchGame();
+
   };
 
   // Выход из игры

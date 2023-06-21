@@ -60,6 +60,7 @@ const Game: FC = () => {
 
   useEffect(() => {
     let unsubRefs: any;
+    console.log('Игроки из Awaiting', players, gameId, socket.id);
     if (!players.length) return;
 
     if (
