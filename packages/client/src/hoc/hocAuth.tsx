@@ -1,4 +1,6 @@
-import { FC } from 'react';
+import { LoaderScreen } from '@/components/Loader/LoaderScreen/LoaderScreen';
+import { useActions } from '@/hooks/useActions';
+import { FC, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
@@ -17,9 +19,18 @@ function hocAuth<Props extends Record<string, unknown>>(
   initOptions?: Partial<Options>
 ): FC<Props> {
   return props => {
-    const { isAuthenticated } = useAuth();
-
     const options = { ...defaultOptions, ...initOptions };
+
+    const { isAuthenticated, isLoading } = useAuth();
+    const { setLoadingStatus } = useActions();
+
+    useEffect(() => {
+      setLoadingStatus(isLoading);
+    }, [isLoading]);
+
+    if (isLoading) {
+      return <LoaderScreen></LoaderScreen>;
+    }
 
     if (isAuthenticated) {
       const redirection = options.onAuthenticatedRedirection;
