@@ -1,6 +1,6 @@
+import hocAuth from '@/hoc/hocAuth';
 import { Link } from 'react-router-dom';
 import SignUpForm from './Form';
-import hocAuth from '@/hoc/hocAuth';
 import './SignUpPage.css';
 
 const SignUpPage: React.FC = () => {
