@@ -40,7 +40,7 @@ const GameEnd: FC = () => {
       <div className={`game-end__image ${imageLeftSrc}`}></div>
       <div className="game-end__wrapper">
         <h1 className="game-end__title game-end__title_spacing_above-below">
-          {winners === 'impostor' ? 'Как так получилось?' : 'Победа!'}
+          {winners === 'impostor' ? 'Как так получилось?' : 'Победа мирных!'}
         </h1>
         <div className="game-end__container">
           <GameEndButton
