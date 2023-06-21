@@ -1,4 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { getRandomTask } from '@/utils/game/getNextTask';
+import { miniGamesList } from '@/utils/game/mingames';
 import type { TypeRootState } from '..';
 import type {
   IGameState,
@@ -19,7 +21,7 @@ const initialState: IGameState = {
   title: '',
   status: 'init',
   params: {
-    players: 3,
+    players: 9,
     impostors: 2,
     meetings: 5,
     discussion: 50,
@@ -55,7 +57,7 @@ const initialState: IGameState = {
     isActive: false,
   },
   task: {
-    targetTask: 1,
+    targetTask: getRandomTask(miniGamesList),
     lastTask: null,
   },
 };
@@ -104,7 +106,6 @@ export const gameSlice = createSlice({
       state.results.winners = action.payload;
       state.player = initialState.player;
       state.playersAmount = 0;
-      state.results = initialState.results;
       state.players = initialState.players;
       state.chatId = initialState.chatId;
       state.meetings = initialState.meetings;

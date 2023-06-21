@@ -103,7 +103,7 @@ export default function canvasProcess(
     }
 
     update(x: number, y: number) {
-      if (isBlocked.current) return;    
+      if (isBlocked.current) return;
       this.x += x * SPEED;
       this.y += y * SPEED;
       background.update(x, y);
@@ -131,7 +131,7 @@ export default function canvasProcess(
       checkObjectArrayCollisions(tasks, useActionBtn, true);
     }
     draw() {
-    if(!this.alive) ctx.globalAlpha = 0.5;
+      if (!this.alive) ctx.globalAlpha = 0.5;
 
       if (this.right) {
         ctx.drawImage(
@@ -158,7 +158,7 @@ export default function canvasProcess(
           this.height
         );
       }
-      
+
       ctx.globalAlpha = 1;
     }
   }
@@ -432,7 +432,7 @@ export default function canvasProcess(
     movePlayer(player, background);
     gameFrame++;
     if (player.alive) {
-        checkObjectArrayCollisions(crewmen, killActionBtn, false);
+      checkObjectArrayCollisions(crewmen, killActionBtn, false);
     }
   }
 
@@ -453,7 +453,6 @@ export default function canvasProcess(
     requestAnimationFrame(update); // get next farme
   }
   requestAnimationFrame(update); // start animation
-
 
   return { moveCrewman, handlePlayerKill };
 }

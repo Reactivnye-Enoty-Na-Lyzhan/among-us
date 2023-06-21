@@ -1,6 +1,6 @@
 import { miniGamesList } from '@/utils/game/mingames';
 
-const getRandomTask = (avaliableTasks: string[]): number => {
+export const getRandomTask = (avaliableTasks: string[]): number => {
   const result =
     avaliableTasks[Math.floor(Math.random() * avaliableTasks.length)];
   return Number(result);

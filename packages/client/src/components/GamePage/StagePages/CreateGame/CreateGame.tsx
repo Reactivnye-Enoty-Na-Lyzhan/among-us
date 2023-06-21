@@ -47,12 +47,15 @@ const CreateGame: FC = () => {
   };
 
   // Обработчик формы
-  const handleFormSubmit = useCallback((values: InputsParamsType) => {
-    if (isProcessing) return;
+  const handleFormSubmit = useCallback(
+    (values: InputsParamsType) => {
+      if (isProcessing) return;
 
-    setIsProcessing(true);
-    createGame(values);
-  }, []);
+      setIsProcessing(true);
+      createGame(values);
+    },
+    [isProcessing]
+  );
 
   return (
     <div className="create-game create-game_spacing_outer">

@@ -15,6 +15,7 @@
   cursor: pointer;
   --screen-content-background: #010318;
   --text-color: #fafafa;
+  transition: 0.4s;
 }
 
 .game-end__button-name:hover {

@@ -177,6 +177,8 @@ export type OnSyncPlayerPosition = (
   callback: (coordinates: PlayerCoordinates) => void
 ) => void;
 
+export type SetPlayerReady = (gameId: GameId) => void;
+
 // Broadcasting
 export interface IGameServerToClientEvents {
   move: MoveServer;
@@ -220,6 +222,7 @@ export interface IGameClienToServerEvents {
   voteForPlayer: VoteForPlayer;
   removeVote: RemoveVote;
   returnToGame: ReturnToGame;
+  setPlayerReady: SetPlayerReady;
 }
 
 // Inter-server

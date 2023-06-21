@@ -7,24 +7,18 @@ import GameEndButton from './GameEndButton/GameEndButton';
 import './GameEnd.css';
 
 type Config = {
-  imageLeftSrc: (score: number) => string;
-  imageRightSrc: (score: number) => string;
+  imageLeftSrc: string;
+  imageRightSrc: string;
 };
 
 const config: Record<string, Config> = {
   impostor: {
-    imageLeftSrc: () => ' ',
-    imageRightSrc: () => 'game-end__image_impostor_dead',
+    imageLeftSrc: 'game-end__image_impostor_yellow',
+    imageRightSrc: 'game-end__image_impostor_mint',
   },
   civil: {
-    imageLeftSrc: (score: number) =>
-      score > 10
-        ? 'game-end__image_impostor_red'
-        : 'game-end__image_impostor_yellow',
-    imageRightSrc: (score: number) =>
-      score > 10
-        ? 'game-end__image_impostor_firework'
-        : 'game-end__image_impostor_mint',
+    imageLeftSrc: 'game-end__image_impostor_red',
+    imageRightSrc: 'game-end__image_impostor_firework',
   },
 };
 
@@ -36,19 +30,17 @@ const GameEnd: FC = () => {
   const { imageLeftSrc, imageRightSrc } =
     winners === 'impostor' ? config['impostor'] : config['civil'];
 
+  console.log('winners', winners, imageLeftSrc, imageRightSrc);
   const handleGameStart = useCallback(() => {
     playMore();
   }, []);
 
   return (
     <div className="game-end game-end_spacing_below">
-      <div
-        className={`game-end__image ${imageLeftSrc(
-          15
-        )} game-end__image_left`}></div>
+      <div className={`game-end__image ${imageLeftSrc}`}></div>
       <div className="game-end__wrapper">
         <h1 className="game-end__title game-end__title_spacing_above-below">
-          {winners === 'impostor' ? 'Как же так-то?' : 'Победа!'}
+          {winners === 'impostor' ? 'Как так получилось?' : 'Победа!'}
         </h1>
         <div className="game-end__container">
           <GameEndButton
@@ -65,10 +57,7 @@ const GameEnd: FC = () => {
           </Link>
         </div>
       </div>
-      <div
-        className={`game-end__image ${imageRightSrc(
-          15
-        )} game-end__image_right`}></div>
+      <div className={`game-end__image ${imageRightSrc}`}></div>
     </div>
   );
 };

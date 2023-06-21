@@ -60,8 +60,6 @@ const Game: FC = () => {
 
   useEffect(() => {
     let unsubRefs: any;
-    console.log('players from game.tsx', players, players.length);
-
     if (!players.length) return;
 
     if (
