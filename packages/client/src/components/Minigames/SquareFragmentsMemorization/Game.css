@@ -4,13 +4,8 @@ body {
 }
 
 .square-fragments-memorization-game {
-  --max-width: clamp(400px, 80vw, 1200px);
-  --max-height: clamp(300px, 80vw, 800px);
-
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  --max-width: clamp(400px, 80vw, 800px);
+  --max-height: clamp(300px, 80vw, 600px);
 
   display: flex;
   align-items: center;
@@ -21,7 +16,7 @@ body {
 
   font-size: 1rem;
 
-  background-color: gray;
+  background-color: var(--background-main-primary);
 
   @media (orientation: portrait) {
     flex-direction: column;
@@ -29,7 +24,7 @@ body {
 }
 
 .square-fragments-memorization-game__puzzle-panel {
-  --puzzle-panel-size: calc(0.45 * min(var(--max-height), var(--max-width)));
+  --puzzle-panel-size: calc(0.6 * min(var(--max-height), var(--max-width)));
   --interactive-panel-size: calc(0.85 * var(--puzzle-panel-size));
   --interactive-panel-border-width: calc(0.01 * var(--interactive-panel-size));
 
@@ -37,6 +32,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  border-radius: 12px;
 
   width: var(--puzzle-panel-size);
   height: var(--puzzle-panel-size);

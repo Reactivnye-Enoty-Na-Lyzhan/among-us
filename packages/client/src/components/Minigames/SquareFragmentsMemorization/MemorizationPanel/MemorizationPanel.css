@@ -6,8 +6,10 @@
   width: var(--interactive-panel-size);
   height: var(--interactive-panel-size);
 
-  background-color: black;
-  border-color: blue;
+  background-color: rgb(22, 33, 26);
+  border-color: rgb(202, 202, 202);
   border-style: solid;
+  border-radius: 8px;
   border-width: var(--interactive-panel-border-width);
+  overflow: hidden;
 }

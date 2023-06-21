@@ -1,16 +1,18 @@
 .match {
+  position: relative;
   background-color: var(--background-main-primary);
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .match__cards {
+  grid-gap: 1.5rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  grid-gap: 1rem;
-  max-width: 580px;
-  padding: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  max-width: 640px;
+  padding: 1.5rem;
+  height: 480px;
 }

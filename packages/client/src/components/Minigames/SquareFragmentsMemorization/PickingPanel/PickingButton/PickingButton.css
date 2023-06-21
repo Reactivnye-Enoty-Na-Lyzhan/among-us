@@ -4,6 +4,7 @@
   border-style: solid;
   border-width: var(--interactive-panel-border-width);
   border-radius: 7%;
+  cursor: pointer;
 
   transition: 500ms;
 }

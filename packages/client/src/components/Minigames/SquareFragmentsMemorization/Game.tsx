@@ -41,7 +41,9 @@ const Game: FC<Props> = ({ onWinCallback }) => {
             <PickingPanel />
           </>
         ) : (
-          <div style={{ fontSize: '2rem' }}>Мини Игра Пройдена!</div>
+          <div className="minigame__win">
+            Реактор стабилен, все проверки прошли успешно!
+          </div>
         )}
       </div>
     </GameContext.Provider>

@@ -214,6 +214,11 @@ const Game: FC = () => {
     }
   };
 
+  const handleMinigameClose = () => {
+    setMinigameId(undefined);
+    isBlocked.current = false;
+  };
+
   const handleMinigameWin = async () => {
     try {
       if (!gameId || !playerId || !minigameId) return;
@@ -253,7 +258,11 @@ const Game: FC = () => {
   return (
     <div className="game">
       {minigameId ? (
-        <MinigameModal gameId={minigameId} onWinCallback={handleMinigameWin} />
+        <MinigameModal
+          gameId={minigameId}
+          onWinCallback={handleMinigameWin}
+          onCloseCallback={handleMinigameClose}
+        />
       ) : null}
       <div className="game__canvas-container">
         <canvas ref={canvasRef} id="main-canvas"></canvas>
