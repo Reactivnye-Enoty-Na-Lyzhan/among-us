@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { ProgressbarIndicatorStatus } from '../../ProgressBar/ProgressBar';
 import type { PickingPanelContext } from '../types';
 
@@ -11,7 +11,7 @@ export function useProgressbar({ pickingPanelContext }: Args) {
     ProgressbarIndicatorStatus[]
   >([]);
 
-  useEffect(() => {
+  useMemo(() => {
     const resetProgressbar = () => {
       setProgressbarIndicators([]);
     };

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import type { WithPickingPanelContextArgs } from './types';
 import type { PickingPanelContext } from '../types';
 
@@ -9,7 +9,7 @@ export function usePickStatus({
   const lastPickStatusRef: PickingPanelContext['lastPickStatusRef'] =
     useRef(null);
 
-  useEffect(() => {
+  useMemo(() => {
     const resetCurrentPickIndex = () => {
       currentPickIndexRef.current = 0;
     };
