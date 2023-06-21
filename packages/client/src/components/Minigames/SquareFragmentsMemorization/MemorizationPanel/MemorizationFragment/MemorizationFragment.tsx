@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState, type FC, useEffect } from 'react';
+import { useState, type FC, useMemo } from 'react';
 import { MemorizationPanelContext } from '../types';
 import { MEMORIZATION_FRAGMENT_HIGHLIGHTING_DURATION } from '../constants';
 import './MemorizationFragment.css';
@@ -15,7 +15,7 @@ export const MemorizationFragment: FC<Props> = ({
 }) => {
   const [isHighlighted, setIsHighLighted] = useState(false);
 
-  useEffect(() => {
+  useMemo(() => {
     const toggleFragmentHighlighting = () => {
       setIsHighLighted(currentValue => {
         console.log(

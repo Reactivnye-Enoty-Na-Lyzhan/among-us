@@ -1,4 +1,4 @@
-import { useState, type FC, useEffect, useContext } from 'react';
+import { useState, type FC, useContext, useMemo } from 'react';
 import { type NodeProps, PickStatus, type ComponentProps } from './types';
 import { ProgressbarIndicatorStatus } from '../../ProgressBar/ProgressBar';
 import './PickingButton.css';
@@ -11,7 +11,7 @@ const PickingButton: FC<ComponentProps> = ({
   const [pickStatus, setPickStatus] = useState(PickStatus.NOT_PICKED);
   const { memorizationSequenceRef } = useContext(GameContext);
 
-  useEffect(
+  useMemo(
     () =>
       (pickingPanelContext.resetPickButton[buttonIndex] = () =>
         setPickStatus(PickStatus.NOT_PICKED)),

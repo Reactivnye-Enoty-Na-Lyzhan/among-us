@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 import type { WithPickingPanelContextArgs } from './types';
 import { GameContext } from '../../GameContext/context';
 import { GameStage } from '../../GameContext/types';
@@ -13,7 +13,7 @@ export function usePickingBlock({
     gameStage !== GameStage.REPRODUCTION
   );
 
-  useEffect(() => {
+  useMemo(() => {
     const blockPicking = () => {
       isPickingBlockedRef.current = true;
     };
