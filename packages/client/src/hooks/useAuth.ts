@@ -2,14 +2,14 @@ import { useGetUserQuery } from '../store/auth/auth.slice';
 
 interface AuthState {
   isAuthenticated: boolean;
-  isFetching: boolean;
+  isLoading: boolean;
 }
 
 const useAuth = (): AuthState => {
-  const { isFetching, isSuccess } = useGetUserQuery();
+  const { isLoading, isSuccess } = useGetUserQuery();
   const isAuthenticated = isSuccess;
 
-  return { isAuthenticated, isFetching };
+  return { isAuthenticated, isLoading };
 };
 
 export default useAuth;

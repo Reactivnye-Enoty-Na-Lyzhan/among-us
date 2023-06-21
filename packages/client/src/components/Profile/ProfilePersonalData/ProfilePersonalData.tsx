@@ -1,14 +1,14 @@
-import { useActions } from '@/hooks/useActions';
-import { useGetUserQuery } from '@/store/auth/auth.slice';
 import { FC, useCallback, useEffect, useState } from 'react';
-import { useValidation } from '../../../hooks/useValidation';
-import { useUpdateUserMutation } from '../../../store/profile/profile.slice';
-import type { User } from '../../../store/profile/profile.types';
-import { validation } from '../../../utils/validation';
-import Button from '../../Form/Button/Button';
 import Form from '../../Form/Form';
 import Input from '../../Form/Input/Input';
 import { useForm } from '../../Form/hooks';
+import { validation } from '../../../utils/validation';
+import Button from '../../Form/Button/Button';
+import { useValidation } from '../../../hooks/useValidation';
+import { useLazyGetUserQuery } from '../../../store/auth/auth.slice';
+import { useUpdateUserMutation } from '../../../store/profile/profile.slice';
+import { useActions } from '@/hooks/useActions';
+import type { User } from '../../../store/profile/profile.types';
 import './ProfilePersonalData.css';
 
 const ProfileForm: FC = () => {
@@ -30,9 +30,13 @@ const ProfileForm: FC = () => {
   ]);
 
   const [updateUser] = useUpdateUserMutation();
-  const results = useGetUserQuery();
+  const [getUser, results] = useLazyGetUserQuery();
 
   const { setApiError } = useActions();
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   useEffect(() => {
     if (results.data) {
