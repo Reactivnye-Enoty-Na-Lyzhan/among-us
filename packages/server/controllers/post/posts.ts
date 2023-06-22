@@ -12,6 +12,7 @@ import { User } from '../../models/user';
 import { Message } from '../../models/forum/message';
 import { Sequelize } from 'sequelize-typescript';
 import { withErrorHandler } from '../../utils/errors/errorHandler';
+import { NotAuthorizedError } from '../../utils/errors/commonErrors/NotAuthorizedError';
 
 export const postPost = withErrorHandler(
   async (req: IRequestPostPost, res: Response) => {
@@ -91,12 +92,25 @@ export const getPostById = withErrorHandler(
 
 export const deletePost = withErrorHandler(
   async (req: IRequestDeletePost, res: Response) => {
+    const authorId = req.user?.id;
+
+    if (!authorId) throw new NotAuthorizedError(ErrorMessages.notAuthorized);
+
     const { postId } = req.params;
     const parsedPostId = Number(postId);
-    const data = await Post.destroy({ where: { id: parsedPostId } });
-    if (!data) {
-      throw new NotExistError(ErrorMessages.notFound);
-    }
+    const post = await Post.findOne({
+      where: {
+        id: parsedPostId,
+      },
+    });
+
+    if (!post) throw new NotExistError(ErrorMessages.invalidPostId);
+
+    if (post.authorId !== authorId)
+      throw new NotAuthorizedError(ErrorMessages.notAuthorized);
+
+    await post.destroy();
+
     res.json({ postId: parsedPostId });
   }
 );

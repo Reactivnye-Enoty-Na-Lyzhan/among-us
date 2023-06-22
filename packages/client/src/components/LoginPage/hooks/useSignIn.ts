@@ -1,13 +1,14 @@
 import { useSignInUserMutation } from '@/store/auth/auth.slice';
-import { APIErrorResponse, SignInRequestDTO } from '@/store/auth/auth.types';
-import { createErrorMessageGetter } from '@/utils/api/errors/createErrorMessageGetter';
-import {
-  isRTKQueryFetchError,
-  isRTKQuerySuccessfulResponse,
-} from '@/utils/api/responseTypes';
+import { SignInRequestDTO } from '@/store/auth/auth.types';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useState } from 'react';
 
-const getErrorMessage = createErrorMessageGetter({ apiName: 'signin' });
+type IResponseError = FetchBaseQueryError & {
+  status: number;
+  data: {
+    message: string;
+  };
+};
 
 export function useSignIn() {
   const [sendSignInQuery, sendSignInQueryStatus] = useSignInUserMutation();
@@ -19,26 +20,17 @@ export function useSignIn() {
     setRequestStatus('Проверяем...');
     try {
       const response = await sendSignInQuery(data);
-      if (isRTKQuerySuccessfulResponse(response)) {
+
+      if ('data' in response) {
         setStatusMessageClass('login-page__status_green');
         setRequestStatus('Рады видеть снова!');
         return true;
       }
-      const { error } = response;
-      if (isRTKQueryFetchError(error)) {
-        const { status } = error;
-        let errorMessage;
-        if (status === 401) {
-          errorMessage = 'Неверный логин или пароль';
-        } else {
-          const response = error.data as APIErrorResponse;
-          errorMessage = getErrorMessage({ status, response });
-        }
-        setStatusMessageClass('login-page__status_red');
-        setRequestStatus(errorMessage);
-        return false;
-      } else {
-        throw error;
+
+      if ('error' in response) {
+        const { data } = response.error as IResponseError;
+        const { message } = data;
+        setRequestStatus(message);
       }
     } catch (error) {
       console.log(error);

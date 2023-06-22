@@ -29,7 +29,7 @@ export const authApi = createApi({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['User'],
+      invalidatesTags: (_result, error) => (error ? [] : ['User']),
     }),
     logout: build.mutation<void, void>({
       query: () => ({

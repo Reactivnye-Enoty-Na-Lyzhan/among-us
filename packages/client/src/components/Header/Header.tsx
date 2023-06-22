@@ -1,5 +1,5 @@
 import { FC, MouseEventHandler } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Header.css';
 
 type Props = {
@@ -8,10 +8,16 @@ type Props = {
 
 const Header: FC<Props> = ({ title }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const goBack: MouseEventHandler<HTMLAnchorElement> = evt => {
     evt.preventDefault();
-    navigate(-1);
+
+    if (location.hash) {
+      navigate('/forum');
+    } else {
+      navigate(-1);
+    }
   };
 
   return (

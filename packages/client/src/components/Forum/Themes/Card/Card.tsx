@@ -1,6 +1,5 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
-import './Card.css';
+import { FC } from 'react';
 import { ForumPostType } from '@/store/forum/forum.types';
 import { Link } from 'react-router-dom';
 import {
@@ -9,6 +8,8 @@ import {
   useUpdatePostMutation,
 } from '@/store/forum/forum.api';
 import { DEFAULT_RESOURCE_URL } from '@/utils/constants';
+import { useActions } from '@/hooks/useActions';
+import './Card.css';
 
 type Props = {
   theme: ForumPostType;
@@ -21,10 +22,19 @@ const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
   const [deletePost] = useDeletePostMutation();
   const [updatePost] = useUpdatePostMutation();
 
+  const { setApiError } = useActions();
+
   const onDeleteButtonClick = async () => {
     // TBD: Temporary implementation
     if (confirm('Вы действительно хотите удалить тему?')) {
-      await deletePost({ postId: theme.id });
+      const deletedPost = await deletePost({ postId: theme.id });
+
+      if ('error' in deletedPost) {
+        setApiError({
+          code: 401,
+          message: 'Невозможно удалить пост, так как вы не его владелец',
+        });
+      }
       refetch();
     }
   };

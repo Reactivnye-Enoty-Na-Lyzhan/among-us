@@ -1,5 +1,5 @@
 .banner {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -11,18 +11,19 @@
   animation: animation 2.5s ease-in-out forwards;
   opacity: 0;
   transform-origin: center;
+  z-index: 4;
 }
 
-.traitor {
-  background-color: rgba(232, 18, 95, 0.4);
+.banner_background_traitor {
+  background-color: rgba(232, 18, 95, 0.9);
 }
 
-.innocent {
-  background-color: rgba(36, 209, 8, 0.4);
+.banner_background_innocent {
+  background-color: rgba(36, 209, 8, 0.9);
 }
 
-.end {
-  background-color: rgba(145, 12, 191, 0.4);
+.banner_background_end {
+  background-color: rgba(145, 12, 191, 0.9);
 }
 
 @keyframes animation {
@@ -54,6 +55,7 @@
   line-height: 120%;
   text-align: center;
   color: #010318;
+  border-radius: 7px;
 }
 
 .banner__subtext {

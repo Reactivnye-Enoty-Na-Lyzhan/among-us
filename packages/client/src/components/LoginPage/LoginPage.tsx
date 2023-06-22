@@ -42,7 +42,10 @@ const LoginPage: FC = () => {
       login: values.login,
       password: values.password,
     } as SignInRequestDTO);
-    success && navigate('/game');
+
+    if (success) {
+      navigate('/game');
+    }
   }
 
   useEffect(() => {
