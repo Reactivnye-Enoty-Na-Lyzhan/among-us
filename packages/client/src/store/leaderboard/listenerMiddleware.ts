@@ -24,7 +24,7 @@ startListening({
     const getRatingsArgs = {
       offset: 0,
       limit: fetchedRatingsCount,
-      ratingFieldName: sortingType,
+      sortField: sortingType,
     };
     const getRatingsRequestAction =
       leaderboardAPISlice.endpoints.getRatings.initiate(getRatingsArgs, {
