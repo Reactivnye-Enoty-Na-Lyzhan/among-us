@@ -1,13 +1,4 @@
 import { canvasSetup } from './canvasSetup';
-import { movePlayer } from './movePlayer';
-import {
-  ICrewman,
-  ICurrentPlayer,
-  IInteractionObject,
-  IPlayer,
-  ITaskObject,
-  IMeetingObject,
-} from './types';
 import {
   gameMap,
   MAP_OFFSET,
@@ -17,6 +8,16 @@ import {
   deadTextures,
   playerSprites,
 } from './consts';
+import { killDelay } from '@/utils/game/constants';
+import { getMoveFunction } from './movePlayer';
+import type {
+  ICrewman,
+  ICurrentPlayer,
+  IInteractionObject,
+  IPlayer,
+  ITaskObject,
+  IMeetingObject,
+} from './types';
 
 export default function canvasProcess(
   canvas: HTMLCanvasElement,
@@ -27,10 +28,14 @@ export default function canvasProcess(
   playerId: any,
   socket: any,
   gameId: any,
-  isBlocked: any
+  isBlocked: any,
+  gameTaskId: any,
+  lastKillTime: any
 ) {
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   canvasSetup(canvas);
+
+  const movePlayer = getMoveFunction();
 
   //TBD
 
@@ -389,15 +394,43 @@ export default function canvasProcess(
     if (forCivils && player.impostor) return;
     if (!forCivils && !player.impostor) return;
     let targetId: number | undefined = undefined;
+    let taskId: number | undefined = undefined;
     arr.forEach(obj => {
       if (obj.checkCollision() && !(obj as Crewman).impostor) {
-        targetId = obj.id;
+        if (obj instanceof Crewman) {
+          targetId = obj.id;
+        }
+        if (obj instanceof TaskObject) {
+          taskId = obj.id;
+        }
       }
     });
-    if (targetId) {
+
+    if (targetId || taskId) {
       if (btnEl.style.display !== 'block') btnEl.style.display = 'block';
+
+      if (taskId) {
+        if (taskId !== gameTaskId.current) {
+          btnEl.classList.add('game__action-btn_inactive');
+        } else {
+          btnEl.classList.remove('game__action-btn_inactive');
+        }
+      }
+
+      if (targetId) {
+        if (lastKillTime.current + killDelay > Date.now()) {
+          btnEl.classList.add('game__action-btn_inactive');
+        } else {
+          btnEl.classList.remove('game__action-btn_inactive');
+        }
+      }
+
       if (btnEl.dataset.targetId !== targetId) {
         btnEl.dataset.targetId = targetId;
+      }
+
+      if (btnEl.dataset.taskId !== taskId) {
+        btnEl.dataset.taskId = taskId;
       }
     } else {
       if (btnEl.style.display !== 'none') btnEl.style.display = 'none';

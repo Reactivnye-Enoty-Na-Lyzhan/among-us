@@ -4,7 +4,7 @@ import { User } from '../auth/auth.types';
 export type FoundGameParamType = Pick<IGameStateParams, 'players' | 'meetings'>;
 
 export interface IFoundGame extends IGame {
-  players: number;
+  playersCount: number;
   creator: {
     login: string;
     avatar: string;

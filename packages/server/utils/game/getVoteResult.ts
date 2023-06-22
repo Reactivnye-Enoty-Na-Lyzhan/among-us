@@ -18,5 +18,5 @@ export const getVoteResult = (votedList: MeetingResults): number | null => {
     return null;
   }
 
-  return Number(resultsArray[0]);
+  return null;
 };

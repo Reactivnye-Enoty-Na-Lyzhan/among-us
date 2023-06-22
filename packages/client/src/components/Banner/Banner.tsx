@@ -33,10 +33,10 @@ const Banner: React.FC<BannerProps> = ({ outcome }) => {
   }
 
   return (
-  <div className={`banner ${backgroundColor}`}>
+    <div className={`banner ${backgroundColor}`}>
       <div className="banner__wrapper">
-      <p className='banner__text'>{bannerText}</p>
-      <p className='banner__subtext'>{bannerSubText}</p>
+        <p className="banner__text">{bannerText}</p>
+        <p className="banner__subtext">{bannerSubText}</p>
       </div>
     </div>
   );

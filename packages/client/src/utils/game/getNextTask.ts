@@ -10,12 +10,13 @@ export const getNextTask = (
   currentTask: number,
   lastTask: number | null
 ): number | null => {
+  console.log('LAST | CURRENT', lastTask, currentTask);
   const avaliableTask = miniGamesList.filter(gameId => {
     const currentGameId = Number(gameId);
     return currentGameId !== currentTask && currentGameId !== lastTask;
   });
 
-  if (!avaliableTask.length) return null;
+  if (!avaliableTask.length) return Number(avaliableTask[0]);
 
   return getRandomTask(avaliableTask);
 };
