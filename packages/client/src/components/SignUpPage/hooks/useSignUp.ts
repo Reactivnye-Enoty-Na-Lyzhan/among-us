@@ -16,8 +16,8 @@ export function useOnSubmitQueries() {
   const [apiQueryStatusMessage, setAPIQueryStatusMessage] = useState<
     string | null
   >(null);
-  const [sendGetUserQuery, getUserQueryStatus] = useLazyGetUserQuery();
   const [sendSignUpQuery, signUpQueryStatus] = useSignUpUserMutation();
+  const [sendGetUserQuery, getUserQueryStatus] = useLazyGetUserQuery();
 
   const signUpWrapper = useCallback(async (formData: SignUpFormData) => {
     const signUpDTO = transformFormDataToDTO(formData);
