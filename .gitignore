@@ -9,5 +9,7 @@ tmp
 package-lock.json
 
 *.pem
-.env.dev
+.env
+.env.*
 dockerfile.server.dev
+docker-compose.dev.yml

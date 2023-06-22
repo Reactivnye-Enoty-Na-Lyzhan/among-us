@@ -1,17 +1,16 @@
-import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import Form from '../Form/Form';
-import Input from '../Form/Input/Input';
-import { useForm } from '../Form/hooks';
-import { validation } from '../../utils/validation';
-import Button from '../Form/Button/Button';
-import OAuthButton from '../Form/OAuthButton/OAuthButton';
-import { useValidation } from '../../hooks/useValidation';
-import { useSignIn } from './hooks/useSignIn';
 import hocAuth from '@/hoc/hocAuth';
 import { SignInRequestDTO } from '@/store/auth/auth.types';
+import { FC, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import useOAuth from '../../hooks/useOAuth';
+import { useValidation } from '../../hooks/useValidation';
+import { validation } from '../../utils/validation';
+import Button from '../Form/Button/Button';
+import Form from '../Form/Form';
+import Input from '../Form/Input/Input';
+import OAuthButton from '../Form/OAuthButton/OAuthButton';
+import { useForm } from '../Form/hooks';
+import { useSignIn } from './hooks/useSignIn';
 import './LoginPage.css';
 
 const LoginPage: FC = () => {

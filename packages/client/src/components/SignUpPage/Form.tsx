@@ -5,8 +5,7 @@ import { useForm } from '@/components/Form/hooks';
 import { useValidation } from '@/hooks/useValidation';
 import { validation } from '@/utils/validation';
 import classNames from 'classnames';
-import { useCallback, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useRef } from 'react';
 import { useOnSubmitQueries } from './hooks/useSignUp';
 import { SignUpFormData } from './types';
 
@@ -34,17 +33,14 @@ export default function SignUpForm() {
     { field: 'password', validation: validation.password },
   ]);
 
-  const navigate = useNavigate();
-
   const valuesRef = useRef(values);
   valuesRef.current = values;
 
   const {
     apiQueryStatusMessage,
     sendSignUpQuery,
-    getUserQueryStatus,
-    sendGetUserQuery,
     signUpQueryStatus,
+    sendSignInQuery,
   } = useOnSubmitQueries();
 
   const onSubmitHandler = useCallback(async () => {
@@ -54,16 +50,16 @@ export default function SignUpForm() {
     }
 
     await sendSignUpQuery(formData as SignUpFormData);
-    sendGetUserQuery();
   }, []);
 
-  if (signUpQueryStatus.isSuccess) {
-    if (getUserQueryStatus.isSuccess) {
-      navigate('/game');
-    } else if (getUserQueryStatus.isError) {
-      navigate('/signin');
+  useEffect(() => {
+    if (signUpQueryStatus.isSuccess) {
+      const signUpData = valuesRef.current as SignUpFormData;
+      const { login, password } = signUpData;
+
+      sendSignInQuery({ login, password });
     }
-  }
+  }, [signUpQueryStatus.isSuccess]);
 
   return (
     <>
