@@ -7,6 +7,7 @@ import {
   useDeleteMessageMutation,
   useGetMessagesDataQuery,
 } from '@/store/forum/forum.api';
+import { DEFAULT_RESOURCE_URL } from '@/utils/constants';
 
 type Props = {
   postId: number;
@@ -33,7 +34,7 @@ const ForumMessage: FC<Props> = ({ postId, data, user, setMessageParent }) => {
           style={
             data.author.avatar
               ? {
-                  backgroundImage: `url(${data.author.avatar})`,
+                  backgroundImage: `url(${DEFAULT_RESOURCE_URL}/${data.author.avatar})`,
                 }
               : undefined
           }></div>
