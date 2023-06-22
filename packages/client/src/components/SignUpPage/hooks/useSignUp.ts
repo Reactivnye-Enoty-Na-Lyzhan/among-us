@@ -1,8 +1,11 @@
 import {
-  useLazyGetUserQuery,
+  useSignInUserMutation,
   useSignUpUserMutation,
 } from '@/store/auth/auth.slice';
-import { APIErrorResponse } from '@/store/auth/auth.types';
+import type {
+  APIErrorResponse,
+  SignInRequestDTO,
+} from '@/store/auth/auth.types';
 import { getSignupAPIErrorMessage } from '@/utils/api/errors/signup/getErrorMessage';
 import {
   isRTKQueryFetchError,
@@ -17,47 +20,61 @@ export function useOnSubmitQueries() {
     string | null
   >(null);
   const [sendSignUpQuery, signUpQueryStatus] = useSignUpUserMutation();
-  const [sendGetUserQuery, getUserQueryStatus] = useLazyGetUserQuery();
+  const [sendSignInQuery, signInQueryStatus] = useSignInUserMutation();
 
-  const signUpWrapper = useCallback(async (formData: SignUpFormData) => {
-    const signUpDTO = transformFormDataToDTO(formData);
-    try {
-      const response = await sendSignUpQuery(signUpDTO);
-      if (isRTKQuerySuccessfulResponse(response)) {
-        setAPIQueryStatusMessage('Регистрация прошла успешно');
-        return;
+  const sendSignUpQueryWrapper = useCallback(
+    async (formData: SignUpFormData) => {
+      const signUpDTO = transformFormDataToDTO(formData);
+      try {
+        const response = await sendSignUpQuery(signUpDTO);
+        if (isRTKQuerySuccessfulResponse(response)) {
+          setAPIQueryStatusMessage('Регистрация прошла успешно');
+          return;
+        }
+
+        const { error } = response;
+        if (isRTKQueryFetchError(error)) {
+          const { status } = error;
+          const response = error.data as APIErrorResponse;
+          const errorMessage = getSignupAPIErrorMessage({ status, response });
+
+          setAPIQueryStatusMessage(errorMessage);
+        } else {
+          throw error;
+        }
+      } catch (error) {
+        console.error(`ERROR WHILE SIGNUP REQUEST: ${JSON.stringify(error)}`);
+        setAPIQueryStatusMessage('Непредвиденная ошибка клиента');
       }
+    },
+    []
+  );
 
-      const { error } = response;
-      if (isRTKQueryFetchError(error)) {
-        const { status } = error;
-        const response = error.data as APIErrorResponse;
-        const errorMessage = getSignupAPIErrorMessage({ status, response });
+  const sendSignInQueryWrapper = useCallback(
+    async (signInData: SignInRequestDTO) => {
+      try {
+        const response = await sendSignInQuery(signInData);
 
-        setAPIQueryStatusMessage(errorMessage);
-      } else {
-        throw error;
+        if (!isRTKQuerySuccessfulResponse(response)) {
+          const { error } = response;
+
+          if (isRTKQueryFetchError(error)) {
+            setAPIQueryStatusMessage(`${error?.data}`);
+          }
+        }
+      } catch (error) {
+        console.error(`ERROR WHILE SIGNIN USER: ${error}`);
+        setAPIQueryStatusMessage('Непредвиденная ошибка клиента');
       }
-    } catch (error) {
-      console.error(`ERROR WHILE SIGNUP REQUEST: ${JSON.stringify(error)}`);
-      setAPIQueryStatusMessage('Непредвиденная ошибка клиента');
-    }
-  }, []);
-
-  const getUserWrapper = useCallback(async () => {
-    try {
-      await sendGetUserQuery();
-    } catch (error) {
-      console.error(`ERROR WHILE GET USER: ${error}`);
-      setAPIQueryStatusMessage('Непредвиденная ошибка клиента');
-    }
-  }, []);
+    },
+    []
+  );
 
   return {
     apiQueryStatusMessage,
-    sendSignUpQuery: signUpWrapper,
-    getUserQueryStatus,
-    sendGetUserQuery: getUserWrapper,
+    sendSignUpQuery: sendSignUpQueryWrapper,
     signUpQueryStatus,
+    sendSignInQuery: sendSignInQueryWrapper,
+    signInQueryStatus,
   };
 }

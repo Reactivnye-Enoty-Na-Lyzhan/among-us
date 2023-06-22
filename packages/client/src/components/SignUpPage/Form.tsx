@@ -40,7 +40,7 @@ export default function SignUpForm() {
     apiQueryStatusMessage,
     sendSignUpQuery,
     signUpQueryStatus,
-    sendGetUserQuery,
+    sendSignInQuery,
   } = useOnSubmitQueries();
 
   const onSubmitHandler = useCallback(async () => {
@@ -54,7 +54,10 @@ export default function SignUpForm() {
 
   useEffect(() => {
     if (signUpQueryStatus.isSuccess) {
-      // after signup logic
+      const signUpData = valuesRef.current as SignUpFormData;
+      const { login, password } = signUpData;
+
+      sendSignInQuery({ login, password });
     }
   }, [signUpQueryStatus.isSuccess]);
 

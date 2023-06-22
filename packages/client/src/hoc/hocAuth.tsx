@@ -7,12 +7,14 @@ import useAuth from '../hooks/useAuth';
 type Options = {
   onUnauthenticatedRedirection: null | string;
   onAuthenticatedRedirection: null | string;
+  shouldUseLoader: boolean;
 };
 type initOptions = Partial<Options>;
 
 const defaultOptions: Options = {
   onUnauthenticatedRedirection: '/signin',
   onAuthenticatedRedirection: null,
+  shouldUseLoader: true,
 };
 
 function hocAuth<Props extends Record<string, unknown>>(
@@ -21,17 +23,23 @@ function hocAuth<Props extends Record<string, unknown>>(
 ): FC<Props> {
   return props => {
     const options = { ...defaultOptions, ...initOptions };
-    const { onAuthenticatedRedirection, onUnauthenticatedRedirection } =
-      options;
+    const {
+      onAuthenticatedRedirection,
+      onUnauthenticatedRedirection,
+      shouldUseLoader,
+    } = options;
 
     const { isAuthenticated, isLoading } = useAuth();
+    const loadingStatus = isLoading;
     const { setLoadingStatus } = useActions();
 
     useEffect(() => {
-      setLoadingStatus(isLoading);
-    }, [isLoading]);
+      if (shouldUseLoader) {
+        setLoadingStatus(loadingStatus);
+      }
+    }, [loadingStatus, shouldUseLoader]);
 
-    if (isLoading) {
+    if (shouldUseLoader && loadingStatus) {
       return <LoaderScreen></LoaderScreen>;
     }
 
