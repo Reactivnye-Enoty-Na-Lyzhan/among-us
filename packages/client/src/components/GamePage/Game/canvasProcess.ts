@@ -190,6 +190,7 @@ export default function canvasProcess(
     renderY: number;
     radius: number;
     nickname: any;
+    nicknameWidth: number;
     constructor(
       id: number,
       user: any,
@@ -203,7 +204,8 @@ export default function canvasProcess(
       this.renderY = this.y + MAP_OFFSET.y;
       this.radius = PLAYER.collisionRadius;
       console.log('user: ', user);
-      this.nickname = user.nickname || user.login;
+      this.nickname = (user.nickname || user.login).substring(0, 9);
+      this.nicknameWidth = ctx.measureText(this.nickname).width;
     }
     update(x: number, y: number) {
       if (!this.alive) {
@@ -278,7 +280,7 @@ export default function canvasProcess(
       ctx.fillStyle = 'black';
       ctx.fillText(
         this.nickname,
-        this.renderX - this.width,
+        this.renderX - (this.width / 2 + this.nicknameWidth / 2),
         this.renderY + this.height / 2 + 15
       );
     }
