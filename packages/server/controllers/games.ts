@@ -187,7 +187,7 @@ export const getGames = async (
             literal(
               `(SELECT COUNT (*)::int  FROM players WHERE "gameId" = "Game"."id")`
             ),
-            'players',
+            'playersCount',
           ],
         ],
       },
@@ -198,6 +198,16 @@ export const getGames = async (
           model: GameParam,
           as: 'param',
           attributes: ['players', 'meetings'],
+        },
+        {
+          model: Player,
+          as: 'players',
+          where: {
+            id: {
+              [Op.not]: null,
+            },
+          },
+          attributes: [],
         },
       ],
     });
@@ -275,7 +285,19 @@ export const findHotGame = async (
       where: {
         status: 'init',
       },
-      order: [['id', 'DESC']],
+      include: [
+        {
+          model: Player,
+          as: 'players',
+          where: {
+            id: {
+              [Op.not]: null,
+            },
+          },
+          attributes: [],
+        },
+      ],
+      order: [['id', 'ASC']],
       attributes: ['id'],
     });
 

@@ -76,7 +76,6 @@ const AwaitStart: FC = () => {
   const handleGameReady = (players: IPlayer[]) => {
     console.log('Игроки из Awaiting', players);
     setGamePlayers(players);
-
   };
 
   // Выход из игры

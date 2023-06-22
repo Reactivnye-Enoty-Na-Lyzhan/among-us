@@ -17,9 +17,15 @@ import {
 import { useUpdateScoreMutation } from '@/store/game/game.api';
 import { GameSocketContext } from '@/utils/socket/gameSocket';
 import { MeetingMessages } from '@/utils/game/MeetingMessages';
+import { getNextTask } from '@/utils/game/getNextTask';
+import {
+  handleContextMenu,
+  handleKeyDown,
+  handleKeyUp,
+  handleOnBlur,
+} from './movePlayer';
 import type { IMeetingResult, PlayerRoleType } from '@/store/game/game.types';
 import './Game.css';
-import { getNextTask } from '@/utils/game/getNextTask';
 
 const Game: FC = () => {
   const [meetingResult, setMeetingResult] = useState<IMeetingResult | null>(
@@ -48,6 +54,7 @@ const Game: FC = () => {
     clearGameError,
     cancelGame,
     setTargetTask,
+    setLastTask,
   } = useActions();
 
   const socket = useContext(GameSocketContext);
@@ -57,6 +64,8 @@ const Game: FC = () => {
   const meetingAction = useRef(null);
   const killAction = useRef(null);
   const isBlocked = useRef(false);
+  const taskId = useRef(targetTask);
+  const lastKillTime = useRef(Date.now());
 
   useEffect(() => {
     let unsubRefs: any;
@@ -82,19 +91,36 @@ const Game: FC = () => {
         playerId,
         socket,
         gameId,
-        isBlocked
+        isBlocked,
+        taskId,
+        lastKillTime
       );
     }
     return () => {
       const { moveCrewman, handlePlayerKill } = unsubRefs;
       socket.off('move', moveCrewman);
       socket.off('onPlayerKill', handlePlayerKill);
+
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('keydown', handleKeyDown);
+
+        window.removeEventListener('keyup', handleKeyUp);
+
+        window.removeEventListener('blur', handleOnBlur);
+
+        window.removeEventListener('contextmenu', handleContextMenu);
+      }
     };
   }, [players.length]);
 
   useEffect(() => {
     if (meetingIsProccessing) {
       isBlocked.current = true;
+
+      // Закрываем мини-игру, если открыта
+      if (minigameId) {
+        setMinigameId(undefined);
+      }
     } else {
       isBlocked.current = false;
     }
@@ -179,6 +205,7 @@ const Game: FC = () => {
     if (!gameId) return;
 
     socket.emit('killPlayer', gameId, targetId);
+    lastKillTime.current = Date.now();
   };
 
   // Коллбэк-уведомление убийства игрока
@@ -189,8 +216,8 @@ const Game: FC = () => {
 
   // Обработчик выполнения задачи
   const handleCompleteTask = async (e: any) => {
-    const taskId = Number(e.currentTarget.dataset.targetId);
-
+    const taskId = Number(e.currentTarget.dataset.taskId);
+    console.log('из Game, taskId | target', taskId, targetTask);
     if (taskId !== targetTask) return;
 
     setMinigameId(taskId);
@@ -206,6 +233,7 @@ const Game: FC = () => {
     finishGame(winner);
   };
 
+  // Обработчик начала голосования
   const handleMeetingStart = () => {
     if (meetingIsProccessing) return;
 
@@ -214,11 +242,13 @@ const Game: FC = () => {
     }
   };
 
+  // Обработчик закрытия мини-игры игроком
   const handleMinigameClose = () => {
     setMinigameId(undefined);
     isBlocked.current = false;
   };
 
+  // Обработчик успешного завершения мини-игры
   const handleMinigameWin = async () => {
     try {
       if (!gameId || !playerId || !minigameId) return;
@@ -240,7 +270,10 @@ const Game: FC = () => {
 
       if (nextTask) {
         setTargetTask(nextTask);
+        taskId.current = nextTask;
       }
+
+      setLastTask(minigameId);
     } catch (err: unknown) {
       console.error(err);
     }

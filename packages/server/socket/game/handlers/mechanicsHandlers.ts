@@ -53,7 +53,6 @@ export const mechanicsHandlers = (
       }
 
       await meeting.update({
-        meetingCount: meeting.meetingCount + 1,
         isProccessing: true,
       });
 
