@@ -32,7 +32,7 @@ const FoundGame: FC<Props> = props => {
         </p>
         <p className="found-game__game-params">
           <span className="found-game__accent">Игроков: </span>
-          {game.playersCount} / {game.param.players}
+          {game.playersCount ? game.playersCount : 0} / {game.param.players}
         </p>
       </div>
     </li>

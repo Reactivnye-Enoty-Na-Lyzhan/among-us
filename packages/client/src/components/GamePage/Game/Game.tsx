@@ -26,12 +26,15 @@ import {
 } from './movePlayer';
 import type { IMeetingResult, PlayerRoleType } from '@/store/game/game.types';
 import './Game.css';
+import Banner from './UI/Banner/Banner';
 
 const Game: FC = () => {
   const [meetingResult, setMeetingResult] = useState<IMeetingResult | null>(
     null
   );
-  const { id: playerId } = useTypedSelector(selectPlayer);
+  const [isBannerShown, setIsBannerShown] = useState<boolean>(false);
+
+  const { id: playerId, role } = useTypedSelector(selectPlayer);
   const players = useTypedSelector(selectPlayers);
   const gameId = useTypedSelector(selectGame);
   const { isProccessing: meetingIsProccessing } =
@@ -141,6 +144,20 @@ const Game: FC = () => {
       socket.off('onFinishMeeting', handleFinishMeeting);
     };
   }, [socket]);
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+
+    if (role) {
+      setIsBannerShown(true);
+
+      timer = setTimeout(() => {
+        setIsBannerShown(false);
+      }, 10000);
+    }
+
+    return () => clearTimeout(timer);
+  }, [role]);
 
   // Обработчик начала встречи
   const handleStartMeeting = (initiatorId: number) => {
@@ -299,6 +316,7 @@ const Game: FC = () => {
       ) : null}
       <div className="game__canvas-container">
         <canvas ref={canvasRef} id="main-canvas"></canvas>
+        {isBannerShown && <Banner outcome={role} />}
         <TaskInterface />
         {meetingResult && (
           <MeetingScreen

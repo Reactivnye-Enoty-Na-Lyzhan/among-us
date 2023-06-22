@@ -55,5 +55,6 @@ export interface IRequestGetPostById extends Request {
   params: { postId: string };
 }
 export interface IRequestDeletePost extends Request {
+  user?: IUser;
   params: { postId: string };
 }

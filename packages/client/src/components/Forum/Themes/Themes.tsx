@@ -9,6 +9,7 @@ import './Themes.css';
 import { ForumThemeGroup } from '../types';
 import { ForumPostType } from '@/store/forum/forum.types';
 import { useNavigate } from 'react-router-dom';
+import { useGetUserQuery } from '@/store/auth/auth.slice';
 
 type Props = {
   pinnedThemes: ForumThemeGroup;
@@ -22,6 +23,8 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
   const [filteredPinnedThemes, setFilteredPinnedThemes] = useState<
     ForumPostType[]
   >([]);
+
+  const { data } = useGetUserQuery();
 
   const navigate = useNavigate();
 
@@ -74,7 +77,13 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
           <ThemesGroup title={pinnedThemes.title} collapsible={true}>
             {filteredPinnedThemes.map(theme => (
               <li className="forum-themes__item" key={theme.id}>
-                <ThemeCard theme={theme} isPinned={true} hasEditAccess={true} />
+                <ThemeCard
+                  theme={theme}
+                  isPinned={true}
+                  hasEditAccess={
+                    data ? data.login === theme.author.login : false
+                  }
+                />
               </li>
             ))}
           </ThemesGroup>
@@ -93,7 +102,10 @@ const Themes: FC<Props> = ({ pinnedThemes, themes }) => {
           ]}>
           {filteredThemes.map(theme => (
             <li className="forum-themes__item" key={theme.id}>
-              <ThemeCard theme={theme} hasEditAccess={true} />
+              <ThemeCard
+                theme={theme}
+                hasEditAccess={data ? data.login === theme.author.login : false}
+              />
             </li>
           ))}
         </ThemesGroup>
