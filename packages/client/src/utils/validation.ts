@@ -86,6 +86,25 @@ export const validation = {
 
     return { isValid, text };
   },
+  nickname: (value?: string) => {
+    let isValid = false;
+    let text = '';
+    const max = 9;
+    const min = 5;
+
+    if (!value) text = validationTexts.notEmpty;
+    else if (validationMethods.checkLength(value, min, max))
+      text = validationTexts.lenNotLessNotMore
+        .replace('{min}', String(min))
+        .replace('{max}', String(max));
+    else if (validationMethods.checkLangs(value))
+      text = validationTexts.onlyCyrilicAndLatin;
+    else {
+      isValid = true;
+    }
+
+    return { isValid, text };
+  },
   email: (value?: string) => {
     let isValid = false;
     let text = '';

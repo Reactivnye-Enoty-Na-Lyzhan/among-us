@@ -24,7 +24,7 @@ const ProfileForm: FC = () => {
   } = useValidation([
     { field: 'firstName', validation: validation.name },
     { field: 'lastName', validation: validation.name },
-    { field: 'nickname', validation: validation.name },
+    { field: 'nickname', validation: validation.nickname },
     { field: 'email', validation: validation.email },
     { field: 'phone', validation: validation.phone },
   ]);
