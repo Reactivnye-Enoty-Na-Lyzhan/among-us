@@ -41,7 +41,9 @@ const ThemeCard: FC<Props> = ({ theme, hasEditAccess, isPinned }) => {
           className="theme-card-info__avatar"
           style={
             theme.author.avatar
-              ? { backgroundImage: `url('${theme.author.avatar}')` }
+              ? {
+                  backgroundImage: `url(${DEFAULT_RESOURCE_URL}/${theme.author.avatar})`,
+                }
               : undefined
           }></div>
         <div className="theme-card-info__container">
