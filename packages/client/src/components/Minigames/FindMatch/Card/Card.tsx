@@ -14,16 +14,12 @@ const Card: FC<Props> = ({ card, handleCardClick }) => {
 
   return (
     <div className="card" onClick={handleClick}>
-      <img
+      <div
         className={`card__frontImg ${card.flipped ? 'flipped' : ''}`}
-        src={card.frontImage}
-        alt="card front"
-      />
-      <img
+        style={{ backgroundImage: `url(${card.frontImage})` }}></div>
+      <div
         className={`card__backImg ${card.flipped ? 'flipped' : ''}`}
-        src={card.backImage}
-        alt="card back"
-      />
+        style={{ backgroundImage: `url(${card.backImage})` }}></div>
     </div>
   );
 };

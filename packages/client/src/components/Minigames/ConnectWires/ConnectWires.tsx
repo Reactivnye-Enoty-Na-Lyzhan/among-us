@@ -93,7 +93,9 @@ const ConnectWires: FC<Props> = ({ onWinCallback }) => {
 
   return (
     <div className="connwires">
-      {isWin ? <div className="connwires__win">Готово!</div> : null}
+      {isWin ? (
+        <div className="minigame__win">Питание восстановлено!</div>
+      ) : null}
       <div className="connwires-board">
         <div className="connwires-board__left">{getConnTips('start')}</div>
         <div className="connwires-grid">{getConnTiles()}</div>

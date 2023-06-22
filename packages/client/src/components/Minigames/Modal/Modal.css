@@ -16,6 +16,26 @@
   background-color: #cacaca;
   border: 5px solid #606060;
   border-radius: 12px;
+  position: relative;
+}
+
+.minigame-modal__close {
+  position: absolute;
+  top: -50px;
+  right: -5px;
+  border-radius: 12px;
+  border: 5px solid #9e3232;
+  padding: 5px 8px;
+  background: #bc4141;
+  color: #fff;
+  font-weight: 700;
+  opacity: 0.7;
+  transition: opacity 0.1s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .minigame-modal__content {
@@ -23,4 +43,22 @@
   border-radius: 6px;
   min-width: 200px;
   min-height: 150px;
+}
+
+.minigame__win {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-main-primary);
+  z-index: 1;
+  color: var(--font-main-primary);
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  padding: 20px;
 }

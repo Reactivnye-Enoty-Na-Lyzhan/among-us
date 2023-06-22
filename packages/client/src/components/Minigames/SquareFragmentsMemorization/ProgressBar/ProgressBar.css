@@ -7,22 +7,24 @@
 
   width: 90%;
   height: 12%;
+  padding-bottom: 3%;
 }
 
 .square-fragments-memorization-game__progressbar-indicator {
   width: var(--indicator-size);
   height: var(--indicator-size);
   border-radius: 50%;
+  border: 3px solid rgb(211, 211, 211);
 }
 
 .square-fragments-memorization-game__progressbar-indicator_success {
-  background-color: green;
+  background-color: rgb(15, 192, 12);
 }
 
 .square-fragments-memorization-game__progressbar-indicator_error {
-  background-color: red;
+  background-color: rgb(226, 20, 20);
 }
 
 .square-fragments-memorization-game__progressbar-indicator_neutral {
-  background-color: grey;
+  background-color: rgb(98, 98, 98);
 }

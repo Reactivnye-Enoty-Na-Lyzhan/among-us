@@ -15,13 +15,12 @@ const FindMatch: FC<Props> = ({ onWinCallback }) => {
   const [clickedCard, setClickedCard] = useState<undefined | CardType>(
     undefined
   );
+  const [isWin, setIsWin] = useState(false);
 
   useEffect(() => {
     if (matchedPairs === cards.length / 2 - 1) {
-      setTimeout(() => {
-        alert('You win!');
-        onWinCallback();
-      }, 3000);
+      setIsWin(true);
+      setTimeout(onWinCallback, 3000);
     }
   }, [matchedPairs]);
 
@@ -65,6 +64,9 @@ const FindMatch: FC<Props> = ({ onWinCallback }) => {
 
   return (
     <div className="match">
+      {isWin ? (
+        <div className="minigame__win">Синхронизация завершена успешно!</div>
+      ) : null}
       <div className="match__cards">
         {cards.map(card => (
           <Card key={card.id} card={card} handleCardClick={handleCardClick} />
