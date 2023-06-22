@@ -67,7 +67,7 @@
 .loader__rocket {
   width: 179px;
   height: 170px;
-  background-image: url(../../images/loader/rocket.svg);
+  background-image: url(@/images/loader/rocket.svg);
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -76,7 +76,7 @@
 .loader__flame {
   width: 98px;
   height: 98px;
-  background-image: url(../../images/loader/flame.svg);
+  background-image: url(@/images/loader/flame.svg);
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
